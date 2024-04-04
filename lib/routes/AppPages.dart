@@ -1,53 +1,147 @@
-part of 'app_pages.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:warmindo_user_ui/pages/cart_page/binding/cart_binding.dart';
+import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
+import 'package:warmindo_user_ui/pages/change-password_page/binding/change_pass_binding.dart';
+import 'package:warmindo_user_ui/pages/change-password_page/view/change_pass_page.dart';
+import 'package:warmindo_user_ui/pages/detail-menu_page/binding/detail_menu_binding.dart';
+import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
+import 'package:warmindo_user_ui/pages/edit-profile/binding/edit_profile_binding.dart';
+import 'package:warmindo_user_ui/pages/edit-profile/view/edit_profile_page.dart';
+import 'package:warmindo_user_ui/pages/history-detail_page/binding/history_detail_binding.dart';
+import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
+import 'package:warmindo_user_ui/pages/history_page/binding/history_binding.dart';
+import 'package:warmindo_user_ui/pages/history_page/view/history_page.dart';
+import 'package:warmindo_user_ui/pages/home_page/binding/home_binding.dart';
+import 'package:warmindo_user_ui/pages/home_page/view/home_page.dart';
+import 'package:warmindo_user_ui/pages/login_page/binding/login_binding.dart';
+import 'package:warmindo_user_ui/pages/login_page/view/login_page.dart';
+import 'package:warmindo_user_ui/pages/menu_page/binding/menu_binding.dart';
+import 'package:warmindo_user_ui/pages/menu_page/view/menu_page.dart';
+import 'package:warmindo_user_ui/pages/onboard_page/binding/onboard_binding.dart';
+import 'package:warmindo_user_ui/pages/onboard_page/view/onboard_page.dart';
+import 'package:warmindo_user_ui/pages/policy_page/binding/policy_binding.dart';
+import 'package:warmindo_user_ui/pages/policy_page/view/policy_page.dart';
+import 'package:warmindo_user_ui/pages/profile_page/binding/profile_binding.dart';
+import 'package:warmindo_user_ui/pages/profile_page/view/profile_page.dart';
+import 'package:warmindo_user_ui/pages/register_page/binding/register_binding.dart';
+import 'package:warmindo_user_ui/pages/register_page/view/register_page.dart';
+import 'package:warmindo_user_ui/pages/splash_page/binding/splash_binding.dart';
+import 'package:warmindo_user_ui/pages/splash_page/view/splash_page.dart';
+import 'package:warmindo_user_ui/pages/veritification_page/binding/veritification_binding.dart';
+import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_page.dart';
+import 'package:warmindo_user_ui/pages/voucher_page/binding/voucher_binding.dart';
+import 'package:warmindo_user_ui/pages/voucher_page/view/voucher_page.dart';
 
-abstract class Routes {
-  Routes._();
-  static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
-  static const HOME_PAGE = _Paths.HOME_PAGE;
-  static const CART_PAGE = _Paths.CART_PAGE;
-  static const PROFILE_PAGE = _Paths.PROFILE_PAGE;
-  static const LOGIN_PAGE = _Paths.LOGIN_PAGE;
-  static const REGISTER_PAGE = _Paths.REGISTER_PAGE;
-  static const ONBOARD_PAGE = _Paths.ONBOARD_PAGE;
-  static const MENU_PAGE = _Paths.MENU_PAGE;
-  static const HISTORY_PAGE = _Paths.HISTORY_PAGE;
-  static const CHANGEPASS_PAGE = _Paths.CHANGEPASS_PAGE;
-  static const VOUCHER_PAGE = _Paths.VOUCHER_PAGE;
-  static const PAYMENT_PAGE = _Paths.PAYMENT_PAGE;
-  static const DETAIL_PAGE = _Paths.DETAIL_PAGE;
-  static const CHECKOUT_PAGE = _Paths.CHECKOUT_PAGE;
-  static const ORDER_PAGE = _Paths.ORDER_PAGE;
-  static const ORDERDETAIL_PAGE = _Paths.ORDERDETAIL_PAGE;
-  static const ORDERHISTORY_PAGE = _Paths.ORDERHISTORY_PAGE;
-  static const ORDERHISTORYDETAIL_PAGE = _Paths.ORDERHISTORYDETAIL_PAGE;
-  static const POLICY_PAGE = _Paths.POLICY_PAGE;
-  static const VERITIFICATION_PAGE = _Paths.VERITIFICATION_PAGE;
-  static const DETAILMENU_PAGE = _Paths.DETAILMENU_PAGE;
+part 'AppRoutes.dart';
 
-}
+class AppPages {
+  AppPages._();
 
-abstract class _Paths {
-  _Paths._();
-  static const SPLASH_SCREEN = '/splash-screen';
-  static const HOME_PAGE = '/home-page';
-  static const CART_PAGE = '/cart-page';
-  static const PROFILE_PAGE = '/profile-page';
-  static const LOGIN_PAGE = '/login-page';
-  static const REGISTER_PAGE = '/register-page';
-  static const ONBOARD_PAGE = '/onboard-page';
-  static const MENU_PAGE = '/menu-page';
-  static const DETAILMENU_PAGE = '/detail-menu-page';
-  static const HISTORY_PAGE = '/history-page';
-  static const CHANGEPASS_PAGE = '/change-pass-page';
-  static const VOUCHER_PAGE = '/voucher-page';
-  static const PAYMENT_PAGE = '/payment-page';
-  static const DETAIL_PAGE = '/detail-page';
-  static const CHECKOUT_PAGE = '/checkout-page';
-  static const ORDER_PAGE = '/order-page';
-  static const ORDERDETAIL_PAGE = '/order-detail-page';
-  static const ORDERHISTORY_PAGE = '/order-history-page';
-  static const ORDERHISTORYDETAIL_PAGE = '/order-history-detail-page';
-  static const POLICY_PAGE = '/policy-page';
-  static const VERITIFICATION_PAGE = '/verification-page';
-   
+  static const INITIAL = Routes.SPLASH_SCREEN;
+
+  static final routes = [
+    GetPage(
+        name: _Paths.SPLASH_SCREEN,
+        page: () => SplashPage(),
+        binding: SplashBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.ONBOARD_PAGE,
+        page: () => OnboardPage(),
+        binding: OnboardBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.HOME_PAGE,
+        page: () => HomePage(),
+        binding: HomeBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.REGISTER_PAGE,
+        page: () => RegisterPage(),
+        binding: RegisterBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 150)),
+    GetPage(
+        name: _Paths.LOGIN_PAGE,
+        page: () => LoginPage(),
+        binding: LoginPageBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 150)),
+    GetPage(
+        name: _Paths.CART_PAGE,
+        page: () => CartPage(),
+        binding: CartBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.MENU_PAGE,
+        page: () => MenuPage(),
+        binding: MenuPageBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.PROFILE_PAGE,
+        page: () => ProfilePage(),
+        binding: ProfileBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.HISTORY_PAGE,
+        page: () => HistoryPage(),
+        binding: HistoryBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.HISTORYDETAIL_PAGE,
+        page: () => HistoryDetailPage(),
+        binding: HISTORYDETAILBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.DETAILMENU_PAGE,
+        page: () => DetailMenuPage(),
+        binding: DETAILMENUBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.POLICY_PAGE,
+        page: () => PolicyPage(),
+        binding: PolicyBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.VERITIFICATION_PAGE,
+        page: () => VeritificationPage(),
+        binding: VeritificationBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.VOUCHER_PAGE,
+        page: () => VoucherPage(),
+        binding: VoucherBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.EDITPROFILE_PAGE,
+        page: () => EditProfile(),
+        binding: EditProfileBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.CHANGEPASS_PAGE,
+        page: () => ChangePasswordPage(),
+        binding: ChangePasswordBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.PROFILE_PAGE,
+        page: () => ProfilePage(),
+        binding: ProfileBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+  ];
 }
