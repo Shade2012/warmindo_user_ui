@@ -5,6 +5,7 @@ class ColorResources {
   static const Color primaryColorLight = Color(0xFFFFFFFF);
   static const Color primaryColorDark = Color(0xFF000000);
   static const Color transparent = Colors.transparent;
+  static const Color darkblue = Color.fromRGBO(23, 77, 97 ,255);
 
   //Text Color
   static const Color primaryTextColor = Color(0xFF000000);
@@ -24,4 +25,5 @@ class ColorResources {
   static const Color tomatoRed = Color(0xFFFF6347);
   static const Color btnonboard = Color(0xFF6D1616);
   static const Color btnonboard2 = Color(0xFF007F6D);
+  // #174D61
 }
