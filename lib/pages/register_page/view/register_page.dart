@@ -20,11 +20,48 @@ class RegisterPage extends GetView<RegisterController>{
    RegisterPage({super.key});
 
 
+  String? isEmailValid(String value) {
+    if (value.isEmpty) {
+      return 'Email is required';
+    } else if (!value.contains('@')) {
+      return 'Invalid email';
+    }
+    return null;
+  }
+  String? isPhone(String value) {
+    if (value.isEmpty) {
+      return 'Phone Number is required';
+    }
+    return null;
+  }
+  String? isNama(String value) {
+    if (value.isEmpty) {
+      return 'Nama Lengkap is required';
+    }
+    return null;
+  }
+  String? isUsername(String value) {
+    if (value.isEmpty) {
+      return 'Username is required';
+    }
+    return null;
+  }
+  String? isPassword(String value) {
+    if (value.isEmpty) {
+      return 'Password is required';
+    } else if (value.length < 8) {
+      return 'Minimum password length is 8 characters';
+    }
+    return null;
+  }
+
+
   Widget Password(
       IconData icon,
       String label,
       String hint,
       TextEditingController controller2,
+      String? Function(String)? validator,
       ) {
 // Control the obscure text visibility
 
@@ -50,6 +87,7 @@ class RegisterPage extends GetView<RegisterController>{
             color: primaryTextColor,
             fontSize: 12,
           ),
+          errorText: validator != null ? validator(controller2.text) : null,
         ),
       ),
       ),
@@ -76,31 +114,48 @@ class RegisterPage extends GetView<RegisterController>{
               Center(
                   child: Text("Silakan Daftar dibawah sini",style: regularTextStyle ,)
               ),
-              myText(Icons.person_2_outlined, "Nama Lengkap", "Isi Nama Aslimu", ctrName),
-              myText(Icons.person_2_outlined, "Username", "Isi Username mu", ctrUsername),
-              myText(Icons.mail_outline, "Email", "Isi Emailmu", ctrEmail),
-              myText(Icons.phone, "Nomor Telepon", "Isi Nomor Hpmu", ctrNumberPhone),
-              Password(Icons.lock_outline, "Password", "Isi Password mu", ctrPassword),
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: ColorResources.btnonboard,
-                ),
-                width: screenWidth,
-               height: 50,
+              myText(Icons.person_2_outlined, TextInputType.text,"Nama Lengkap", "Isi Nama Aslimu", ctrName,null),
+              myText(Icons.person_2_outlined,TextInputType.text, "Username", "Isi Username mu", ctrUsername,null),
+              myText(Icons.mail_outline, TextInputType.emailAddress, "Email", "Isi Emailmu", ctrEmail, isEmailValid),
+              myText(Icons.phone, TextInputType.phone,"Nomor Telepon", "Isi Nomor Hpmu", ctrNumberPhone,isPhone),
+              Password(Icons.lock_outline, "Password", "Isi Password mu", ctrPassword,isPassword),
+              GestureDetector(
+                onTap: () {
+                  if (isEmailValid(ctrEmail.text) == null &&
+                      isPassword(ctrPassword.text) == null &&
+                      isPhone(ctrNumberPhone.text) == null &&
+                      isNama(ctrName.text) == null &&
+                      isUsername(ctrUsername.text) == null) {
+                    // All fields are valid, perform registration logic
 
-                child: Center(child: Text("Register",style: whiteboldTextStyle,)),
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: (isEmailValid(ctrEmail.text) == null &&
+                        isPassword(ctrPassword.text) == null &&
+                        isPhone(ctrNumberPhone.text) == null &&
+                        isNama(ctrName.text) == null &&
+                        isUsername(ctrUsername.text) == null)
+                        ? ColorResources.btnonboard
+                        : Colors.grey,
+                  ),
+                  width: screenWidth,
+                  height: 50,
+                  child: Center(child: Text("Register", style: whiteboldTextStyle)),
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(top: 20,bottom: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Sudah Punya akun? "),
+                    Text("Sudah punya akun? "),
                     GestureDetector(
                       onTap: (){
-                        Get.toNamed(Routes.LOGIN_PAGE);
+
                       },
                         child: Text("Login Sekarang ",style:LoginboldTextStyle,)),
                   ],
