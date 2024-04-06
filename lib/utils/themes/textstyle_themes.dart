@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 
 //figma font size
 figmaFontsize(double fontSize) {
@@ -14,10 +15,9 @@ Color greenTextColor = Color(0xFF007F6D);
 
 
 TextStyle onboardingHeaderTextStyle = GoogleFonts.oxygen(
-    textStyle: TextStyle(
         color: primaryTextColor,
         fontWeight: FontWeight.bold,
-        fontSize: figmaFontsize(20)));
+        fontSize: figmaFontsize(20));
 
 TextStyle onboardingSubHeaderTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
@@ -30,3 +30,38 @@ TextStyle onboardingButtonTextStyle = GoogleFonts.oxygen(
         color: greenTextColor,
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(12)));
+
+TextStyle regularInputTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(15)));
+
+TextStyle boldTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(15)));
+
+TextStyle LoginboldTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: ColorResources.primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(15)));
+
+
+TextStyle regularTextStyle = GoogleFonts.oxygen(
+  textStyle:TextStyle(
+      color: primaryTextColor,
+      fontWeight: FontWeight.normal,
+      fontSize: figmaFontsize(17)
+  )
+);
+
+TextStyle whiteboldTextStyle = GoogleFonts.oxygen(
+    textStyle:TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(17)
+    )
+);
