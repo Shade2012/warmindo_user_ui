@@ -1,7 +1,7 @@
 class Images {
   static const String logo = 'assets/images/Warmindo 1.png';
   static const String google = 'assets/images/google.png';
-  static const String onboard1 = 'assets/images/onboard1.png';
-  static const String onboard2 = 'assets/images/onboard2.png';
-  static const String onboard3 = 'assets/images/onboard3.png';
+  static const String onboard1 = 'assets/images/Onboard1.png';
+  static const String onboard2 = 'assets/images/Onboard2.png';
+  static const String onboard3 = 'assets/images/Onboard3.png';
 }
