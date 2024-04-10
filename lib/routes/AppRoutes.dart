@@ -19,6 +19,10 @@ abstract class _Paths {
   static const VERITIFICATION_PAGE = '/verification-page';
   static const VOUCHER_PAGE = '/voucher-page';
   static const BOTTOM_NAVBAR = '/bottom-navbar';
+  static const GUEST_HOME_PAGE = '/guest-home-page';
+  static const GUEST_MENU_PAGE = '/guest-menu-page';
+  static const GUEST_NAVIGATOR_PAGE = '/guest-bottom-navbar';
+  static const GUEST_PROFILE_PAGE = '/guest-profile-page';
 }
 
 abstract class Routes {
@@ -40,4 +44,8 @@ abstract class Routes {
   static const VERITIFICATION_PAGE = _Paths.VERITIFICATION_PAGE;
   static const VOUCHER_PAGE = _Paths.VOUCHER_PAGE;
   static const BOTTOM_NAVBAR = _Paths.BOTTOM_NAVBAR;
+  static const GUEST_HOME_PAGE = _Paths.GUEST_HOME_PAGE;
+  static const GUEST_MENU_PAGE = _Paths.GUEST_MENU_PAGE;
+  static const GUEST_NAVIGATOR_PAGE = _Paths.GUEST_NAVIGATOR_PAGE;
+  static const GUEST_PROFILE_PAGE = _Paths.GUEST_PROFILE_PAGE;
 }

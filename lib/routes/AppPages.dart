@@ -8,6 +8,14 @@ import 'package:warmindo_user_ui/pages/detail-menu_page/binding/detail_menu_bind
 import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/binding/edit_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/view/edit_profile_page.dart';
+import 'package:warmindo_user_ui/pages/guest_home_page/binding/guest_home_binding.dart';
+import 'package:warmindo_user_ui/pages/guest_menu_page/binding/guest_menu_binding.dart';
+import 'package:warmindo_user_ui/pages/guest_menu_page/view/guest_menu_page.dart';
+import 'package:warmindo_user_ui/pages/guest_navigator_page/binding/guest_navigator_binding.dart';
+import 'package:warmindo_user_ui/pages/guest_navigator_page/controller/guest_navigator_controller.dart';
+import 'package:warmindo_user_ui/pages/guest_navigator_page/view/guest_home_page.dart';
+import 'package:warmindo_user_ui/pages/guest_profile_page/binding/guest_profile_binding.dart';
+import 'package:warmindo_user_ui/pages/guest_profile_page/view/guest_profile_page.dart';
 import 'package:warmindo_user_ui/pages/history-detail_page/binding/history_detail_binding.dart';
 import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/binding/history_binding.dart';
@@ -149,5 +157,30 @@ class AppPages {
         binding: ProfileBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.GUEST_HOME_PAGE,
+        page: () => GuestHomePage(),
+        binding: GuestHomeBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.GUEST_MENU_PAGE,
+        page: () => GuestMenuPage(),
+        binding: GuestMenuBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.GUEST_NAVIGATOR_PAGE,
+        page: () => GuestNavigatorPage(),
+        binding: GuestNavigatorBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.GUEST_PROFILE_PAGE,
+        page: () => GuestProfilePage(),
+        binding: GuestProfileBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    
   ];
 }
