@@ -18,6 +18,7 @@ abstract class _Paths {
   static const SPLASH_SCREEN = '/splash-screen';
   static const VERITIFICATION_PAGE = '/verification-page';
   static const VOUCHER_PAGE = '/voucher-page';
+  static const BOTTOM_NAVBAR = '/bottom-navbar';
 }
 
 abstract class Routes {
@@ -38,4 +39,5 @@ abstract class Routes {
   static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
   static const VERITIFICATION_PAGE = _Paths.VERITIFICATION_PAGE;
   static const VOUCHER_PAGE = _Paths.VOUCHER_PAGE;
+  static const BOTTOM_NAVBAR = _Paths.BOTTOM_NAVBAR;
 }

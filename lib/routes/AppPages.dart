@@ -18,6 +18,7 @@ import 'package:warmindo_user_ui/pages/login_page/binding/login_binding.dart';
 import 'package:warmindo_user_ui/pages/login_page/view/login_page.dart';
 import 'package:warmindo_user_ui/pages/menu_page/binding/menu_binding.dart';
 import 'package:warmindo_user_ui/pages/menu_page/view/menu_page.dart';
+import 'package:warmindo_user_ui/pages/navigator_page/view/navigator_page.dart';
 import 'package:warmindo_user_ui/pages/onboard_page/binding/onboard_binding.dart';
 import 'package:warmindo_user_ui/pages/onboard_page/view/onboard_page.dart';
 import 'package:warmindo_user_ui/pages/policy_page/binding/policy_binding.dart';
@@ -39,10 +40,16 @@ class AppPages {
   AppPages._();
 
 
-  static const INITIAL = Routes.SPLASH_SCREEN;
+  static const INITIAL = Routes.BOTTOM_NAVBAR;
+
 
 
   static final routes = [
+    GetPage(
+        name: _Paths.BOTTOM_NAVBAR,
+        page: () => BottomNavbar(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
         name: _Paths.SPLASH_SCREEN,
         page: () => SplashPage(),

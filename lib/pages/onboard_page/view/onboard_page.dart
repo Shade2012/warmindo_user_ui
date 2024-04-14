@@ -84,8 +84,7 @@ class OnboardPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () =>
-                      controller.goToPage(pageContent.length - 1), 
+                  onPressed: () => controller.goToPage(pageContent.length - 1),
                   child: Text('Skip'),
                 ),
                 SizedBox(width: 270),
