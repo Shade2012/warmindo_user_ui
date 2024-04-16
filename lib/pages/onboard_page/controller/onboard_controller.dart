@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 class OnboardController extends GetxController {
   final PageController pageController = PageController();
-
+  RxBool isLastPage = false.obs;
   RxInt currentPage = 0.obs;
 
-  void nextPage() {
-    currentPage.value++;
-    if (currentPage.value >= 3) {
-      // Jika sudah sampai halaman terakhir, pindah ke halaman selanjutnya
-      Get.offAllNamed('/home');
-    } else {
-      pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
-    }
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+
   }
+
 
    void goToPage(int page) {
     currentPage.value = page;
