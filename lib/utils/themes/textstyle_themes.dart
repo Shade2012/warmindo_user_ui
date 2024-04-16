@@ -25,6 +25,12 @@ TextStyle onboardingSubHeaderTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(12)));
 
+TextStyle onboardingskip = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: greyTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(14)));
+
 TextStyle onboardingButtonTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: greenTextColor,

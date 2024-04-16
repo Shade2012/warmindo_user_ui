@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:warmindo_user_ui/pages/onboard_page/controller/onboard_controller.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
@@ -14,19 +15,19 @@ class OnboardPage extends StatelessWidget {
     {
       'header': 'Cari Makanan yang kamu sukai',
       'subheader':
-          'Hai Pecinta mie Yuk, temukan kenikmatan mie terbaikmu di Warmindo Anggrek Muria Nikmati setiap kelezatan mie kesayangan kamu di Warmindo Anggrek Muria.',
+      'Hai Pecinta mie Yuk, temukan kenikmatan mie terbaikmu di Warmindo Anggrek Muria Nikmati setiap kelezatan mie kesayangan kamu di Warmindo Anggrek Muria.',
       'image': Images.onboard1,
     },
     {
       'header': 'Tanpa Antre, Tanpa Waktu Terbuang',
       'subheader':
-          'Tidak suka antre dan buang-buang waktu? Kami juga tidak! kamu bisa memesan makanan dan minuman kesukaan kamu tanpa harus lelah mengantre lama.',
+      'Tidak suka antre dan buang-buang waktu? Kami juga tidak! kamu bisa memesan makanan dan minuman kesukaan kamu tanpa harus lelah mengantre lama.',
       'image': Images.onboard2,
     },
     {
       'header': 'Yuk, Jadi Bagian dari Warmindo️',
       'subheader':
-          'Jangan lewatkan kesempatan untuk merasakan kelezatan mie istimewa kami! Segera login atau daftar sekarang juga dan nikmati sensasi mie yang luar biasa! Dengan setiap gigitan.',
+      'Jangan lewatkan kesempatan untuk merasakan kelezatan mie istimewa kami! Segera login atau daftar sekarang juga dan nikmati sensasi mie yang luar biasa! Dengan setiap gigitan.',
       'image': Images.onboard3,
     },
   ];
@@ -34,7 +35,7 @@ class OnboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Obx(() =>  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -67,29 +68,45 @@ class OnboardPage extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     // Tampilkan indikator halaman
-                    DotIndicator(pageNumber: controller.currentPage.value),
+
                   ],
                 );
               },
-              onPageChanged: (int page) {
-                controller.currentPage.value = page;
+              onPageChanged: (index) {
+                controller.isLastPage.value = index == pageContent.length - 1;
               },
             ),
           ),
           SizedBox(height: 20),
           // Tampilkan tombol skip dan next jika tidak berada di halaman terakhir
+          Center(
+            child:SmoothPageIndicator(
+                controller: controller.pageController,  // PageController
+                count:  3,
+                effect:  ScaleEffect(
+                    dotColor: ColorResources.lightTomatoRed,
+                    activeDotColor: ColorResources.tomatoRed,
+                    spacing: 15,
+                    dotHeight: 12,
+                    dotWidth: 12
+                ),  // your preferred effect
+                onDotClicked: (index) => controller.pageController.animateToPage(
+                  index, duration: const Duration(milliseconds: 300),  curve: Curves.ease,
+                )
+            ),
+          ),
           Visibility(
-            visible: controller.currentPage.value < pageContent.length - 1,
+            visible: !controller.isLastPage.value,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
                   onPressed: () => controller.goToPage(pageContent.length - 1),
-                  child: Text('Skip'),
+                  child: Text('Skip',style: onboardingskip,),
                 ),
                 SizedBox(width: 270),
                 IconButton(
-                  onPressed: () => controller.nextPage(),
+                  onPressed: () => controller.pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease),
                   icon: Icon(Icons.arrow_forward_ios),
                 ),
               ],
@@ -97,7 +114,7 @@ class OnboardPage extends StatelessWidget {
           ),
           // Tampilkan tombol register dan login di halaman terakhir
           Visibility(
-            visible: controller.currentPage.value == pageContent.length - 1,
+            visible:  controller.isLastPage.value,
             child: Column(
               children: [
                 SizedBox(height: 20),
@@ -139,7 +156,8 @@ class OnboardPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      ),) ,
+
       backgroundColor: controller.currentPage.value == 1
           ? ColorResources.bgonboard
           : Colors.white,

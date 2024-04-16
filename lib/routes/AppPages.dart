@@ -42,13 +42,15 @@ import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_p
 import 'package:warmindo_user_ui/pages/voucher_page/binding/voucher_binding.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/view/voucher_page.dart';
 
+import '../pages/guest_home_page/view/guest_home_page.dart';
+
 part 'AppRoutes.dart';
 
 class AppPages {
   AppPages._();
 
 
-  static const INITIAL = Routes.BOTTOM_NAVBAR;
+  static const INITIAL = Routes.ONBOARD_PAGE;
 
 
 
@@ -184,6 +186,6 @@ class AppPages {
         binding: GuestProfileBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
-    
+
   ];
 }
