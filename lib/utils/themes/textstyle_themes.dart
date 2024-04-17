@@ -12,6 +12,7 @@ Color primaryTextColor = Color(0xFF000000);
 Color secondaryTextColor = Color(0xFFffffff);
 Color greyTextColor = Color(0xFF696969);
 Color greenTextColor = Color(0xFF007F6D);
+Color bluelinkTextColor = Color(0xFF289BF6);
 
 
 TextStyle onboardingHeaderTextStyle = GoogleFonts.oxygen(
@@ -60,14 +61,41 @@ TextStyle regularTextStyle = GoogleFonts.oxygen(
   textStyle:TextStyle(
       color: primaryTextColor,
       fontWeight: FontWeight.normal,
-      fontSize: figmaFontsize(17)
-  )
-);
+      fontSize: figmaFontsize(17)));
 
 TextStyle whiteboldTextStyle = GoogleFonts.oxygen(
     textStyle:TextStyle(
         color: secondaryTextColor,
         fontWeight: FontWeight.bold,
-        fontSize: figmaFontsize(17)
-    )
-);
+        fontSize: figmaFontsize(17)));
+
+TextStyle headerboldverifyTextStyle = GoogleFonts.oxygen(
+    textStyle:TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(38)));
+
+TextStyle subheaderverifyTextStyle = GoogleFonts.oxygen(
+    textStyle:TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(14)));
+
+TextStyle boldphoneNumberTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));
+
+TextStyle boldcodeTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(30)));
+
+TextStyle bluelinkTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: bluelinkTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(16)));
+

@@ -48,7 +48,7 @@ class AppPages {
   AppPages._();
 
 
-  static const INITIAL = Routes.ONBOARD_PAGE;
+  static const INITIAL = Routes.VERITIFICATION_PAGE;
 
   static final routes = [
     GetPage(
@@ -130,7 +130,7 @@ class AppPages {
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
         name: _Paths.VERITIFICATION_PAGE,
-        page: () => VeritificationPage(),
+        page: () => VerificationPage(),
         binding: VeritificationBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
