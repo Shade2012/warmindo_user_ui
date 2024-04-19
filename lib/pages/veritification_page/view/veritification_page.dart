@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/register_page/controller/register_controller.dart';
+import 'package:warmindo_user_ui/pages/veritification_page/controller/veritification_controller.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/otp_textfield.dart';
 
-class VerificationPage extends StatelessWidget {
+import '../../../utils/themes/color_themes.dart';
+
+class VerificationPage extends GetView<VeritificationController> {
   final RegisterController registerController = Get.put(RegisterController());
-  final _codeController1 = TextEditingController();
-  final _codeController2 = TextEditingController();
-  final _codeController3 = TextEditingController();
-  final _codeController4 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -58,38 +57,42 @@ class VerificationPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   VerificationCodeInput(
-                      key: UniqueKey(), controller: _codeController1, index: 1),
+                      key: UniqueKey(), controller: controller.code1Controller, index: 1),
                   SizedBox(width: 17),
                   VerificationCodeInput(
-                      key: UniqueKey(), controller: _codeController2, index: 2),
+                      key: UniqueKey(), controller: controller.code2Controller, index: 2),
                   SizedBox(width: 17),
                   VerificationCodeInput(
-                      key: UniqueKey(), controller: _codeController3, index: 3),
+                      key: UniqueKey(), controller: controller.code3Controller, index: 3),
                   SizedBox(width: 17),
                   VerificationCodeInput(
-                      key: UniqueKey(), controller: _codeController4, index: 4),
+                      key: UniqueKey(), controller: controller.code4Controller, index: 4),
                 ],
               ),
               SizedBox(height: 25),
-              Container(
-                width: 350,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.blue, // Warna latar belakang
-                  borderRadius: BorderRadius.circular(8), // Border radius
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    print('Verification code: ${_codeController1.text}${_codeController2.text}${_codeController3.text}${_codeController4.text}');
-                  },
-                  child: Center(
-                    child: Text(
+              Obx(() {
+                print('isFilled value: ${controller.isFilled.value}');
+                return Container(
+                  width: 350,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: (controller.isFilled.value) ? Colors.blue : Colors.grey,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      print('Verification code: ${controller.code1Controller.text}${controller.code2Controller.text}${controller.code3Controller.text}${controller.code4Controller.text}');
+                    },
+                    child: Center(
+                      child: Text(
                         'SUBMIT',
-                        style: whiteboldTextStyle
+                        style: whiteboldTextStyle,
+                      ),
                     ),
                   ),
-                ),
-              ),
+                );
+              }),
+
 
               SizedBox(height: 20.0),
               // Button to resend the verification code
