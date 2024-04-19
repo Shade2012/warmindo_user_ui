@@ -42,7 +42,6 @@ import 'package:warmindo_user_ui/pages/veritification_page/binding/veritificatio
 import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_page.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/binding/voucher_binding.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/view/voucher_page.dart';
-
 import '../pages/guest_home_page/view/guest_home_page.dart';
 
 part 'AppRoutes.dart';
@@ -52,8 +51,6 @@ class AppPages {
 
 
   static const INITIAL = Routes.GUEST_NAVIGATOR_PAGE;
-
-
 
   static final routes = [
     GetPage(

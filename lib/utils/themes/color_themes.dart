@@ -18,7 +18,7 @@ class ColorResources {
   static const Color splashGradientEnd = Color(0xFFE91C21);
 
   //onboard page color
-  static const Color bgonboard = Color(0xFFFFDCC0);
+  static const Color bgonboard = Color(0xFFFFF2CC);
   static const Color golden = Color(0xFFFFD700);
   static const Color lightBrown = Color.fromARGB(255, 36, 19, 5);
   static const Color lightSalmon = Color(0xFFF4B183);
@@ -26,6 +26,7 @@ class ColorResources {
   static const Color lightTomatoRed = Color.fromARGB(100, 244, 177, 177);
   static const Color btnonboard = Color(0xFF6D1616);
   static const Color btnonboard2 = Color(0xFF007F6D);
+  static const Color borderside =Color(0xFF99927D);
 
   //Navigation bar color
   static const Color selectedItemColor = Color(0xFFD15353);
