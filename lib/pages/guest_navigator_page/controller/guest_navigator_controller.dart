@@ -1,14 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class GuestNavigatorPage extends StatelessWidget {
-  const GuestNavigatorPage({super.key});
+class GuestNavigatorController extends GetxController {
+  var currentIndex = 0.obs;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Guest Navigator Page'),
-      )
-    );
+  void changeIndex(int index) {
+    currentIndex.value = index;
   }
-}
+} 
