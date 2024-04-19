@@ -23,12 +23,13 @@ class ColorResources {
   static const Color lightBrown = Color.fromARGB(255, 36, 19, 5);
   static const Color lightSalmon = Color(0xFFF4B183);
   static const Color tomatoRed = Color(0xFFFF6347);
+  static const Color lightTomatoRed = Color.fromARGB(100, 244, 177, 177);
   static const Color btnonboard = Color(0xFF6D1616);
-  static const Color btnonboard2 = Color(0xFF007F6D); 
-  
+  static const Color btnonboard2 = Color(0xFF007F6D);
+
   //Navigation bar color
   static const Color selectedItemColor = Color(0xFFD15353);
-  static const Color unselectedItemColor = Color(0xFF9DB2CE); 
+  static const Color unselectedItemColor = Color(0xFF9DB2CE);
   static const Color backgroundColor = Color(0xFFFFFFFF);
   static const Color bgfloatingActionButtonColor = Color(0xFFC62828);
 }
