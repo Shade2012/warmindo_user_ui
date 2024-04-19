@@ -49,7 +49,7 @@ class AppPages {
   AppPages._();
 
 
-  static const INITIAL = Routes.ONBOARD_PAGE;
+  static const INITIAL = Routes.VERITIFICATION_PAGE;
 
 
 

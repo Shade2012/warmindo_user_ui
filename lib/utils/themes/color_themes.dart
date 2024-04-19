@@ -7,6 +7,10 @@ class ColorResources {
   static const Color transparent = Colors.transparent;
   static const Color darkblue = Color.fromRGBO(23, 77, 97 ,255);
 
+  //Verification page Color
+  static const Color uncheck = Color.fromARGB(255 ,243, 248, 255);
+  static const Color focused = Color.fromARGB(255,21, 115, 254);
+  static const Color border = Color.fromARGB(255,217, 217, 217);
   //Text Color
   static const Color primaryTextColor = Color(0xFF000000);
   static const Color secondaryTextColor = Color(0xFFFFFFFF);

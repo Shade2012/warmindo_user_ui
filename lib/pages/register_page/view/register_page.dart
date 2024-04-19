@@ -102,7 +102,6 @@ class RegisterPage extends GetView<RegisterController>{
         child: Container(
           margin: EdgeInsets.only(left: 20,right: 20),
           child: Column(
-
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
@@ -155,7 +154,6 @@ class RegisterPage extends GetView<RegisterController>{
                     Text("Sudah punya akun? "),
                     GestureDetector(
                       onTap: (){
-
                       },
                         child: Text("Login Sekarang ",style:LoginboldTextStyle,)),
                   ],

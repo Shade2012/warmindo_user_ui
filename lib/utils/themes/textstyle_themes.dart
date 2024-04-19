@@ -12,6 +12,7 @@ Color primaryTextColor = Color(0xFF000000);
 Color secondaryTextColor = Color(0xFFffffff);
 Color greyTextColor = Color(0xFF696969);
 Color greenTextColor = Color(0xFF007F6D);
+Color blueTextColor = Color.fromARGB(255,40, 155, 246);
 
 
 TextStyle onboardingHeaderTextStyle = GoogleFonts.oxygen(
@@ -30,6 +31,12 @@ TextStyle onboardingskip = GoogleFonts.oxygen(
         color: greyTextColor,
         fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(14)));
+
+TextStyle link = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: blueTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(15)));
 
 TextStyle onboardingButtonTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
@@ -69,5 +76,22 @@ TextStyle whiteboldTextStyle = GoogleFonts.oxygen(
         color: secondaryTextColor,
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(17)
+    )
+);
+
+//Verfication
+TextStyle HeadingVerification = GoogleFonts.oxygen(
+    textStyle:TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(38)
+    )
+);
+
+TextStyle NumberStyle = GoogleFonts.oxygen(
+    textStyle:TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(22)
     )
 );
