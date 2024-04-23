@@ -9,9 +9,11 @@ import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.da
 import 'package:warmindo_user_ui/pages/edit-profile/binding/edit_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/view/edit_profile_page.dart';
 import 'package:warmindo_user_ui/pages/guest_home_page/binding/guest_home_binding.dart';
+import 'package:warmindo_user_ui/pages/guest_home_page/view/guest_home_page.dart';
 import 'package:warmindo_user_ui/pages/guest_menu_page/binding/guest_menu_binding.dart';
 import 'package:warmindo_user_ui/pages/guest_menu_page/view/guest_menu_page.dart';
 import 'package:warmindo_user_ui/pages/guest_navigator_page/binding/guest_navigator_binding.dart';
+import 'package:warmindo_user_ui/pages/guest_navigator_page/view/guest_navigator_page.dart';
 import 'package:warmindo_user_ui/pages/guest_navigator_page/controller/guest_navigator_controller.dart';
 import 'package:warmindo_user_ui/pages/guest_profile_page/binding/guest_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/guest_profile_page/view/guest_profile_page.dart';
@@ -49,6 +51,7 @@ class AppPages {
 
 
   static const INITIAL = Routes.PROFILE_PAGE;
+
 
   static final routes = [
     GetPage(
