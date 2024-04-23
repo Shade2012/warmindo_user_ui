@@ -99,3 +99,21 @@ TextStyle bluelinkTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(16)));
 
+TextStyle nameProfileTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(24)));
+
+TextStyle usernameProfileTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(17)));
+
+TextStyle editProfileTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(12)));
+
