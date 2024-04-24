@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:warmindo_user_ui/pages/navigator_page/view/navigator_page.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
@@ -17,15 +16,22 @@ class ProfilePage extends StatelessWidget {
         child: Container(
           width: screenWidth,
           height: screenHeight,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(Images.profilebg),
+              fit: BoxFit.fill,
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 20),
               // Container 1 (Bagian atas)
               Container(
+                margin: EdgeInsets.only(bottom: 10),
                 width: screenWidth,
                 height: screenHeight * 0.3,
-                color: ColorResources.profileBg,
+                color: ColorResources.transparent,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -86,7 +92,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   child: ListView(
                     children: [
-                      SizedBox(height: 60),
+                      SizedBox(height: 40),
                       ListTile(
                         leading: Icon(Icons.person),
                         title: Text('Veritification'),
