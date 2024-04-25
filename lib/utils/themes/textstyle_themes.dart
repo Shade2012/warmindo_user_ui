@@ -135,3 +135,15 @@ TextStyle normalPolicyTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(14)));
 
+TextStyle blackvoucherTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));
+
+TextStyle whitevoucherTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));
+

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:warmindo_user_ui/routes/AppPages.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
@@ -103,11 +107,11 @@ class ProfilePage extends StatelessWidget {
                       ),
                       SizedBox(height: 30),
                       ListTile(
-                        leading: Icon(Icons.email),
+                        leading: Icon(FontAwesomeIcons.ticket),
                         title: Text('Voucher'),
                         trailing: Icon(Icons.chevron_right),
                         onTap: () {
-                          // Aksi saat item di tap
+                          Get.toNamed(Routes.VOUCHER_PAGE);
                         },
                       ),
                       SizedBox(height: 30),
