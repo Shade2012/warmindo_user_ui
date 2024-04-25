@@ -129,7 +129,7 @@ class ProfilePage extends StatelessWidget {
                         title: Text('Policy'),
                         trailing: Icon(Icons.chevron_right),
                         onTap: () {
-                          // Aksi saat item di tap
+                          Get.toNamed(Routes.POLICY_PAGE);
                         },
                       ),
                       SizedBox(height: 30),
