@@ -14,7 +14,6 @@ import 'package:warmindo_user_ui/pages/guest_menu_page/binding/guest_menu_bindin
 import 'package:warmindo_user_ui/pages/guest_menu_page/view/guest_menu_page.dart';
 import 'package:warmindo_user_ui/pages/guest_navigator_page/binding/guest_navigator_binding.dart';
 import 'package:warmindo_user_ui/pages/guest_navigator_page/view/guest_navigator_page.dart';
-import 'package:warmindo_user_ui/pages/guest_navigator_page/controller/guest_navigator_controller.dart';
 import 'package:warmindo_user_ui/pages/guest_profile_page/binding/guest_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/guest_profile_page/view/guest_profile_page.dart';
 import 'package:warmindo_user_ui/pages/history-detail_page/binding/history_detail_binding.dart';
@@ -42,16 +41,13 @@ import 'package:warmindo_user_ui/pages/veritification_page/binding/veritificatio
 import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_page.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/binding/voucher_binding.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/view/voucher_page.dart';
-import '../pages/guest_home_page/view/guest_home_page.dart';
 
 part 'AppRoutes.dart';
 
 class AppPages {
   AppPages._();
 
-
   static const INITIAL = Routes.POLICY_PAGE;
-
 
   static final routes = [
     GetPage(

@@ -16,9 +16,9 @@ Color bluelinkTextColor = Color(0xFF289BF6);
 
 
 TextStyle onboardingHeaderTextStyle = GoogleFonts.oxygen(
-    color: primaryTextColor,
-    fontWeight: FontWeight.bold,
-    fontSize: figmaFontsize(20));
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(20));
 
 TextStyle onboardingSubHeaderTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
@@ -58,10 +58,10 @@ TextStyle LoginboldTextStyle = GoogleFonts.oxygen(
 
 
 TextStyle regularTextStyle = GoogleFonts.oxygen(
-    textStyle:TextStyle(
-        color: primaryTextColor,
-        fontWeight: FontWeight.normal,
-        fontSize: figmaFontsize(17)));
+  textStyle:TextStyle(
+      color: primaryTextColor,
+      fontWeight: FontWeight.normal,
+      fontSize: figmaFontsize(17)));
 
 TextStyle whiteboldTextStyle = GoogleFonts.oxygen(
     textStyle:TextStyle(
@@ -117,4 +117,21 @@ TextStyle editProfileTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(12)));
 
+TextStyle appBarTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(20)));
+
+TextStyle boldPolicyTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));
+
+TextStyle normalPolicyTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(14)));
 
