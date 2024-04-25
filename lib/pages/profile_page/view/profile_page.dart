@@ -6,6 +6,7 @@ import 'package:warmindo_user_ui/routes/AppPages.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
+import 'package:warmindo_user_ui/widget/popup_veritification.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key});
@@ -102,7 +103,12 @@ class ProfilePage extends StatelessWidget {
                         title: Text('Veritification'),
                         trailing: Icon(Icons.info_outlined),
                         onTap: () {
-                          // Aksi saat item di tap
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return VerificationStatusPopup();
+                            },
+                          );
                         },
                       ),
                       SizedBox(height: 30),
