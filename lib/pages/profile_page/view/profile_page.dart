@@ -62,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                     SizedBox(height: 15),
                     ElevatedButton(
                       onPressed: () {
-                        // Aksi saat tombol ditekan
+                        Get.toNamed(Routes.EDITPROFILE_PAGE);
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(133, 30),
