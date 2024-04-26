@@ -142,7 +142,7 @@ class AppPages {
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
         name: _Paths.EDITPROFILE_PAGE,
-        page: () => EditProfile(),
+        page: () => EditProfileScreen(),
         binding: EditProfileBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
