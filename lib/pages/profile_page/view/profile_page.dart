@@ -120,7 +120,7 @@ class ProfilePage extends StatelessWidget {
                         title: Text('Change Password'),
                         trailing: Icon(Icons.chevron_right),
                         onTap: () {
-                          // Aksi saat item di tap
+                          Get.toNamed(Routes.CHANGEPASS_PAGE);
                         },
                       ),
                       SizedBox(height: 30),
