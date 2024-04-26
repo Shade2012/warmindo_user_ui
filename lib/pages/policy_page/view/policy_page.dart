@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/unordered_list.dart';
 
@@ -11,7 +12,10 @@ class PolicyPage extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios_new),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new),
+            onPressed: () => Get.back(),
+          ),
         title: Text(
           'Kebijakan Privasi',
           style: appBarTextStyle,
