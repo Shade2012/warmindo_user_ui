@@ -6,6 +6,7 @@ import 'package:warmindo_user_ui/pages/change-password_page/binding/change_pass_
 import 'package:warmindo_user_ui/pages/change-password_page/view/change_pass_page.dart';
 import 'package:warmindo_user_ui/pages/detail-menu_page/binding/detail_menu_binding.dart';
 import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
+import 'package:warmindo_user_ui/pages/detail-voucher-page/view/detail_voucher_page.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/binding/edit_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/view/edit_profile_page.dart';
 import 'package:warmindo_user_ui/pages/guest_home_page/binding/guest_home_binding.dart';
@@ -47,7 +48,7 @@ part 'AppRoutes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.POLICY_PAGE;
+  static const INITIAL = Routes.PROFILE_PAGE;
 
   static final routes = [
     GetPage(
@@ -143,6 +144,11 @@ class AppPages {
         name: _Paths.EDITPROFILE_PAGE,
         page: () => EditProfile(),
         binding: EditProfileBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage( 
+        name: _Paths.DETAIL_VOUCHER_PAGE,
+        page: () => DetailVoucherPage(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(

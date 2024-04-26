@@ -41,4 +41,8 @@ class ColorResources {
   //Profile
   static const Color profileBg = Color(0xFFD15353);
   static const Color wProfileBg = Color(0xFFFFFFFF);
+
+  //Voucher
+  static const Color voucherbtnDetail = Color(0xFF00A549);
+  static const Color vouchercircleIcon = Color(0xFFB0E4DD);
 }
