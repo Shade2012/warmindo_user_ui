@@ -37,4 +37,7 @@ class ColorResources {
   static const Color unselectedItemColor = Color(0xFF9DB2CE);
   static const Color backgroundColor = Color(0xFFFFFFFF);
   static const Color bgfloatingActionButtonColor = Color(0xFFC62828);
+
+  //Homepage Color
+static const Color backgroundCardColor = Color.fromARGB(255, 255, 255, 255);
 }

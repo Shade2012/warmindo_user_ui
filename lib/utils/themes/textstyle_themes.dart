@@ -63,6 +63,12 @@ TextStyle regularTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(17)));
 
+TextStyle boldTextStyle2 = GoogleFonts.oxygen(
+    textStyle:TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(20)));
+
 TextStyle whiteboldTextStyle = GoogleFonts.oxygen(
     textStyle:TextStyle(
         color: secondaryTextColor,
@@ -98,3 +104,19 @@ TextStyle bluelinkTextStyle = GoogleFonts.oxygen(
         color: bluelinkTextColor,
         fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(16)));
+
+TextStyle descriptionTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: Colors.grey,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(12)));
+
+TextStyle priceTextStyle =  GoogleFonts.oxygen(textStyle: TextStyle(
+    color: greenTextColor,
+    fontWeight: FontWeight.normal,
+    fontSize: figmaFontsize(14)));
+
+TextStyle ratingTextStyle =  GoogleFonts.oxygen(textStyle: TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.normal,
+    fontSize: figmaFontsize(14)));
