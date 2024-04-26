@@ -45,4 +45,7 @@ class ColorResources {
   //Voucher
   static const Color voucherbtnDetail = Color(0xFF00A549);
   static const Color vouchercircleIcon = Color(0xFFB0E4DD);
+
+  //Verify Status
+  static const Color verifyStatus = Color(0xFFD15353);
 }
