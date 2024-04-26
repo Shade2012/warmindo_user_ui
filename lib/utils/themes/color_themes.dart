@@ -48,4 +48,9 @@ class ColorResources {
 
   //Verify Status
   static const Color verifyStatus = Color(0xFFD15353);
+
+  //reusable dialog
+  static const Color confirmButtonColor = Color(0xFFD15353);
+  static const Color cancelButttonColor = Color(0xFF00A991);
+  
 }
