@@ -7,6 +7,7 @@ import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/popup_veritification.dart';
+import 'package:warmindo_user_ui/widget/reusable_dialog.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key});
@@ -144,7 +145,29 @@ class ProfilePage extends StatelessWidget {
                         title: Text('Logout'),
                         trailing: Icon(Icons.chevron_right),
                         onTap: () {
-                          // Aksi saat item di tap
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ReusableDialog(
+                                title: "Log Out",
+                                content: "Apakah Kamu yakin ingin logout?",
+                                cancelText: "Tidak",
+                                confirmText: "Iya",
+                                onCancelPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                onConfirmPressed: () {
+                                  Navigator.of(context).pop();
+                                  Get.toNamed(Routes.LOGIN_PAGE);
+                                },
+                                cancelButtonColor:
+                                    ColorResources.cancelButttonColor,
+                                confirmButtonColor:
+                                    ColorResources.confirmButtonColor,
+                                dialogImage: Image.asset(Images.askDialog),
+                              );
+                            },
+                          );
                         },
                       ),
                     ],

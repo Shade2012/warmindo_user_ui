@@ -153,3 +153,23 @@ TextStyle verifyStatusTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(14)));
 
+TextStyle contentDialogButtonTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(12)));  
+
+TextStyle titleDialogButtonTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));  
+
+
+TextStyle dialogButtonTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(12)));  
+
+
