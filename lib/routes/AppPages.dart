@@ -6,6 +6,7 @@ import 'package:warmindo_user_ui/pages/change-password_page/binding/change_pass_
 import 'package:warmindo_user_ui/pages/change-password_page/view/change_pass_page.dart';
 import 'package:warmindo_user_ui/pages/detail-menu_page/binding/detail_menu_binding.dart';
 import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
+import 'package:warmindo_user_ui/pages/detail-voucher-page/view/detail_voucher_page.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/binding/edit_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/view/edit_profile_page.dart';
 import 'package:warmindo_user_ui/pages/guest_home_page/binding/guest_home_binding.dart';
@@ -13,7 +14,7 @@ import 'package:warmindo_user_ui/pages/guest_home_page/view/guest_home_page.dart
 import 'package:warmindo_user_ui/pages/guest_menu_page/binding/guest_menu_binding.dart';
 import 'package:warmindo_user_ui/pages/guest_menu_page/view/guest_menu_page.dart';
 import 'package:warmindo_user_ui/pages/guest_navigator_page/binding/guest_navigator_binding.dart';
-import 'package:warmindo_user_ui/pages/guest_navigator_page/controller/guest_navigator_controller.dart';
+import 'package:warmindo_user_ui/pages/guest_navigator_page/view/guest_navigator_page.dart';
 import 'package:warmindo_user_ui/pages/guest_profile_page/binding/guest_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/guest_profile_page/view/guest_profile_page.dart';
 import 'package:warmindo_user_ui/pages/history-detail_page/binding/history_detail_binding.dart';
@@ -42,15 +43,14 @@ import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_p
 import 'package:warmindo_user_ui/pages/voucher_page/binding/voucher_binding.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/view/voucher_page.dart';
 
-import '../pages/guest_home_page/view/guest_home_page.dart';
-
 part 'AppRoutes.dart';
 
 class AppPages {
   AppPages._();
 
 
-  static const INITIAL = Routes.ONBOARD_PAGE;
+
+  static const INITIAL = Routes.HOME_PAGE;
 
 
 
@@ -134,7 +134,7 @@ class AppPages {
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
         name: _Paths.VERITIFICATION_PAGE,
-        page: () => VeritificationPage(),
+        page: () => VerificationPage(),
         binding: VeritificationBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
@@ -146,8 +146,13 @@ class AppPages {
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
         name: _Paths.EDITPROFILE_PAGE,
-        page: () => EditProfile(),
+        page: () => EditProfileScreen(),
         binding: EditProfileBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage( 
+        name: _Paths.DETAIL_VOUCHER_PAGE,
+        page: () => DetailVoucherPage(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
