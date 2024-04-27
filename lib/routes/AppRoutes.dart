@@ -23,6 +23,7 @@ abstract class _Paths {
   static const GUEST_MENU_PAGE = '/guest-menu-page';
   static const GUEST_NAVIGATOR_PAGE = '/guest-bottom-navbar';
   static const GUEST_PROFILE_PAGE = '/guest-profile-page';
+  static const DETAIL_VOUCHER_PAGE = '/detail-voucher-page';
 }
 
 abstract class Routes {
@@ -48,4 +49,5 @@ abstract class Routes {
   static const GUEST_MENU_PAGE = _Paths.GUEST_MENU_PAGE;
   static const GUEST_NAVIGATOR_PAGE = _Paths.GUEST_NAVIGATOR_PAGE;
   static const GUEST_PROFILE_PAGE = _Paths.GUEST_PROFILE_PAGE;
+  static const DETAIL_VOUCHER_PAGE = _Paths.DETAIL_VOUCHER_PAGE;
 }

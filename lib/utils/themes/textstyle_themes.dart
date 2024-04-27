@@ -16,9 +16,9 @@ Color bluelinkTextColor = Color(0xFF289BF6);
 
 
 TextStyle onboardingHeaderTextStyle = GoogleFonts.oxygen(
-    color: primaryTextColor,
-    fontWeight: FontWeight.bold,
-    fontSize: figmaFontsize(20));
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(20));
 
 TextStyle onboardingSubHeaderTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
@@ -58,10 +58,10 @@ TextStyle LoginboldTextStyle = GoogleFonts.oxygen(
 
 
 TextStyle regularTextStyle = GoogleFonts.oxygen(
-    textStyle:TextStyle(
-        color: primaryTextColor,
-        fontWeight: FontWeight.normal,
-        fontSize: figmaFontsize(17)));
+  textStyle:TextStyle(
+      color: primaryTextColor,
+      fontWeight: FontWeight.normal,
+      fontSize: figmaFontsize(17)));
 
 TextStyle boldTextStyle2 = GoogleFonts.oxygen(
     textStyle:TextStyle(
@@ -105,6 +105,7 @@ TextStyle bluelinkTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(16)));
 
+
 TextStyle descriptionTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: Colors.grey,
@@ -120,3 +121,78 @@ TextStyle ratingTextStyle =  GoogleFonts.oxygen(textStyle: TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.normal,
     fontSize: figmaFontsize(14)));
+
+TextStyle nameProfileTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(24)));
+
+TextStyle usernameProfileTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(17)));
+
+TextStyle editProfileTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(12)));
+
+TextStyle appBarTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(20)));
+
+TextStyle boldPolicyTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));
+
+TextStyle normalPolicyTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(14)));
+
+TextStyle blackvoucherTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));
+
+TextStyle whitevoucherTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));
+
+TextStyle verifyStatusTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));
+
+TextStyle contentDialogButtonTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(12)));  
+
+TextStyle titleDialogButtonTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));  
+
+
+TextStyle dialogButtonTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(12)));  
+
+
