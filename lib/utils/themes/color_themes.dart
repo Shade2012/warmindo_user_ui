@@ -37,7 +37,10 @@ class ColorResources {
   static const Color unselectedItemColor = Color(0xFF9DB2CE);
   static const Color backgroundColor = Color(0xFFFFFFFF);
   static const Color bgfloatingActionButtonColor = Color(0xFFC62828);
-
+  
+  //Homepage Color
+static const Color backgroundCardColor = Color.fromARGB(255, 255, 255, 255);
+  
   //Profile
   static const Color profileBg = Color(0xFFD15353);
   static const Color wProfileBg = Color(0xFFFFFFFF);
@@ -53,4 +56,5 @@ class ColorResources {
   static const Color confirmButtonColor = Color(0xFFD15353);
   static const Color cancelButttonColor = Color(0xFF00A991);
   
+
 }
