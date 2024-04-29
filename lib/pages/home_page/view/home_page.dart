@@ -2,21 +2,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/home_controller.dart';
 import 'package:warmindo_user_ui/widget/cart.dart';
 import 'package:warmindo_user_ui/widget/makanan_widget.dart';
-
 import '../../../utils/themes/color_themes.dart';
-import '../../../utils/themes/icon_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/minuman_widget.dart';
 import '../../../widget/rounded_image.dart';
 import '../../../widget/snack_widget.dart';
-import '../../navigator_page/view/navigator_page.dart';
 
 class HomePage extends GetView<HomeController> {
   @override
