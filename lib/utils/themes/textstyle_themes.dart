@@ -195,4 +195,42 @@ TextStyle dialogButtonTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(12)));  
 
+TextStyle hintSearchBarTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.w300,
+        fontSize: figmaFontsize(20)));  
+
+TextStyle categoryMenuBarTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.w300,
+        fontSize: figmaFontsize(17)));  
+
+TextStyle categoryMenuTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(15)));  
+
+TextStyle menuNameTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.w400,
+        fontSize: figmaFontsize(16)));
+
+TextStyle menuDescTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.w400,
+        fontSize: figmaFontsize(14)));
+
+TextStyle menuPriceTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.w400,
+        fontSize: figmaFontsize(14)));
+
+
+
 
