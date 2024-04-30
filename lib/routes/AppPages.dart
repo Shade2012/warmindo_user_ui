@@ -50,7 +50,7 @@ class AppPages {
 
 
 
-  static const INITIAL = Routes.HOME_PAGE;
+  static const INITIAL = Routes.HISTORY_PAGE;
 
 
 
@@ -150,7 +150,7 @@ class AppPages {
         binding: EditProfileBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
-    GetPage( 
+    GetPage(
         name: _Paths.DETAIL_VOUCHER_PAGE,
         page: () => DetailVoucherPage(),
         transition: Transition.fadeIn,
