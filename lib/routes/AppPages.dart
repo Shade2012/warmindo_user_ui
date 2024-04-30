@@ -50,7 +50,7 @@ class AppPages {
 
 
 
-  static const INITIAL = Routes.GUEST_NAVIGATOR_PAGE;
+  static const INITIAL = Routes.MENU_PAGE;
 
 
 
