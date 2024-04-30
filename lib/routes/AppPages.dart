@@ -51,7 +51,9 @@ class AppPages {
 
 
 
+
   static const INITIAL = Routes.HISTORY_PAGE;
+
 
 
 
