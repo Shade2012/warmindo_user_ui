@@ -3,16 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
-
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
-
 import '../../../utils/themes/textstyle_themes.dart';
 
 
-class HistoryPage extends GetView<HistoryController> {
-
+class HistoryPage extends StatelessWidget {
+  final HistoryController controller = Get.put(HistoryController());
   Color selectedTextColor = Colors.white;
   Color dropdownTextColor = Colors.black;
   List<String> titles = <String>[

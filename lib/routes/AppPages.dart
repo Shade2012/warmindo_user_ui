@@ -52,7 +52,7 @@ class AppPages {
 
 
 
-  static const INITIAL = Routes.HISTORY_PAGE;
+  static const INITIAL = Routes.BOTTOM_NAVBAR;
 
 
 
