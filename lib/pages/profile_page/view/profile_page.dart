@@ -36,7 +36,7 @@ class ProfilePage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(bottom: 10),
                 width: screenWidth,
-                height: screenHeight * 0.3,
+                height: screenHeight * 0.34,
                 color: ColorResources.transparent,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -73,7 +73,8 @@ class ProfilePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                           side: BorderSide(color: Colors.white),
                         ),
-                        backgroundColor: ColorResources.primaryColor,
+                        backgroundColor: Colors.black.withOpacity(0.05),
+
                       ),
                       child: Text(
                         'Edit Profile',

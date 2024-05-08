@@ -102,7 +102,7 @@ class GuestHomePage extends GetView<HomeController> {
                               child: Container(
                                 child: GestureDetector(
                                   onTap: () {},
-                                  child: Cart(),
+                              child:Cart(context: context, product: controller.menu[0],),
                                 ),
                               ),
                             ),
@@ -190,7 +190,7 @@ class GuestHomePage extends GetView<HomeController> {
                               child: Container(
                                 child: GestureDetector(
                                   onTap: () {},
-                                  child: Cart(),
+                                  child: Cart(context: context, product: controller.menu[1],),
                                 ),
                               ),
                             ),

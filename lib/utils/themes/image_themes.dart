@@ -13,6 +13,8 @@ class Images {
   static const String profilebg = 'assets/images/profilebg.png';
   static const String askDialog = 'assets/images/ask.png';
   static const String eximagemenu = 'assets/images/coffee.png';
+  static const String cart = 'assets/images/cartimage.png';
+
 
 }
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/custom_search_bar.dart';
@@ -10,6 +12,10 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final int initialTabIndex = Get.arguments ?? 0;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     List<Menu> drinksList =
         menuList.where((menu) => menu.category == 'Minuman').toList();
     List<Menu> foodList =
@@ -18,6 +24,7 @@ class MenuPage extends StatelessWidget {
         menuList.where((menu) => menu.category == 'Snack').toList();
 
     return DefaultTabController(
+      initialIndex: initialTabIndex,
       length: 4,
       child: Scaffold(
         appBar: PreferredSize(
@@ -28,6 +35,7 @@ class MenuPage extends StatelessWidget {
               hintText: 'Mau makan apa hari ini?',
               controller: SearchController(),
             ),
+            automaticallyImplyLeading: false,
             bottom: TabBar(
               indicatorPadding: EdgeInsets.only(bottom: 10),
               indicatorColor: ColorResources.backgroundCardColor,
@@ -66,28 +74,28 @@ class MenuPage extends StatelessWidget {
             SingleChildScrollView(
               child: MenuCategory(
                 categoryName: 'All',
-                menuList: menuList,
+                menuList: menuList,context: context
               ),
             ),
             // Menampilkan menu minuman
             SingleChildScrollView(
               child: MenuCategory(
                 categoryName: 'Minuman',
-                menuList: drinksList,
+                menuList: drinksList,context: context
               ),
             ),
             // Menampilkan menu makanan
             SingleChildScrollView(
               child: MenuCategory(
                 categoryName: 'Makanan',
-                menuList: foodList,
+                menuList: foodList, context: context,
               ),
             ),
             // Menampilkan menu snack
             SingleChildScrollView(
               child: MenuCategory(
                 categoryName: 'Snack',
-                menuList: snackList,
+                menuList: snackList,context: context
               ),
             ),
           ],

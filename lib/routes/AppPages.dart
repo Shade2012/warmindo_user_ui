@@ -30,6 +30,8 @@ import 'package:warmindo_user_ui/pages/menu_page/view/menu_page.dart';
 import 'package:warmindo_user_ui/pages/navigator_page/view/navigator_page.dart';
 import 'package:warmindo_user_ui/pages/onboard_page/binding/onboard_binding.dart';
 import 'package:warmindo_user_ui/pages/onboard_page/view/onboard_page.dart';
+import 'package:warmindo_user_ui/pages/pembayaran-page/binding/pembayaran_binding.dart';
+import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_page.dart';
 import 'package:warmindo_user_ui/pages/policy_page/binding/policy_binding.dart';
 import 'package:warmindo_user_ui/pages/policy_page/view/policy_page.dart';
 import 'package:warmindo_user_ui/pages/profile_page/binding/profile_binding.dart';
@@ -58,12 +60,17 @@ class AppPages {
 
 
 
-
-
   static final routes = [
     GetPage(
         name: _Paths.BOTTOM_NAVBAR,
         page: () => BottomNavbar(),
+        bindings: [
+          HomeBinding(),
+          MenuPageBinding(),
+          CartBinding(),
+          HistoryBinding(),
+          ProfileBinding(),
+        ],
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
@@ -107,6 +114,7 @@ class AppPages {
         page: () => MenuPage(),
         binding: MenuPageBinding(),
         transition: Transition.fadeIn,
+        popGesture: false,
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
         name: _Paths.PROFILE_PAGE,
@@ -195,6 +203,12 @@ class AppPages {
         name: _Paths.GUEST_PROFILE_PAGE,
         page: () => GuestProfilePage(),
         binding: GuestProfileBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.PEMBAYARAN_PAGE,
+        page: () => PembayaranPage(),
+        binding: PembayaranBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
 

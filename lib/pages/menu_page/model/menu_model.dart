@@ -4,9 +4,10 @@ class Menu {
   final int id;
   final String name;
   final String category;
-  final double price;
+  final int price;
   final String description;
-  final String imagePath; 
+  final String imagePath;
+  int quantity;
 
   Menu({
     required this.id,
@@ -15,12 +16,30 @@ class Menu {
     required this.price,
     required this.description,
     required this.imagePath,
+    this.quantity = 1
   });
 }
 
 List<Menu> menuList = [
+
   Menu(
     id: 1,
+    name: 'Tubruk',
+    category: 'Minuman',
+    price: 4000,
+    description: 'bubuk kopi dengan air panas langsung dalam gelas atau cangkir.',
+    imagePath: Images.eximagemenu,
+  ),
+  Menu(
+    id: 2,
+    name: 'Mie Ayam Penyet',
+    category: 'Makanan',
+    price: 14000,
+    description: 'Ayam goreng dengan sambal penyet dan mi indomie.',
+    imagePath: Images.onboard1,
+  ),
+  Menu(
+    id: 3,
     name: 'Nasi Goreng',
     category: 'Makanan',
     price: 12000,
@@ -28,7 +47,7 @@ List<Menu> menuList = [
     imagePath: Images.eximagemenu,
   ),
   Menu(
-    id: 2,
+    id: 4,
     name: 'Ayam Goreng',
     category: 'Makanan',
     price: 12000,
@@ -36,7 +55,7 @@ List<Menu> menuList = [
     imagePath: Images.eximagemenu,
   ),
   Menu(
-    id: 3,
+    id: 5,
     name: 'Ayam Serundeng',
     category: 'Makanan',
     price: 10000,
@@ -44,7 +63,7 @@ List<Menu> menuList = [
     imagePath: Images.eximagemenu,
   ),
   Menu(
-    id: 4,
+    id: 6,
     name: 'Mie Goreng',
     category: 'Makanan',
     price: 4500,
@@ -52,7 +71,7 @@ List<Menu> menuList = [
     imagePath: Images.eximagemenu,
   ),
   Menu(
-    id: 5,
+    id: 7,
     name: 'Mie Ayam Penyet',
     category: 'Makanan',
     price: 13000,
@@ -60,7 +79,7 @@ List<Menu> menuList = [
     imagePath: Images.eximagemenu,
   ),
   Menu(
-    id: 6,
+    id: 8,
     name: 'Nutrisari Jeruk',
     category: 'Minuman',
     price: 3000,
@@ -68,7 +87,7 @@ List<Menu> menuList = [
     imagePath: Images.eximagemenu,
   ),
   Menu(
-    id: 7,
+    id: 9,
     name: 'Good Day Freeze',
     category: 'Minuman',
     price: 4000,
@@ -76,7 +95,7 @@ List<Menu> menuList = [
     imagePath: Images.eximagemenu,
   ),
   Menu(
-    id: 8,
+    id: 10,
     name: 'Good Day Capucino',
     category: 'Minuman',
     price: 4000,
@@ -84,7 +103,7 @@ List<Menu> menuList = [
     imagePath: Images.eximagemenu,
   ),
   Menu(
-    id: 9,
+    id: 11,
     name: 'Es Teh',
     category: 'Minuman',
     price: 3000,
@@ -92,7 +111,7 @@ List<Menu> menuList = [
     imagePath: Images.eximagemenu,
   ),
   Menu(
-    id: 10,
+    id: 12,
     name: 'Mendoan',
     category: 'Snack',
     price: 1000,
@@ -100,7 +119,7 @@ List<Menu> menuList = [
     imagePath: Images.eximagemenu,
   ),
   Menu(
-    id: 11,
+    id: 13,
     name: 'Bakwan',
     category: 'Snack',
     price: 1000,

@@ -13,7 +13,8 @@ import '../../../widget/minuman_widget.dart';
 import '../../../widget/rounded_image.dart';
 import '../../../widget/snack_widget.dart';
 
-class HomePage extends GetView<HomeController> {
+class HomePage extends StatelessWidget {
+  final HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +96,8 @@ class HomePage extends GetView<HomeController> {
                               child: Container(
                                 child: GestureDetector(
                                   onTap: (){},
-                                  child: Cart(),
+                                  child: Cart(context: context, product: controller.menu[0],),
+
                                 ),
                               ),
                             ),
@@ -170,7 +172,7 @@ class HomePage extends GetView<HomeController> {
                               child: Container(
                                 child: GestureDetector(
                                   onTap: (){},
-                                  child: Cart(),
+                                  child: Cart(context: context, product: controller.menu[1],),
                                 ),
                               ),
                             ),
