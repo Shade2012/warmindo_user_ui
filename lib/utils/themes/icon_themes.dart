@@ -11,4 +11,7 @@ class IconThemes {
   static const String iconcoffe = 'assets/icon/coffee_tea.svg';
   static const String icon_french_fries = 'assets/icon/frenchfries.svg';
   static const String cartLogo = 'assets/icon/cart_logo.svg';
+  static const String icon_trash = 'assets/icon/trash.svg';
+  static const String icon_empty = 'assets/icon/icon_empty.png';
 }
+

@@ -14,6 +14,11 @@ Color greyTextColor = Color(0xFF696969);
 Color greenTextColor = Color(0xFF007F6D);
 Color bluelinkTextColor = Color(0xFF289BF6);
 
+TextStyle boldgreyText = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: greyTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(15)));
 
 TextStyle onboardingHeaderTextStyle = GoogleFonts.oxygen(
         color: primaryTextColor,
@@ -119,7 +124,7 @@ TextStyle priceTextStyle =  GoogleFonts.oxygen(textStyle: TextStyle(
 
 TextStyle ratingTextStyle =  GoogleFonts.oxygen(textStyle: TextStyle(
     color: Colors.black,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.bold,
     fontSize: figmaFontsize(14)));
 
 TextStyle nameProfileTextStyle = GoogleFonts.oxygen(
@@ -180,38 +185,38 @@ TextStyle contentDialogButtonTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,
         fontWeight: FontWeight.bold,
-        fontSize: figmaFontsize(12)));  
+        fontSize: figmaFontsize(12)));
 
 TextStyle titleDialogButtonTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,
         fontWeight: FontWeight.bold,
-        fontSize: figmaFontsize(14)));  
+        fontSize: figmaFontsize(14)));
 
 
 TextStyle dialogButtonTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: secondaryTextColor,
         fontWeight: FontWeight.bold,
-        fontSize: figmaFontsize(12)));  
+        fontSize: figmaFontsize(12)));
 
 TextStyle hintSearchBarTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,
         fontWeight: FontWeight.w300,
-        fontSize: figmaFontsize(20)));  
+        fontSize: figmaFontsize(20)));
 
 TextStyle categoryMenuBarTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: secondaryTextColor,
         fontWeight: FontWeight.w300,
-        fontSize: figmaFontsize(17)));  
+        fontSize: figmaFontsize(17)));
 
 TextStyle categoryMenuTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: secondaryTextColor,
         fontWeight: FontWeight.bold,
-        fontSize: figmaFontsize(15)));  
+        fontSize: figmaFontsize(15)));
 
 TextStyle menuNameTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(

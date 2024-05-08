@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/menu_page/model/menu_model.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
+import 'myCustomPopUp/myPopup_controller.dart';
+
 class MenuCategory extends StatelessWidget {
+  final popUpcontroller = Get.put(MyCustomPopUpController());
   final String categoryName;
   final List<Menu> menuList;
-
-  const MenuCategory({
+  final BuildContext context;
+   MenuCategory({
     Key? key,
     required this.categoryName,
     required this.menuList,
+    required this.context
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -30,7 +37,8 @@ class MenuCategory extends StatelessWidget {
         GridView.count(
           crossAxisCount: 2,
           shrinkWrap: true,
-          childAspectRatio: 125/195,
+          childAspectRatio: MediaQuery.of(context).size.width /
+              (MediaQuery.of(context).size.height / 1.28),
           physics: NeverScrollableScrollPhysics(),
           children: menuList.map((menu) {
             return Container(
@@ -51,15 +59,20 @@ class MenuCategory extends StatelessWidget {
               // Tampilkan informasi menu di sini
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    margin: EdgeInsets.all(5),
-                    child: Image.asset(
-                      menu.imagePath,
-                      width: 150,
-                      height: 130,
-                      fit: BoxFit.contain,
-                    ),
+                  Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(2),
+                        child: Image.asset(
+                          menu.imagePath,
+                          width: screenWidth / 0.2,
+                          height: 130,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 8),
@@ -88,15 +101,20 @@ class MenuCategory extends StatelessWidget {
                           'Rp ${menu.price.toInt()}',
                           style: menuPriceTextStyle,
                         ),
-                        Container(
-                          padding: EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.white,
+                        InkWell(
+                          onTap: (){
+                            popUpcontroller.showCustomModalForItem(menu, context);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],

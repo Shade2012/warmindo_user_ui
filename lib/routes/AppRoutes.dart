@@ -3,6 +3,7 @@ part of 'AppPages.dart';
 abstract class _Paths {
   _Paths._();
   static const CART_PAGE = '/cart-page';
+  static const PEMBAYARAN_PAGE = '/pembayaran-page';
   static const CHANGEPASS_PAGE = '/change-pass-page';
   static const DETAILMENU_PAGE = '/detail-menu-page';
   static const EDITPROFILE_PAGE = '/edit-profile-page';
@@ -29,6 +30,7 @@ abstract class _Paths {
 abstract class Routes {
   Routes._();
   static const CART_PAGE = _Paths.CART_PAGE;
+  static const PEMBAYARAN_PAGE = _Paths.PEMBAYARAN_PAGE;
   static const CHANGEPASS_PAGE = _Paths.CHANGEPASS_PAGE;
   static const DETAILMENU_PAGE = _Paths.DETAILMENU_PAGE;
   static const EDITPROFILE_PAGE = _Paths.EDITPROFILE_PAGE;
