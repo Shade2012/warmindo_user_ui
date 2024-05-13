@@ -20,6 +20,12 @@ TextStyle boldgreyText = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(15)));
 
+TextStyle regulargreyText = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: greyTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(15)));
+
 TextStyle onboardingHeaderTextStyle = GoogleFonts.oxygen(
         color: primaryTextColor,
         fontWeight: FontWeight.bold,

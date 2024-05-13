@@ -27,8 +27,14 @@ class VoucherController extends GetxController {
     appliedVoucher.value = null;
   }
   void fetchProduct()  {
-    voucher.assignAll(voucherList);
+    DateTime now = DateTime.now();
+    voucher.assignAll(voucherList.where((voucher) {
+      // Check if the expiration date is after the current date
+      return voucher.expired.isAfter(now);
+    }).toList());
   }
+
+
   void showVoucher( BuildContext context) {
     showModalBottomSheet(
       context: context,

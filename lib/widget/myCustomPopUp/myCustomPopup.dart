@@ -6,7 +6,6 @@ import 'package:warmindo_user_ui/pages/cart_page/model/cartmodel.dart';
 import 'package:warmindo_user_ui/pages/menu_page/model/menu_model.dart';
 import 'package:warmindo_user_ui/widget/counter/counter.dart';
 import 'package:get/get.dart';
-
 import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../routes/AppPages.dart';
 import '../../utils/themes/color_themes.dart';
