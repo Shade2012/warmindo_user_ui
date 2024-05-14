@@ -29,8 +29,8 @@ class CartController extends GetxController {
 
   // Increment the quantity of an item at a specific index
   void incrementQuantity(int index) {
-      cartItems[index].quantity++;
-      cartItems.refresh();
+    cartItems[index].quantity++;
+    cartItems.refresh();
   }
 
   // Decrement the quantity of an item at a specific index

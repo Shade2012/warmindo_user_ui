@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
 import '../../../utils/themes/textstyle_themes.dart';
+import '../../../widget/appBar.dart';
 
 
 class HistoryPage extends StatelessWidget {
@@ -22,35 +23,7 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(
-          child: GestureDetector(
-            onTap: (){
-              Get.back();
-            },
-            child: Container(
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5), // Set shadow color here
-                    spreadRadius: 1, // Set spread radius of the shadow
-                    blurRadius: 3, // Set blur radius of the shadow
-                    offset: Offset(0, 1), // Set offset of the shadow
-                  ),
-                ],
-              ),
-              child: Icon(Icons.keyboard_arrow_left_sharp),
-            ),
-
-          ),
-        ),
-        title: Text("History"),
-        centerTitle: true,
-
-      ),
+      appBar:AppbarCustom(title: 'History',),
       body: Column(
         children: [
           Container(

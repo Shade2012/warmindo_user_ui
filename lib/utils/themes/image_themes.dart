@@ -15,6 +15,9 @@ class Images {
   static const String eximagemenu = 'assets/images/coffee.png';
   static const String cart = 'assets/images/cartimage.png';
 
+  static const String ovo = 'assets/images/ovo.jpg';
+  static const String dana = 'assets/images/dana.png';
+  static const String complete = 'assets/images/complete.png';
 
 }
 

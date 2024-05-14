@@ -20,12 +20,12 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currencyFormat =
-        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -182,13 +182,13 @@ class CartPage extends StatelessWidget {
                             children: [
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("Subtotal", style: boldTextStyle),
                                   Obx(() {
                                     double totalPrice = 0;
                                     for (CartItem cartItem
-                                        in controller.cartItems) {
+                                    in controller.cartItems) {
                                       totalPrice +=
                                           cartItem.price * cartItem.quantity;
                                     }
@@ -203,7 +203,7 @@ class CartPage extends StatelessWidget {
                               SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("Voucher", style: boldTextStyle),
                                   Obx(() {
@@ -217,7 +217,7 @@ class CartPage extends StatelessWidget {
                               SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("Total", style: boldTextStyle),
                                   Row(
@@ -257,7 +257,7 @@ class CartPage extends StatelessWidget {
                                   Obx(() {
                                     double totalPrice = 0;
                                     for (CartItem cartItem
-                                        in controller.cartItems) {
+                                    in controller.cartItems) {
                                       totalPrice +=
                                           cartItem.price * cartItem.quantity;
                                     }
@@ -285,7 +285,7 @@ class CartPage extends StatelessWidget {
                                         Obx(() {
                                           double totalPrice = 0;
                                           for (CartItem cartItem
-                                              in controller.cartItems) {
+                                          in controller.cartItems) {
                                             totalPrice += cartItem.price *
                                                 cartItem.quantity;
                                           }
@@ -313,7 +313,7 @@ class CartPage extends StatelessWidget {
                           decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                              BorderRadius.all(Radius.circular(10))),
                           padding: EdgeInsets.all(10),
                           child: Text(
                             "Bayar",

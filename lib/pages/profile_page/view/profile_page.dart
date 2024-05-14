@@ -17,17 +17,12 @@ class ProfilePage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: ColorResources.profileBg,
+      backgroundColor: ColorResources.primaryColor,
       body: SafeArea(
         child: Container(
           width: screenWidth,
           height: screenHeight,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(Images.profilebg),
-              fit: BoxFit.fill,
-            ),
-          ),
+          color: ColorResources.primaryColor,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
