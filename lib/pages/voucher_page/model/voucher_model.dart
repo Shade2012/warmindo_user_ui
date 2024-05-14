@@ -39,7 +39,7 @@ List<Voucher> voucherList = [
       imagePath: Images.promo1,
       discount: 10000,
       code: "OSL2P23",
-      expired: DateTime(2024, 5, 20), // Use DateTime object
+      expired: DateTime(2024, 5, 21), // Use DateTime object
       description: "Nikmati Kelezatan Tanpa Batas dengan Diskon 10.000 Ayo, Segera Pesan dan Rasakan Sensasi Minum yang Luar Biasa!"
   )
 ];
