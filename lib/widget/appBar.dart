@@ -12,6 +12,7 @@ class AppbarCustom extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      surfaceTintColor: Colors.white,
       leading: GestureDetector(
         onTap: () {
           Get.back();

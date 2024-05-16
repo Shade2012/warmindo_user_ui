@@ -1,3 +1,4 @@
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,14 +46,16 @@ class HomePage extends StatelessWidget {
                     options: CarouselOptions(
                       viewportFraction: 1,
                       autoPlay: true,
+                      enlargeCenterPage: true,
                     ),
                     items: [
-                      RoundedImage(imageUrl: Images.promo1, padding: EdgeInsets.all(10.0)),
-                      RoundedImage(imageUrl: Images.promo2, padding: EdgeInsets.all(10.0)),
-                      RoundedImage(imageUrl: Images.promo3, padding: EdgeInsets.all(10.0)),
+                      RoundedImage(imageUrl: Images.promo1),
+                      RoundedImage(imageUrl: Images.promo2),
+                      RoundedImage(imageUrl: Images.promo3),
                     ],
                   ),
                 ),
+
                 Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
                 SizedBox(height: 20,),
                 Row(
@@ -98,7 +101,7 @@ class HomePage extends StatelessWidget {
                                   child: GestureDetector(
                                     onTap: (){},
                                     child: Cart(context: context, product: controller.menu[0],),
-        
+
                                   ),
                                 ),
                               ),
@@ -279,12 +282,12 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-        
-        
+
+
                 SizedBox(height: 20,)
               ],
             ),
-        
+
           ),
         ),
       ),
