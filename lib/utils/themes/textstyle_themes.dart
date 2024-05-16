@@ -31,6 +31,11 @@ TextStyle onboardingHeaderTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(20));
 
+TextStyle headerBold = GoogleFonts.oxygen(
+    color: primaryTextColor,
+    fontWeight: FontWeight.bold,
+    fontSize: figmaFontsize(25));
+
 TextStyle onboardingSubHeaderTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: greyTextColor,
@@ -79,6 +84,12 @@ TextStyle boldTextStyle2 = GoogleFonts.oxygen(
         color: primaryTextColor,
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(20)));
+
+TextStyle whiteboldTextStyle15 = GoogleFonts.oxygen(
+    textStyle:TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(15)));
 
 TextStyle whiteboldTextStyle = GoogleFonts.oxygen(
     textStyle:TextStyle(

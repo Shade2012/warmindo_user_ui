@@ -42,7 +42,8 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   carousel_slider:
   intl: ^0.17.0
-  url_launcher: 
+  url_launcher:
+  animated_custom_dropdown:
 
 dev_dependencies:
   flutter_test:

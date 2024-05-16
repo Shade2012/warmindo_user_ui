@@ -32,7 +32,7 @@ class ChangePasswordPage extends StatelessWidget {
                   "Masukkan password lama",
                   _currentPasswordController,
                   (value) {
-                    if (value == null || value.isEmpty) {
+                    if ( value.isEmpty) {
                       return "Password Lama diperlukan";
                     }
                     return null;
@@ -45,7 +45,7 @@ class ChangePasswordPage extends StatelessWidget {
                   "Masukkan password baru",
                   _newPasswordController,
                   (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value.isEmpty) {
                       return "Password Baru diperlukan";
                     }
                     return null;
@@ -58,7 +58,7 @@ class ChangePasswordPage extends StatelessWidget {
                   "Konfirmasi password baru",
                   _confirmNewPasswordController,
                   (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value.isEmpty) {
                       return "Konfirmasi Password Baru diperlukan";
                     }
                     if (_newPasswordController.text != value) {

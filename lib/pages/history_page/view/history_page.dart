@@ -1,11 +1,13 @@
-import 'package:flutter/cupertino.dart';
+// In HistoryPage
+
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
+import 'package:warmindo_user_ui/widget/order_box.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/appBar.dart';
-
+import '../controller/history_controller.dart';
+import '../model/history.dart';
 
 class HistoryPage extends StatelessWidget {
   final HistoryController controller = Get.put(HistoryController());
@@ -23,101 +25,69 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppbarCustom(title: 'History',),
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            height: 60,
-            decoration:BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Colors.red,
-            ),
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: Obx(() => DropdownButtonFormField<String>(
-                    value: controller.selectedCategory.value,
-                    onChanged: (String? newValue) {
-                      if (newValue != null) {
-                        controller.changeCategory(newValue);
-                      }
-                    },
-
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
+      appBar: AppbarCustom(title: 'History'),
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0,
+                    blurRadius: 4,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: Obx(() => CustomDropdown(
+                      decoration: CustomDropdownDecoration(
+                        listItemStyle: boldTextStyle,
+                        listItemDecoration: ListItemDecoration(selectedColor: Colors.black),
                       ),
-                    ),
-                    items: titles.expand<DropdownMenuItem<String>>((String value) {
-                      final isLastItem = value == titles.last;
-                      return [
-                        DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: boldTextStyle,
-                            selectionColor: Colors.white,
-                          ),
-                        ),
-                        if (isLastItem)
-                          DropdownMenuItem<String>(
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 0),
-                            ),
-                            value: null,
-                            enabled: false,
-                          )
-                        else
-                          DropdownMenuItem<String>(
-                            child: Divider(
-                              color: Colors.black,
-                              height: 1,
-                            ),
-                            value: null,
-                            enabled: false,
-                          ),
-                      ];
-                    }).toList(),
-                  )),
-                ),
-              ],
+                      initialItem: controller.selectedCategory.value,
+                      items: titles,
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          controller.printOrdersLength();
+                          controller.changeCategory(newValue);
+
+                        }
+                      },
+                    )),
+                  ),
+                ],
+              ),
             ),
 
-          ),
-          Expanded(
-            child: Obx(() => ListView.builder(
-              itemCount: getCategoryItemCount(controller.selectedCategory.value),
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text('${controller.selectedCategory.value} $index'),
-                );
-              },
-            )),
-          ),
-        ],
+            Container(
+              margin: EdgeInsets.all(10),
+                child: Obx(() => Text(controller.selectedCategory.value.toString(),style: headerBold,),)),
+
+            Expanded(
+              child: Obx(() => ListView.builder(
+                itemCount: controller.filteredHistory().length,
+                itemBuilder: (BuildContext context, int index) {
+                  final order = controller.filteredHistory()[index];
+                  return OrderBox(
+                      order: order,
+                  );
+                },
+              )),
+            ),
+          ],
+        ),
       ),
     );
   }
-
-  int getCategoryItemCount(String category) {
-    switch (category) {
-      case 'Semua':
-        return 5;
-      case 'Selesai':
-        return 3;
-      case 'Pesanan Siap':
-        return 4;
-      case 'Menunggu Batal':
-        return 2;
-      case 'Batal':
-        return 6;
-      default:
-        return 0;
-    }
-  }
 }
-
