@@ -19,5 +19,6 @@ class Images {
   static const String dana = 'assets/images/dana.png';
   static const String complete = 'assets/images/complete.png';
 
+  static const String history = 'assets/images/orderComplete.png';
 }
 

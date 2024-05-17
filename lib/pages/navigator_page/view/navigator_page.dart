@@ -24,7 +24,8 @@ class BottomNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() => pages[controller.currentIndex.value]),
+      body:
+      Obx(() => pages[controller.currentIndex.value]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           controller.changeIndex(2);
@@ -53,7 +54,7 @@ class BottomNavbar extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: SizedBox.shrink(),
-            label: '', 
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
@@ -64,7 +65,8 @@ class BottomNavbar extends StatelessWidget {
             label: 'Profile',
           ),
         ],
-      )),
+      )
+      ),
     );
   }
 }

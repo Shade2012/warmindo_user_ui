@@ -1,5 +1,7 @@
 
 
+import 'package:get/get.dart';
+
 import '../../../utils/themes/image_themes.dart';
 import '../../voucher_page/model/voucher_model.dart';
 
@@ -7,7 +9,7 @@ class Order {
   final int id;
   final List<Menu> menus;
   final List<Voucher>? vouchers;
-  final String status;
+  RxString status = ''.obs;
   final String? reason;
   final String? paymentMethod;
   final String? orderMethod;
@@ -23,12 +25,14 @@ class Order {
 }
 
 class Menu {
+  final int id;
   final String name;
   final int price;
   final String imagePath;
   final int quantity;
 
   Menu({
+    required this.id,
     required this.name,
     required this.price,
     required this.imagePath,
@@ -46,30 +50,41 @@ Order order001 = Order(
           name: "Mendoan",
           price: 4000,
           quantity: 1,
-          imagePath: Images.promo1
+          imagePath: Images.promo1,
+          id: 12,
       ),
       Menu(
           name: "Es Teh",
           price: 3000,
           quantity: 3,
+          imagePath: Images.promo1, id: 11
+      ),
+      Menu(
+        id:7,
+          name: "Mie Ayam Penyet",
+          price: 13000,
+          quantity: 1,
           imagePath: Images.promo1
       )
     ],
-    status: "Batal",
+    status: "Batal".obs,
     orderMethod: "Takeaway",
     paymentMethod: "OVO"
 );
 Order order002 = Order(
     id: 002,
+    vouchers: [
+      voucherList.firstWhere((voucher) => voucher.id == 2, orElse: () => throw Exception('Voucher not found')),
+    ],
     menus: [
       Menu(
-          name: "Mie Ayam Geprek",
-          price: 14000,
+          name: "Mie Ayam penyet",
+          price: 13000,
           imagePath: Images.promo1,
-          quantity: 1
+          quantity: 1, id: 7
       )
     ],
-    status: "Selesai",
+    status: "Selesai".obs,
     orderMethod: "Takeaway",
     paymentMethod: "DANA"
 );
