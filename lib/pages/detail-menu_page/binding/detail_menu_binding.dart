@@ -4,6 +4,6 @@ import 'package:warmindo_user_ui/pages/detail-menu_page/controller/detail_menu_c
 class DETAILMENUBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<DETAILMENUController>(() => DETAILMENUController());
+    Get.lazyPut<DetailMenuController>(() => DetailMenuController());
   }
 }

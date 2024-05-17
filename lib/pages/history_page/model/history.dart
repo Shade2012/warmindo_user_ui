@@ -41,17 +41,16 @@ class Menu {
 }
 
 // Objek Order pertama
-
-
-Order order001 = Order(
+List<Order> orderList = [
+Order(
     id: 001,
     menus: [
       Menu(
-          name: "Mendoan",
-          price: 1000,
-          quantity: 1,
-          imagePath: Images.promo1,
-          id: 12,
+        name: "Mendoan",
+        price: 1000,
+        quantity: 1,
+        imagePath: Images.promo1,
+        id: 12,
       ),
       Menu(
           name: "Es Teh",
@@ -60,7 +59,7 @@ Order order001 = Order(
           imagePath: Images.promo1, id: 11
       ),
       Menu(
-        id:7,
+          id:7,
           name: "Mie Ayam Penyet",
           price: 13000,
           quantity: 1,
@@ -70,8 +69,8 @@ Order order001 = Order(
     status: "Batal".obs,
     orderMethod: "Takeaway",
     paymentMethod: "OVO"
-);
-Order order002 = Order(
+),
+Order(
     id: 002,
     vouchers: [
       voucherList.firstWhere((voucher) => voucher.id == 2, orElse: () => throw Exception('Voucher not found')),
@@ -87,8 +86,8 @@ Order order002 = Order(
     status: "Selesai".obs,
     orderMethod: "Takeaway",
     paymentMethod: "DANA"
-);
-Order order003 = Order(
+),
+Order(
     id: 003,
     vouchers: [
       voucherList.firstWhere((voucher) => voucher.id == 2, orElse: () => throw Exception('Voucher not found')),
@@ -104,8 +103,8 @@ Order order003 = Order(
     status: "Menunggu Batal".obs,
     orderMethod: "Takeaway",
     paymentMethod: "DANA"
-);
-Order order004 = Order(
+),
+ Order(
     id: 004,
     vouchers: [
       voucherList.firstWhere((voucher) => voucher.id == 2, orElse: () => throw Exception('Voucher not found')),
@@ -121,8 +120,8 @@ Order order004 = Order(
     status: "In Progress".obs,
     orderMethod: "Takeaway",
     paymentMethod: "DANA"
-);
-Order order005 = Order(
+),
+ Order(
     id: 005,
     vouchers: [
       voucherList.firstWhere((voucher) => voucher.id == 2, orElse: () => throw Exception('Voucher not found')),
@@ -138,4 +137,7 @@ Order order005 = Order(
     status: "Pesanan Siap".obs,
     orderMethod: "Takeaway",
     paymentMethod: "DANA"
-);
+),
+];
+
+

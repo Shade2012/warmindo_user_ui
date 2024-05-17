@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/cart_page/model/cartmodel.dart';
 import 'package:warmindo_user_ui/pages/menu_page/model/menu_model.dart';
 import 'package:warmindo_user_ui/widget/counter/counter.dart';
@@ -22,6 +23,7 @@ class MyCustomPopUp extends StatelessWidget {
   final CounterController controllerCounter = Get.put(CounterController());
   @override
   Widget build(BuildContext context) {
+    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     return  Container(
       height: MediaQuery.of(context).size.height  / 1.2, // Adjust the percentage as needed
       width: MediaQuery.of(context).size.width,
@@ -100,7 +102,7 @@ class MyCustomPopUp extends StatelessWidget {
                       children: [
                         Obx(() => Container(
                           child: Text(
-                            "Rp " + (controllerCounter.quantity.value * product.price).toString(),
+                            (currencyFormat.format(controllerCounter.quantity.value * product.price)) ,
                             style: onboardingHeaderTextStyle,
                           ),
                         ),

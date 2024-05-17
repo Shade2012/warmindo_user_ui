@@ -13,6 +13,7 @@ import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/minuman_widget.dart';
 import '../../../widget/rounded_image.dart';
 import '../../../widget/snack_widget.dart';
+import '../../detail-menu_page/view/detail_menu_page.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
@@ -63,156 +64,166 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: screenWidth * 0.43,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 0,
-                            blurRadius: 4,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                        color: ColorResources.backgroundCardColor,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      child: Column(
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                width: double.infinity, // Use the screen width
-                                height: 104,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20),
-                                  ),
-                                  child: FadeInImage(
-                                    image: AssetImage(Images.onboard1),
-                                    fit: BoxFit.cover,
-                                    placeholder: AssetImage(Images.onboard2),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: 5,
-                                right: 8,
-                                child: Container(
-                                  child: GestureDetector(
-                                    onTap: (){},
-                                    child: Cart(context: context, product: controller.menu[0],),
-
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          ListTile(
-                            title: Text("Good Day", style: regularInputTextStyle),
-                            subtitle:
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(DetailMenuPage(menu: controller.menu[0]));
+                      },
+                      child: Container(
+                        width: screenWidth * 0.43,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 0,
+                              blurRadius: 4,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                          color: ColorResources.backgroundCardColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: Column(
+                          children: [
+                            Stack(
                               children: [
-                                SizedBox(height: 3,),
-                                Text("bubuk kopi dengan air panas langsung dalam gelas atau cangkir.",  maxLines: 3,
-                                    overflow: TextOverflow.ellipsis, style: descriptionTextStyle),
-                                SizedBox(height: 10,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Wrap(
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      children: [
-                                        Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                                        Text('4.6', style: ratingTextStyle),
-                                      ],
+                                Container(
+                                  width: double.infinity, // Use the screen width
+                                  height: 104,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
                                     ),
-                                    Text("Rp4.000", style: priceTextStyle),
-                                  ],
+                                    child: FadeInImage(
+                                      image: AssetImage(Images.onboard1),
+                                      fit: BoxFit.cover,
+                                      placeholder: AssetImage(Images.onboard2),
+                                    ),
+                                  ),
                                 ),
-                                SizedBox(height: 10,)
+                                Positioned(
+                                  top: 5,
+                                  right: 8,
+                                  child: Container(
+                                    child: GestureDetector(
+                                      onTap: (){},
+                                      child: Cart(context: context, product: controller.menu[0],),
+
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
-                            // Add more fields to display as needed
-                          ),
-                        ],
+                            ListTile(
+                              title: Text("Good Day", style: regularInputTextStyle),
+                              subtitle:
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 3,),
+                                  Text("bubuk kopi dengan air panas langsung dalam gelas atau cangkir.",  maxLines: 2,
+                                      overflow: TextOverflow.ellipsis, style: descriptionTextStyle),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Wrap(
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        children: [
+                                          Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
+                                          Text('4.6', style: ratingTextStyle),
+                                        ],
+                                      ),
+                                      Text("Rp4.000", style: priceTextStyle),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,)
+                                ],
+                              ),
+                              // Add more fields to display as needed
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    Container(
-                      width: screenWidth * 0.43,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 0,
-                            blurRadius: 4,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                        color: ColorResources.backgroundCardColor,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      child: Column(
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                width: double.infinity, // Use the screen width
-                                height: 104,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20),
-                                  ),
-                                  child: FadeInImage(
-                                    image: AssetImage(Images.onboard1),
-                                    fit: BoxFit.cover,
-                                    placeholder: AssetImage(Images.onboard2),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: 5,
-                                right: 8,
-                                child: Container(
-                                  child: GestureDetector(
-                                    onTap: (){},
-                                    child: Cart(context: context, product: controller.menu[1],),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          ListTile(
-                            title: Text("Mie Ayam Penyet", style: regularInputTextStyle),
-                            subtitle: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(DetailMenuPage(menu: controller.menu[1]));
+                      },
+                      child: Container(
+                        width: screenWidth * 0.43,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 0,
+                              blurRadius: 4,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                          color: ColorResources.backgroundCardColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: Column(
+                          children: [
+                            Stack(
                               children: [
-                                SizedBox(height: 3,),
-                                Text("Ayam goreng dengan sambal penyet dan mi indomie",  maxLines: 3,
-                                    overflow: TextOverflow.ellipsis, style: descriptionTextStyle),
-                                SizedBox(height: 10,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Wrap(
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      children: [
-                                        Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                                        Text('4.6', style: ratingTextStyle),
-                                      ],
+                                Container(
+                                  width: double.infinity, // Use the screen width
+                                  height: 104,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
                                     ),
-                                    Text("Rp14.000", style: priceTextStyle),
-                                  ],
+                                    child: FadeInImage(
+                                      image: AssetImage(Images.onboard1),
+                                      fit: BoxFit.cover,
+                                      placeholder: AssetImage(Images.onboard2),
+                                    ),
+                                  ),
                                 ),
-                                SizedBox(height: 10,)
+                                Positioned(
+                                  top: 5,
+                                  right: 8,
+                                  child: Container(
+                                    child: GestureDetector(
+                                      onTap: (){},
+                                      child: Cart(context: context, product: controller.menu[1],),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
-                            // Add more fields to display as needed
-                          ),
-                        ],
+                            ListTile(
+                              title: Text("Mie Ayam Penyet", style: regularInputTextStyle),
+                              subtitle: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 3,),
+                                  Text("Ayam goreng dengan sambal penyet dan mi indomie",  maxLines: 2,
+                                      overflow: TextOverflow.ellipsis, style: descriptionTextStyle),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Wrap(
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        children: [
+                                          Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
+                                          Text('4.6', style: ratingTextStyle),
+                                        ],
+                                      ),
+                                      Text("Rp14.000", style: priceTextStyle),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,)
+                                ],
+                              ),
+                              // Add more fields to display as needed
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -220,85 +231,90 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 20,),
                 Text("Favorite Snack", style: LoginboldTextStyle),
                 SizedBox(height: 20,),
-                Container(
-                  padding: EdgeInsets.only(left: 10),
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 0,
-                        blurRadius: 4,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: ColorResources.backgroundCardColor,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                GestureDetector(
+                  onTap: (){
+                    Get.to(DetailMenuPage(menu: controller.menu[11]));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 0,
+                          blurRadius: 4,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                      color: ColorResources.backgroundCardColor,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 10,),
+                              Text("Mendoan", style: regularInputTextStyle),
+                              SizedBox(height: 3,),
+                              Text(
+                                "adonan tepung teriguyang di goreng krispi dan taburi gula dan kayumanis ",
+                                style: descriptionTextStyle,
+                              ),
+                              SizedBox(height: 10,),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Wrap(
+                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    children: [
+                                      Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
+                                      Text('4.6', style: ratingTextStyle),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  Text("Rp14.000", style: priceTextStyle),
+                                ],
+                              ),
+                              SizedBox(height: 10,),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 10,),
+                        Stack(
                           children: [
-                            SizedBox(height: 10,),
-                            Text("Mendoan", style: regularInputTextStyle),
-                            SizedBox(height: 3,),
-                            Text(
-                              "adonan tepung teriguyang di goreng krispi dan taburi gula dan kayumanis ",
-                              style: descriptionTextStyle,
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Wrap(
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                    Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                                    Text('4.6', style: ratingTextStyle),
-                                  ],
+                            Container(
+                              width: 122, // Use the screen width
+                              height: 104,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topRight: (Radius.circular(20)),
+                                  bottomRight: (Radius.circular(20)),
                                 ),
-                                Spacer(),
-                                Text("Rp14.000", style: priceTextStyle),
-                              ],
+                                child: FadeInImage(
+                                  image: AssetImage(Images.onboard1),
+                                  fit: BoxFit.cover,
+                                  placeholder: AssetImage(Images.onboard2),
+                                ),
+                              ),
                             ),
-                            SizedBox(height: 10,),
+                            Positioned(
+                              top: 5,
+                              right: 8,
+                              child: Container(
+                                child: GestureDetector(
+                                  onTap: (){},
+                                  child: Cart(context: context, product: controller.menu[11],),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                      SizedBox(width: 10,),
-                      Stack(
-                        children: [
-                          Container(
-                            width: 122, // Use the screen width
-                            height: 104,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topRight: (Radius.circular(20)),
-                                bottomRight: (Radius.circular(20)),
-                              ),
-                              child: FadeInImage(
-                                image: AssetImage(Images.onboard1),
-                                fit: BoxFit.cover,
-                                placeholder: AssetImage(Images.onboard2),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 5,
-                            right: 8,
-                            child: Container(
-                              child: GestureDetector(
-                                onTap: (){},
-                                child: Cart(context: context, product: controller.menu[11],),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
 
-                    ],
+                      ],
+                    ),
                   ),
                 ),
 
