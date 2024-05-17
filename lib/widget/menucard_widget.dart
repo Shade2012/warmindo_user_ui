@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/menu_page/model/menu_model.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
+import '../utils/themes/color_themes.dart';
 import 'myCustomPopUp/myPopup_controller.dart';
 
 class MenuCategory extends StatelessWidget {
@@ -38,23 +39,24 @@ class MenuCategory extends StatelessWidget {
           crossAxisCount: 2,
           shrinkWrap: true,
           childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 1.28),
+              (MediaQuery.of(context).size.height / 1.3),
           physics: NeverScrollableScrollPhysics(),
           children: menuList.map((menu) {
             return Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+              width: screenWidth * 0.43,
+              margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
+              padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.grey[200],
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0,
+                    blurRadius: 4,
+                    offset: Offset(0, 3), // changes position of shadow
                   ),
                 ],
+                color: ColorResources.backgroundCardColor,
+                borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
               // Tampilkan informasi menu di sini
               child: Column(
@@ -86,7 +88,9 @@ class MenuCategory extends StatelessWidget {
                         SizedBox(height: 5),
                         Text(
                           menu.description,
-                          maxLines: 3,
+                          maxLines: 2
+                          ,
+                          overflow: TextOverflow.ellipsis,
                           style: menuDescTextStyle,
                         ),
                       ],

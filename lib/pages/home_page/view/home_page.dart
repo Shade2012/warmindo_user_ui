@@ -18,6 +18,8 @@ class HomePage extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -62,7 +64,7 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: 170,
+                      width: screenWidth * 0.43,
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
@@ -114,7 +116,8 @@ class HomePage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 SizedBox(height: 3,),
-                                Text("bubuk kopi dengan air panas langsung dalam gelas atau cangkir.", style: descriptionTextStyle),
+                                Text("bubuk kopi dengan air panas langsung dalam gelas atau cangkir.",  maxLines: 3,
+                                    overflow: TextOverflow.ellipsis, style: descriptionTextStyle),
                                 SizedBox(height: 10,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,7 +141,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      width: 170,
+                      width: screenWidth * 0.43,
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
@@ -188,7 +191,8 @@ class HomePage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 SizedBox(height: 3,),
-                                Text("Ayam goreng dengan sambal penyet dan mi indomie", style: descriptionTextStyle),
+                                Text("Ayam goreng dengan sambal penyet dan mi indomie",  maxLines: 3,
+                                    overflow: TextOverflow.ellipsis, style: descriptionTextStyle),
                                 SizedBox(height: 10,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -264,21 +268,36 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 10,),
-                      Container(
-                        width: 122, // Use the screen width
-                        height: 104,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topRight: (Radius.circular(20)),
-                            bottomRight: (Radius.circular(20)),
+                      Stack(
+                        children: [
+                          Container(
+                            width: 122, // Use the screen width
+                            height: 104,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topRight: (Radius.circular(20)),
+                                bottomRight: (Radius.circular(20)),
+                              ),
+                              child: FadeInImage(
+                                image: AssetImage(Images.onboard1),
+                                fit: BoxFit.cover,
+                                placeholder: AssetImage(Images.onboard2),
+                              ),
+                            ),
                           ),
-                          child: FadeInImage(
-                            image: AssetImage(Images.onboard1),
-                            fit: BoxFit.cover,
-                            placeholder: AssetImage(Images.onboard2),
+                          Positioned(
+                            top: 5,
+                            right: 8,
+                            child: Container(
+                              child: GestureDetector(
+                                onTap: (){},
+                                child: Cart(context: context, product: controller.menu[11],),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
+
                     ],
                   ),
                 ),

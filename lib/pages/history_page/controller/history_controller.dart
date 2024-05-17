@@ -26,7 +26,7 @@ class HistoryController extends GetxController {
   }
 
   void initializeOrders() {
-    orders.assignAll([order001, order002]);
+    orders.assignAll([order001, order002,order003,order004,order005]);
   }
 
   void printOrdersLength() {
@@ -92,18 +92,15 @@ class HistoryController extends GetxController {
     return currencyFormat.format(totalPrice) ;
   }
   String getButtonText(Order order) {
-    switch (order.status) {
-      case 'Selesai':
-      case 'Batal':
-        return "Pesan Lagi";
-      case 'In Progress':
-      case 'Pesanan Siap':
-        return 'Batalkan';
-      case 'Menunggu Batal':
-        return 'Menunggu';
-      default:
-        return 'Pesan lagi'; // Default color if status is unknown
+    if(order.status == 'Selesai' || order.status == "Batal")
+    {
+      return "Pesan Lagi";
+    } else if (order.status == 'In Progress' || order.status == 'Pesanan Siap'){
+      return 'Batalkan';
+    } else{
+      return 'Menunggu';
     }
+
   }
   Color getButtonColor(Order order) {
     switch (order.status) {
@@ -138,22 +135,13 @@ class HistoryController extends GetxController {
   }
 
   void onButtonPressed(Order order) {
-    switch (order.status) {
-      case 'Selesai':
-      case 'Batal':
-      goToCart(order);
-        break;
-      case 'In Progress':
-      case 'Pesanan Siap':
-        Get.to(BatalPopup());
-        break;
-      case 'Menunggu Batal':
-      // Do nothing or handle accordingly
-        break;
-      default:
-      // For "Pesan Lagi", navigate to cart
+    if(order.status == 'Selesai' || order.status == "Batal")
+      {
         goToCart(order);
-        break;
+      } else if (order.status == 'In Progress' || order.status == 'Pesanan Siap'){
+      Get.to(BatalPopup());
+    } else{
+      return null;
     }
   }
 
