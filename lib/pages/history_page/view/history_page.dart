@@ -1,6 +1,7 @@
 // In HistoryPage
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/widget/order_box.dart';
@@ -45,42 +46,37 @@ class HistoryPage extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: Obx(() => CustomDropdown(
-                      decoration: CustomDropdownDecoration(
-                        listItemStyle: boldTextStyle,
-                        listItemDecoration: ListItemDecoration(selectedColor: Colors.black),
-                      ),
-                      initialItem: controller.selectedCategory.value,
-                      items: titles,
-                      onChanged: (String? newValue) {
-                        if (newValue != null) {
-                          controller.printOrdersLength();
-                          controller.changeCategory(newValue);
-
-                        }
-                      },
-                    )),
+              child: Expanded(
+                child: Obx(() => CustomDropdown(
+                  decoration: CustomDropdownDecoration(
+                    listItemStyle: boldTextStyle,
+                    listItemDecoration: ListItemDecoration(selectedColor: Colors.black),
                   ),
-                ],
+                  initialItem: controller.selectedCategory.value,
+                  items: titles,
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      controller.printOrdersLength();
+                      controller.changeCategory(newValue);
+
+                    }
+                  },
+                )),
               ),
             ),
-
             Container(
-              margin: EdgeInsets.all(10),
+                margin: EdgeInsets.all(10),
                 child: Obx(() => Text(controller.selectedCategory.value.toString(),style: headerBold,),)),
-
-            Expanded(
+            Flexible(
               child: Obx(() => ListView.builder(
+                shrinkWrap: true,
+                physics: AlwaysScrollableScrollPhysics(),
+                primary: false,
                 itemCount: controller.filteredHistory().length,
                 itemBuilder: (BuildContext context, int index) {
                   final order = controller.filteredHistory()[index];
                   return OrderBox(
-                      order: order,
+                    order: order,
                   );
                 },
               )),

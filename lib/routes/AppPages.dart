@@ -20,6 +20,7 @@ import 'package:warmindo_user_ui/pages/guest_profile_page/view/guest_profile_pag
 import 'package:warmindo_user_ui/pages/history-detail_page/binding/history_detail_binding.dart';
 import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/binding/history_binding.dart';
+import 'package:warmindo_user_ui/pages/history_page/model/history.dart';
 import 'package:warmindo_user_ui/pages/history_page/view/history_page.dart';
 import 'package:warmindo_user_ui/pages/home_page/binding/home_binding.dart';
 import 'package:warmindo_user_ui/pages/home_page/view/home_page.dart';
@@ -48,6 +49,7 @@ import 'package:warmindo_user_ui/pages/voucher_page/view/voucher_page.dart';
 part 'AppRoutes.dart';
 
 class AppPages {
+  late Order order2;
   AppPages._();
 
 
@@ -128,12 +130,7 @@ class AppPages {
         binding: HistoryBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
-    GetPage(
-        name: _Paths.HISTORYDETAIL_PAGE,
-        page: () => HistoryDetailPage(),
-        binding: HISTORYDETAILBinding(),
-        transition: Transition.fadeIn,
-        transitionDuration: const Duration(milliseconds: 500)),
+
     GetPage(
         name: _Paths.DETAILMENU_PAGE,
         page: () => DetailMenuPage(),

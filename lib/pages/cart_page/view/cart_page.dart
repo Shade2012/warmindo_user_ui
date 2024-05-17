@@ -26,7 +26,8 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.white,
-        leading: GestureDetector(
+        leading:
+        GestureDetector(
           onTap: () {
             Get.back();
           },
