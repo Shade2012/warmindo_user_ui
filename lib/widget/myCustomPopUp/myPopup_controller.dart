@@ -31,7 +31,7 @@ class MyCustomPopUpController extends GetxController {
     ));
     counterController.reset();
     print('Item added to cart');
-    Get.off(() => CartPage());
+    Get.back();
     print('Navigating to CartPage');
   }
 }

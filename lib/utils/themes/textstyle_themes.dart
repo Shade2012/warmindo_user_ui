@@ -233,7 +233,7 @@ TextStyle categoryMenuTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: secondaryTextColor,
         fontWeight: FontWeight.bold,
-        fontSize: figmaFontsize(15)));
+        fontSize: figmaFontsize(14)));
 
 TextStyle menuNameTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
@@ -245,7 +245,7 @@ TextStyle menuDescTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,
         fontWeight: FontWeight.w400,
-        fontSize: figmaFontsize(14)));
+        fontSize: figmaFontsize(12)));
 
 TextStyle menuPriceTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(

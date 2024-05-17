@@ -48,7 +48,7 @@ Order order001 = Order(
     menus: [
       Menu(
           name: "Mendoan",
-          price: 4000,
+          price: 1000,
           quantity: 1,
           imagePath: Images.promo1,
           id: 12,
@@ -85,6 +85,57 @@ Order order002 = Order(
       )
     ],
     status: "Selesai".obs,
+    orderMethod: "Takeaway",
+    paymentMethod: "DANA"
+);
+Order order003 = Order(
+    id: 003,
+    vouchers: [
+      voucherList.firstWhere((voucher) => voucher.id == 2, orElse: () => throw Exception('Voucher not found')),
+    ],
+    menus: [
+      Menu(
+          name: "Mie Ayam penyet",
+          price: 13000,
+          imagePath: Images.promo1,
+          quantity: 1, id: 7
+      )
+    ],
+    status: "Menunggu Batal".obs,
+    orderMethod: "Takeaway",
+    paymentMethod: "DANA"
+);
+Order order004 = Order(
+    id: 004,
+    vouchers: [
+      voucherList.firstWhere((voucher) => voucher.id == 2, orElse: () => throw Exception('Voucher not found')),
+    ],
+    menus: [
+      Menu(
+          name: "Mie Ayam penyet",
+          price: 13000,
+          imagePath: Images.promo1,
+          quantity: 1, id: 7
+      )
+    ],
+    status: "In Progress".obs,
+    orderMethod: "Takeaway",
+    paymentMethod: "DANA"
+);
+Order order005 = Order(
+    id: 005,
+    vouchers: [
+      voucherList.firstWhere((voucher) => voucher.id == 2, orElse: () => throw Exception('Voucher not found')),
+    ],
+    menus: [
+      Menu(
+          name: "Mie Ayam penyet",
+          price: 13000,
+          imagePath: Images.promo1,
+          quantity: 1, id: 7
+      )
+    ],
+    status: "Pesanan Siap".obs,
     orderMethod: "Takeaway",
     paymentMethod: "DANA"
 );

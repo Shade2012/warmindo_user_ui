@@ -28,7 +28,7 @@ class MenuPage extends StatelessWidget {
       length: 4,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(120),
+          preferredSize: Size.fromHeight(110),
           child: AppBar(
             backgroundColor: ColorResources.primaryColor,
             title: CustomSearchBar(
@@ -37,6 +37,7 @@ class MenuPage extends StatelessWidget {
             ),
             automaticallyImplyLeading: false,
             bottom: TabBar(
+              labelPadding: EdgeInsets.only(bottom: 10),
               indicatorPadding: EdgeInsets.only(bottom: 10),
               indicatorColor: ColorResources.backgroundCardColor,
               tabs: [
@@ -50,12 +51,13 @@ class MenuPage extends StatelessWidget {
                   child: Text(
                     'Minuman',
                     style: categoryMenuTextStyle,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Tab(
                   child: Text(
                     'Makanan',
-                    style: categoryMenuTextStyle,
+                    style: categoryMenuTextStyle,overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Tab(
