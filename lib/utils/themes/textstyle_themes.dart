@@ -91,6 +91,13 @@ TextStyle whiteboldTextStyle15 = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(15)));
 
+TextStyle whiteregulerTextStyle15 = GoogleFonts.oxygen(
+    textStyle:TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(15)));
+
+
 TextStyle whiteboldTextStyle = GoogleFonts.oxygen(
     textStyle:TextStyle(
         color: secondaryTextColor,
@@ -143,6 +150,11 @@ TextStyle ratingTextStyle =  GoogleFonts.oxygen(textStyle: TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.bold,
     fontSize: figmaFontsize(14)));
+
+TextStyle descriptionratingTextStyle =  GoogleFonts.oxygen(textStyle: TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontSize: figmaFontsize(16)));
 
 TextStyle nameProfileTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
@@ -234,6 +246,7 @@ TextStyle categoryMenuTextStyle = GoogleFonts.oxygen(
         color: secondaryTextColor,
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(14)));
+
 
 TextStyle menuNameTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(

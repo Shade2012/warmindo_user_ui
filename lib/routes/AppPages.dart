@@ -131,12 +131,7 @@ class AppPages {
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
 
-    GetPage(
-        name: _Paths.DETAILMENU_PAGE,
-        page: () => DetailMenuPage(),
-        binding: DETAILMENUBinding(),
-        transition: Transition.fadeIn,
-        transitionDuration: const Duration(milliseconds: 500)),
+
     GetPage(
         name: _Paths.POLICY_PAGE,
         page: () => PolicyPage(),

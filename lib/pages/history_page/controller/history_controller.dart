@@ -26,7 +26,7 @@ class HistoryController extends GetxController {
   }
 
   void initializeOrders() {
-    orders.assignAll([order001, order002,order003,order004,order005]);
+    orders.assignAll(orderList);
   }
 
   void printOrdersLength() {
