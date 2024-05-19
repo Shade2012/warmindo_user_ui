@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 
 class AppbarCustom extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final TextStyle style;
 
-  const AppbarCustom({required this.title});
+  const AppbarCustom({required this.title, required this.style});
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
@@ -34,7 +35,7 @@ class AppbarCustom extends StatelessWidget implements PreferredSizeWidget {
           child: Icon(Icons.keyboard_arrow_left_sharp),
         ),
       ),
-      title: Text(title),
+      title: Text(title,style: style,),
       centerTitle: true,
     );
   }

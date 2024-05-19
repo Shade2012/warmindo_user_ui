@@ -12,6 +12,7 @@ import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/icon_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
+import '../../../widget/appBar.dart';
 
 class CartPage extends StatelessWidget {
   final CartController controller = Get.put(CartController());
@@ -24,33 +25,7 @@ class CartPage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Colors.white,
-        leading:
-        GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Container(
-            margin: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 3,
-                  offset: Offset(0, 1),
-                ),
-              ],
-            ),
-            child: Icon(Icons.keyboard_arrow_left_sharp),
-          ),
-        ),
-        title: Text("Keranjang"),
-        centerTitle: true,
-      ),
+      appBar: AppbarCustom(title: 'Keranjang',style: headerRegularStyle,),
       body: Container(
         decoration: BoxDecoration(
           boxShadow: [
