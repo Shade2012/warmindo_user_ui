@@ -17,6 +17,7 @@ class HistoryController extends GetxController {
   RxString status = ''.obs;
   var selectedCategory = 'Semua'.obs;
 
+
   @override
   void onInit() {
     // Call super.onInit() first

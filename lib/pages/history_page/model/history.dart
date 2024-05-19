@@ -7,6 +7,7 @@ import '../../voucher_page/model/voucher_model.dart';
 
 class Order {
   final int id;
+  final bool paid;
   final List<Menu> menus;
   final List<Voucher>? vouchers;
   RxString status = ''.obs;
@@ -18,6 +19,7 @@ class Order {
     required this.menus,
     required this.status,
     required this.orderMethod,
+    required this.paid,
     this.vouchers,
     this.reason,
     this.paymentMethod,
@@ -30,6 +32,7 @@ class Menu {
   final int price;
   final String imagePath;
   final int quantity;
+
 
   Menu({
     required this.id,
@@ -68,7 +71,7 @@ Order(
     ],
     status: "Batal".obs,
     orderMethod: "Takeaway",
-    paymentMethod: "OVO"
+    paymentMethod: "OVO", paid: true
 ),
 Order(
     id: 002,
@@ -85,7 +88,8 @@ Order(
     ],
     status: "Selesai".obs,
     orderMethod: "Takeaway",
-    paymentMethod: "DANA"
+    paymentMethod: "DANA",
+    paid: true
 ),
 Order(
     id: 003,
@@ -102,7 +106,8 @@ Order(
     ],
     status: "Menunggu Batal".obs,
     orderMethod: "Takeaway",
-    paymentMethod: "DANA"
+    paymentMethod: "DANA",
+    paid: true
 ),
  Order(
     id: 004,
@@ -119,7 +124,8 @@ Order(
     ],
     status: "In Progress".obs,
     orderMethod: "Takeaway",
-    paymentMethod: "DANA"
+    paymentMethod: "DANA",
+     paid: true
 ),
  Order(
     id: 005,
@@ -136,7 +142,8 @@ Order(
     ],
     status: "Pesanan Siap".obs,
     orderMethod: "Takeaway",
-    paymentMethod: "DANA"
+    paymentMethod: "DANA",
+     paid: true
 ),
 ];
 

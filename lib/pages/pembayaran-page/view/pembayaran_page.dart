@@ -191,19 +191,46 @@ class PembayaranPage extends GetView<PembayaranController> {
             Divider(),
             SizedBox(height: 20),
             InkWell(
-              onTap: (){
-                controller.paid();
+              onTap: () {
+                if (!controller.selected.value) {
+                  Get.snackbar(
+                    'Pesan',
+                    'Silakan pilih metode pemesananya terlebih dahulu',
+                    backgroundColor: Colors.orange,
+                    colorText: Colors.white,
+                  );
+                  return;
+                }
+
+
+                if (!controller.selectedButton1.value && !controller.selectedButton2.value) {
+                  Get.snackbar(
+                    'Pesan',
+                    'Silakan pilih metode pembayaranya terlebih dahulu',
+                    backgroundColor: Colors.orange,
+                    colorText: Colors.white,
+                  );
+                  return; // Return to prevent further execution
+                }
+
+                // Make the payment
+                controller.makePayment();
               },
               child: Container(
                 padding: EdgeInsets.all(15),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.all(Radius.circular(10))
+                    color: Colors.black,
+                    borderRadius: BorderRadius.all(Radius.circular(10))
                 ),
-                  child: Text("Bayar",style: categoryMenuTextStyle,textAlign: TextAlign.center,),
+                child: Text(
+                  "Bayar",
+                  style: categoryMenuTextStyle,
+                  textAlign: TextAlign.center,
+                ),
               ),
             )
+
           ],
         ),
       ),
