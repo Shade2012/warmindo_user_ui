@@ -60,6 +60,13 @@ TextStyle regularInputTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(15)));
 
+
+TextStyle headerRegularStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(25)));
+
 TextStyle boldTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,
@@ -264,7 +271,7 @@ TextStyle menuPriceTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,
         fontWeight: FontWeight.w400,
-        fontSize: figmaFontsize(14)));
+        fontSize: figmaFontsize(16)));
 
 
 

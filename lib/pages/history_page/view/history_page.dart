@@ -26,7 +26,7 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarCustom(title: 'History'),
+      appBar: AppbarCustom(title: 'History',style: headerRegularStyle,),
       body: Container(
         padding: EdgeInsets.all(10),
         child: Column(

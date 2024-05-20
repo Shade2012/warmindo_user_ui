@@ -20,5 +20,6 @@ class Images {
   static const String complete = 'assets/images/complete.png';
 
   static const String history = 'assets/images/orderComplete.png';
+  static const String placeholder = 'assets/images/placeholder.png';
 }
 

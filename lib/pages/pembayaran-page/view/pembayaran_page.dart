@@ -24,7 +24,7 @@ class PembayaranPage extends GetView<PembayaranController> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppbarCustom(title: 'Pembayaran',),
+      appBar: AppbarCustom(title: 'Pembayaran',style: headerRegularStyle,),
       body: Container(
         padding: EdgeInsets.all(20),
         child: Column(

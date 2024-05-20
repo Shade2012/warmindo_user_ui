@@ -21,7 +21,7 @@ class DetailMenuPage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppbarCustom(title: 'Details'),
+      appBar: AppbarCustom(title: 'Details',style: headerRegularStyle,),
       body: SingleChildScrollView(
         child: Container(
           height: screenHeight * 0.9,

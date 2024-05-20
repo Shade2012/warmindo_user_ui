@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
 import 'package:warmindo_user_ui/pages/menu_page/model/menu_model.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
 import '../utils/themes/color_themes.dart';
+import '../utils/themes/image_themes.dart';
 import 'myCustomPopUp/myPopup_controller.dart';
 
 class MenuCategory extends StatelessWidget {
@@ -21,6 +23,7 @@ class MenuCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Column(
@@ -40,17 +43,17 @@ class MenuCategory extends StatelessWidget {
           crossAxisCount: 2,
           shrinkWrap: true,
           childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 1.3),
+              (MediaQuery.of(context).size.height / 1.60),
           physics: NeverScrollableScrollPhysics(),
           children: menuList.map((menu) {
-            return GestureDetector(
+
+            return  GestureDetector(
               onTap: (){
                 Get.to(DetailMenuPage(menu: menu));
               },
               child: Container(
-                width: screenWidth * 0.43,
                 margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
-                padding: EdgeInsets.all(10),
+                width: screenWidth * 0.43,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -63,71 +66,67 @@ class MenuCategory extends StatelessWidget {
                   color: ColorResources.backgroundCardColor,
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
-                // Tampilkan informasi menu di sini
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
+                    Stack(
                       children: [
                         Container(
-                          margin: EdgeInsets.all(2),
-                          child: Image.asset(
-                            menu.imagePath,
-                            width: screenWidth / 0.2,
-                            height: 130,
-                            fit: BoxFit.contain,
+                          width: double.infinity, // Use the screen width
+                          height: 104,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                            child: FadeInImage(
+                              image: AssetImage(menu.imagePath),
+                              fit: BoxFit.cover,
+                              placeholder: AssetImage(Images.placeholder),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    ListTile(
+                      title: Text(menu.name, style: regularInputTextStyle),
+                      subtitle:
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            menu.name,
-                            style: menuNameTextStyle,
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            menu.description,
-                            maxLines: 2
-                            ,
-                            overflow: TextOverflow.ellipsis,
-                            style: menuDescTextStyle,
-                          ),
+                          SizedBox(height: 3,),
+                          Text(menu.description,  maxLines: 2,
+                              overflow: TextOverflow.ellipsis, style: descriptionTextStyle),
+                          SizedBox(height: screenHeight * 0.03,),
+                      Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(currencyFormat.format(menu.price),
+                                        style: menuPriceTextStyle,
+                                      ),
+                                      InkWell(
+                                        onTap: (){
+                                          popUpcontroller.showCustomModalForItem(menu, context);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                          child: Icon(
+                                            Icons.add,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                     ],
+                                   ),
+                               ),
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Rp ${menu.price.toInt()}',
-                            style: menuPriceTextStyle,
-                          ),
-                          InkWell(
-                            onTap: (){
-                              popUpcontroller.showCustomModalForItem(menu, context);
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Add more fields to display as needed
                     ),
                   ],
                 ),
