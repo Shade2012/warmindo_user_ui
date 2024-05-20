@@ -1,11 +1,19 @@
 import 'package:get/get.dart';
+import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
+import 'package:warmindo_user_ui/pages/pembayaran-page/controller/pembayaran_controller.dart';
 
+import '../../history_page/model/history.dart';
+import '../../voucher_page/controller/voucher_controller.dart';
 import '../model/cartmodel.dart';
 
 class CartController extends GetxController {
+
+
   RxInt quantity = 1.obs;
   // final RxList<CartItem> cartItems = cartList.obs;
   final RxList<CartItem> cartItems = <CartItem>[].obs;
+
+
 
   void addToCart(CartItem item) {
     // Check if an item with the same product ID already exists in the cart
