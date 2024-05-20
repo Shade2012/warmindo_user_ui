@@ -67,6 +67,12 @@ TextStyle headerRegularStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(25)));
 
+TextStyle subheaderRegularStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: secondaryTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(20)));
+
 TextStyle boldTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,
@@ -172,7 +178,7 @@ TextStyle nameProfileTextStyle = GoogleFonts.oxygen(
 TextStyle usernameProfileTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: secondaryTextColor,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(17)));
 
 TextStyle editProfileTextStyle = GoogleFonts.oxygen(
