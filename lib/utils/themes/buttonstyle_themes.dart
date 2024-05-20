@@ -27,3 +27,16 @@ ButtonStyle dynamicButtonStyle(String status) {
     ),
   );
 }
+ButtonStyle redeembutton() {
+  return ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+      EdgeInsets.only(top: 15, bottom: 15),
+    ),
+    shape: MaterialStateProperty.all<OutlinedBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
+  );
+}

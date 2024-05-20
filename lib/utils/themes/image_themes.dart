@@ -21,5 +21,7 @@ class Images {
 
   static const String history = 'assets/images/orderComplete.png';
   static const String placeholder = 'assets/images/placeholder.png';
+  static const String exampleverfication2 = 'assets/images/exampleverfication2.png';
+
 }
 

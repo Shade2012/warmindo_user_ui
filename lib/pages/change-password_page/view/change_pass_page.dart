@@ -70,7 +70,7 @@ class ChangePasswordPage extends StatelessWidget {
                 const SizedBox(height: 20.0),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorResources.primaryColor,
+                    backgroundColor: Colors.black,
                     foregroundColor: ColorResources.secondaryTextColor,
                     minimumSize: Size(400, 46),
                     padding: EdgeInsets.all(8.0),
@@ -105,12 +105,12 @@ class ChangePasswordPage extends StatelessWidget {
 }
 
 Widget typePass(
-  TextInputType keyboardType,
-  String label,
-  String hint,
-  TextEditingController controller,
-  String? Function(String)? validator,
-) {
+    TextInputType keyboardType,
+    String label,
+    String hint,
+    TextEditingController controller,
+    String? Function(String)? validator,
+    ) {
   return Container(
     margin: EdgeInsets.only(top: 20, bottom: 20),
     child: TextFormField(
@@ -119,15 +119,26 @@ Widget typePass(
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            color: validator != null && validator(controller.text) != null
+                ? Colors.red // Red border color for error
+                : Colors.black, // Black border color for no error
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black),
         ),
         hintText: hint,
         labelText: label,
+        labelStyle: TextStyle(
+          color: validator != null && validator(controller.text) != null
+              ? Colors.black // Black label color for no error
+              : Colors.grey, // Grey label color for error
+        ),
         hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
         errorText: validator != null ? validator(controller.text) : null,
       ),
     ),
   );
 }
+

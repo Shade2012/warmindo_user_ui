@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/appBar.dart';
 import 'package:warmindo_user_ui/widget/reusable_card.dart';
@@ -15,8 +16,9 @@ class FilteredMenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     return Scaffold(
-      appBar: AppbarCustom(title:'Promo ${price}', style: headerRegularStyle,),
+      appBar: AppbarCustom(title:'Promo ${currencyFormat.format(price)}', style: headerRegularStyle,),
       body: SafeArea(
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
