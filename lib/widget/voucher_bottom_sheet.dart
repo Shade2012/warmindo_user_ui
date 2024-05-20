@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
+import '../utils/themes/buttonstyle_themes.dart';
+
 class VoucherFrame extends StatelessWidget {
   const VoucherFrame({Key? key});
 
@@ -19,36 +21,40 @@ class VoucherFrame extends StatelessWidget {
           pinned: true,
         ),
       ],
-      body: ListView(
-        shrinkWrap: true,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                typeCode(
-                  TextInputType.text,
-                  'Code Voucher',
-                  'Enter voucher code',
-                  TextEditingController(),
-                  (value) {
-                    if (value.isEmpty) {
-                      return 'Voucher code cannot be empty';
-                    }
-                    return null;
-                  },
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Action to redeem voucher
-                  },
-                  child: Text('Redeem Voucher'),
-                ),
-              ],
+      body: Container(
+        color: Colors.white,
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  typeCode(
+                    TextInputType.text,
+                    'Code Voucher',
+                    'Enter voucher code',
+                    TextEditingController(),
+                    (value) {
+                      if (value.isEmpty) {
+                        return 'Voucher code cannot be empty';
+                      }
+                      return null;
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Action to redeem voucher
+                    },
+                    style: redeembutton(),
+                    child: Text('Redeem Voucher',style: whiteboldTextStyle15,),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

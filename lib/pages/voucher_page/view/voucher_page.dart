@@ -101,8 +101,7 @@ class VoucherPage extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              SizedBox(height: 20), // Spacing between elements
+              ), // Spacing between elements
               ElevatedButton(
                 onPressed: () {
                   showModalBottomSheet(

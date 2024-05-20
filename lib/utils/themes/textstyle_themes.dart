@@ -273,6 +273,12 @@ TextStyle menuPriceTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.w400,
         fontSize: figmaFontsize(16)));
 
+TextStyle regulerinfotext = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.w400,
+        fontSize: figmaFontsize(14)));
+
 
 
 
