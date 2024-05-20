@@ -56,7 +56,7 @@ class ProfilePage extends StatelessWidget {
                       '@manusia',
                       style: usernameProfileTextStyle,
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
                         Get.toNamed(Routes.EDITPROFILE_PAGE);
@@ -66,9 +66,8 @@ class ProfilePage extends StatelessWidget {
                         padding: EdgeInsets.all(8),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
-                          side: BorderSide(color: Colors.white),
                         ),
-                        backgroundColor: Colors.black.withOpacity(0.05),
+                        backgroundColor: Colors.black,
 
                       ),
                       child: Text(
