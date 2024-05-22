@@ -54,12 +54,7 @@ class AppPages {
 
 
 
-
-
   static const INITIAL = Routes.BOTTOM_NAVBAR;
-
-
-
 
 
   static final routes = [

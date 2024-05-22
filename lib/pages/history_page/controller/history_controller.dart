@@ -16,12 +16,16 @@ class HistoryController extends GetxController {
   final RxList<Order> orders = <Order>[].obs;
   RxString status = ''.obs;
   var selectedCategory = 'Semua'.obs;
+  final RxBool isLoading = true.obs;
 
 
   @override
   void onInit() {
     // Call super.onInit() first
     super.onInit();
+    Future.delayed(Duration(seconds: 4),(){
+      isLoading.value = false;
+    });
     // Initialize orders with order001 and order002
     initializeOrders();
   }

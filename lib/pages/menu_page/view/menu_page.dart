@@ -74,30 +74,42 @@ class MenuPage extends StatelessWidget {
           children: [
             // Menampilkan semua menu
             SingleChildScrollView(
-              child: MenuCategory(
-                categoryName: 'All',
-                menuList: menuList,context: context
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: MenuCategory(
+                  categoryName: 'All',
+                  menuList: menuList,context: context
+                ),
               ),
             ),
             // Menampilkan menu minuman
             SingleChildScrollView(
-              child: MenuCategory(
-                categoryName: 'Minuman',
-                menuList: drinksList,context: context
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: MenuCategory(
+                  categoryName: 'Minuman',
+                  menuList: drinksList,context: context
+                ),
               ),
             ),
             // Menampilkan menu makanan
             SingleChildScrollView(
-              child: MenuCategory(
-                categoryName: 'Makanan',
-                menuList: foodList, context: context,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: MenuCategory(
+                  categoryName: 'Makanan',
+                  menuList: foodList, context: context,
+                ),
               ),
             ),
             // Menampilkan menu snack
             SingleChildScrollView(
-              child: MenuCategory(
-                categoryName: 'Snack',
-                menuList: snackList,context: context
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: MenuCategory(
+                  categoryName: 'Snack',
+                  menuList: snackList,context: context
+                ),
               ),
             ),
           ],

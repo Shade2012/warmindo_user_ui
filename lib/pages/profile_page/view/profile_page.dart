@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:warmindo_user_ui/pages/profile_page/controller/profile_controller.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
@@ -10,7 +12,8 @@ import 'package:warmindo_user_ui/widget/popup_veritification.dart';
 import 'package:warmindo_user_ui/widget/reusable_dialog.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key});
+  final ProfileController profileController = Get.put(ProfileController());
+  ProfilePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
