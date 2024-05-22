@@ -1,10 +1,14 @@
 
+import 'dart:ffi';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/home_controller.dart';
+import 'package:warmindo_user_ui/pages/home_page/shimmer/homeshimmer.dart';
+import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 import 'package:warmindo_user_ui/widget/cart.dart';
 import 'package:warmindo_user_ui/widget/makanan_widget.dart';
 import 'package:warmindo_user_ui/widget/reusable_card.dart';
@@ -27,7 +31,9 @@ class HomePage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.only(left: 20, right: 20, top: 50),
-            child: Column(
+            child: Obx(() => controller.isLoading.value?
+            HomeSkeleton() :
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Selamat Pagi", style: regularTextStyle),
@@ -56,7 +62,7 @@ class HomePage extends StatelessWidget {
                       RoundedImage(
                         imageUrl: Images.promo1,
                         onPressed: () {
-                         controller.navigateToFilteredMenu(context, 10000);
+                          controller.navigateToFilteredMenu(context, 10000);
                         },
                       ),
                       RoundedImage(
@@ -74,7 +80,6 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
                 SizedBox(height: 20,),
                 Row(
@@ -177,7 +182,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 20,)
               ],
             ),
-
+            ),
           ),
         ),
       ),
