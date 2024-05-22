@@ -16,14 +16,10 @@ class CartController extends GetxController {
 
 
   void addToCart(CartItem item) {
-    // Check if an item with the same product ID already exists in the cart
     final existingItemIndex = cartItems.indexWhere((cartItem) => cartItem.productId == item.productId);
-
     if (existingItemIndex != -1) {
-      // Item already exists in the cart, update the quantity
       cartItems[existingItemIndex].quantity += item.quantity;
     } else {
-      // Item doesn't exist, add it to the cart
       cartItems.add(item);
     }
     cartItems.refresh();

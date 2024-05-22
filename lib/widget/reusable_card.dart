@@ -21,7 +21,7 @@ class ReusableCard extends StatelessWidget {
   ReusableCard({
     Key? key,
     required this.context,
-    required this.product, required this.width
+    required this.product, required this.width,
   }) : super(key: key);
 
   @override
@@ -80,7 +80,7 @@ class ReusableCard extends StatelessWidget {
               ],
             ),
             ListTile(
-              title: Text(product.name, style: regularInputTextStyle),
+              title: Text(product.name, style: regularInputTextStyle,maxLines: 1,overflow: TextOverflow.ellipsis,),
               subtitle:
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,

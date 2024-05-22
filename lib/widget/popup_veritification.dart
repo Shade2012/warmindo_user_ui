@@ -19,9 +19,11 @@ class VerificationStatusPopup extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Cara Dapat",
-                    style: boldTextStyle, // Text color
+                  Center(
+                    child: Text(
+                      "Verifikasi",
+                      style: boldTextStyle, // Text color
+                    ),
                   ),
                   Text('Cara mendapatkan centang verifikasi, itu ada 2 cara'),
                   Text('1. Dari System minimal membeli 15 kali,'),

@@ -39,20 +39,24 @@ class MenuCategory extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        GridView.count(
-          crossAxisCount: 2,
+        GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            mainAxisExtent: 260,
+          ),
           shrinkWrap: true,
-          childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 1.60),
           physics: NeverScrollableScrollPhysics(),
-          children: menuList.map((menu) {
-
-            return  GestureDetector(
-              onTap: (){
+          itemCount: menuList.length,
+          itemBuilder: (context, index) {
+            final menu = menuList[index];
+            return GestureDetector(
+              onTap: () {
                 Get.to(DetailMenuPage(menu: menu));
               },
               child: Container(
-                margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
+                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                 width: screenWidth * 0.43,
                 decoration: BoxDecoration(
                   boxShadow: [
@@ -60,7 +64,7 @@ class MenuCategory extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.2),
                       spreadRadius: 0,
                       blurRadius: 4,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: Offset(0, 3),
                     ),
                   ],
                   color: ColorResources.backgroundCardColor,
@@ -71,7 +75,7 @@ class MenuCategory extends StatelessWidget {
                     Stack(
                       children: [
                         Container(
-                          width: double.infinity, // Use the screen width
+                          width: double.infinity,
                           height: 104,
                           child: ClipRRect(
                             borderRadius: BorderRadius.only(
@@ -89,51 +93,55 @@ class MenuCategory extends StatelessWidget {
                     ),
                     ListTile(
                       title: Text(menu.name, style: regularInputTextStyle),
-                      subtitle:
-                      Column(
+                      subtitle: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SizedBox(height: 3,),
-                          Text(menu.description,  maxLines: 2,
-                              overflow: TextOverflow.ellipsis, style: descriptionTextStyle),
-                          SizedBox(height: screenHeight * 0.03,),
-                      Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(currencyFormat.format(menu.price),
-                                        style: menuPriceTextStyle,
-                                      ),
-                                      InkWell(
-                                        onTap: (){
-                                          popUpcontroller.showCustomModalForItem(menu, context);
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(2),
-                                          decoration: BoxDecoration(
-                                            color: Colors.black,
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          child: Icon(
-                                            Icons.add,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                     ],
-                                   ),
-                               ),
+                          SizedBox(height: 3),
+                          Text(
+                            menu.description,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: descriptionTextStyle,
+                          ),
+                          SizedBox(height: screenHeight * 0.03),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  currencyFormat.format(menu.price),
+                                  style: menuPriceTextStyle,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    popUpcontroller.showCustomModalForItem(menu, context);
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(2),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Icon(
+                                      Icons.add,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                      // Add more fields to display as needed
                     ),
                   ],
                 ),
               ),
             );
-          }).toList(),
-        ),
+          },
+        )
+
       ],
     );
   }
