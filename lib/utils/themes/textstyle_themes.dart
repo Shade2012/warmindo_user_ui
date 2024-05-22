@@ -154,6 +154,13 @@ TextStyle descriptionTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(12)));
 
+TextStyle vouchertextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(13)));
+
+
 TextStyle priceTextStyle =  GoogleFonts.oxygen(textStyle: TextStyle(
     color: greenTextColor,
     fontWeight: FontWeight.normal,

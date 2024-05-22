@@ -26,153 +26,151 @@ class ProfilePage extends StatelessWidget {
           width: screenWidth,
           height: screenHeight,
           color: ColorResources.primaryColor,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 20),
-              // Container 1 (Bagian atas)
-              Container(
-                margin: EdgeInsets.only(bottom: 10),
-                width: screenWidth,
-                height: screenHeight * 0.34,
-                color: ColorResources.transparent,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        Images.profile,
-                        width: 125,
-                        height: 125,
-                        fit: BoxFit.cover,
-                        alignment: Alignment.center,
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    Text(
-                      'Baratha Wijaya',
-                      style: nameProfileTextStyle,
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      '@manusia',
-                      style: usernameProfileTextStyle,
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Get.toNamed(Routes.EDITPROFILE_PAGE);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(133, 30),
-                        padding: EdgeInsets.all(8),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        backgroundColor: Colors.black,
-
-                      ),
-                      child: Text(
-                        'Edit Profile',
-                        style: editProfileTextStyle,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              // Container 2 (Bagian bawah)
-              Expanded(
-                child: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 20),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
                   width: screenWidth,
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: ColorResources.wProfileBg,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(22),
-                      topRight: Radius.circular(22),
-                    ),
-                  ),
-                  child: ListView(
+                  color: ColorResources.transparent,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 40),
-                      ListTile(
-                        leading: Icon(Icons.person),
-                        title: Text('Veritification'),
-                        trailing: Icon(Icons.info_outlined),
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return VerificationStatusPopup();
-                            },
-                          );
-                        },
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          Images.profile,
+                          width: 125,
+                          height: 125,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                        ),
                       ),
-                      SizedBox(height: 30),
-                      ListTile(
-                        leading: Icon(FontAwesomeIcons.ticket),
-                        title: Text('Voucher'),
-                        trailing: Icon(Icons.chevron_right),
-                        onTap: () {
-                          Get.toNamed(Routes.VOUCHER_PAGE);
-                        },
+                      SizedBox(height: 15),
+                      Text(
+                        'Baratha Wijaya',
+                        style: nameProfileTextStyle,
                       ),
-                      SizedBox(height: 30),
-                      ListTile(
-                        leading: Icon(Icons.security),
-                        title: Text('Change Password'),
-                        trailing: Icon(Icons.chevron_right),
-                        onTap: () {
-                          Get.toNamed(Routes.CHANGEPASS_PAGE);
-                        },
+                      SizedBox(height: 5),
+                      Text(
+                        '@manusia',
+                        style: usernameProfileTextStyle,
                       ),
-                      SizedBox(height: 30),
-                      ListTile(
-                        leading: Icon(Icons.policy),
-                        title: Text('Policy'),
-                        trailing: Icon(Icons.chevron_right),
-                        onTap: () {
-                          Get.toNamed(Routes.POLICY_PAGE);
+                      SizedBox(height: screenHeight * 0.002),
+                      ElevatedButton(
+                        onPressed: () {
+                          Get.toNamed(Routes.EDITPROFILE_PAGE);
                         },
-                      ),
-                      SizedBox(height: 30),
-                      ListTile(
-                        leading: Icon(Icons.logout),
-                        title: Text('Logout'),
-                        trailing: Icon(Icons.chevron_right),
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return ReusableDialog(
-                                title: "Log Out",
-                                content: "Apakah Kamu yakin ingin logout?",
-                                cancelText: "Tidak",
-                                confirmText: "Iya",
-                                onCancelPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                onConfirmPressed: () {
-                                  Navigator.of(context).pop();
-                                  Get.toNamed(Routes.LOGIN_PAGE);
-                                },
-                                cancelButtonColor:
-                                    ColorResources.cancelButttonColor,
-                                confirmButtonColor:
-                                    ColorResources.confirmButtonColor,
-                                dialogImage: Image.asset(Images.askDialog),
-                              );
-                            },
-                          );
-                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(133, 30),
+                          padding: EdgeInsets.all(8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          backgroundColor: Colors.black,
+
+                        ),
+                        child: Text(
+                          'Edit Profile',
+                          style: editProfileTextStyle,
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+                SizedBox(height: 20),
+                Container(
+                    width: screenWidth,
+                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 40),
+                    decoration: BoxDecoration(
+                      color: ColorResources.wProfileBg,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(22),
+                        topRight: Radius.circular(22),
+                      ),
+                    ),
+                   child:  Column(
+                        children: [
+                          ListTile(
+                            leading: Icon(Icons.person),
+                            title: Text('Veritification'),
+                            trailing: Icon(Icons.info_outlined),
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return VerificationStatusPopup();
+                                },
+                              );
+                            },
+                          ),
+                          SizedBox(height: 30),
+                          ListTile(
+                            leading: Icon(FontAwesomeIcons.ticket),
+                            title: Text('Voucher'),
+                            trailing: Icon(Icons.chevron_right),
+                            onTap: () {
+                              Get.toNamed(Routes.VOUCHER_PAGE);
+                            },
+                          ),
+                          SizedBox(height: 30),
+                          ListTile(
+                            leading: Icon(Icons.security),
+                            title: Text('Change Password'),
+                            trailing: Icon(Icons.chevron_right),
+                            onTap: () {
+                              Get.toNamed(Routes.CHANGEPASS_PAGE);
+                            },
+                          ),
+                          SizedBox(height: 30),
+                          ListTile(
+                            leading: Icon(Icons.policy),
+                            title: Text('Policy'),
+                            trailing: Icon(Icons.chevron_right),
+                            onTap: () {
+                              Get.toNamed(Routes.POLICY_PAGE);
+                            },
+                          ),
+                          SizedBox(height: 30),
+                          ListTile(
+                            leading: Icon(Icons.logout),
+                            title: Text('Logout'),
+                            trailing: Icon(Icons.chevron_right),
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ReusableDialog(
+                                    title: "Log Out",
+                                    content: "Apakah Kamu yakin ingin logout?",
+                                    cancelText: "Tidak",
+                                    confirmText: "Iya",
+                                    onCancelPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    onConfirmPressed: () {
+                                      Navigator.of(context).pop();
+                                      Get.toNamed(Routes.LOGIN_PAGE);
+                                    },
+                                    cancelButtonColor:
+                                    ColorResources.cancelButttonColor,
+                                    confirmButtonColor:
+                                    ColorResources.confirmButtonColor,
+                                    dialogImage: Image.asset(Images.askDialog),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      )
+
+
+                  ),
+              ],
+            ),
           ),
         ),
       ),

@@ -44,6 +44,7 @@ class MenuCategory extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
+
         Obx((){
           return menuController.isLoading.value ?
           GridView.count(
@@ -65,101 +66,108 @@ class MenuCategory extends StatelessWidget {
               Container(margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),child: Skeleton(width: 60,radius: 20,))
             ],
 
-          ) : GridView.count(
+          ) :        GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            shrinkWrap: true,
-            childAspectRatio: MediaQuery.of(context).size.width /
-                (MediaQuery.of(context).size.height / 1.60),
-            physics: NeverScrollableScrollPhysics(),
-            children: menuList.map((menu) {
-
-              return  GestureDetector(
-                onTap: (){
-                  Get.to(DetailMenuPage(menu: menu));
-                },
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
-                  width: screenWidth * 0.43,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 0,
-                        blurRadius: 4,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: ColorResources.backgroundCardColor,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                  child: Column(
-                    children: [
-                      Stack(
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            mainAxisExtent: 260,
+          ),
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: menuList.length,
+          itemBuilder: (context, index) {
+            final menu = menuList[index];
+            return GestureDetector(
+              onTap: () {
+                Get.to(DetailMenuPage(menu: menu));
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                width: screenWidth * 0.43,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 0,
+                      blurRadius: 4,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                  color: ColorResources.backgroundCardColor,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 104,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                            child: FadeInImage(
+                              image: AssetImage(menu.imagePath),
+                              fit: BoxFit.cover,
+                              placeholder: AssetImage(Images.placeholder),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    ListTile(
+                      title: Text(menu.name, style: regularInputTextStyle),
+                      subtitle: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
-                            width: double.infinity, // Use the screen width
-                            height: 104,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
-                              child: FadeInImage(
-                                image: AssetImage(menu.imagePath),
-                                fit: BoxFit.cover,
-                                placeholder: AssetImage(Images.placeholder),
-                              ),
+                          SizedBox(height: 3),
+                          Text(
+                            menu.description,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: descriptionTextStyle,
+                          ),
+                          SizedBox(height: screenHeight * 0.03),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  currencyFormat.format(menu.price),
+                                  style: menuPriceTextStyle,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    popUpcontroller.showCustomModalForItem(menu, context);
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(2),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Icon(
+                                      Icons.add,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                      ListTile(
-                        title: Text(menu.name, style: regularInputTextStyle),
-                        subtitle:
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 3,),
-                            Text(menu.description,  maxLines: 2,
-                                overflow: TextOverflow.ellipsis, style: descriptionTextStyle),
-                            SizedBox(height: screenHeight * 0.03,),
-                            Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(currencyFormat.format(menu.price),
-                                    style: menuPriceTextStyle,
-                                  ),
-                                  InkWell(
-                                    onTap: (){
-                                      popUpcontroller.showCustomModalForItem(menu, context);
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                        color: Colors.black,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Add more fields to display as needed
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              );
-            }).toList(),
-          );
+              ),
+            );
+          },
+        );
         }),
       ],
     );

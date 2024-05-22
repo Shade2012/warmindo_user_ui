@@ -20,18 +20,21 @@ class FilteredMenuPage extends StatelessWidget {
     return Scaffold(
       appBar: AppbarCustom(title:'Promo ${currencyFormat.format(price)}', style: headerRegularStyle,),
       body: SafeArea(
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 20,
-            childAspectRatio: MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.7),
+        child: Container(
+          margin: EdgeInsets.only(top: 20),
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+                mainAxisExtent: 240
+            ),
+            itemCount: filteredMenu.length,
+            itemBuilder: (context, index) {
+              final menu = filteredMenu[index];
+              return ReusableCard(context: context, product: menu, width: MediaQuery.of(context).size.width * 0.8,);
+            },
           ),
-          itemCount: filteredMenu.length,
-          itemBuilder: (context, index) {
-            final menu = filteredMenu[index];
-            return ReusableCard(context: context, product: menu, width: MediaQuery.of(context).size.width * 0.8,);
-          },
         ),
       ),
     );

@@ -85,8 +85,8 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ReusableCard(width: screenWidth * 0.43,context: context, product: controller.menu[0]),
-                    ReusableCard(width: screenWidth * 0.43 ,context: context, product: controller.menu[1]),
+                    ReusableCard(width: screenWidth * 0.43,context: context, product: controller.menu[0], ),
+                    ReusableCard(width: screenWidth * 0.43 ,context: context, product: controller.menu[1],),
 
                   ],
                 ),

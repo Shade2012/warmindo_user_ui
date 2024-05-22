@@ -77,7 +77,6 @@ class VoucherPage extends StatelessWidget {
                                 style: blackvoucherTextStyle),
                             Text(' || 1 x Penggunaan',
                                 style: blackvoucherTextStyle),
-                            SizedBox(width: screenWidth / 20),
                           ],
                         ),
                         SizedBox(height: screenHeight / 70),
@@ -125,7 +124,7 @@ class VoucherPage extends StatelessWidget {
                   children: [
                     Icon(FontAwesomeIcons.ticket),
                     SizedBox(width: 15),
-                    Text('Punya Kode Voucher? Tukarkan disini!'),
+                    Text('Punya Kode Voucher? Tukarkan disini!',style: vouchertextStyle,),
                   ],
                 ),
               ),
