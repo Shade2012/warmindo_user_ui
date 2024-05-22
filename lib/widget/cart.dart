@@ -32,7 +32,7 @@ class Cart extends StatelessWidget {
         width: 35,
         height: 35,
         decoration: BoxDecoration(
-          color: Color.fromARGB(207, 217, 217, 217),
+          color: Color.fromARGB(160, 0, 0, 0),
           borderRadius: BorderRadius.circular(50),
         ),
         child: Icon(
