@@ -63,6 +63,7 @@ class ReusableCard extends StatelessWidget {
                       image: AssetImage(product.imagePath),
                       fit: BoxFit.cover,
                       placeholder: AssetImage(Images.placeholder),
+                      alignment: Alignment.center,
                     ),
                   ),
                 ),
@@ -113,4 +114,3 @@ class ReusableCard extends StatelessWidget {
     );
   }
 }
-

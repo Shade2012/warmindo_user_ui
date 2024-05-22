@@ -30,38 +30,7 @@ class PembayaranPage extends GetView<PembayaranController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Metode Pemesanan",style: boldTextStyle,),
-            SizedBox(height: 20,),
-             Container(
-               width: double.infinity,
-               child: Obx(() => InkWell(
-                 onTap: (){
-                   controller.selected.value = true;
-                 },
-                 child: Ink(
-                   decoration: BoxDecoration(
-                     color: Colors.white,
-                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                     border: controller.selected.value ? Border.all(
-                       color: Colors.black,
-                       width: 2
-                     ) : null,
 
-                     boxShadow: [
-                       BoxShadow(
-                         color: Colors.grey.withOpacity(0.4),
-                         spreadRadius: 0,
-                         blurRadius: 2,
-                         offset: Offset(0, 1), // changes position of shadow
-                       ),
-                     ],
-                   ),
-                   padding: EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
-                   child: Text("Takeaway",style: boldTextStyle,textAlign: TextAlign.center,),
-                 ),
-               )),
-             ),
-            SizedBox( height: 20,),
             Row(
               children: [
                 MapScreen(),
@@ -157,10 +126,42 @@ class PembayaranPage extends GetView<PembayaranController> {
                       ),
                     ),
                   ),
+
                 ],
               );
             }),
+            SizedBox( height: 10,),
+            Text("Metode Pemesanan",style: boldTextStyle,),
+            SizedBox(height: 20,),
+            Container(
+              width: double.infinity,
+              child: Obx(() => InkWell(
+                onTap: (){
+                  controller.selected.value = true;
+                },
+                child: Ink(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    border: controller.selected.value ? Border.all(
+                        color: Colors.black,
+                        width: 2
+                    ) : null,
 
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.4),
+                        spreadRadius: 0,
+                        blurRadius: 2,
+                        offset: Offset(0, 1), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  padding: EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
+                  child: Text("Takeaway",style: boldTextStyle,textAlign: TextAlign.center,),
+                ),
+              )),
+            ),
             SizedBox( height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
