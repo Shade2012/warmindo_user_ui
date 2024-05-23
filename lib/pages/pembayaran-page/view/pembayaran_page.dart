@@ -47,7 +47,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                          color: Colors.black,
                          width: 2
                        ) : null,
-        
+
                        boxShadow: [
                          BoxShadow(
                            color: Colors.grey.withOpacity(0.4),
@@ -161,7 +161,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                   ],
                 );
               }),
-        
+
               SizedBox( height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -202,8 +202,8 @@ class PembayaranPage extends GetView<PembayaranController> {
                     );
                     return;
                   }
-        
-        
+
+
                   if (!controller.selectedButton1.value && !controller.selectedButton2.value) {
                     Get.snackbar(
                       'Pesan',
@@ -213,7 +213,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                     );
                     return; // Return to prevent further execution
                   }
-        
+
                   // Make the payment
                   controller.makePayment();
                 },
@@ -231,7 +231,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                   ),
                 ),
               )
-        
+
             ],
           ),
         ),

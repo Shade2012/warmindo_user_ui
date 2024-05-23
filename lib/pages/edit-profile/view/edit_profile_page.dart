@@ -101,12 +101,6 @@ class EditProfileScreen extends StatelessWidget {
                         ),
                         labelText: "Full Name",
                         labelStyle: TextStyle(color: Colors.white), // Set label text color to white
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.clear, color: Colors.white), // Set clear icon color to white
-                          onPressed: () {
-                            _fullNameController.clear(); // Clear text when icon is pressed
-                          },
-                        ),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -144,12 +138,7 @@ class EditProfileScreen extends StatelessWidget {
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.grey),
                             ),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.clear, color: Colors.black), // Set clear icon color to white
-                            onPressed: () {
-                              _emailController.clear(); // Clear text when icon is pressed
-                            },
-                          ),
+
                         ),
 
                         validator: (value) {
@@ -176,12 +165,6 @@ class EditProfileScreen extends StatelessWidget {
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.clear, color: Colors.black), // Set clear icon color to white
-                            onPressed: () {
-                              _phoneNumberController.clear(); // Clear text when icon is pressed
-                            },
-                          ),
                         ),
 
                         validator: (value) {
@@ -199,7 +182,6 @@ class EditProfileScreen extends StatelessWidget {
                       const SizedBox(height: 10.0),
                       TextFormField(
                         controller: _usernameController,
-                        enabled: false, // Make the field readonly
                         style: regulargreyText,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),

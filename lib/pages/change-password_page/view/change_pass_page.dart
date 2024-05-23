@@ -11,6 +11,7 @@ class ChangePasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
         title: Text("Ubah Password"),
       ),
       body: SingleChildScrollView(
@@ -79,21 +80,39 @@ class ChangePasswordPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Change password
-                      print(
-                          "Password Lama: ${_currentPasswordController.text}");
-                      print("Password Baru: ${_newPasswordController.text}");
-
-                      // Show a success message or perform other actions
+                    if (_currentPasswordController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Password berhasil diubah!"),
+                          content: Text("Password Lama Kosong"),
+                        ),
+                      );
+                    } else if(_newPasswordController.text != _confirmNewPasswordController.text){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Password tidak sama"),
+                      ),
+                    );
+                    } else if(_newPasswordController.text.isNotEmpty && _confirmNewPasswordController.text.isNotEmpty && _currentPasswordController.text.isNotEmpty){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Password Berhasil dirubah"),
+                          ),
+                      );
+                    }else if(_newPasswordController.text.isEmpty){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Password baru Kosong"),
+                        ),
+                      );
+                    }else if(_confirmNewPasswordController.text.isEmpty){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Password baru Kosong"),
                         ),
                       );
                     }
                   },
-                  child: Text("Ubah Password"),
+                  child: Text("Ubah Password2"),
                 ),
               ],
             ),
@@ -120,25 +139,24 @@ Widget typePass(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
-            color: validator != null && validator(controller.text) != null
-                ? Colors.red // Red border color for error
-                : Colors.black, // Black border color for no error
+            color: Colors.black,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black),
         ),
         hintText: hint,
+
         labelText: label,
         labelStyle: TextStyle(
-          color: validator != null && validator(controller.text) != null
-              ? Colors.black // Black label color for no error
-              : Colors.grey, // Grey label color for error
+          color: Colors.grey, // Label color is always grey
         ),
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-        errorText: validator != null ? validator(controller.text) : null,
+        hintStyle: TextStyle(color: Colors.grey, fontSize: 12,fontWeight: FontWeight.normal),
+        errorStyle: TextStyle(color: Colors.black), // Error text color is black
+
       ),
     ),
   );
 }
+
 
