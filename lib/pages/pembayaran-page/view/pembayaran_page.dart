@@ -179,8 +179,8 @@ class PembayaranPage extends GetView<PembayaranController> {
                           double totalPrice = 0;
                           for (CartItem cartItem in cartController.cartItems) {
                             totalPrice += cartItem.price * cartItem.quantity;
-                            totalPrice -= voucherController.appliedVoucher.value?.discount ?? 0;
                           }
+                          totalPrice -= voucherController.appliedVoucher.value?.discount ?? 0;
                           return Text(
                               currencyFormat.format(totalPrice),
                               style: boldTextStyle);

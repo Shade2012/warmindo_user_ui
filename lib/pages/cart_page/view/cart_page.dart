@@ -216,8 +216,8 @@ class CartPage extends StatelessWidget {
                                             double totalPrice = 0;
                                             for (CartItem cartItem in controller.cartItems) {
                                               totalPrice += cartItem.price * cartItem.quantity;
-                                              totalPrice -= voucherController.appliedVoucher.value?.discount ?? 0;
                                             }
+                                            totalPrice -= voucherController.appliedVoucher.value?.discount ?? 0;
                                             return Text(
                                                 currencyFormat.format(totalPrice),
                                                 style: boldTextStyle);
