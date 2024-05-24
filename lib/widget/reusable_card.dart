@@ -97,7 +97,7 @@ class ReusableCard extends StatelessWidget {
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                          Text('4.6', style: ratingTextStyle),
+                          Text(product.ratings.first.toString(), style: ratingTextStyle),
                         ],
                       ),
                       Text(currencyFormat.format(product.price), style: priceTextStyle),

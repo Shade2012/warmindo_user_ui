@@ -68,7 +68,8 @@ class HistoryPage extends StatelessWidget {
                 margin: EdgeInsets.all(10),
                 child: Obx(() => Text(controller.selectedCategory.value.toString(),style: headerBold,),)),
             Flexible(
-              child: Obx(() => ListView.builder(
+              child: Obx(() =>
+                  ListView.builder(
                 shrinkWrap: true,
                 physics: AlwaysScrollableScrollPhysics(),
                 primary: false,

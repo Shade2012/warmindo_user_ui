@@ -7,6 +7,7 @@ import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 
 import '../../history_page/model/history.dart';
+import '../../menu_page/model/menu_model.dart';
 import '../../voucher_page/controller/voucher_controller.dart';
 
 class PembayaranController extends GetxController{
@@ -46,7 +47,7 @@ void makePayment() {
       name: item.productName,
       price: item.price,
       imagePath: item.productImage,
-      quantity: item.quantity,
+      quantity: item.quantity, category: '', description: '',
     )).toList();
 
     Order order = Order(

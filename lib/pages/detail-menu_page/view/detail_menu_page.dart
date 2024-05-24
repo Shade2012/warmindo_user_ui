@@ -55,7 +55,7 @@ class DetailMenuPage extends StatelessWidget {
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Icon(Icons.star_rounded, color: Colors.orange, size: 23,),
-                          Text('4.6', style: descriptionratingTextStyle),
+                          Text(menu.ratings.toString(), style: descriptionratingTextStyle),
                         ],
                       ),
                     ],

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/model/history.dart';
 import 'package:warmindo_user_ui/widget/batal_popup.dart';
 import 'package:warmindo_user_ui/widget/cart.dart';
 
+import '../../../widget/myRatingPopUp/rating_popup.dart';
 import '../../cart_page/controller/cart_controller.dart';
 import '../../cart_page/model/cartmodel.dart';
+import '../../menu_page/model/menu_model.dart';
 import '../../voucher_page/model/voucher_model.dart';
 
 class HistoryController extends GetxController {
@@ -17,6 +20,12 @@ class HistoryController extends GetxController {
   RxString status = ''.obs;
   var selectedCategory = 'Semua'.obs;
   final RxBool isLoading = true.obs;
+  final RxBool isRating2 = false.obs;
+
+
+
+
+
 
 
   @override
@@ -121,6 +130,9 @@ class HistoryController extends GetxController {
         return Colors.transparent; // Default color if status is unknown
     }
   }
+  void gotoRating(Order order){
+
+  }
   void goToCart(Order order) {
     List<CartItem> itemsToAdd = order.menus.map((menu) {
       return CartItem(
@@ -139,15 +151,25 @@ class HistoryController extends GetxController {
     Get.to(CartPage());
   }
 
-  void onButtonPressed(Order order) {
+  void onButtonPressed(Order order,BuildContext context) {
     if(order.status == 'Selesai' || order.status == "Batal")
       {
         goToCart(order);
       } else if (order.status == 'In Progress' || order.status == 'Pesanan Siap'){
-      Get.to(BatalPopup());
+      showDialog(context: context,  builder: (BuildContext context) {
+        return BatalPopup(order: order,);
+      },);
     } else{
       return null;
     }
   }
+  void showCustomModalForRating(Order product, BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) => RatingCard(order: product,),
+    );
+  }
 
 }
+

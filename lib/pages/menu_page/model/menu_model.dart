@@ -1,13 +1,17 @@
+import 'package:get/get.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 
 class Menu {
   final int id;
   final String name;
+  List<double> ratings;
   final String category;
   final int price;
   final String description;
   final String imagePath;
+
   int quantity;
+
 
   Menu({
     required this.id,
@@ -16,8 +20,19 @@ class Menu {
     required this.price,
     required this.description,
     required this.imagePath,
+    this.ratings = const [],
     this.quantity = 1
   });
+  double get meanRating {
+    if (ratings.isEmpty) {
+      return 0.0;
+    }
+    return ratings.reduce((a, b) => a + b) / ratings.length;
+  }
+
+  void addRating(double rating) {
+    ratings.add(rating);
+  }
 }
 
 List<Menu> menuList = [
@@ -28,7 +43,7 @@ List<Menu> menuList = [
     category: 'Minuman',
     price: 4000,
     description: 'bubuk kopi dengan air panas langsung dalam gelas atau cangkir.',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.6]
   ),
   Menu(
     id: 2,
@@ -36,7 +51,7 @@ List<Menu> menuList = [
     category: 'Makanan',
     price: 14000,
     description: 'Ayam goreng dengan sambal penyet dan mi indomie.',
-    imagePath: Images.onboard1,
+    imagePath: Images.onboard1,ratings: [4.6]
   ),
   Menu(
     id: 3,
@@ -44,7 +59,7 @@ List<Menu> menuList = [
     category: 'Makanan',
     price: 12000,
     description: 'Nasi goreng spesial dengan campuran bumbu rempah pilihan.',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.0]
   ),
   Menu(
     id: 4,
@@ -52,7 +67,7 @@ List<Menu> menuList = [
     category: 'Makanan',
     price: 12000,
     description: 'Ayam goreng yang gurih dan renyah dengan bumbu khas.',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.0]
   ),
   Menu(
     id: 5,
@@ -60,7 +75,7 @@ List<Menu> menuList = [
     category: 'Makanan',
     price: 10000,
     description: 'Ayam goreng dengan taburan serundeng yang lezat.',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.0]
   ),
   Menu(
     id: 6,
@@ -68,7 +83,7 @@ List<Menu> menuList = [
     category: 'Makanan',
     price: 4500,
     description: 'Mie goreng dengan saus pedas dan irisan sayuran segar.',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.0]
   ),
   Menu(
     id: 7,
@@ -76,7 +91,7 @@ List<Menu> menuList = [
     category: 'Makanan',
     price: 13000,
     description: 'Mie ayam dengan bumbu pedas dan daging ayam yang empuk.',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.0]
   ),
   Menu(
     id: 8,
@@ -84,7 +99,7 @@ List<Menu> menuList = [
     category: 'Minuman',
     price: 3000,
     description: 'Minuman rasa jeruk yang menyegarkan',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.0]
   ),
   Menu(
     id: 9,
@@ -92,7 +107,7 @@ List<Menu> menuList = [
     category: 'Minuman',
     price: 4000,
     description: 'Minuman kopi dingin yang menyegarkan.',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.0]
   ),
   Menu(
     id: 10,
@@ -100,7 +115,7 @@ List<Menu> menuList = [
     category: 'Minuman',
     price: 4000,
     description: 'Minuman capucino dengan cita rasa khas.',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.0]
   ),
   Menu(
     id: 11,
@@ -108,7 +123,7 @@ List<Menu> menuList = [
     category: 'Minuman',
     price: 3000,
     description: 'Es teh dengan tambahan es batu yang segar.',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.0]
   ),
   Menu(
     id: 12,
@@ -116,7 +131,7 @@ List<Menu> menuList = [
     category: 'Snack',
     price: 1000,
     description: 'Gorengan berbahan dasar tepung terigu yang renyah dan gurih.',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.7]
   ),
   Menu(
     id: 13,
@@ -124,6 +139,6 @@ List<Menu> menuList = [
     category: 'Snack',
     price: 1000,
     description: 'Gorengan berisi campuran sayuran dan tepung yang gurih.',
-    imagePath: Images.eximagemenu,
+    imagePath: Images.eximagemenu,ratings: [4.0]
   ),
 ];

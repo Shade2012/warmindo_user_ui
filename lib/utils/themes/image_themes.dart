@@ -23,5 +23,7 @@ class Images {
   static const String placeholder = 'assets/images/placeholder.png';
   static const String exampleverfication2 = 'assets/images/exampleverfication2.png';
 
+  static const String batalask = 'assets/images/batal.png';
 }
+
 
