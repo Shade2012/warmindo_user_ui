@@ -1,6 +1,7 @@
 
 
 import 'package:get/get.dart';
+import 'package:warmindo_user_ui/pages/menu_page/model/menu_model.dart';
 
 import '../../../utils/themes/image_themes.dart';
 import '../../voucher_page/model/voucher_model.dart';
@@ -14,6 +15,7 @@ class Order {
   final String? reason;
   final String? paymentMethod;
   final String? orderMethod;
+  RxBool isRatingDone;
   Order({
     required this.id,
     required this.menus,
@@ -23,25 +25,11 @@ class Order {
     this.vouchers,
     this.reason,
     this.paymentMethod,
-  });
+    bool isRatingDone = false, // Initialize as regular boolean value
+  }) : isRatingDone = isRatingDone.obs;
 }
 
-class Menu {
-  final int id;
-  final String name;
-  final int price;
-  final String imagePath;
-  final int quantity;
 
-
-  Menu({
-    required this.id,
-    required this.name,
-    required this.price,
-    required this.imagePath,
-    required this.quantity
-  });
-}
 
 // Objek Order pertama
 List<Order> orderList = [
@@ -53,20 +41,20 @@ Order(
         price: 1000,
         quantity: 1,
         imagePath: Images.promo1,
-        id: 12,
+        id: 12, category: 'makanan', description: 'tempe',ratings: [4.7]
       ),
       Menu(
           name: "Es Teh",
           price: 3000,
           quantity: 3,
-          imagePath: Images.promo1, id: 11
+          imagePath: Images.promo1, id: 11, category: '', description: '',ratings: [4.0]
       ),
       Menu(
           id:7,
           name: "Mie Ayam Penyet",
           price: 13000,
           quantity: 1,
-          imagePath: Images.promo1
+          imagePath: Images.promo1, category: '', description: '',ratings: [4.6]
       )
     ],
     status: "Batal".obs,
@@ -80,10 +68,10 @@ Order(
     ],
     menus: [
       Menu(
-          name: "Mie Ayam penyet",
+          name: "Mie Ayam Penyet",
           price: 13000,
           imagePath: Images.promo1,
-          quantity: 1, id: 7
+          quantity: 1, id: 7, category: '', description: '',ratings: [4.6]
       )
     ],
     status: "Selesai".obs,
@@ -98,10 +86,11 @@ Order(
     ],
     menus: [
       Menu(
-          name: "Mie Ayam penyet",
+          name: "Mie Ayam Penyet",
           price: 13000,
           imagePath: Images.promo1,
-          quantity: 1, id: 7
+          quantity: 1, id: 7,
+          category: '', description: '',ratings: [4.6]
       )
     ],
     status: "Menunggu Batal".obs,
@@ -116,10 +105,11 @@ Order(
     ],
     menus: [
       Menu(
-          name: "Mie Ayam penyet",
+          name: "Mie Ayam Penyet",
           price: 13000,
           imagePath: Images.promo1,
-          quantity: 1, id: 7
+          quantity: 1, id: 7,
+          category: '', description: '',ratings: [4.6]
       )
     ],
     status: "In Progress".obs,
@@ -134,10 +124,11 @@ Order(
     ],
     menus: [
       Menu(
-          name: "Mie Ayam penyet",
+          name: "Mie Ayam Penyet",
           price: 13000,
           imagePath: Images.promo1,
-          quantity: 1, id: 7
+          quantity: 1, id: 7,
+          category: '', description: '',ratings: [4.6]
       )
     ],
     status: "Pesanan Siap".obs,

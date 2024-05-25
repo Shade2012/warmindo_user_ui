@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
@@ -10,8 +11,10 @@ import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import '../../../utils/themes/buttonstyle_themes.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../widget/appBar.dart';
+
 import '../../history_page/controller/history_controller.dart';
 import '../../history_page/model/history.dart';
+import '../../menu_page/model/menu_model.dart';
 
 class HistoryDetailPage extends StatelessWidget {
   final HistoryController controller = Get.put(HistoryController());
@@ -32,7 +35,7 @@ class HistoryDetailPage extends StatelessWidget {
         return Colors.black;
     }
   }
- HistoryDetailPage({Key? key, required this.order}) : super(key: key);
+ HistoryDetailPage({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -75,13 +78,14 @@ class HistoryDetailPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Center(
-                            child: Text(order.status.value, style: TextStyle(
-                                fontFamily: GoogleFonts.oxygen().fontFamily,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: labelColor
-                            ),),
+                          Obx(()=> Center(
+                              child: Text(order.status.value, style: TextStyle(
+                                  fontFamily: GoogleFonts.oxygen().fontFamily,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: labelColor
+                              ),),
+                            ),
                           ),
                           SizedBox(height: 10,),
                           Row(
@@ -95,6 +99,39 @@ class HistoryDetailPage extends StatelessWidget {
                           SizedBox(height: 10,),
                           Text('${totalQuantity} Items',style: boldTextStyle,),
                           SizedBox(height: 10,),
+                          Obx(() {
+                            return Visibility(
+                              visible: order.status.value.toLowerCase() == 'selesai' && order.isRatingDone.value == false,
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Text("Rating", style: boldTextStyle,),
+                                    SizedBox(height: 10,),
+                                    GestureDetector(
+                                      onTap: () {
+                                        controller.showCustomModalForRating(order, context);
+
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.star_border_rounded, size: 50,),
+                                          Icon(Icons.star_border_rounded, size: 50),
+                                          Icon(Icons.star_border_rounded, size: 50),
+                                          Icon(Icons.star_border_rounded, size: 50),
+                                          Icon(Icons.star_border_rounded, size: 50)
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+
+
+
+                          SizedBox(height: 20,),
                           ListView.separated(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -175,13 +212,14 @@ class HistoryDetailPage extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 20,),
-                Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: (){
-                        controller.onButtonPressed(order);
-                      },
-                      child: Text(controller.getButtonText(order),style: whiteboldTextStyle15,),style: dynamicButtonStyle(order.status.value),),
+                Obx(()=> Container(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: (){
+                          controller.onButtonPressed(order,context);
+                        },
+                        child: Text(controller.getButtonText(order),style: whiteboldTextStyle15,),style: dynamicButtonStyle(order.status.value),),
+                  ),
                 )
               ],
             ),
@@ -190,3 +228,4 @@ class HistoryDetailPage extends StatelessWidget {
     );
   }
 }
+
