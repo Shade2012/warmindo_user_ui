@@ -78,4 +78,34 @@ ButtonStyle button_cancel() {
     ),
   );
 }
+ButtonStyle button_detail_voucher() {
+  return ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(ColorResources.voucherbtnDetail),
+    shape: MaterialStateProperty.all<OutlinedBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20.0),
+          bottomRight: Radius.circular(20.0),
+        ),
+
+      ),
+    ),
+  );
+}
+ButtonStyle button_reedem_voucher() {
+  return ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+    shape: MaterialStateProperty.all<OutlinedBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+        Radius.circular(10.0),
+        ),
+        side: BorderSide(
+          color: Colors.grey, // Set the border color here
+          // Set the border width here
+        ),
+      ),
+    ),
+  );
+}
 
