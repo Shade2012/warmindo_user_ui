@@ -44,6 +44,7 @@ import 'package:warmindo_user_ui/pages/splash_page/view/splash_page.dart';
 import 'package:warmindo_user_ui/pages/veritification_page/binding/veritification_binding.dart';
 import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_page.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/binding/voucher_binding.dart';
+import 'package:warmindo_user_ui/pages/voucher_page/model/voucher_model.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/view/voucher_page.dart';
 
 part 'AppRoutes.dart';
@@ -149,11 +150,6 @@ class AppPages {
         name: _Paths.EDITPROFILE_PAGE,
         page: () => EditProfileScreen(),
         binding: EditProfileBinding(),
-        transition: Transition.fadeIn,
-        transitionDuration: const Duration(milliseconds: 500)),
-    GetPage(
-        name: _Paths.DETAIL_VOUCHER_PAGE,
-        page: () => DetailVoucherPage(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(

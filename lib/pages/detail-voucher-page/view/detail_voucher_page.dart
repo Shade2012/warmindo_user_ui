@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:warmindo_user_ui/pages/voucher_page/model/voucher_model.dart';
 
 class DetailVoucherPage extends StatelessWidget {
-  const DetailVoucherPage({Key? key});
+
+  final Voucher voucher;
+   DetailVoucherPage({Key? key, required this.voucher});
 
   @override
   Widget build(BuildContext context) {
+    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     return Scaffold(
       appBar: AppBar(
         title: Text('Detail Voucher'),
@@ -29,7 +34,7 @@ class DetailVoucherPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               Text(
-                'Dapatkan pengalaman berbelanja yang lebih menyenangkan dengan voucher eksklusif untuk Anda, pengguna baru kami! Gunakan kode voucher "NEWUSER5K" saat checkout dan nikmati potongan harga sebesar Rp 5000 untuk pembelian pertama Anda.',
+                'Dapatkan pengalaman berbelanja yang lebih menyenangkan dengan voucher eksklusif untuk Anda, pengguna baru kami! Gunakan kode voucher ${voucher.code} saat checkout dan nikmati potongan harga sebesar Rp ${currencyFormat.format(voucher.discount)} untuk pembelian pertama Anda.',
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 16),

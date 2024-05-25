@@ -12,11 +12,15 @@ class VoucherController extends GetxController {
   final CartController controller = Get.put(CartController());
   RxList<Voucher> voucher = <Voucher>[].obs;
   Rx<Voucher?> appliedVoucher = Rx<Voucher?>(null);
+  RxBool isLoading = true.obs;
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     fetchProduct();
+    Future.delayed(Duration(seconds: 4),(){
+      isLoading.value = false;
+    });
 
   }
   void applyVoucher(Voucher voucher) {
