@@ -95,6 +95,7 @@ ButtonStyle button_detail_voucher() {
 ButtonStyle button_reedem_voucher() {
   return ButtonStyle(
     backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+    elevation: MaterialStateProperty.all<double>(0),
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -109,3 +110,37 @@ ButtonStyle button_reedem_voucher() {
   );
 }
 
+ButtonStyle button_login() {
+  return ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(ColorResources.btnonboard2),
+    elevation: MaterialStateProperty.all<double>(0),
+    shape: MaterialStateProperty.all<OutlinedBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+        side: BorderSide(
+          color: ColorResources.btnonboard2,
+        ),
+      ),
+    ),
+  );
+}
+
+ButtonStyle button_register() {
+  return ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+    elevation: MaterialStateProperty.all<double>(0),
+    shape: MaterialStateProperty.all<OutlinedBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+        side: BorderSide(
+          color: ColorResources.btnonboard2, // Set the border color here
+          // Set the border width here
+        ),
+      ),
+    ),
+  );
+}

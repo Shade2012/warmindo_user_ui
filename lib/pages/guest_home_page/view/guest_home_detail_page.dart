@@ -7,12 +7,12 @@ import 'package:warmindo_user_ui/widget/reusable_card.dart';
 import '../../menu_page/model/menu_model.dart';
 
 
-class FilteredMenuPage extends StatelessWidget {
+class GuestFilteredMenuPage extends StatelessWidget {
 
   final List<Menu> filteredMenu;
   int price;
 
-  FilteredMenuPage({Key? key, required this.filteredMenu,required this.price}) : super(key: key);
+  GuestFilteredMenuPage({Key? key, required this.filteredMenu,required this.price}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +24,15 @@ class FilteredMenuPage extends StatelessWidget {
           margin: EdgeInsets.only(top: 20),
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
                 mainAxisExtent: 240
             ),
             itemCount: filteredMenu.length,
             itemBuilder: (context, index) {
               final menu = filteredMenu[index];
-              return ReusableCard(context: context, product: menu, width: MediaQuery.of(context).size.width * 0.8,isGuest: false,);
+              return ReusableCard(context: context, product: menu, width: MediaQuery.of(context).size.width * 0.8, isGuest: true,);
             },
           ),
         ),

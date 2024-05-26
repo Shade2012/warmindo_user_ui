@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 
@@ -15,6 +17,7 @@ class BatalPopup extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
+      elevation: 0,
       contentPadding: EdgeInsets.all(20),
 
       content: SingleChildScrollView(
@@ -53,25 +56,30 @@ class BatalPopup extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(onPressed: (){
-                  Get.back();
-                }, style: button_no(),child: Container(
-
-                  padding: const EdgeInsets.all(15),
-                  child: Text("Tidak",style: boldTextStyle,),
-                )),
-                ElevatedButton(onPressed: (){
-                  if(ctrAlasan.text.isEmpty){
-                  Get.snackbar("Pesan", "Beri alasan terlebih dahulu kenapa membatalkan pesanan",backgroundColor: Colors.white,);
-                  } else {
-                    order.status.value = "Menunggu Batal";
+                Expanded(
+                  child: ElevatedButton(onPressed: (){
                     Get.back();
-                  }
-                },style: button_cancel(), child: Container(
+                  }, style: button_no(),child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 15),
 
-                  padding: const EdgeInsets.all(15),
-                  child: Text("Batalkan",style: whiteboldTextStyle15,),
-                ))
+                    child: Text("Tidak",style: boldTextStyle,),
+                  )),
+                ),
+                SizedBox( width: 10,),
+                Expanded(
+                  child: ElevatedButton(onPressed: (){
+                    if(ctrAlasan.text.isEmpty){
+                    Get.snackbar("Pesan", "Beri alasan terlebih dahulu kenapa membatalkan pesanan",backgroundColor: Colors.white,);
+                    } else {
+                      order.status.value = "Menunggu Batal";
+                      Get.back();
+                    }
+                  },style: button_cancel(), child: Container(
+padding: EdgeInsets.symmetric(vertical: 15),
+
+                    child: Text("Batalkan",style: whiteboldTextStyle15,),
+                  )),
+                )
               ],
             )
           ],

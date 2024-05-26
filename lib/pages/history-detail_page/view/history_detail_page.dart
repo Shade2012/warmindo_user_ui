@@ -42,7 +42,7 @@ class HistoryDetailPage extends StatelessWidget {
     final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    final labelColor = _getLabelColor(order.status.value);
+
     int totalQuantity = 0;
     for (Menu menu in order.menus) {
       totalQuantity += menu.quantity;
@@ -78,14 +78,20 @@ class HistoryDetailPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Obx(()=> Center(
-                              child: Text(order.status.value, style: TextStyle(
-                                  fontFamily: GoogleFonts.oxygen().fontFamily,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: labelColor
-                              ),),
-                            ),
+                          Obx(() {
+                              final labelColor = _getLabelColor(order.status.value);
+                              return Center(
+                                child: Text(
+                                  order.status.value,
+                                  style: TextStyle(
+                                    fontFamily: GoogleFonts.oxygen().fontFamily,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: labelColor,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                           SizedBox(height: 10,),
                           Row(

@@ -17,13 +17,14 @@ class MenuCategory extends StatelessWidget {
   final MenuPageController menuController = Get.put(MenuPageController());
   final popUpcontroller = Get.put(MyCustomPopUpController());
   final String categoryName;
+  final bool isGuest;
   final List<Menu> menuList;
   final BuildContext context;
    MenuCategory({
     Key? key,
     required this.categoryName,
     required this.menuList,
-    required this.context
+    required this.context, required this.isGuest
   }) : super(key: key);
 
   @override
@@ -80,7 +81,7 @@ class MenuCategory extends StatelessWidget {
             final menu = menuList[index];
             return GestureDetector(
               onTap: () {
-                Get.to(DetailMenuPage(menu: menu));
+                Get.to(DetailMenuPage(menu: menu, isGuest: isGuest,));
               },
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
@@ -142,7 +143,12 @@ class MenuCategory extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    popUpcontroller.showCustomModalForItem(menu, context);
+                                    if(isGuest == true){
+                                      popUpcontroller.showCustomModalForGuest(context);
+                                    }else{
+                                      popUpcontroller.showCustomModalForItem(menu, context);
+                                    }
+
                                   },
                                   child: Container(
                                     padding: EdgeInsets.all(2),
