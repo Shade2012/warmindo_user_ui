@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/home_controller.dart';
 import 'package:warmindo_user_ui/pages/home_page/shimmer/homeshimmer.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
@@ -21,6 +22,7 @@ import '../../../widget/snack_widget.dart';
 import '../../detail-menu_page/view/detail_menu_page.dart';
 
 class HomePage extends StatelessWidget {
+  final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
@@ -85,8 +87,8 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ReusableCard(width: screenWidth * 0.43,context: context, product: controller.menu[0], ),
-                    ReusableCard(width: screenWidth * 0.43 ,context: context, product: controller.menu[1],),
+                    ReusableCard(width: screenWidth * 0.43,context: context, product: controller.menu[0], isGuest: false, ),
+                    ReusableCard(width: screenWidth * 0.43 ,context: context, product: controller.menu[1],isGuest: false,),
 
                   ],
                 ),
@@ -95,7 +97,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 20,),
                 GestureDetector(
                   onTap: (){
-                    Get.to(DetailMenuPage(menu: controller.menu[11]));
+                    Get.to(DetailMenuPage(menu: controller.menu[11], isGuest: false,));
                   },
                   child: Container(
                     padding: EdgeInsets.only(left: 10),
@@ -119,10 +121,10 @@ class HomePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 10,),
-                              Text("Mendoan", style: regularInputTextStyle),
+                              Text(controller.menu[11].name, style: regularInputTextStyle),
                               SizedBox(height: 3,),
                               Text(
-                                "adonan tepung teriguyang di goreng krispi dan taburi gula dan kayumanis ",
+                                controller.menu[11].description,
                                 style: descriptionTextStyle,
                               ),
                               SizedBox(height: 10,),
@@ -133,11 +135,11 @@ class HomePage extends StatelessWidget {
                                     crossAxisAlignment: WrapCrossAlignment.center,
                                     children: [
                                       Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                                      Text('4.6', style: ratingTextStyle),
+                                      Text(controller.menu[11].ratings.first.toString(), style: ratingTextStyle),
                                     ],
                                   ),
                                   Spacer(),
-                                  Text("Rp14.000", style: priceTextStyle),
+                                  Text(currencyFormat.format(controller.menu[11].price), style: priceTextStyle),
                                 ],
                               ),
                               SizedBox(height: 10,),

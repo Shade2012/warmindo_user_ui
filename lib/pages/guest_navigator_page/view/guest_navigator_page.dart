@@ -14,7 +14,7 @@ class GuestNavigatorPage extends StatelessWidget {
   final List<Widget> pages = [
     GuestHomePage(),
     GuestMenuPage(),
-    const GuestProfilePage(), 
+    const GuestProfilePage(),
   ];
 
   @override
@@ -25,12 +25,13 @@ class GuestNavigatorPage extends StatelessWidget {
         onPressed: () {
           controller.changeIndex(1);
         },
-        child: Obx(() => SvgPicture.asset(controller.currentIndex.value == 1 ? IconThemes.guest_iconmenuSelected: IconThemes.guest_iconmenu)),
+        child: Obx(() => SvgPicture.asset(controller.currentIndex.value == 1 ? IconThemes.guest_iconmenuSelected: IconThemes.guest_iconmenu, color: Colors.white)),
         backgroundColor: ColorResources.bgfloatingActionButtonColor,
         shape: CircleBorder(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Obx(() => BottomNavigationBar(
+
         currentIndex: controller.currentIndex.value,
         onTap: controller.changeIndex,
         backgroundColor: ColorResources.backgroundColor,
@@ -45,7 +46,8 @@ class GuestNavigatorPage extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: SizedBox.shrink(),
-            label: '', 
+            label: '',
+
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

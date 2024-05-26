@@ -78,7 +78,7 @@ class MenuPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: MenuCategory(
                   categoryName: 'All',
-                  menuList: menuList,context: context
+                  menuList: menuList,context: context, isGuest: false,
                 ),
               ),
             ),
@@ -88,7 +88,7 @@ class MenuPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: MenuCategory(
                   categoryName: 'Minuman',
-                  menuList: drinksList,context: context
+                  menuList: drinksList,context: context, isGuest: false
                 ),
               ),
             ),
@@ -98,7 +98,7 @@ class MenuPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: MenuCategory(
                   categoryName: 'Makanan',
-                  menuList: foodList, context: context,
+                  menuList: foodList, context: context, isGuest: false
                 ),
               ),
             ),
@@ -108,7 +108,7 @@ class MenuPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: MenuCategory(
                   categoryName: 'Snack',
-                  menuList: snackList,context: context
+                  menuList: snackList,context: context, isGuest: false
                 ),
               ),
             ),

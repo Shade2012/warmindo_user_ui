@@ -10,7 +10,8 @@ import '../../../widget/myCustomPopUp/myPopup_controller.dart';
 
 class DetailMenuPage extends StatelessWidget {
   final Menu menu;
-  DetailMenuPage({Key? key, required this.menu}) : super(key: key);
+  final bool isGuest;
+  DetailMenuPage({Key? key, required this.menu, required this.isGuest}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +102,12 @@ class DetailMenuPage extends StatelessWidget {
 
             InkWell(
               onTap: () {
-                popUpcontroller.showCustomModalForItem(menu, context);
+                if(isGuest == false){
+                  popUpcontroller.showCustomModalForItem(menu, context);
+                }else{
+                  popUpcontroller.showCustomModalForGuest(context);
+                }
+
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),

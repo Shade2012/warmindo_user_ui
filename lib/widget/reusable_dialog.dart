@@ -32,6 +32,7 @@ class ReusableDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      elevation: 0,
       backgroundColor: ColorResources.backgroundColor,
       title: Text(
         title,

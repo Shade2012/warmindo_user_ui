@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:warmindo_user_ui/pages/onboard_page/controller/onboard_controller.dart';
@@ -76,7 +77,7 @@ class OnboardPage extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: 134),
+
               // Tampilkan tombol skip dan next jika tidak berada di halaman terakhir
               Center(
                 child: SmoothPageIndicator(
@@ -98,108 +99,117 @@ class OnboardPage extends StatelessWidget {
               ),
               Visibility(
                 visible: !controller.isLastPage.value,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () => controller.pageController.animateToPage(
-                          pageContent.length - 1,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.ease),
-                      child: Text('Skip', style: onboardingskip),
-                    ),
-                    SizedBox(width: 241),
-                    Stack(
-                      children: [
-                        Container(
-                          width: 59,
-                          height: 49,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(
-                                    0.5), // Warna hitam dengan opasitas 50%
-                                spreadRadius: 0, // Persebaran bayangan
-                                blurRadius: 10, // Kekaburan bayangan
-                                offset: Offset(0,
-                                    3), // Geser bayangan (horizontal, vertical)
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () => controller.pageController.animateToPage(
+                            pageContent.length - 1,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease),
+                        child: Text('Skip', style: onboardingskip),
+                      ),
+                          Container(
+                             margin: EdgeInsets.only(right: 10),
+                            width: 55,
+                            height: 49,
+                            decoration: BoxDecoration(
+
+                              boxShadow: [
+                                BoxShadow(
+                                  color: ColorResources.tomatoRed, // Warna hitam dengan opasitas 50%
+                                  spreadRadius: 0, // Persebaran bayangan
+                                  blurRadius: 6, // Kekaburan bayangan
+                                  offset: Offset(0,
+                                      3), // Geser bayangan (horizontal, vertical)
+                                ),
+                              ],
+                              color: ColorResources.primaryColorLight,
+                              borderRadius: BorderRadius.circular(9),
+                            ),
+
+                            child: GestureDetector(
+                              onTap: () {
+                                controller.pageController.nextPage(
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.ease);
+                              },
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                color: ColorResources.tomatoRed,
                               ),
-                            ],
-                            color: ColorResources.primaryColorLight,
-                            borderRadius: BorderRadius.circular(9),
-                          ),
-                        ),
-                        Positioned(
-                          right: 14,
-                          top: 10,
-                          child: GestureDetector(
-                            onTap: () {
-                              controller.pageController.nextPage(
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.ease);
-                            },
-                            child: Icon(
-                              Icons.arrow_forward_ios,
-                              color: ColorResources.tomatoRed,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               // Tampilkan tombol register dan login di halaman terakhir
               Visibility(
                 visible: controller.isLastPage.value,
-                child: Column(
-                  children: [
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () =>
-                              Get.offAllNamed(Routes.REGISTER_PAGE),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorResources.primaryColorLight,
-                            foregroundColor: ColorResources.btnonboard2,
-                            minimumSize: Size(195, 53),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4)),
-                            side: BorderSide(width: 1.5, color: ColorResources.borderside),
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(child:  ElevatedButton(
+                            onPressed: () =>
+                                Get.offAllNamed(Routes.REGISTER_PAGE),
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: ColorResources.primaryColorLight,
+                              foregroundColor: ColorResources.btnonboard2,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4)),
+                              side: BorderSide(width: 1.5, color: ColorResources.btnonboard2),
+                            ),
+                            child: Padding(
+                             padding: EdgeInsets.symmetric(vertical: 15),
+                              child: Text('Register'),
+                            ),
+                          ),),
+
+                          SizedBox(width: 8),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () => Get.offAllNamed(Routes.LOGIN_PAGE),
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: Colors.white,
+                                foregroundColor: ColorResources.btnonboard2,
+
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4)),
+                                side: BorderSide(width: 1.5, color: ColorResources.btnonboard2),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 15),
+                                child: Text('Login'),
+                              ),
+                            ),
                           ),
-                          child: Text('Register'),
-                        ),
-                        SizedBox(width: 8),
-                        ElevatedButton(
-                          onPressed: () => Get.offAllNamed(Routes.LOGIN_PAGE),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorResources.primaryColorLight,
-                            foregroundColor: ColorResources.btnonboard2,
-                            minimumSize: Size(195, 53),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4)),
-                            side: BorderSide(width: 1.5, color: ColorResources.borderside),
-                          ),
-                          child: Text('Login'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 11),
-                    ElevatedButton(
-                      onPressed: () =>
-                          Get.offAllNamed(Routes.GUEST_NAVIGATOR_PAGE),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorResources.btnonboard,
-                        foregroundColor: ColorResources.primaryColorLight,
-                        minimumSize: Size(395, 45),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4)),
+                        ],
                       ),
-                      child: Text('Guest Mode'),
-                    ),
-                  ],
+                      SizedBox(height: 11),
+                      ElevatedButton(
+                        onPressed: () =>
+                            Get.offAllNamed(Routes.GUEST_NAVIGATOR_PAGE),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorResources.btnonboard,
+                          foregroundColor: ColorResources.primaryColorLight,
+                          minimumSize: Size(395, 45),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4)),
+                        ),
+                        child: Text('Guest Mode'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

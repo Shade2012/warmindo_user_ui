@@ -112,7 +112,7 @@ class ChangePasswordPage extends StatelessWidget {
                       );
                     }
                   },
-                  child: Text("Ubah Password2"),
+                  child: Text("Ubah Password"),
                 ),
               ],
             ),

@@ -53,9 +53,7 @@ class AppPages {
   late Order order2;
   AppPages._();
 
-
-
-  static const INITIAL = Routes.BOTTOM_NAVBAR;
+  static const INITIAL = Routes.GUEST_NAVIGATOR_PAGE;
 
 
   static final routes = [

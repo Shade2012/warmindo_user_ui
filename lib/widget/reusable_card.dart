@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -17,11 +18,12 @@ class ReusableCard extends StatelessWidget {
   final BuildContext context;
   final Menu product;
   final double width;
+  final bool isGuest;
 
   ReusableCard({
     Key? key,
     required this.context,
-    required this.product, required this.width,
+    required this.product, required this.width, required this.isGuest,
   }) : super(key: key);
 
   @override
@@ -31,7 +33,7 @@ class ReusableCard extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     return  GestureDetector(
       onTap: (){
-        Get.to(DetailMenuPage(menu: product));
+        Get.to(DetailMenuPage(menu: product, isGuest: isGuest,));
       },
       child: Container(
         width: width,
@@ -67,14 +69,17 @@ class ReusableCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 5,
-                  right: 8,
-                  child: Container(
-                    child: GestureDetector(
-                      onTap: (){},
-                      child: Cart(context: context, product: product,),
+                Visibility(
+                  visible: !isGuest,
+                  child: Positioned(
+                    top: 5,
+                    right: 8,
+                    child: Container(
+                      child: GestureDetector(
+                        onTap: (){},
+                        child: Cart(context: context, product: product,),
 
+                      ),
                     ),
                   ),
                 ),

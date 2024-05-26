@@ -24,6 +24,9 @@ class Images {
   static const String exampleverfication2 = 'assets/images/exampleverfication2.png';
 
   static const String batalask = 'assets/images/batal.png';
+  static const String haveaccount = 'assets/images/haveaccount2.png';
+  static const String guest = 'assets/images/guest.png';
+
 }
 
 
