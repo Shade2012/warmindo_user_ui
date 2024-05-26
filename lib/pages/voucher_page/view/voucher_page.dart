@@ -48,7 +48,7 @@ class VoucherPage extends StatelessWidget {
             Column(
               children: [
                 Container(
-                  height: screenHeight * 0.8,
+                  height: screenHeight * 0.83,
                   child: ListView.separated(
                     itemCount: controller.voucher.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -152,7 +152,6 @@ class VoucherPage extends StatelessWidget {
                 ),
               ],
             )
-
             ),
           ),
         ),
