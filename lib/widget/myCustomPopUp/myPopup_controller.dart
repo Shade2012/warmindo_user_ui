@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:warmindo_user_ui/pages/cart_page/model/cartmodel.dart';
-import 'package:warmindo_user_ui/pages/menu_page/model/menu_model.dart';
+import 'package:warmindo_user_ui/common/model/cartmodel.dart';
+import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
+import 'package:warmindo_user_ui/common/model/menu_model.dart';
+import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 
 import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../pages/cart_page/view/cart_page.dart';
@@ -13,7 +15,7 @@ class MyCustomPopUpController extends GetxController {
   final CartController cartController = Get.put(CartController());
   final CounterController counterController = Get.put(CounterController());
 
-  void showCustomModalForItem(Menu product, BuildContext context) {
+  void showCustomModalForItem(MenuList product, BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -29,13 +31,13 @@ class MyCustomPopUpController extends GetxController {
     );
   }
 
-  void addToCart(Menu product) {
+  void addToCart(MenuList product) {
     cartController.addToCart(CartItem(
-      productId: product.id,
-      productName: product.name,
-      price: product.price,
+      productId: product.menuId,
+      productName: product.nameMenu,
+      price: product.price.toInt(),
       quantity: counterController.quantity?.value ?? 0,
-      productImage: product.imagePath,
+      productImage: Images.eximagemenu,
     ));
     counterController.reset();
     print('Item added to cart');

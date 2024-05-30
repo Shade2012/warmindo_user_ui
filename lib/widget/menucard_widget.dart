@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
-import 'package:warmindo_user_ui/pages/menu_page/model/menu_model.dart';
+import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
+import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 
@@ -18,7 +19,7 @@ class MenuCategory extends StatelessWidget {
   final popUpcontroller = Get.put(MyCustomPopUpController());
   final String categoryName;
   final bool isGuest;
-  final List<Menu> menuList;
+  final List<MenuList> menuList;
   final BuildContext context;
    MenuCategory({
     Key? key,
@@ -111,7 +112,7 @@ class MenuCategory extends StatelessWidget {
                               topRight: Radius.circular(20),
                             ),
                             child: FadeInImage(
-                              image: AssetImage(menu.imagePath),
+                              image: AssetImage(Images.eximagemenu),
                               fit: BoxFit.cover,
                               placeholder: AssetImage(Images.placeholder),
                             ),
@@ -120,7 +121,7 @@ class MenuCategory extends StatelessWidget {
                       ],
                     ),
                     ListTile(
-                      title: Text(menu.name, style: regularInputTextStyle),
+                      title: Text(menu.nameMenu, style: regularInputTextStyle,maxLines: 1,overflow: TextOverflow.ellipsis,),
                       subtitle: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [

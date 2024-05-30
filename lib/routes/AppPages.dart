@@ -20,7 +20,7 @@ import 'package:warmindo_user_ui/pages/guest_profile_page/view/guest_profile_pag
 import 'package:warmindo_user_ui/pages/history-detail_page/binding/history_detail_binding.dart';
 import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/binding/history_binding.dart';
-import 'package:warmindo_user_ui/pages/history_page/model/history.dart';
+import 'package:warmindo_user_ui/common/model/history.dart';
 import 'package:warmindo_user_ui/pages/history_page/view/history_page.dart';
 import 'package:warmindo_user_ui/pages/home_page/binding/home_binding.dart';
 import 'package:warmindo_user_ui/pages/home_page/view/home_page.dart';
@@ -44,7 +44,7 @@ import 'package:warmindo_user_ui/pages/splash_page/view/splash_page.dart';
 import 'package:warmindo_user_ui/pages/veritification_page/binding/veritification_binding.dart';
 import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_page.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/binding/voucher_binding.dart';
-import 'package:warmindo_user_ui/pages/voucher_page/model/voucher_model.dart';
+import 'package:warmindo_user_ui/common/model/voucher_model.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/view/voucher_page.dart';
 
 part 'AppRoutes.dart';

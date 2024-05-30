@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
-import 'package:warmindo_user_ui/pages/menu_page/model/menu_model.dart';
+import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
+import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
 import '../pages/home_page/controller/home_controller.dart';
@@ -16,7 +17,7 @@ class ReusableCard extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
   final popUpcontroller = Get.put(MyCustomPopUpController());
   final BuildContext context;
-  final Menu product;
+  final MenuList product;
   final double width;
   final bool isGuest;
 
@@ -62,7 +63,7 @@ class ReusableCard extends StatelessWidget {
                       topRight: Radius.circular(20),
                     ),
                     child: FadeInImage(
-                      image: AssetImage(product.imagePath),
+                      image: AssetImage(Images.eximagemenu),
                       fit: BoxFit.cover,
                       placeholder: AssetImage(Images.placeholder),
                       alignment: Alignment.center,
@@ -86,7 +87,7 @@ class ReusableCard extends StatelessWidget {
               ],
             ),
             ListTile(
-              title: Text(product.name, style: regularInputTextStyle,maxLines: 1,overflow: TextOverflow.ellipsis,),
+              title: Text(product.nameMenu, style: regularInputTextStyle,maxLines: 1,overflow: TextOverflow.ellipsis,),
               subtitle:
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -102,7 +103,7 @@ class ReusableCard extends StatelessWidget {
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                          Text(product.ratings.first.toString(), style: ratingTextStyle),
+                          Text(product.ratings.toString(), style: ratingTextStyle),
                         ],
                       ),
                       Text(currencyFormat.format(product.price), style: priceTextStyle),

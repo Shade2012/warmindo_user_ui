@@ -24,10 +24,11 @@ import '../../detail-menu_page/view/detail_menu_page.dart';
 class HomePage extends StatelessWidget {
   final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final HomeController controller = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -84,104 +85,103 @@ class HomePage extends StatelessWidget {
                 ),
                 Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
                 SizedBox(height: 20,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ReusableCard(width: screenWidth * 0.43,context: context, product: controller.menu[0], isGuest: false, ),
-                    ReusableCard(width: screenWidth * 0.43 ,context: context, product: controller.menu[1],isGuest: false,),
-
-                  ],
-                ),
+                if (controller.menuElement.length > 1) // Check if there are at least 2 items
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ReusableCard(width: screenWidth * 0.43, context: context, product: controller.menuElement[0], isGuest: false,),
+                      ReusableCard(width: screenWidth * 0.43, context: context, product: controller.menuElement[1], isGuest: false,),
+                    ],
+                  ),
                 SizedBox(height: 20,),
                 Text("Favorite Snack", style: LoginboldTextStyle),
                 SizedBox(height: 20,),
-                GestureDetector(
-                  onTap: (){
-                    Get.to(DetailMenuPage(menu: controller.menu[11], isGuest: false,));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(left: 10),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 0,
-                          blurRadius: 4,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      color: ColorResources.backgroundCardColor,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(DetailMenuPage(menu: controller.menuElement[2], isGuest: false,));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 0,
+                            blurRadius: 4,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                        color: ColorResources.backgroundCardColor,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 10,),
+                                Text(controller.menuElement[5].nameMenu, style: regularInputTextStyle),
+                                SizedBox(height: 3,),
+                                Text(
+                                  controller.menuElement[5].description,maxLines: 2,
+                                  style: descriptionTextStyle,
+                                ),
+                                SizedBox(height: 10,),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Wrap(
+                                      crossAxisAlignment: WrapCrossAlignment.center,
+                                      children: [
+                                        Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
+                                        Text(controller.menuElement[5].ratings.toString(), style: ratingTextStyle),
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    Text(currencyFormat.format(controller.menuElement[5].price), style: priceTextStyle),
+                                  ],
+                                ),
+                                SizedBox(height: 10,),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          Stack(
                             children: [
-                              SizedBox(height: 10,),
-                              Text(controller.menu[11].name, style: regularInputTextStyle),
-                              SizedBox(height: 3,),
-                              Text(
-                                controller.menu[11].description,
-                                style: descriptionTextStyle,
-                              ),
-                              SizedBox(height: 10,),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Wrap(
-                                    crossAxisAlignment: WrapCrossAlignment.center,
-                                    children: [
-                                      Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                                      Text(controller.menu[11].ratings.first.toString(), style: ratingTextStyle),
-                                    ],
+                              Container(
+                                width: 122, // Use the screen width
+                                height: 104,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                    topRight: (Radius.circular(20)),
+                                    bottomRight: (Radius.circular(20)),
                                   ),
-                                  Spacer(),
-                                  Text(currencyFormat.format(controller.menu[11].price), style: priceTextStyle),
-                                ],
+                                  child: FadeInImage(
+                                    image: AssetImage(Images.onboard1),
+                                    fit: BoxFit.cover,
+                                    placeholder: AssetImage(Images.onboard2),
+                                  ),
+                                ),
                               ),
-                              SizedBox(height: 10,),
+                              Positioned(
+                                top: 5,
+                                right: 8,
+                                child: Container(
+                                  child: GestureDetector(
+                                    onTap: (){},
+                                    child: Cart(context: context, product: controller.menuElement[4],),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                        ),
-                        SizedBox(width: 10,),
-                        Stack(
-                          children: [
-                            Container(
-                              width: 122, // Use the screen width
-                              height: 104,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topRight: (Radius.circular(20)),
-                                  bottomRight: (Radius.circular(20)),
-                                ),
-                                child: FadeInImage(
-                                  image: AssetImage(Images.onboard1),
-                                  fit: BoxFit.cover,
-                                  placeholder: AssetImage(Images.onboard2),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 5,
-                              right: 8,
-                              child: Container(
-                                child: GestureDetector(
-                                  onTap: (){},
-                                  child: Cart(context: context, product: controller.menu[11],),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20,)
+                SizedBox(height: 20,),
               ],
             ),
             ),
@@ -191,3 +191,4 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+

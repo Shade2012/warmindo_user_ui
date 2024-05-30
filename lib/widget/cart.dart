@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 
 import '../pages/cart_page/controller/cart_controller.dart';
-import '../pages/cart_page/model/cartmodel.dart';
-import '../pages/menu_page/model/menu_model.dart';
+import '../common/model/cartmodel.dart';
+import '../common/model/menu_model.dart';
 import '../utils/themes/icon_themes.dart';
 import 'myCustomPopUp/myCustomPopup.dart';
 import 'myCustomPopUp/myPopup_controller.dart';
@@ -16,7 +17,7 @@ class Cart extends StatelessWidget {
   final popUpcontroller = Get.put(MyCustomPopUpController());
 
   final BuildContext context;
-  final Menu product;
+  final MenuList product;
 
   Cart({required this.context,required this.product});
 

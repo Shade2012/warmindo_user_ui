@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:warmindo_user_ui/widget/myRatingPopUp/rating_controller.dart';
 
 import '../../pages/history_page/controller/history_controller.dart';
-import '../../pages/history_page/model/history.dart';
-import '../../pages/menu_page/model/menu_model.dart';
+import '../../common/model/history.dart';
+import '../../common/model/menu_model.dart';
 import '../../utils/themes/buttonstyle_themes.dart';
 import '../../utils/themes/textstyle_themes.dart';
 

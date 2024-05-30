@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
-import 'package:warmindo_user_ui/pages/cart_page/model/cartmodel.dart';
+import 'package:warmindo_user_ui/common/model/cartmodel.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/controller/voucher_controller.dart';
 import 'package:warmindo_user_ui/widget/counter/counterCart.dart';
 

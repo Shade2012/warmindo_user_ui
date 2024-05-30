@@ -1,4 +1,4 @@
-import '../../../utils/themes/image_themes.dart';
+import '../../utils/themes/image_themes.dart';
 
 class CartItem {
   final int productId;

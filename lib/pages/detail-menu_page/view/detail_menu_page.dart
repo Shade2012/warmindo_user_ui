@@ -2,14 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:warmindo_user_ui/pages/menu_page/model/menu_model.dart';
+import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
+import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
+import '../../../utils/themes/image_themes.dart';
 import '../../../widget/appBar.dart';
 import '../../../widget/myCustomPopUp/myPopup_controller.dart';
 
 class DetailMenuPage extends StatelessWidget {
-  final Menu menu;
+  final MenuList menu;
   final bool isGuest;
   DetailMenuPage({Key? key, required this.menu, required this.isGuest}) : super(key: key);
 
@@ -40,13 +42,13 @@ class DetailMenuPage extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       child: Image.asset(
-                        menu.imagePath,
+                        Images.eximagemenu,
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   SizedBox(height: 10,),
-                  Text(menu.name, style: boldTextStyle2,),
+                  Text(menu.nameMenu, style: boldTextStyle2,),
                   Text(menu.category, style: regulargreyText,),
                   SizedBox(height: 10,),
                   Row(
@@ -56,7 +58,7 @@ class DetailMenuPage extends StatelessWidget {
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Icon(Icons.star_rounded, color: Colors.orange, size: 23,),
-                          Text(menu.ratings.first.toString(), style: descriptionratingTextStyle),
+                          Text(menu.ratings.toString(), style: descriptionratingTextStyle),
                         ],
                       ),
                     ],

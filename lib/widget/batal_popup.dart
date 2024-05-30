@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 
-import '../pages/history_page/model/history.dart';
+import '../common/model/history.dart';
 import '../utils/themes/buttonstyle_themes.dart';
 import '../utils/themes/textstyle_themes.dart';
 class BatalPopup extends StatelessWidget {

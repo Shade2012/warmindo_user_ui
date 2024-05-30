@@ -10,7 +10,7 @@ import 'package:warmindo_user_ui/widget/map/view/map_view.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../widget/appBar.dart';
 import '../../cart_page/controller/cart_controller.dart';
-import '../../cart_page/model/cartmodel.dart';
+import '../../../common/model/cartmodel.dart';
 
 class PembayaranPage extends GetView<PembayaranController> {
   final CartController cartController = Get.put(CartController());

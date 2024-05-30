@@ -84,8 +84,8 @@ class GuestHomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ReusableCard(width: screenWidth * 0.43,context: context, product: controller.menu[0],isGuest: true, ),
-                    ReusableCard(width: screenWidth * 0.43 ,context: context, product: controller.menu[1],isGuest: true,),
+                    ReusableCard(width: screenWidth * 0.43,context: context, product: controller.menuElement[0],isGuest: true, ),
+                    ReusableCard(width: screenWidth * 0.43 ,context: context, product: controller.menuElement[1],isGuest: true,),
 
                   ],
                 ),
@@ -94,7 +94,7 @@ class GuestHomePage extends StatelessWidget {
                 SizedBox(height: 20,),
                 GestureDetector(
                   onTap: (){
-                    Get.to(DetailMenuPage(menu: controller.menu[11], isGuest: true,));
+                    Get.to(DetailMenuPage(menu: controller.menuElement[2], isGuest: true,));
                   },
                   child: Container(
                     padding: EdgeInsets.only(left: 10),
@@ -118,10 +118,10 @@ class GuestHomePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 10,),
-                              Text(controller.menu[11].name, style: regularInputTextStyle),
+                              Text(controller.menuElement[5].nameMenu, style: regularInputTextStyle),
                               SizedBox(height: 3,),
                               Text(
-                                controller.menu[11].description,
+                                controller.menuElement[5].description,
                                 style: descriptionTextStyle,
                               ),
                               SizedBox(height: 10,),
@@ -132,11 +132,11 @@ class GuestHomePage extends StatelessWidget {
                                     crossAxisAlignment: WrapCrossAlignment.center,
                                     children: [
                                       Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                                      Text(controller.menu[11].ratings.first.toString(), style: ratingTextStyle),
+                                      Text(controller.menuElement[5].ratings.toString(), style: ratingTextStyle),
                                     ],
                                   ),
                                   Spacer(),
-                                  Text(currencyFormat.format(controller.menu[11].price), style: priceTextStyle),
+                                  Text(currencyFormat.format(controller.menuElement[5].price), style: priceTextStyle),
                                 ],
                               ),
                               SizedBox(height: 10,),

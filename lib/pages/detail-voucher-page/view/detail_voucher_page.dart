@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:warmindo_user_ui/pages/voucher_page/model/voucher_model.dart';
+import 'package:warmindo_user_ui/common/model/voucher_model.dart';
 
 class DetailVoucherPage extends StatelessWidget {
 

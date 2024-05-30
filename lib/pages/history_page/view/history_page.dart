@@ -9,7 +9,7 @@ import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/appBar.dart';
 import '../controller/history_controller.dart';
-import '../model/history.dart';
+import '../../../common/model/history.dart';
 
 class HistoryPage extends StatelessWidget {
   final HistoryController controller = Get.put(HistoryController());

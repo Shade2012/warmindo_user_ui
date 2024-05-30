@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/voucher_page/controller/voucher_controller.dart';
-import 'package:warmindo_user_ui/pages/voucher_page/model/voucher_model.dart';
+import 'package:warmindo_user_ui/common/model/voucher_model.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 
 import '../../utils/themes/image_themes.dart';

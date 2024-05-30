@@ -4,13 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
-import 'package:warmindo_user_ui/pages/history_page/model/history.dart';
+import 'package:warmindo_user_ui/common/model/history.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 
 import '../utils/themes/image_themes.dart';
-import '../pages/history_page/model/history.dart';
+import '../common/model/history.dart';
 
 class OrderBox extends StatelessWidget {
   final HistoryController controller = Get.put(HistoryController());
