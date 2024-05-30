@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../pages/menu_page/model/menu_model.dart';
+import '../../common/model/menu_model.dart';
 
 class RatingController extends GetxController{
   void addRating(int menuId, double rating) {

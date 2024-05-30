@@ -3,15 +3,15 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
-import 'package:warmindo_user_ui/pages/history_page/model/history.dart';
+import 'package:warmindo_user_ui/common/model/history.dart';
 import 'package:warmindo_user_ui/widget/batal_popup.dart';
 import 'package:warmindo_user_ui/widget/cart.dart';
 
 import '../../../widget/myRatingPopUp/rating_popup.dart';
 import '../../cart_page/controller/cart_controller.dart';
-import '../../cart_page/model/cartmodel.dart';
-import '../../menu_page/model/menu_model.dart';
-import '../../voucher_page/model/voucher_model.dart';
+import '../../../common/model/cartmodel.dart';
+import '../../../common/model/menu_model.dart';
+import '../../../common/model/voucher_model.dart';
 
 class HistoryController extends GetxController {
   final CartController cartController = Get.put(CartController());

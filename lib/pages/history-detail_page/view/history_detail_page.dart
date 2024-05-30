@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,8 +14,8 @@ import '../../../utils/themes/color_themes.dart';
 import '../../../widget/appBar.dart';
 
 import '../../history_page/controller/history_controller.dart';
-import '../../history_page/model/history.dart';
-import '../../menu_page/model/menu_model.dart';
+import '../../../common/model/history.dart';
+import '../../../common/model/menu_model.dart';
 
 class HistoryDetailPage extends StatelessWidget {
   final HistoryController controller = Get.put(HistoryController());
@@ -164,8 +165,9 @@ class HistoryDetailPage extends StatelessWidget {
                                       children: [
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(order.menus[index].name, style: boldTextStyle,),
+                                            Flexible(child: Text(order.menus[index].name, style: boldTextStyle,maxLines: 2,overflow: TextOverflow.ellipsis,)),
                                             Text('${order.menus[index].quantity}x',style: boldTextStyle,),
                                           ],
                                         ),

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:warmindo_user_ui/pages/voucher_page/model/voucher_model.dart';
+import 'package:warmindo_user_ui/common/model/voucher_model.dart';
 
 import '../../../widget/myCustomPopUp/myCustomPopup.dart';
 import '../../../widget/voucher/voucher.dart';
 import '../../cart_page/controller/cart_controller.dart';
-import '../../cart_page/model/cartmodel.dart';
+import '../../../common/model/cartmodel.dart';
 
 class VoucherController extends GetxController {
   final CartController controller = Get.put(CartController());

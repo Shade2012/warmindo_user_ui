@@ -6,8 +6,8 @@ import 'package:warmindo_user_ui/pages/history_page/controller/history_controlle
 import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_view.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 
-import '../../history_page/model/history.dart';
-import '../../menu_page/model/menu_model.dart';
+import '../../../common/model/history.dart';
+import '../../../common/model/menu_model.dart';
 import '../../voucher_page/controller/voucher_controller.dart';
 
 class PembayaranController extends GetxController{

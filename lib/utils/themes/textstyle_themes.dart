@@ -253,7 +253,7 @@ TextStyle hintSearchBarTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,
         fontWeight: FontWeight.w300,
-        fontSize: figmaFontsize(20)));
+        fontSize: figmaFontsize(15)));
 
 TextStyle categoryMenuBarTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(

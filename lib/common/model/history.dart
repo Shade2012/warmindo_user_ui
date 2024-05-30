@@ -1,10 +1,10 @@
 
 
 import 'package:get/get.dart';
-import 'package:warmindo_user_ui/pages/menu_page/model/menu_model.dart';
+import 'package:warmindo_user_ui/common/model/menu_model.dart';
 
-import '../../../utils/themes/image_themes.dart';
-import '../../voucher_page/model/voucher_model.dart';
+import '../../utils/themes/image_themes.dart';
+import 'voucher_model.dart';
 
 class Order {
   final int id;

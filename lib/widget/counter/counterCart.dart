@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 
 import '../../pages/cart_page/controller/cart_controller.dart';
-import '../../pages/cart_page/model/cartmodel.dart';
+import '../../common/model/cartmodel.dart';
 import '../../utils/themes/color_themes.dart';
 import '../../utils/themes/textstyle_themes.dart';
 
