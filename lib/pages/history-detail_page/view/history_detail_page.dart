@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
@@ -45,7 +46,7 @@ class HistoryDetailPage extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     int totalQuantity = 0;
-    for (Menu menu in order.menus) {
+    for (MenuList menu in order.menus) {
       totalQuantity += menu.quantity;
     }
     return Scaffold(
@@ -152,7 +153,7 @@ class HistoryDetailPage extends StatelessWidget {
                                     height: screenHeight * 0.11,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      child: Image.asset(order.menus[index].imagePath, fit: BoxFit.cover,),
+                                      child: Image.network(order.menus[index].image, fit: BoxFit.cover,),
                                     ),
                                   ),
                                   SizedBox(width: 10), // Add space between image and text
@@ -167,7 +168,7 @@ class HistoryDetailPage extends StatelessWidget {
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Flexible(child: Text(order.menus[index].name, style: boldTextStyle,maxLines: 2,overflow: TextOverflow.ellipsis,)),
+                                            Flexible(child: Text(order.menus[index].nameMenu, style: boldTextStyle,maxLines: 2,overflow: TextOverflow.ellipsis,)),
                                             Text('${order.menus[index].quantity}x',style: boldTextStyle,),
                                           ],
                                         ),
@@ -182,14 +183,6 @@ class HistoryDetailPage extends StatelessWidget {
                           ),
                           SizedBox(height: 10,),
                           Text("Detail Pembayaran",style: boldTextStyle,),
-                          SizedBox(height: 10,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Potongan Harga",style: boldTextStyle,),
-                              Text(controller.getVoucherText(order),style: boldTextStyle,),
-                            ],
-                          ),
                           SizedBox(height: 10,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

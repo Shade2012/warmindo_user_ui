@@ -8,11 +8,11 @@ import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/icon_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/counter/counterCart.dart';
-import '../../voucher_page/controller/voucher_controller.dart';
+
 import '../controller/cart_controller.dart';
 import 'package:get/get.dart';
 class CartData extends StatelessWidget {
-  final VoucherController voucherController = Get.put(VoucherController());
+
   final CartController controller = Get.put(CartController());
 
    CartData({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class CartData extends StatelessWidget {
                         height: screenWidth / 3.4,
                         child: ClipRRect(
                           borderRadius:BorderRadius.all(Radius.circular(10)),
-                          child: Image.asset(cartItem.productImage, fit: BoxFit.cover,),
+                          child: Image.network(cartItem.productImage, fit: BoxFit.cover,),
                         ),
                       ),
                       SizedBox(width: 10),
@@ -95,27 +95,6 @@ class CartData extends StatelessWidget {
             padding: EdgeInsets.all(20),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Voucher", style: boldgreyText,),
-                    Container(
-                      child: voucherController.appliedVoucher.value != null ?
-                      Container(height: 50, width: 120, child: Image.asset(voucherController.appliedVoucher.value!.imagePath, fit: BoxFit.cover,)) : Text("Pilih Voucher"),
-                    ),
-                    InkWell(
-                      onTap: () {voucherController.showVoucher(context);},
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: ColorResources.btnonboard2,
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
-                          padding: EdgeInsets.all(10),
-                          child: Text(voucherController.appliedVoucher.value != null ? "Ganti" : "Pakai",
-                            style: verifyStatusTextStyle,
-                          )),
-                    )
-                  ],
-                ),
                 SizedBox(height: 20),
                 Obx(() {
 
@@ -142,28 +121,6 @@ class CartData extends StatelessWidget {
                       SizedBox(height: 10),
                       Divider(),
                       SizedBox(height: 10),
-                      Visibility(
-                        visible: voucherController.appliedVoucher.value != null,
-                        child:    Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Voucher", style: boldTextStyle),
-                                Obx(() {
-                                  return Text("- " + currencyFormat.format(voucherController.appliedVoucher.value!.discount).toString(), style: boldTextStyle,
-                                  );
-                                }),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Divider(),
-                            SizedBox(height: 10),
-                          ],
-                        ),
-                      ),
-
                       Row(
                         mainAxisAlignment:
                         MainAxisAlignment.spaceBetween,
@@ -182,7 +139,7 @@ class CartData extends StatelessWidget {
                                   for (CartItem cartItem in controller.cartItems) {
                                     totalPrice += cartItem.price * cartItem.quantity;
                                   }
-                                  totalPrice -= voucherController.appliedVoucher.value?.discount ?? 0;
+
                                   return Text(
                                       currencyFormat.format(totalPrice),
                                       style: boldTextStyle);

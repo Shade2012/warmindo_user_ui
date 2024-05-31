@@ -63,7 +63,7 @@ class ReusableCard extends StatelessWidget {
                       topRight: Radius.circular(20),
                     ),
                     child: FadeInImage(
-                      image: AssetImage(Images.eximagemenu),
+                      image: NetworkImage(product.image),
                       fit: BoxFit.cover,
                       placeholder: AssetImage(Images.placeholder),
                       alignment: Alignment.center,

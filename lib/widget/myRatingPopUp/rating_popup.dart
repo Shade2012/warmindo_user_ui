@@ -105,7 +105,7 @@ class RatingCard extends StatelessWidget {
               height: screenHeight * 0.12,
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                child: Image.asset(menu.imagePath, fit: BoxFit.cover),
+                child: Image.network(menu.image, fit: BoxFit.cover),
               ),
             ),
             Container(
@@ -115,7 +115,7 @@ class RatingCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(menu.name, style: vouchertextStyle),
+                  Text(menu.nameMenu, style: vouchertextStyle),
                   RatingBar(
                     initialRating: 0,
                     minRating: 0,

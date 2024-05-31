@@ -4,9 +4,7 @@ import 'package:warmindo_user_ui/pages/cart_page/binding/cart_binding.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
 import 'package:warmindo_user_ui/pages/change-password_page/binding/change_pass_binding.dart';
 import 'package:warmindo_user_ui/pages/change-password_page/view/change_pass_page.dart';
-import 'package:warmindo_user_ui/pages/detail-menu_page/binding/detail_menu_binding.dart';
-import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
-import 'package:warmindo_user_ui/pages/detail-voucher-page/view/detail_voucher_page.dart';
+
 import 'package:warmindo_user_ui/pages/edit-profile/binding/edit_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/view/edit_profile_page.dart';
 import 'package:warmindo_user_ui/pages/guest_home_page/binding/guest_home_binding.dart';
@@ -17,8 +15,7 @@ import 'package:warmindo_user_ui/pages/guest_navigator_page/binding/guest_naviga
 import 'package:warmindo_user_ui/pages/guest_navigator_page/view/guest_navigator_page.dart';
 import 'package:warmindo_user_ui/pages/guest_profile_page/binding/guest_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/guest_profile_page/view/guest_profile_page.dart';
-import 'package:warmindo_user_ui/pages/history-detail_page/binding/history_detail_binding.dart';
-import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
+
 import 'package:warmindo_user_ui/pages/history_page/binding/history_binding.dart';
 import 'package:warmindo_user_ui/common/model/history.dart';
 import 'package:warmindo_user_ui/pages/history_page/view/history_page.dart';
@@ -43,9 +40,8 @@ import 'package:warmindo_user_ui/pages/splash_page/binding/splash_binding.dart';
 import 'package:warmindo_user_ui/pages/splash_page/view/splash_page.dart';
 import 'package:warmindo_user_ui/pages/veritification_page/binding/veritification_binding.dart';
 import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_page.dart';
-import 'package:warmindo_user_ui/pages/voucher_page/binding/voucher_binding.dart';
-import 'package:warmindo_user_ui/common/model/voucher_model.dart';
-import 'package:warmindo_user_ui/pages/voucher_page/view/voucher_page.dart';
+
+
 
 part 'AppRoutes.dart';
 
@@ -53,7 +49,7 @@ class AppPages {
   late Order order2;
   AppPages._();
 
-  static const INITIAL = Routes.BOTTOM_NAVBAR;
+  static const INITIAL = Routes.GUEST_NAVIGATOR_PAGE;
 
 
   static final routes = [
@@ -138,12 +134,7 @@ class AppPages {
         binding: VeritificationBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
-    GetPage(
-        name: _Paths.VOUCHER_PAGE,
-        page: () => VoucherPage(),
-        binding: VoucherBinding(),
-        transition: Transition.fadeIn,
-        transitionDuration: const Duration(milliseconds: 500)),
+
     GetPage(
         name: _Paths.EDITPROFILE_PAGE,
         page: () => EditProfileScreen(),

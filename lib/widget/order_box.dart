@@ -109,8 +109,8 @@ class OrderBox extends StatelessWidget {
                             height: MediaQuery.of(context).size.height * 0.11,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
-                                order.menus[index].imagePath,
+                              child: Image.network(
+                                order.menus[index].image,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -122,7 +122,7 @@ class OrderBox extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(order.menus[index].name, style: boldTextStyle),
+                                Text(order.menus[index].nameMenu, style: boldTextStyle),
                                 Text('(${order.menus[index].quantity} Items)'),
                               ],
                             ),
@@ -195,8 +195,8 @@ class OrderBox extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.11,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(
-                              order.menus[index].imagePath,
+                            child: Image.network(
+                              order.menus[index].image,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -208,7 +208,7 @@ class OrderBox extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(order.menus[index].name, style: boldTextStyle),
+                              Text(order.menus[index].nameMenu, style: boldTextStyle),
                               Text('(${order.menus[index].quantity} Items)'),
                             ],
                           ),

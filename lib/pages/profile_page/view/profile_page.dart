@@ -28,9 +28,9 @@ class ProfilePage extends StatelessWidget {
           color: ColorResources.primaryColor,
           child: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 20),
                 Container(
                   margin: EdgeInsets.only(bottom: 10),
                   width: screenWidth,
@@ -80,7 +80,7 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: screenHeight * 0.1,),
                 Container(
                     width: screenWidth,
                     padding: EdgeInsets.symmetric(horizontal: 20,vertical: 40),
@@ -104,15 +104,6 @@ class ProfilePage extends StatelessWidget {
                                   return VerificationStatusPopup();
                                 },
                               );
-                            },
-                          ),
-                          SizedBox(height: 30),
-                          ListTile(
-                            leading: Icon(FontAwesomeIcons.ticket),
-                            title: Text('Voucher'),
-                            trailing: Icon(Icons.chevron_right),
-                            onTap: () {
-                              Get.toNamed(Routes.VOUCHER_PAGE);
                             },
                           ),
                           SizedBox(height: 30),
