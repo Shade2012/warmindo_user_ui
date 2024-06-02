@@ -41,8 +41,8 @@ class DetailMenuPage extends StatelessWidget {
                     height: screenHeight * 0.3,
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
-                      child: Image.asset(
-                        Images.eximagemenu,
+                      child: Image.network(
+                        menu.image,
                         fit: BoxFit.cover,
                       ),
                     ),

@@ -9,10 +9,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/home_controller.dart';
 import 'package:warmindo_user_ui/pages/home_page/shimmer/homeshimmer.dart';
+import 'package:warmindo_user_ui/pages/home_page/view/home_snack.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 import 'package:warmindo_user_ui/widget/cart.dart';
 import 'package:warmindo_user_ui/widget/makanan_widget.dart';
 import 'package:warmindo_user_ui/widget/reusable_card.dart';
+import '../../../common/model/menu_list_API_model.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
@@ -28,7 +30,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -96,91 +97,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 20,),
                 Text("Favorite Snack", style: LoginboldTextStyle),
                 SizedBox(height: 20,),
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(DetailMenuPage(menu: controller.menuElement[2], isGuest: false,));
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(left: 10),
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 0,
-                            blurRadius: 4,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                        color: ColorResources.backgroundCardColor,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 10,),
-                                Text(controller.menuElement[5].nameMenu, style: regularInputTextStyle),
-                                SizedBox(height: 3,),
-                                Text(
-                                  controller.menuElement[5].description,maxLines: 2,
-                                  style: descriptionTextStyle,
-                                ),
-                                SizedBox(height: 10,),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Wrap(
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      children: [
-                                        Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                                        Text(controller.menuElement[5].ratings.toString(), style: ratingTextStyle),
-                                      ],
-                                    ),
-                                    Spacer(),
-                                    Text(currencyFormat.format(controller.menuElement[5].price), style: priceTextStyle),
-                                  ],
-                                ),
-                                SizedBox(height: 10,),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 10,),
-                          Stack(
-                            children: [
-                              Container(
-                                width: 122, // Use the screen width
-                                height: 104,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                    topRight: (Radius.circular(20)),
-                                    bottomRight: (Radius.circular(20)),
-                                  ),
-                                  child: FadeInImage(
-                                    image: AssetImage(Images.onboard1),
-                                    fit: BoxFit.cover,
-                                    placeholder: AssetImage(Images.onboard2),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: 5,
-                                right: 8,
-                                child: Container(
-                                  child: GestureDetector(
-                                    onTap: (){},
-                                    child: Cart(context: context, product: controller.menuElement[4],),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                HomeSnack(),
                 SizedBox(height: 20,),
               ],
             ),

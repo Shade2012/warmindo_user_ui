@@ -12,23 +12,40 @@ import 'guest_reusable_card.dart';
 import 'myCustomPopup.dart';
 
 class MyCustomPopUpController extends GetxController {
+  RxBool isLoading = true.obs;
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+
+  }
   final CartController cartController = Get.put(CartController());
   final CounterController counterController = Get.put(CounterController());
 
   void showCustomModalForItem(MenuList product, BuildContext context) {
+    Future.delayed(Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (BuildContext context) => MyCustomPopUp(product: product),
+      builder: (BuildContext context) {
+       return MyCustomPopUp(product: product);
+      }
     );
     counterController.reset();
   }
   void showCustomModalForGuest(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) => GuestReusableCard() ,elevation: 0,
-    );
+    Future.delayed(Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
+
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext context) => GuestReusableCard() ,elevation: 0,
+      );
+
   }
 
   void addToCart(MenuList product) {
@@ -37,7 +54,7 @@ class MyCustomPopUpController extends GetxController {
       productName: product.nameMenu,
       price: product.price.toInt(),
       quantity: counterController.quantity?.value ?? 0,
-      productImage: Images.eximagemenu,
+      productImage: product.image,
     ));
     counterController.reset();
     print('Item added to cart');

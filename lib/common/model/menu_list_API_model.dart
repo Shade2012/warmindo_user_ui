@@ -58,23 +58,26 @@ class MenuList {
   final String nameMenu;
   final double price;
   final String category;
-  final int stock;
-  final double ratings;
+  final int? stock;
+  final double? ratings;
   final String description;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  int quantity;
 
   MenuList({
-    required this.menuId,
-    required this.image,
+    required  this.menuId,
+    required  this.image,
     required this.nameMenu,
-    required this.price,
+    required  this.price,
     required this.category,
-    required this.stock,
-    required this.ratings,
-    required this.description,
-    required this.createdAt,
-    required this.updatedAt,
+      this.stock,
+    this.ratings,
+   required this.description,
+    this.createdAt,
+    this.updatedAt,
+    this.quantity = 1
+
   });
 
   factory MenuList.fromJson(Map<String, dynamic> json) => MenuList(
@@ -99,8 +102,8 @@ class MenuList {
     "stock": stock.toString(),
     "ratings": ratings.toString(),
     "description": description,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
   };
 
   @override

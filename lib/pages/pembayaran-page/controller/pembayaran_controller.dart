@@ -1,6 +1,8 @@
 import 'dart:ffi';
 
 import 'package:get/get.dart';
+import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
+
 import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_view.dart';
@@ -8,11 +10,12 @@ import 'package:warmindo_user_ui/routes/AppPages.dart';
 
 import '../../../common/model/history.dart';
 import '../../../common/model/menu_model.dart';
-import '../../voucher_page/controller/voucher_controller.dart';
+
+
 
 class PembayaranController extends GetxController{
   final HistoryController historyController = Get.put(HistoryController());
-  final VoucherController voucherController = Get.put(VoucherController());
+
   final CartController cartController = Get.put(CartController());
 
 RxBool selected = false.obs;
@@ -42,11 +45,11 @@ int generateOrderId() {
   }
 void makePayment() {
   String paymentMethod = getPaymentMethod();
-    List<Menu> orderedMenus = cartController.cartItems.map((item) => Menu(
-      id: item.productId,
-      name: item.productName,
-      price: item.price,
-      imagePath: item.productImage,
+    List<MenuList> orderedMenus = cartController.cartItems.map((item) => MenuList(
+      menuId: item.productId,
+      nameMenu: item.productName,
+      price: item.price.toDouble(),
+      image: item.productImage,
       quantity: item.quantity, category: '', description: '',
     )).toList();
 
@@ -56,7 +59,7 @@ void makePayment() {
       status: 'In Progress'.obs,
       orderMethod: 'Takeaway',
       paymentMethod: paymentMethod,
-      vouchers: voucherController.appliedVoucher.value != null ? [voucherController.appliedVoucher.value!] : null,
+
       paid: true,
     );
 

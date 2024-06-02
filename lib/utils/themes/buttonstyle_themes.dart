@@ -7,7 +7,8 @@ Color _getLabelColor(String status) {
       return Colors.green;
     case 'batal':
       return Colors.green;
-    case 'menunggu batal':
+    case 'menunggu batal' :
+    case 'pesanan siap' :
       return Colors.white60;
     default:
       return Colors.red; // Default to red for other statuses

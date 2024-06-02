@@ -19,11 +19,11 @@ class GuestMenuPage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     List<MenuList> drinksList =
-    controller.menuElement.where((menu) => menu.category == 'minuman').toList();
+    controller.menuElement.where((menu) => menu.category.toLowerCase() == 'minuman').toList();
     List<MenuList> foodList =
-    controller.menuElement.where((menu) => menu.category == 'makanan').toList();
+    controller.menuElement.where((menu) => menu.category.toLowerCase() == 'makanan').toList();
     List<MenuList> snackList =
-    controller.menuElement.where((menu) => menu.category == 'snack').toList();
+    controller.menuElement.where((menu) => menu.category.toLowerCase() == 'snack').toList();
 
     return DefaultTabController(
       initialIndex: initialTabIndex,
@@ -87,7 +87,7 @@ class GuestMenuPage extends StatelessWidget {
                   categoryName: 'Search Results',
                   menuList: controller.searchResults,
                   context: context,
-                  isGuest: false,
+                  isGuest: true,
                 ),
               ),
             );
@@ -101,7 +101,7 @@ class GuestMenuPage extends StatelessWidget {
                       categoryName: 'All',
                       menuList: controller.menuElement,
                       context: context,
-                      isGuest: false,
+                      isGuest: true,
                     ),
                   ),
                 ),
@@ -112,7 +112,7 @@ class GuestMenuPage extends StatelessWidget {
                       categoryName: 'Minuman',
                       menuList: drinksList,
                       context: context,
-                      isGuest: false,
+                      isGuest: true,
                     ),
                   ),
                 ),
@@ -123,7 +123,7 @@ class GuestMenuPage extends StatelessWidget {
                       categoryName: 'Makanan',
                       menuList: foodList,
                       context: context,
-                      isGuest: false,
+                      isGuest: true,
                     ),
                   ),
                 ),
@@ -134,7 +134,7 @@ class GuestMenuPage extends StatelessWidget {
                       categoryName: 'Snack',
                       menuList: snackList,
                       context: context,
-                      isGuest: false,
+                      isGuest: true,
                     ),
                   ),
                 ),

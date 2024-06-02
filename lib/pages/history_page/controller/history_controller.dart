@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:intl/intl.dart';
+import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
 import 'package:warmindo_user_ui/common/model/history.dart';
 import 'package:warmindo_user_ui/widget/batal_popup.dart';
@@ -21,12 +22,6 @@ class HistoryController extends GetxController {
   var selectedCategory = 'Semua'.obs;
   final RxBool isLoading = true.obs;
   final RxBool isRating2 = false.obs;
-
-
-
-
-
-
 
   @override
   void onInit() {
@@ -65,43 +60,17 @@ class HistoryController extends GetxController {
     }
   }
 
-  String getVoucherText(Order order) {
-    if (order.vouchers != null && order.vouchers!.isNotEmpty) {
-      final voucherPrice = calculateTotalDiscount(order);
-      final formattedPrice = currencyFormat.format(voucherPrice);
-      return "- $formattedPrice"; // Assuming 'Potongan Harga' is the title and formattedPrice is the price
-    } else {
-      return "-";
-    }
-  }
 
-  int calculateTotalDiscount(Order order) {
-    if (order.vouchers == null) return 0;
 
-    int totalDiscount = 0;
-    for (Voucher voucher in order.vouchers!) {
-      totalDiscount += voucher.discount;
-    }
-    return totalDiscount;
-  }
+
 
   String calculateTotalPrice(Order order) {
     int totalPrice = 0;
-    for (Menu menu in order.menus) {
-      totalPrice += menu.price * menu.quantity;
+    for (MenuList menu in order.menus) {
+      totalPrice += menu.price.toInt() * menu.quantity;
     }
 
     // Check if the order has a voucher
-    if (order.vouchers != null && order.vouchers!.isNotEmpty) {
-      // Calculate total discount from vouchers
-      int totalDiscount = 0;
-      for (Voucher voucher in order.vouchers!) {
-        totalDiscount += voucher.discount;
-      }
-
-      // Reduce total price by total discount
-      totalPrice -= totalDiscount;
-    }
 
     return currencyFormat.format(totalPrice) ;
   }
@@ -109,38 +78,25 @@ class HistoryController extends GetxController {
     if(order.status == 'Selesai' || order.status == "Batal")
     {
       return "Pesan Lagi";
-    } else if (order.status == 'In Progress' || order.status == 'Pesanan Siap'){
+    } else if (order.status == 'In Progress'){
       return 'Batalkan';
     } else{
       return 'Menunggu';
     }
 
   }
-  Color getButtonColor(Order order) {
-    switch (order.status) {
-      case 'Selesai':
-      case 'Batal':
-        return Colors.green;
-      case 'In Progress':
-      case 'Pesanan Siap':
-        return Colors.red;
-      case 'Menunggu Batal':
-        return Colors.grey;
-      default:
-        return Colors.transparent; // Default color if status is unknown
-    }
-  }
+
   void gotoRating(Order order){
 
   }
   void goToCart(Order order) {
     List<CartItem> itemsToAdd = order.menus.map((menu) {
       return CartItem(
-        productName: menu.name,
-        productImage: menu.imagePath,
-        price: menu.price,
+        productName: menu.nameMenu,
+        productImage: menu.image,
+        price: menu.price.toInt(),
         quantity: menu.quantity,
-        productId: menu.id,
+        productId: menu.menuId,
       );
     }).toList();
 
@@ -155,7 +111,7 @@ class HistoryController extends GetxController {
     if(order.status == 'Selesai' || order.status == "Batal")
       {
         goToCart(order);
-      } else if (order.status == 'In Progress' || order.status == 'Pesanan Siap'){
+      } else if (order.status == 'In Progress'){
       showDialog(context: context,  builder: (BuildContext context) {
         return BatalPopup(order: order,);
       },);

@@ -112,7 +112,7 @@ class MenuCategory extends StatelessWidget {
                               topRight: Radius.circular(20),
                             ),
                             child: FadeInImage(
-                              image: AssetImage(Images.eximagemenu),
+                              image: NetworkImage(menu.image),
                               fit: BoxFit.cover,
                               placeholder: AssetImage(Images.placeholder),
                             ),

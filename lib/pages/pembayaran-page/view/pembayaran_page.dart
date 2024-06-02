@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/controller/pembayaran_controller.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_view.dart';
-import 'package:warmindo_user_ui/pages/voucher_page/controller/voucher_controller.dart';
+
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/map/view/map_view.dart';
 import '../../../utils/themes/image_themes.dart';
@@ -14,7 +14,7 @@ import '../../../common/model/cartmodel.dart';
 
 class PembayaranPage extends GetView<PembayaranController> {
   final CartController cartController = Get.put(CartController());
-  final VoucherController voucherController = Get.put(VoucherController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +180,6 @@ class PembayaranPage extends GetView<PembayaranController> {
                           for (CartItem cartItem in cartController.cartItems) {
                             totalPrice += cartItem.price * cartItem.quantity;
                           }
-                          totalPrice -= voucherController.appliedVoucher.value?.discount ?? 0;
                           return Text(
                               currencyFormat.format(totalPrice),
                               style: boldTextStyle);

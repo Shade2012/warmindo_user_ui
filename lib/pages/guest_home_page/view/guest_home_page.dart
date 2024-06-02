@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/guest_home_page/controller/guest_home_controller.dart';
+import 'package:warmindo_user_ui/pages/guest_home_page/view/guest_snack.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/home_controller.dart';
 import 'package:warmindo_user_ui/widget/cart.dart';
 import 'package:warmindo_user_ui/widget/makanan_widget.dart';
@@ -92,83 +93,7 @@ class GuestHomePage extends StatelessWidget {
                 SizedBox(height: 20,),
                 Text("Favorite Snack", style: LoginboldTextStyle),
                 SizedBox(height: 20,),
-                GestureDetector(
-                  onTap: (){
-                    Get.to(DetailMenuPage(menu: controller.menuElement[2], isGuest: true,));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(left: 10),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 0,
-                          blurRadius: 4,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      color: ColorResources.backgroundCardColor,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 10,),
-                              Text(controller.menuElement[5].nameMenu, style: regularInputTextStyle),
-                              SizedBox(height: 3,),
-                              Text(
-                                controller.menuElement[5].description,
-                                style: descriptionTextStyle,
-                              ),
-                              SizedBox(height: 10,),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Wrap(
-                                    crossAxisAlignment: WrapCrossAlignment.center,
-                                    children: [
-                                      Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                                      Text(controller.menuElement[5].ratings.toString(), style: ratingTextStyle),
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  Text(currencyFormat.format(controller.menuElement[5].price), style: priceTextStyle),
-                                ],
-                              ),
-                              SizedBox(height: 10,),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 10,),
-                        Stack(
-                          children: [
-                            Container(
-                              width: 122, // Use the screen width
-                              height: 104,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topRight: (Radius.circular(20)),
-                                  bottomRight: (Radius.circular(20)),
-                                ),
-                                child: FadeInImage(
-                                  image: AssetImage(Images.onboard1),
-                                  fit: BoxFit.cover,
-                                  placeholder: AssetImage(Images.onboard2),
-                                ),
-                              ),
-                            ),
-
-                          ],
-                        ),
-
-                      ],
-                    ),
-                  ),
-                ),
+                GuestSnack(),
                 SizedBox(height: 20,)
               ],
             ),
