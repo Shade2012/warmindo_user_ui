@@ -103,11 +103,11 @@ class GuestProfilePage extends StatelessWidget {
                                   cancelText: "Tidak",
                                   confirmText: "Iya",
                                   onCancelPressed: () {
-                                    Navigator.of(context).pop();
+                                    Get.back();
                                   },
                                   onConfirmPressed: () {
-                                    Navigator.of(context).pop();
-                                    Get.toNamed(Routes.LOGIN_PAGE);
+                                   Get.back();
+                                    Get.offAllNamed(Routes.ONBOARD_PAGE);
                                   },
                                   cancelButtonColor:
                                   ColorResources.cancelButttonColor,

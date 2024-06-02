@@ -5,130 +5,136 @@ import 'package:warmindo_user_ui/pages/login_page/controller/login_controller.da
 import 'package:warmindo_user_ui/widget/inputfield.dart';
 import 'package:get/get.dart';
 import '../../../routes/AppPages.dart';
+import '../../../utils/themes/buttonstyle_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 
-
-
-class LoginPage extends GetView<LoginController>{
+class LoginPage extends GetView<LoginController> {
   final TextEditingController ctrUsername = TextEditingController();
   final TextEditingController ctrPassword = TextEditingController();
   LoginPage({super.key});
   String? isPassword(String value) {
     if (value.isEmpty) {
-      return 'Password is required';
+      return null;
     } else if (value.length < 8) {
-      return 'Minimum password length is 8 characters';
+      return 'Minimal password 8 karakter';
     }
     return null;
   }
-  String? isUsername(String value) {
-    if (value.isEmpty) {
-      return 'Username is required';
-    }
-    return null;
-  }
+
   Widget Password(
-      IconData icon,
-      String label,
-      String hint,
-      TextEditingController controller2,
-      String? Function(String)? validator,
-      ) {
+    IconData icon,
+    String label,
+    String hint,
+    TextEditingController controller2,
+    String? Function(String)? validator,
+  ) {
 // Control the obscure text visibility
 
     return Container(
-      margin: EdgeInsets.only(top: 20,bottom: 20),
-      child: Obx(()=> TextField(
-        controller: controller2,
-        obscureText: controller.obscureText.value,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+      margin: EdgeInsets.only(top: 20, bottom: 20),
+      child: Obx(
+        () => TextField(
+          controller: controller2,
+          obscureText: controller.obscureText.value,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            suffixIcon: IconButton(
+              onPressed: () {
+                controller.obscureText.value = !controller.obscureText.value;
+              },
+              icon: Icon(controller.obscureText.value
+                  ? Icons.visibility
+                  : Icons.visibility_off),
+            ),
+            // suffixIcon: ),
+            hintText: hint,
+            labelText: label,
+            prefixIcon: Icon(icon),
+            labelStyle: boldTextStyle,
+            hintStyle: TextStyle(
+              color: primaryTextColor,
+              fontSize: 12,
+            ),
+            errorText: validator != null ? validator(controller2.text) : null,
           ),
-          suffixIcon: IconButton(onPressed: (){
-            controller.obscureText.value =!controller.obscureText.value;
-          },
-            icon: Icon(controller.obscureText.value?Icons.visibility:Icons.visibility_off),),
-          // suffixIcon: ),
-          hintText: hint,
-          labelText: label,
-          prefixIcon: Icon(icon),
-          labelStyle: boldTextStyle,
-          hintStyle: TextStyle(
-            color: primaryTextColor,
-            fontSize: 12,
-          ),
-          errorText: validator != null ? validator(controller2.text) : null,
         ),
-      ),
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
-        body: SingleChildScrollView(
+    return Stack(
+      children: [
+        Scaffold(
+            body: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.only(left: 20,right: 20),
+            margin: EdgeInsets.only(left: 20, right: 20),
             child: Column(
-
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: screenHeight /10,
+                  height: screenHeight / 10,
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 20,top: 40),
+                  margin: EdgeInsets.only(bottom: 20, top: 40),
                   child: Center(
-                      child: Text("Hello",style: onboardingHeaderTextStyle ,)
-                  ),
+                      child: Text(
+                    "Hello",
+                    style: onboardingHeaderTextStyle,
+                  )),
                 ),
                 Center(
-                    child: Text("Selamat datang, kamu",style: regularTextStyle ,)
-                ),
+                    child: Text(
+                  "Selamat datang, kamu",
+                  style: regularTextStyle,
+                )),
                 SizedBox(
-                  height: screenHeight /8,
+                  height: screenHeight / 8,
                 ),
-                myText(Icons.person_2_outlined, TextInputType.text,"Username", "Isi Username mu", ctrUsername,isUsername),
-                Password(Icons.lock_outline, "Password", "Isi Password mu", ctrPassword,isPassword),
-                GestureDetector(
-                  onTap: (){
-                    if (
-                        isPassword(ctrPassword.text) == null &&
-                        isUsername(ctrUsername.text) == null) {
-                      // All fields are valid, perform registration logic
-
-                    }
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(top: 20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: (
-                          isUsername(ctrUsername.text) == null)
-                          ? ColorResources.btnonboard
-                          : Colors.grey,
-                    ),
-                    width: screenWidth,
-                    height: 50,
-                    child: Center(child: Text("Login", style: whiteboldTextStyle)),
-                  ),
+                myText(Icons.person_2_outlined, TextInputType.text, "Username",
+                    "Isi Username mu", ctrUsername, null),
+                Password(Icons.lock_outline, "Password", "Isi Password mu",
+                    ctrPassword, isPassword),
+                Container(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        if (ctrPassword.text.isNotEmpty &&
+                            ctrUsername.text.isNotEmpty &&
+                            isPassword(ctrPassword.text) == null) {
+                          controller.loginUser(ctrUsername.text, ctrPassword.text);
+                        } else {
+                          Get.snackbar("Warning",
+                              'Tolong isi semua data terlebih dahulu');
+                        }
+                      },
+                      style: authLoginRegisterButtonStyle(),
+                      child: Text(
+                        'Login',
+                        style: whiteboldTextStyle,
+                      )),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 20,bottom: 20),
+                  margin: EdgeInsets.only(top: 20, bottom: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("Tidak punya akun? "),
                       GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Get.toNamed(Routes.REGISTER_PAGE);
                           },
-                          child: Text("Daftar Sekarang ",style:LoginboldTextStyle,)),
+                          child: Text(
+                            "Daftar Sekarang ",
+                            style: LoginboldTextStyle,
+                          )),
                     ],
                   ),
                 ),
@@ -156,7 +162,7 @@ class LoginPage extends GetView<LoginController>{
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 40,bottom: 20),
+                  margin: EdgeInsets.only(top: 40, bottom: 20),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -176,7 +182,24 @@ class LoginPage extends GetView<LoginController>{
               ],
             ),
           ),
-        )
+        )),
+        Obx(() {
+          if (controller.isLoading.value == true) {
+            return Positioned.fill(
+              child: Container(
+                color: Colors.black.withOpacity(0.5),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return SizedBox.shrink();
+          }
+        }),
+      ],
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
@@ -50,37 +51,46 @@ class ReusableDialog extends StatelessWidget {
         ],
       ),
       actions: [
-        TextButton(
-          onPressed: onCancelPressed as void Function()?,
-          style: TextButton.styleFrom(
-            minimumSize: Size(120, 48),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(7.0),
-              side: BorderSide(color: Colors.white),
+        Row(
+          children: [
+            Expanded(
+              child: TextButton(
+                onPressed: onCancelPressed as void Function()?,
+                style: TextButton.styleFrom(
+                  minimumSize: Size(120, 48),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(7.0),
+                    side: BorderSide(color: Colors.white),
+                  ),
+                  backgroundColor: cancelButtonColor,
+                  foregroundColor: cancelButtonTextColor,
+                ),
+                child: Text(
+                  cancelText,
+                  style: dialogButtonTextStyle,
+                ),
+              ),
             ),
-            backgroundColor: cancelButtonColor,
-            foregroundColor: cancelButtonTextColor,
-          ),
-          child: Text(
-            cancelText,
-            style: dialogButtonTextStyle,
-          ),
-        ),
-        TextButton(
-          onPressed: onConfirmPressed as void Function()?,
-          style: TextButton.styleFrom(
-            minimumSize: Size(120, 48),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(7.0),
-              side: BorderSide(color: Colors.white),
+            SizedBox(width: 8), // Add some spacing between the buttons
+            Expanded(
+              child: TextButton(
+                onPressed: onConfirmPressed as void Function()?,
+                style: TextButton.styleFrom(
+                  minimumSize: Size(120, 48),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(7.0),
+                    side: BorderSide(color: Colors.white),
+                  ),
+                  backgroundColor: confirmButtonColor,
+                  foregroundColor: confirmButtonTextColor,
+                ),
+                child: Text(
+                  confirmText,
+                  style: dialogButtonTextStyle,
+                ),
+              ),
             ),
-            backgroundColor: confirmButtonColor,
-            foregroundColor: confirmButtonTextColor,
-          ),
-          child: Text(
-            confirmText,
-            style: dialogButtonTextStyle,
-          ),
+          ],
         ),
       ],
     );

@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
                 Text("Selamat Pagi", style: regularTextStyle),
                 Container(
                   margin: EdgeInsets.only(bottom: 40),
-                  child: Text("User", style: boldTextStyle2),
+                  child: Text( controller.txtUsername.value.toLowerCase().substring(0, 1).toUpperCase() + controller.txtUsername.value.toLowerCase().substring(1), style: boldTextStyle2),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

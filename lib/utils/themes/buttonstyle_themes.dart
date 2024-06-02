@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 
-Color _getLabelColor(String status) {
+Color getLabelColor(String status) {
   switch (status.toLowerCase()) {
     case 'selesai':
       return Colors.green;
@@ -14,11 +14,44 @@ Color _getLabelColor(String status) {
       return Colors.red; // Default to red for other statuses
   }
 }
+Color getColorVerify(bool status) {
+if(status == true){
+return Colors.blue;
+}else{
+  return Colors.grey;
+}
+}
 
 // Create a function to generate dynamic button style
 ButtonStyle dynamicButtonStyle(String status) {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(_getLabelColor(status)),
+    backgroundColor: MaterialStateProperty.all<Color>(getLabelColor(status)),
+    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+      EdgeInsets.only(top: 15, bottom: 15),
+    ),
+    shape: MaterialStateProperty.all<OutlinedBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
+  );
+}
+ButtonStyle verifyOTPStyle(bool status) {
+  return ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(getColorVerify(status)),
+    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+      EdgeInsets.only(top: 15, bottom: 15),
+    ),
+    shape: MaterialStateProperty.all<OutlinedBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
+  );
+}
+ButtonStyle authLoginRegisterButtonStyle() {
+  return ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(ColorResources.btnonboard),
     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
       EdgeInsets.only(top: 15, bottom: 15),
     ),

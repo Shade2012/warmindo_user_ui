@@ -79,6 +79,12 @@ TextStyle boldTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(15)));
 
+TextStyle otpcode = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(25)));
+
 TextStyle LoginboldTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: ColorResources.primaryTextColor,
