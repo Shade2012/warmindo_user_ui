@@ -24,7 +24,6 @@ import '../../../widget/snack_widget.dart';
 import '../../detail-menu_page/view/detail_menu_page.dart';
 
 class HomePage extends StatelessWidget {
-  final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final HomeController controller = Get.put(HomeController());
 
   @override
@@ -32,75 +31,82 @@ class HomePage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.only(left: 20, right: 20, top: 50),
-            child: Obx(() => controller.isLoading.value?
-            HomeSkeleton() :
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Selamat Pagi", style: regularTextStyle),
-                Container(
-                  margin: EdgeInsets.only(bottom: 40),
-                  child: Text( controller.txtUsername.value.toLowerCase().substring(0, 1).toUpperCase() + controller.txtUsername.value.toLowerCase().substring(1), style: boldTextStyle2),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    MakananWidget(),
-                    MinumanWidget(),
-                    SnackWidget(),
-                  ],
-                ),
-                SizedBox(height: 20,),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: CarouselSlider(
-                    options: CarouselOptions(
-                      viewportFraction: 1,
-                      autoPlay: true,
-                      enlargeCenterPage: true,
+        child: RefreshIndicator(
+          onRefresh: controller.fetchProduct,
+          child: SingleChildScrollView(
+            child: Container(
+              margin: EdgeInsets.only(left: 20, right: 20, top: 50),
+              child: Obx(() => controller.isLoading.value
+                  ? HomeSkeleton()
+                  : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Selamat Pagi", style: regularTextStyle),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 40),
+                    child: Text(
+                      controller.txtUsername.value.toLowerCase().substring(0, 1).toUpperCase() +
+                          controller.txtUsername.value.toLowerCase().substring(1),
+                      style: boldTextStyle2,
                     ),
-                    items: [
-                      RoundedImage(
-                        imageUrl: Images.promo1,
-                        onPressed: () {
-                          controller.navigateToFilteredMenu(context, 10000);
-                        },
-                      ),
-                      RoundedImage(
-                        imageUrl: Images.promo2,
-                        onPressed: () {
-                          controller.navigateToFilteredMenu(context, 15000);
-                        },
-                      ),
-                      RoundedImage(
-                        imageUrl: Images.promo3,
-                        onPressed: () {
-                          controller.navigateToFilteredMenu(context, 20000);
-                        },
-                      ),
-                    ],
                   ),
-                ),
-                Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
-                SizedBox(height: 20,),
-                if (controller.menuElement.length > 1) // Check if there are at least 2 items
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ReusableCard(width: screenWidth * 0.43, context: context, product: controller.menuElement[0], isGuest: false,),
-                      ReusableCard(width: screenWidth * 0.43, context: context, product: controller.menuElement[1], isGuest: false,),
+                      MakananWidget(),
+                      MinumanWidget(),
+                      SnackWidget(),
                     ],
                   ),
-                SizedBox(height: 20,),
-                Text("Favorite Snack", style: LoginboldTextStyle),
-                SizedBox(height: 20,),
-                HomeSnack(),
-                SizedBox(height: 20,),
-              ],
-            ),
+                  SizedBox(height: 20,),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                        viewportFraction: 1,
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                      ),
+                      items: [
+                        RoundedImage(
+                          imageUrl: Images.promo1,
+                          onPressed: () {
+                            controller.navigateToFilteredMenu(context, 10000);
+                          },
+                        ),
+                        RoundedImage(
+                          imageUrl: Images.promo2,
+                          onPressed: () {
+                            controller.navigateToFilteredMenu(context, 15000);
+                          },
+                        ),
+                        RoundedImage(
+                          imageUrl: Images.promo3,
+                          onPressed: () {
+                            controller.navigateToFilteredMenu(context, 20000);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
+                  SizedBox(height: 20,),
+                  if (controller.menuElement.length > 1)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ReusableCard(width: screenWidth * 0.43, context: context, product: controller.menuElement[0], isGuest: false,),
+                        ReusableCard(width: screenWidth * 0.43, context: context, product: controller.menuElement[1], isGuest: false,),
+                      ],
+                    ),
+                  SizedBox(height: 20,),
+                  Text("Favorite Snack", style: LoginboldTextStyle),
+                  SizedBox(height: 20,),
+                  HomeSnack(),
+                  SizedBox(height: 20,),
+                ],
+              ),
+              ),
             ),
           ),
         ),
@@ -108,4 +114,5 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
 

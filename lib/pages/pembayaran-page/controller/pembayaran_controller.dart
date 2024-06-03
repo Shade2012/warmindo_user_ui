@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 
@@ -14,6 +15,7 @@ import '../../../common/model/menu_model.dart';
 
 
 class PembayaranController extends GetxController{
+  late final TextEditingController ctrCatatan = TextEditingController();
   final HistoryController historyController = Get.put(HistoryController());
 
   final CartController cartController = Get.put(CartController());
