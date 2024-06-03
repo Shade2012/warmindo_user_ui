@@ -7,14 +7,15 @@ import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../detail-menu_page/view/detail_menu_page.dart';
 import '../../home_page/controller/home_controller.dart';
+import '../controller/guest_home_controller.dart';
 class GuestSnack extends StatelessWidget {
   final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
-  final HomeController controller = Get.put(HomeController());
+  final GuestHomeController controller = Get.put(GuestHomeController());
    GuestSnack({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final menuItem = controller.menuElement.firstWhere((item) => item.menuId == 20,);
+    final menuItem = controller.menuElement.firstWhere((item) => item.menuId == 2,);
     if (menuItem == null) {
       return Center(child: Text('Menu item not found'));
     }

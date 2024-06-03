@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
+import 'package:warmindo_user_ui/widget/ReusableTextBox.dart';
 
 import '../common/model/history.dart';
 import '../utils/themes/buttonstyle_themes.dart';
@@ -30,28 +31,7 @@ class BatalPopup extends StatelessWidget {
             SizedBox(height: 20,),
             Text("Apakah kamu yakin melakukan pembatalan?",style: boldTextStyle,),
             SizedBox(height: 20,),
-            TextField(
-              controller: ctrAlasan,
-              maxLines: null,
-              minLines: 3,
-              decoration: InputDecoration(
-                labelText: 'Alasan:',
-                labelStyle: boldTextStyle,
-                focusColor: Colors.black,
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 2), // Adjust the border color and width
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 2), // Adjust the border color and width
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 2), // Adjust the border color and width
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-              ),
-            ),
+            ReusableTextBox(title: 'Alasan', controller: ctrAlasan,),
             SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

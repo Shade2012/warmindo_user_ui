@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:warmindo_user_ui/pages/guest_menu_page/controller/guest_menu_controller.dart';
+import 'package:warmindo_user_ui/pages/menu_page/controller/menu_controller.dart';
+import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
+import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
+import 'package:warmindo_user_ui/widget/custom_search_bar.dart';
+import 'package:warmindo_user_ui/widget/menu_widget/menuCardSecondCategory.dart';
+import 'package:warmindo_user_ui/widget/menu_widget/menucard_widget.dart';
+import 'package:warmindo_user_ui/common/model/menu_model.dart';
 
-import '../../../utils/themes/color_themes.dart';
-import '../../../utils/themes/textstyle_themes.dart';
-import '../../../widget/custom_search_bar.dart';
-import '../../../widget/menucard_widget.dart';
-import '../../home_page/controller/home_controller.dart';
-import '../../../common/model/menu_list_API_model.dart';
-import '../../../common/model/menu_model.dart';
+import '../../../widget/menu_widget/search.dart';
+import '../controller/guest_menu_controller.dart';
+
 class GuestMenuPage extends StatelessWidget {
+  GuestMenuPage({Key? key}) : super(key: key);
   final GuestMenuController controller = Get.put(GuestMenuController());
-   GuestMenuPage({super.key});
+  final MenuPageController menuPageController = Get.put(MenuPageController());
 
   @override
   Widget build(BuildContext context) {
     final int initialTabIndex = Get.arguments ?? 0;
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    List<MenuList> drinksList =
-    controller.menuElement.where((menu) => menu.category.toLowerCase() == 'minuman').toList();
-    List<MenuList> foodList =
-    controller.menuElement.where((menu) => menu.category.toLowerCase() == 'makanan').toList();
-    List<MenuList> snackList =
-    controller.menuElement.where((menu) => menu.category.toLowerCase() == 'snack').toList();
 
     return DefaultTabController(
       initialIndex: initialTabIndex,
@@ -35,12 +30,9 @@ class GuestMenuPage extends StatelessWidget {
             backgroundColor: ColorResources.primaryColor,
             title: CustomSearchBar(
               hintText: 'Mau makan apa hari ini?',
-              controller: controller.search,
-              onChanged: (query){
-                print(query);{
-                  controller.searchFilter(query);
-                  print(controller.searchResults);
-                }
+              controller: controller.search.value,
+              onChanged: (query) {
+                controller.searchFilter(query);
               },
             ),
             automaticallyImplyLeading: false,
@@ -65,7 +57,8 @@ class GuestMenuPage extends StatelessWidget {
                 Tab(
                   child: Text(
                     'Makanan',
-                    style: categoryMenuTextStyle,overflow: TextOverflow.ellipsis,
+                    style: categoryMenuTextStyle,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Tab(
@@ -78,65 +71,36 @@ class GuestMenuPage extends StatelessWidget {
             ),
           ),
         ),
-        body:Obx(() {
+        body: Obx(() {
           if (controller.searchResults.isNotEmpty) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: MenuCategory(
-                  categoryName: 'Search Results',
-                  menuList: controller.searchResults,
-                  context: context,
-                  isGuest: true,
-                ),
-              ),
+            return Search(
+              categoryName: 'Search Results',
+              menuList: controller.searchResults,
+              context: context,
+              isGuest: true,
             );
           } else {
             return TabBarView(
               children: [
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: MenuCategory(
-                      categoryName: 'All',
-                      menuList: controller.menuElement,
-                      context: context,
-                      isGuest: true,
-                    ),
-                  ),
+                MenuSecondCategory(
+                  categoryName: 'All',
+                  menuList: controller.menuElement,
+                  isGuest: true,
                 ),
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: MenuCategory(
-                      categoryName: 'Minuman',
-                      menuList: drinksList,
-                      context: context,
-                      isGuest: true,
-                    ),
-                  ),
+                MenuSecondCategory(
+                  categoryName: 'Minuman',
+                  menuList: controller.menuElement.where((menu) => menu.category.toLowerCase() == 'minuman').toList(),
+                  isGuest: true,
                 ),
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: MenuCategory(
-                      categoryName: 'Makanan',
-                      menuList: foodList,
-                      context: context,
-                      isGuest: true,
-                    ),
-                  ),
+                MenuSecondCategory(
+                  categoryName: 'Makanan',
+                  menuList: controller.menuElement.where((menu) => menu.category.toLowerCase() == 'makanan').toList(),
+                  isGuest: true,
                 ),
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: MenuCategory(
-                      categoryName: 'Snack',
-                      menuList: snackList,
-                      context: context,
-                      isGuest: true,
-                    ),
-                  ),
+                MenuSecondCategory(
+                  categoryName: 'Snack',
+                  menuList: controller.menuElement.where((menu) => menu.category.toLowerCase() == 'snack').toList(),
+                  isGuest: true,
                 ),
               ],
             );
@@ -146,3 +110,4 @@ class GuestMenuPage extends StatelessWidget {
     );
   }
 }
+

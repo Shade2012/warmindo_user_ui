@@ -23,7 +23,7 @@ class MyCustomPopUpController extends GetxController {
   final CounterController counterController = Get.put(CounterController());
 
   void showCustomModalForItem(MenuList product, BuildContext context) {
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(milliseconds: 200), () {
       isLoading.value = false;
     });
     showModalBottomSheet(
@@ -36,7 +36,7 @@ class MyCustomPopUpController extends GetxController {
     counterController.reset();
   }
   void showCustomModalForGuest(BuildContext context) {
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(milliseconds: 200), () {
       isLoading.value = false;
     });
 

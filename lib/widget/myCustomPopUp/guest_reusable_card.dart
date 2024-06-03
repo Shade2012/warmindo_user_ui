@@ -42,7 +42,7 @@ class GuestReusableCard extends StatelessWidget {
                 Expanded(
                     child:
                     ElevatedButton(onPressed: (){
-                      Get.offNamed(Routes.REGISTER_PAGE);
+                      Get.offAllNamed(Routes.REGISTER_PAGE);
                     },style: button_register(),
                         child:
                         Padding(padding:EdgeInsets.symmetric(vertical: 15,horizontal: 5),
@@ -55,7 +55,7 @@ class GuestReusableCard extends StatelessWidget {
                 Expanded(
                     child:
                     ElevatedButton(onPressed: (){
-                      Get.offNamed(Routes.LOGIN_PAGE);
+                      Get.offAllNamed(Routes.LOGIN_PAGE);
                     },style: button_login(),
                         child:
                         Padding(padding:EdgeInsets.symmetric(vertical: 15,horizontal: 5),

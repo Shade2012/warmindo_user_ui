@@ -61,11 +61,13 @@ class MenuList {
   final int? stock;
   final double? ratings;
   final String description;
+  final String? second_category;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   int quantity;
 
-  MenuList({
+  MenuList(
+      {
     required  this.menuId,
     required  this.image,
     required this.nameMenu,
@@ -76,7 +78,8 @@ class MenuList {
    required this.description,
     this.createdAt,
     this.updatedAt,
-    this.quantity = 1
+        this.second_category,
+        this.quantity = 1
 
   });
 
@@ -89,6 +92,7 @@ class MenuList {
     stock: int.parse(json["stock"]), // Parsing string to int
     ratings: double.parse(json["ratings"]), // Parsing string to double
     description: json["description"],
+    second_category: json["second_category"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -102,13 +106,14 @@ class MenuList {
     "stock": stock.toString(),
     "ratings": ratings.toString(),
     "description": description,
+    "second_category": second_category,
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
   };
 
   @override
   String toString() {
-    return 'MenuList(menuId: $menuId, nameMenu: $nameMenu, price: $price, category: $category, stock: $stock, ratings: $ratings)';
+    return 'MenuList(menuId: $menuId, nameMenu: $nameMenu, price: $price, category: $category, stock: $stock,second_category: $second_category , ratings: $ratings)';
   }
 }
 

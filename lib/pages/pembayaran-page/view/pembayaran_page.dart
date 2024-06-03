@@ -6,6 +6,7 @@ import 'package:warmindo_user_ui/pages/pembayaran-page/controller/pembayaran_con
 import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_view.dart';
 
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
+import 'package:warmindo_user_ui/widget/ReusableTextBox.dart';
 import 'package:warmindo_user_ui/widget/map/view/map_view.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../widget/appBar.dart';
@@ -13,6 +14,7 @@ import '../../cart_page/controller/cart_controller.dart';
 import '../../../common/model/cartmodel.dart';
 
 class PembayaranPage extends GetView<PembayaranController> {
+
   final CartController cartController = Get.put(CartController());
 
 
@@ -162,6 +164,8 @@ class PembayaranPage extends GetView<PembayaranController> {
                 );
               }),
 
+              SizedBox( height: 20,),
+              ReusableTextBox(title: 'Catatan ', controller: controller.ctrCatatan),
               SizedBox( height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

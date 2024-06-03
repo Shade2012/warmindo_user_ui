@@ -27,8 +27,10 @@ checkSharedPreference();
     fetchProduct();
   }
 
-  void fetchProduct() async {
+  Future<void> fetchProduct() async {
     try {
+      isLoading.value = true; // Set loading to true before fetching data
+
       final response = await http.get(
         Uri.parse(GlobalVariables.apiMenuUrl),
       );
@@ -36,14 +38,17 @@ checkSharedPreference();
       if (response.statusCode == 200) {
         menuElement.value = menuListFromJson(response.body);
         print("Fetched menu list: ${menuElement.length} items");
-        isLoading.value = false; // Set loading to false after data is fetched
       } else {
         print('Error: ${response.statusCode}');
       }
     } catch (e) {
       print(e);
+    } finally {
+      isLoading.value = false; // Set loading to false after data is fetched
     }
   }
+
+
 
 
   void navigateToFilteredMenu(BuildContext context, int priceThreshold) {
