@@ -8,16 +8,16 @@ class VerificationCodeInput extends StatelessWidget {
   const VerificationCodeInput({
     required this.controller,
     required this.index,
-    required Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      width: 73,
-      height: 73,
-      child: Align(
-        alignment: Alignment.center,
+      width: screenWidth * 0.11,
+      height: screenWidth * 0.11,
+      child: Center(
         child: TextField(
           controller: controller,
           keyboardType: TextInputType.number,
@@ -25,7 +25,7 @@ class VerificationCodeInput extends StatelessWidget {
           textAlign: TextAlign.center,
           onChanged: (String value) {
             if (value.length == 1) {
-              if (index == 4) {
+              if (index == 6) {
                 FocusScope.of(context).unfocus();
               } else {
                 FocusScope.of(context).nextFocus();
@@ -34,11 +34,12 @@ class VerificationCodeInput extends StatelessWidget {
           },
           decoration: InputDecoration(
             counterText: '',
+            contentPadding: EdgeInsets.zero, // Ensures no extra padding
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
           ),
-          style: boldcodeTextStyle,
+          style:otpcode,
         ),
       ),
     );

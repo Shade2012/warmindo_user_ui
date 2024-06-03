@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 
 class SplashController extends GetxController {
@@ -16,6 +17,8 @@ class SplashController extends GetxController {
   }
 
   void animate() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
     await Future.delayed(Duration(seconds: 1));
     _animationController.sink.add(0.3); // Green Circle
     _circleSizeController.sink.add(0.3); // Small size
@@ -28,8 +31,12 @@ class SplashController extends GetxController {
     await Future.delayed(Duration(seconds: 1));
     _animationController.sink.add(1);   // Red Circle
     _circleSizeController.sink.add(1);   // Large size
-    await Future.delayed(Duration(milliseconds: 400)); //buat hide
-    Get.offNamed(Routes.ONBOARD_PAGE); 
+    await Future.delayed(Duration(milliseconds: 400));
+    if(token == null){
+      Get.offNamed(Routes.ONBOARD_PAGE);
+    } else{
+      Get.offNamed(Routes.BOTTOM_NAVBAR);
+    }
   }
 
   @override
@@ -39,3 +46,4 @@ class SplashController extends GetxController {
     super.onClose();
   }
 }
+

@@ -7,6 +7,7 @@ import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
+import 'package:warmindo_user_ui/widget/reusable_dialog.dart';
 
 class OnboardPage extends StatelessWidget {
   final OnboardController controller = Get.find();
@@ -159,33 +160,31 @@ class OnboardPage extends StatelessWidget {
                         children: [
                           Expanded(child:  ElevatedButton(
                             onPressed: () =>
-                                Get.offAllNamed(Routes.REGISTER_PAGE),
+                                Get.toNamed(Routes.REGISTER_PAGE),
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
                               backgroundColor: ColorResources.primaryColorLight,
-                              foregroundColor: ColorResources.btnonboard2,
+                              foregroundColor:  Colors.black,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4)),
-                              side: BorderSide(width: 1.5, color: ColorResources.btnonboard2),
+                              side: BorderSide(width: 1.5, color:  Colors.black),
                             ),
                             child: Padding(
                              padding: EdgeInsets.symmetric(vertical: 15),
                               child: Text('Register'),
                             ),
                           ),),
-
                           SizedBox(width: 8),
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () => Get.offAllNamed(Routes.LOGIN_PAGE),
+                              onPressed: () => Get.toNamed(Routes.LOGIN_PAGE),
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
                                 backgroundColor: Colors.white,
-                                foregroundColor: ColorResources.btnonboard2,
-
+                                foregroundColor: Colors.black,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(4)),
-                                side: BorderSide(width: 1.5, color: ColorResources.btnonboard2),
+                                side: BorderSide(width: 1.5, color:  Colors.black),
                               ),
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 15),
@@ -197,8 +196,18 @@ class OnboardPage extends StatelessWidget {
                       ),
                       SizedBox(height: 11),
                       ElevatedButton(
-                        onPressed: () =>
-                            Get.offAllNamed(Routes.GUEST_NAVIGATOR_PAGE),
+                        onPressed: () {
+                         showDialog(context: context,
+                             builder: (BuildContext context) {
+                         return ReusableDialog(title: 'Pesan', content: "Apakah anda yakin ingin masuk sebagai Guest?",
+                               cancelText: 'Tidak', confirmText: 'Yakin', onCancelPressed: (){
+                             Get.back();
+                               }, onConfirmPressed: (){
+                                 Get.offAllNamed(Routes.GUEST_NAVIGATOR_PAGE);
+                               });
+                         });
+                        },
+
                         style: ElevatedButton.styleFrom(
                           backgroundColor: ColorResources.btnonboard,
                           foregroundColor: ColorResources.primaryColorLight,

@@ -50,12 +50,11 @@ class ProfilePage extends StatelessWidget {
                       ),
                       SizedBox(height: 15),
                       Text(
-                        'Baratha Wijaya',
+                        profileController.txtName.value,
                         style: nameProfileTextStyle,
                       ),
-                      SizedBox(height: 5),
                       Text(
-                        '@manusia',
+                        '@${profileController.txtUsername.toLowerCase()}',
                         style: usernameProfileTextStyle,
                       ),
                       SizedBox(height: screenHeight * 0.002),
@@ -80,7 +79,7 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.1,),
+                SizedBox(height: screenHeight * 0.12,),
                 Container(
                     width: screenWidth,
                     padding: EdgeInsets.symmetric(horizontal: 20,vertical: 40),
@@ -139,11 +138,10 @@ class ProfilePage extends StatelessWidget {
                                     cancelText: "Tidak",
                                     confirmText: "Iya",
                                     onCancelPressed: () {
-                                      Navigator.of(context).pop();
+                                      Get.back();
                                     },
                                     onConfirmPressed: () {
-                                      Navigator.of(context).pop();
-                                      Get.toNamed(Routes.LOGIN_PAGE);
+                                      profileController.logOut();
                                     },
                                     cancelButtonColor:
                                     ColorResources.cancelButttonColor,

@@ -4,18 +4,18 @@ import 'package:warmindo_user_ui/pages/splash_page/controller/splash_controller.
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends GetView<SplashController> {
   const SplashPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final SplashController _splashController = Get.find();
+
     return Scaffold(
       body: StreamBuilder<double>(
-        stream: _splashController.animationStream,
+        stream: controller.animationStream,
         builder: (context, snapshot) {
           return StreamBuilder<double>(
-            stream: _splashController.circleSizeStream,
+            stream: controller.circleSizeStream,
             builder: (context, sizeSnapshot) {
               final double circleSize = sizeSnapshot.data ?? 1.0;
               final double animationValue = snapshot.data ?? 0.0;
