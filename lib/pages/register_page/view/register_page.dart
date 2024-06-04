@@ -112,11 +112,11 @@ class RegisterPage extends GetView<RegisterController>{
                     Center(
                         child: Text("Silakan Daftar dibawah sini",style: regularTextStyle ,)
                     ),
-                    myText(Icons.person_2_outlined, TextInputType.text,"Nama Lengkap", "Isi Nama Aslimu", ctrName,null),
-                    myText(Icons.person_2_outlined,TextInputType.text, "Username", "Isi Username mu", ctrUsername,null),
-                    myText(Icons.mail_outline, TextInputType.emailAddress, "Email", "Isi Emailmu", ctrEmail, isEmailValid),
-                    myText(Icons.phone, TextInputType.phone,"Nomor Telepon", "Isi Nomor Hpmu", ctrNumberPhone,isPhone),
-                    Password(Icons.lock_outline, "Password", "Isi Password mu", ctrPassword,isPassword),
+                    myText(Icons.person_2_outlined, TextInputType.text,"Nama Lengkap", "Ex: ex@gmail.com", ctrName,null),
+                    myText(Icons.person_2_outlined,TextInputType.text, "Username", "Ex: userTest", ctrUsername,null),
+                    myText(Icons.mail_outline, TextInputType.emailAddress, "Email", "Ex: ex@gmail.com", ctrEmail, isEmailValid),
+                    myText(Icons.phone, TextInputType.phone,"Nomor Telepon", "Ex: 082124805253", ctrNumberPhone,isPhone),
+                    Password(Icons.lock_outline, "Password", "Ex: ********", ctrPassword,isPassword),
                     Container(
                       width: double.infinity,
                       child: ElevatedButton(

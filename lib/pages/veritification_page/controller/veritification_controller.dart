@@ -77,7 +77,18 @@ Future<void> printShared () async {
       var response = await http.Response.fromStream(await request.send());
 
       if (response.statusCode == 200) {
-        // Successfully sent OTP
+        var responseBody = json.decode(response.body);
+        if(responseBody['status'] == 'failed'){
+          Get.snackbar('Pesan', 'Coba lagi setelah 5 menit',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,);
+        } else  if(responseBody['status'] == 'success') {
+            Get.snackbar('Pesan', 'Kode OTP Behasil dikirim',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.green,
+              colorText: Colors.white,);
+        }
         print('OTP sent successfully');
         print('Response: ${response.body}');
       } else {
@@ -89,7 +100,7 @@ Future<void> printShared () async {
         Get.snackbar(
           'Error',
           'Failed to send OTP!',
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
@@ -102,7 +113,7 @@ Future<void> printShared () async {
       Get.snackbar(
         'Error',
         '$e',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -138,12 +149,20 @@ Future<void> printShared () async {
        Get.snackbar(
          'Error',
          'Kode OTP salah',
-         snackPosition: SnackPosition.BOTTOM,
+         snackPosition: SnackPosition.TOP,
          backgroundColor: Colors.red,
          colorText: Colors.white,
        );
-     }else{
+     }
+     else if (responseData['status'] == 'success'){
        print('OTP verification succeeded');
+       Get.snackbar(
+         'Success',
+         'Verifikasi Berhasil',
+         snackPosition: SnackPosition.TOP,
+         backgroundColor: Colors.green,
+         colorText: Colors.white,
+       );
        print('Response: ${response.body}');
        Get.offNamed(Routes.LOGIN_PAGE);
        await prefs.remove('token2');
@@ -155,8 +174,8 @@ Future<void> printShared () async {
         // Show error snackbar
         Get.snackbar(
           'Error',
-          'Gagal Mengirim OTP',
-          snackPosition: SnackPosition.BOTTOM,
+          'Ada Kesalahan',
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
@@ -169,7 +188,7 @@ Future<void> printShared () async {
       Get.snackbar(
         'Error',
         '$e',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
