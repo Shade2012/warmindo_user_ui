@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 
@@ -136,9 +137,6 @@ class HistoryDetailPage extends StatelessWidget {
                               ),
                             );
                           }),
-
-
-
                           SizedBox(height: 20,),
                           ListView.separated(
                             physics: NeverScrollableScrollPhysics(),
@@ -206,6 +204,54 @@ class HistoryDetailPage extends StatelessWidget {
                               Text("Metode Pembayaran",style: boldTextStyle,),
                               Text(order.paymentMethod.toString(),style: boldTextStyle,),
                             ],
+                          ),
+                          Obx(() =>   Visibility(
+                            visible: order.alasan_batal != '',
+                            child: Column(
+                              children: [
+                                SizedBox(height: 20,),
+                                Container(
+                                  height: 120,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                      border: Border.all(color: Colors.black)
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        SizedBox(width: 10,),
+                                        Text('Alasan Batal : '),
+                                        Expanded(child: Text('${order.alasan_batal}',maxLines: 5,overflow: TextOverflow.ellipsis,))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          )),
+                          SizedBox(height: 20,),
+                          Container(
+                            height: 120,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                border: Border.all(color: Colors.black)
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(width: 10,),
+                                  Text('Catatan : '),
+                                  Expanded(child: Text('${order.catatan}',maxLines: 5,overflow: TextOverflow.ellipsis,))
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),

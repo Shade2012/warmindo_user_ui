@@ -45,7 +45,9 @@ int generateOrderId() {
       return 'Default Payment Method';
     }
   }
-void makePayment() {
+void makePayment({
+  required String catatan}) {
+
   String paymentMethod = getPaymentMethod();
     List<MenuList> orderedMenus = cartController.cartItems.map((item) => MenuList(
       menuId: item.productId,
@@ -63,6 +65,8 @@ void makePayment() {
       paymentMethod: paymentMethod,
 
       paid: true,
+      catatan: catatan ?? '-', alasan_batal: ''.obs,
+
     );
 
     saveOrderToHistory(order);
