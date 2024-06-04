@@ -45,7 +45,7 @@ class MenuCategory extends StatelessWidget {
         children: [
           SizedBox(height: 10,),
           DashedDivider(
-            height: 1,dashSpace: 1.2,dashWidth: 4,color: Colors.black,
+            height: 0.4,dashSpace: 2,dashWidth: 2,color: Colors.grey,
           ),
           SizedBox(height: 10,),
           GridView.builder(
@@ -164,7 +164,7 @@ class MenuCategory extends StatelessWidget {
           ),
           SizedBox(height: 10,),
           DashedDivider(
-            height: 1,dashSpace: 1.2,dashWidth: 4,color: Colors.black,
+            height: 0.4,dashSpace: 2,dashWidth: 2,color: Colors.grey,
           ),
           SizedBox(height: 50,),
         ],

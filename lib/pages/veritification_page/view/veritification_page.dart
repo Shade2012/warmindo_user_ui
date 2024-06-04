@@ -35,41 +35,50 @@ class VerificationPage extends GetView<VeritificationController> {
                   ),
                   SizedBox(height: 10),
                   Visibility(
-                    visible:  loginController.phone_number.value != "",
-                    child:  RichText(
-                      textAlign: TextAlign.start, // Align text to center
-                      text: TextSpan(
-                        style: subheaderverifyTextStyle,
-                        children: <TextSpan>[
-                          TextSpan(
-                            text:
-                            'Masukkan kode verifikasi yang telah kami kirimkan ke nomor telepon kamu ',
+                    visible: loginController.phone_number.value != "",
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            style: subheaderverifyTextStyle, // Base style for the whole text
+                            children: [
+                              TextSpan(
+                                text: 'Masukkan kode verifikasi yang telah kami kirimkan ke nomor telepon kamu ',
+                              ),
+                              TextSpan(
+                                text: '+62 ${controller.removeLeadingZero(loginController.phone_number.value)}',
+                                style: boldphoneNumberTextStyle,
+                              ),
+
+                            ],
                           ),
-                          TextSpan(
-                            text: '+62 ${controller.removeLeadingZero(loginController.phone_number.value)}',
-                            style: boldphoneNumberTextStyle,
-                          ),
-                        ],
-                      ),
+                        ),
+                        TextButton(onPressed: (){}, child: Text('Edit',style: blueLinkRegular,))
+                      ],
                     ),
                   ),
                   Visibility(
                     visible: registerController.phone_number.value != "",
-                    child: RichText(
-                      textAlign: TextAlign.start, // Align text to center
-                      text: TextSpan(
-                        style: subheaderverifyTextStyle,
-                        children: <TextSpan>[
-                          TextSpan(
-                            text:
-                            'Masukkan kode verifikasi yang telah kami kirimkan ke nomor telepon kamu ',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            style: subheaderverifyTextStyle, // Base style for the whole text
+                            children: [
+                              TextSpan(
+                                text: 'Masukkan kode verifikasi yang telah kami kirimkan ke nomor telepon kamu ',
+                              ),
+                              TextSpan(
+                                text: '+62 ${controller.removeLeadingZero(registerController.phone_number.value)}',
+                                style: boldphoneNumberTextStyle,
+                              ),
+                            ],
                           ),
-                          TextSpan(
-                            text: '+62 ${controller.removeLeadingZero(registerController.phone_number.value)}',
-                            style: boldphoneNumberTextStyle,
-                          ),
-                        ],
-                      ),
+                        ),
+                        TextButton(onPressed: (){}, child: Text('Edit',style: blueLinkRegular,))
+                      ],
                     ),
                   ),
                   SizedBox(height: 30),
@@ -108,7 +117,7 @@ class VerificationPage extends GetView<VeritificationController> {
                   SizedBox(height: 20.0),
                   TextButton(
                     onPressed: () {
-                      // Add logic to resend the code
+                      controller.sendOtp();
                       print('Resend code');
                     },
                     child: Text('Resend code', style: bluelinkTextStyle,),

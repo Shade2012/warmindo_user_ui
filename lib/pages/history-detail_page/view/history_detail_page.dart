@@ -205,54 +205,27 @@ class HistoryDetailPage extends StatelessWidget {
                               Text(order.paymentMethod.toString(),style: boldTextStyle,),
                             ],
                           ),
-                          Obx(() =>   Visibility(
+                          SizedBox(height: 20,),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('Catatan : ',style: boldTextStyle,),
+                              Expanded(child: Text('${order.catatan}',maxLines: 5,overflow: TextOverflow.ellipsis,))
+                            ],
+                          ),
+                          SizedBox(height: 20,),
+                          Obx(() =>  Visibility(
                             visible: order.alasan_batal != '',
-                            child: Column(
+                            child:Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                SizedBox(height: 20,),
-                                Container(
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      border: Border.all(color: Colors.black)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        SizedBox(width: 10,),
-                                        Text('Alasan Batal : '),
-                                        Expanded(child: Text('${order.alasan_batal}',maxLines: 5,overflow: TextOverflow.ellipsis,))
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
+                                Text('Alasan Batal : ',style: boldTextStyle,),
+                                Expanded(child: Text('${order.alasan_batal}',maxLines: 5,overflow: TextOverflow.ellipsis,))
                               ],
                             ),
                           )),
-                          SizedBox(height: 20,),
-                          Container(
-                            height: 120,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                border: Border.all(color: Colors.black)
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(width: 10,),
-                                  Text('Catatan : '),
-                                  Expanded(child: Text('${order.catatan}',maxLines: 5,overflow: TextOverflow.ellipsis,))
-                                ],
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
