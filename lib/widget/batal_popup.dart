@@ -52,10 +52,11 @@ class BatalPopup extends StatelessWidget {
                     Get.snackbar("Pesan", "Beri alasan terlebih dahulu kenapa membatalkan pesanan",backgroundColor: Colors.white,);
                     } else {
                       order.status.value = "Menunggu Batal";
+                      order.alasan_batal!.value = '${ctrAlasan.text}';
                       Get.back();
                     }
                   },style: button_cancel(), child: Container(
-padding: EdgeInsets.symmetric(vertical: 15),
+                      padding: EdgeInsets.symmetric(vertical: 15),
 
                     child: Text("Batalkan",style: whiteboldTextStyle15,),
                   )),

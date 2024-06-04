@@ -218,7 +218,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                   }
 
                   // Make the payment
-                  controller.makePayment();
+                  controller.makePayment(catatan: controller.ctrCatatan.text);
                 },
                 child: Container(
                   padding: EdgeInsets.all(15),
