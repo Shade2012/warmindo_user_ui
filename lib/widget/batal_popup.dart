@@ -11,6 +11,7 @@ import '../utils/themes/textstyle_themes.dart';
 class BatalPopup extends StatelessWidget {
   final TextEditingController ctrAlasan = TextEditingController();
   final Order order;
+
   BatalPopup({Key? key, required this.order}) : super(key: key);
 
   @override
