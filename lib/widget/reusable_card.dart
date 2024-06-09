@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
@@ -19,12 +20,14 @@ class ReusableCard extends StatelessWidget {
   final BuildContext context;
   final MenuList product;
   final double width;
+  final double? height;
   final bool isGuest;
+
 
   ReusableCard({
     Key? key,
     required this.context,
-    required this.product, required this.width, required this.isGuest,
+    required this.product, required this.width, required this.isGuest, this.height,
   }) : super(key: key);
 
   @override
@@ -38,6 +41,7 @@ class ReusableCard extends StatelessWidget {
       },
       child: Container(
         width: width,
+        height: height,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -86,33 +90,35 @@ class ReusableCard extends StatelessWidget {
                 ),
               ],
             ),
-            ListTile(
-              title: Text(product.nameMenu, style: regularInputTextStyle,maxLines: 1,overflow: TextOverflow.ellipsis,),
-              subtitle:
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(height: 3,),
-                  Text(product.description,  maxLines: 2,
-                      overflow: TextOverflow.ellipsis, style: descriptionTextStyle),
-                  SizedBox(height: 30,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                          Text(product.ratings.toString(), style: ratingTextStyle),
-                        ],
-                      ),
-                      Text(currencyFormat.format(product.price), style: priceTextStyle),
-                    ],
-                  ),
-                  SizedBox(height: 10,)
-                ],
+            Expanded(
+              child: ListTile(
+                title: Text(product.nameMenu, style: regularInputTextStyle,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                subtitle:
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // SizedBox(height: 3,),
+                    Text(product.description,  maxLines: 2,
+                        overflow: TextOverflow.ellipsis, style: descriptionTextStyle),
+                    // SizedBox(height: screenHeight * 0.04,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
+                            Text(product.ratings.toString(), style: ratingTextStyle),
+                          ],
+                        ),
+                        Text(currencyFormat.format(product.price), style: priceTextStyle),
+                      ],
+                    ),
+                    SizedBox(height: 10,)
+                  ],
+                ),
+                // Add more fields to display as needed
               ),
-              // Add more fields to display as needed
             ),
           ],
         ),
@@ -120,3 +126,4 @@ class ReusableCard extends StatelessWidget {
     );
   }
 }
+

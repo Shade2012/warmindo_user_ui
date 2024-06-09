@@ -29,7 +29,7 @@ class CounterWidget2 extends StatelessWidget {
             ),
             child: GestureDetector(
               onTap: (){
-    cartController.decrementQuantity(index);
+    cartController.decrementQuantity(cartItem);
     },
               child: Icon(
                 Icons.remove,
@@ -61,7 +61,7 @@ class CounterWidget2 extends StatelessWidget {
               ),
               child: GestureDetector(
                 onTap: (){
-                  cartController.incrementQuantity(index);
+                  cartController.incrementQuantity(cartItem);
                 },
                 child: Icon(
                   Icons.add,

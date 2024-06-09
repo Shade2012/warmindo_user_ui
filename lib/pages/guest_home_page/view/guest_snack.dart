@@ -21,7 +21,7 @@ class GuestSnack extends StatelessWidget {
     }
     return  GestureDetector(
       onTap: (){
-        Get.to(DetailMenuPage(menu: menuItem, isGuest: true,));
+        Get.to(DetailMenuPage(menu: menuItem, isGuest: true, ));
       },
       child: Container(
         padding: EdgeInsets.only(left: 10),

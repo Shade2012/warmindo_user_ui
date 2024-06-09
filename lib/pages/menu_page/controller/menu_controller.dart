@@ -28,7 +28,7 @@ class MenuPageController extends GetxController {
 
       final response = await http.get(
         Uri.parse(GlobalVariables.apiMenuUrl),
-      );
+      ).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         menuElement.value = menuListFromJson(response.body);
@@ -38,6 +38,7 @@ class MenuPageController extends GetxController {
       }
     } catch (e) {
       print(e);
+      print('error');
     } finally {
       isLoading.value = false;
     }

@@ -182,7 +182,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                         Obx(() {
                           double totalPrice = 0;
                           for (CartItem cartItem in cartController.cartItems) {
-                            totalPrice += cartItem.price * cartItem.quantity;
+                            totalPrice += cartItem.price * cartItem.quantity.value;
                           }
                           return Text(
                               currencyFormat.format(totalPrice),

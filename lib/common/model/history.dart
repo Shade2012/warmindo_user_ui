@@ -19,6 +19,7 @@ class Order {
   final String? paymentMethod;
   final String? orderMethod;
   RxBool isRatingDone;
+
   Order({
     required this.id,
     required this.menus,
@@ -122,7 +123,7 @@ List<Order> orderList = [
           image: 'https://warmindo.pradiptaahmad.tech/menu/1717146658.jpg', category: 'Makanan', description: 'Ayam serundeng merupakan menu makanan yang terbuat dari potongan ayam dengan taburan parutan kelapa dan lengkuas yang goreng. Makanan khas Indonesia ini nikmat disantap dengan nasi hangat dan sambal',
         )
       ],
-      status: "In Progress".obs,
+      status: "Sedang Diproses".obs,
       orderMethod: "Takeaway",
       paymentMethod: "DANA",
       paid: true, catatan: 'Serondengnya banyakin', alasan_batal: ''.obs

@@ -5,14 +5,12 @@ import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
 import 'package:warmindo_user_ui/common/model/history.dart';
+import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/widget/batal_popup.dart';
-import 'package:warmindo_user_ui/widget/cart.dart';
-
 import '../../../widget/myRatingPopUp/rating_popup.dart';
 import '../../cart_page/controller/cart_controller.dart';
 import '../../../common/model/cartmodel.dart';
-import '../../../common/model/menu_model.dart';
-import '../../../common/model/voucher_model.dart';
+
 
 class HistoryController extends GetxController {
   final CartController cartController = Get.put(CartController());
@@ -20,6 +18,7 @@ class HistoryController extends GetxController {
   final RxList<Order> orders = <Order>[].obs;
   RxString status = ''.obs;
   var selectedCategory = 'Semua'.obs;
+  var selectedTimes = 'Terbaru'.obs;
   final RxBool isLoading = true.obs;
   final RxBool isRating2 = false.obs;
 
@@ -46,10 +45,19 @@ class HistoryController extends GetxController {
   void changeCategory(String newCategory) {
     selectedCategory.value = newCategory;
   }
+  void changeTime(String newTimes) {
+    selectedTimes.value = newTimes;
+  }
   void updateOrderStatus(Order order, String newStatus) {
     order.status.value = newStatus;
   }
+  void saveOrderToHistory(Order order) {
+    orders.add(order);
+  }
 
+  List<Order> getOrdersByStatus(String status) {
+    return orders.where((o) => o.status.value.toLowerCase() == status.toLowerCase()).toList();
+  }
   List<Order> filteredHistory() {
     if (selectedCategory.value == null || selectedCategory.value == 'Semua') {
       return orders;
@@ -59,9 +67,6 @@ class HistoryController extends GetxController {
           .toList();
     }
   }
-
-
-
 
 
   String calculateTotalPrice(Order order) {
@@ -78,24 +83,35 @@ class HistoryController extends GetxController {
     if(order.status == 'Selesai' || order.status == "Batal")
     {
       return "Pesan Lagi";
-    } else if (order.status == 'In Progress'){
+    } else if (order.status == 'Sedang Diproses'){
       return 'Batalkan';
     } else{
       return 'Menunggu';
     }
 
   }
-
-  void gotoRating(Order order){
-
+  String imageChange(String status){
+    if(status == 'Selesai') //1
+    {
+      return Images.pesanan_selesai;
+    } else if(status == 'Sedang Diproses'){
+      return Images.pesanan_sedang_diproses;
+    }else if(status == 'Batal'){
+      return Images.pesanan_batal;
+    }else if(status == 'Menunggu Batal'){
+      return Images.pesanan_menunggu_batal;
+    }else{
+      return Images.pesanan_siap_diambil;
+    }
   }
+
   void goToCart(Order order) {
     List<CartItem> itemsToAdd = order.menus.map((menu) {
       return CartItem(
         productName: menu.nameMenu,
         productImage: menu.image,
         price: menu.price.toInt(),
-        quantity: menu.quantity,
+        quantity: menu.quantity.obs,
         productId: menu.menuId,
       );
     }).toList();
@@ -111,7 +127,7 @@ class HistoryController extends GetxController {
     if(order.status == 'Selesai' || order.status == "Batal")
       {
         goToCart(order);
-      } else if (order.status == 'In Progress'){
+      } else if (order.status == 'Sedang Diproses'){
       showDialog(context: context,  builder: (BuildContext context) {
         return BatalPopup(order: order,);
       },);
@@ -127,5 +143,7 @@ class HistoryController extends GetxController {
     );
   }
 
+
 }
+
 
