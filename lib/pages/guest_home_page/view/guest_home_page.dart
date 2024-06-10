@@ -85,8 +85,8 @@ class GuestHomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ReusableCard(width: screenWidth * 0.43,context: context, product: controller.menuElement[0],isGuest: true, ),
-                    ReusableCard(width: screenWidth * 0.43 ,context: context, product: controller.menuElement[1],isGuest: true,),
+                    ReusableCard(width: screenWidth * 0.43,height: screenHeight * 0.29, context: context, product: controller.menuElement[0],isGuest: true,),
+                    ReusableCard(width: screenWidth * 0.43,height: screenHeight * 0.29,context: context, product: controller.menuElement[1],isGuest: true,),
 
                   ],
                 ),

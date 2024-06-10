@@ -27,6 +27,14 @@ class Images {
   static const String haveaccount = 'assets/images/haveaccount2.png';
   static const String guest = 'assets/images/guest.png';
 
+  static const String pesanan_selesai = 'assets/images/selesai.png';
+  static const String pesanan_sedang_diproses = 'assets/images/sedang_diproses.png';
+  static const String pesanan_siap_diambil = 'assets/images/pesanan_siap_diambil.png';
+  static const String pesanan_menunggu_batal = 'assets/images/menunggu_batal.png';
+  static const String pesanan_batal = 'assets/images/batal_pesanan.png';
+
+
+
 }
 
 

@@ -29,6 +29,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
@@ -36,77 +37,83 @@ class HomePage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Container(
               margin: EdgeInsets.only(left: 20, right: 20, top: 50),
-              child: Obx(() => controller.isLoading.value
-                  ? HomeSkeleton()
-                  : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Selamat Pagi", style: regularTextStyle),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 40),
-                    child: Text(
-                      controller.txtUsername.value.toLowerCase().substring(0, 1).toUpperCase() +
-                          controller.txtUsername.value.toLowerCase().substring(1),
-                      style: boldTextStyle2,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              child: Obx((){
+                if(controller.isLoading.value == false){
+                  return  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MakananWidget(),
-                      MinumanWidget(),
-                      SnackWidget(),
-                    ],
-                  ),
-                  SizedBox(height: 20,),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
-                    child: CarouselSlider(
-                      options: CarouselOptions(
-                        viewportFraction: 1,
-                        autoPlay: true,
-                        enlargeCenterPage: true,
+                      Text("Selamat Pagi", style: regularTextStyle),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 40),
+                        child: Text(
+                          controller.txtUsername.value.toLowerCase().substring(0, 1).toUpperCase() +
+                              controller.txtUsername.value.toLowerCase().substring(1),
+                          style: boldTextStyle2,
+                        ),
                       ),
-                      items: [
-                        RoundedImage(
-                          imageUrl: Images.promo1,
-                          onPressed: () {
-                            controller.navigateToFilteredMenu(context, 10000);
-                          },
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MakananWidget(),
+                          MinumanWidget(),
+                          SnackWidget(),
+                        ],
+                      ),
+                      SizedBox(height: 20,),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: CarouselSlider(
+                          options: CarouselOptions(
+                            viewportFraction: 1,
+                            autoPlay: true,
+                            enlargeCenterPage: true,
+                          ),
+                          items: [
+                            RoundedImage(
+                              imageUrl: Images.promo1,
+                              onPressed: () {
+                                controller.navigateToFilteredMenu(context, 10000);
+                              },
+                            ),
+                            RoundedImage(
+                              imageUrl: Images.promo2,
+                              onPressed: () {
+                                controller.navigateToFilteredMenu(context, 15000);
+                              },
+                            ),
+                            RoundedImage(
+                              imageUrl: Images.promo3,
+                              onPressed: () {
+                                controller.navigateToFilteredMenu(context, 20000);
+                              },
+                            ),
+                          ],
                         ),
-                        RoundedImage(
-                          imageUrl: Images.promo2,
-                          onPressed: () {
-                            controller.navigateToFilteredMenu(context, 15000);
-                          },
+                      ),
+                      Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
+                      SizedBox(height: 20,),
+                      if (controller.menuElement.length > 1)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ReusableCard(width: screenWidth * 0.43,height: screenHeight * 0.29, context: context, product: controller.menuElement[0], isGuest: false,),
+                            ReusableCard(width: screenWidth * 0.43,height: screenHeight * 0.29, context: context, product: controller.menuElement[1], isGuest: false,),
+                          ],
                         ),
-                        RoundedImage(
-                          imageUrl: Images.promo3,
-                          onPressed: () {
-                            controller.navigateToFilteredMenu(context, 20000);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
-                  SizedBox(height: 20,),
-                  if (controller.menuElement.length > 1)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ReusableCard(width: screenWidth * 0.43, context: context, product: controller.menuElement[0], isGuest: false,),
-                        ReusableCard(width: screenWidth * 0.43, context: context, product: controller.menuElement[1], isGuest: false,),
-                      ],
-                    ),
-                  SizedBox(height: 20,),
-                  Text("Favorite Snack", style: LoginboldTextStyle),
-                  SizedBox(height: 20,),
-                  HomeSnack(),
-                  SizedBox(height: 20,),
-                ],
-              ),
-              ),
+                      SizedBox(height: 20,),
+                      Text("Favorite Snack", style: LoginboldTextStyle),
+                      SizedBox(height: 20,),
+                      Visibility(visible: controller.menuElement.length > 1,
+                          child: HomeSnack()),
+                      SizedBox(height: 20,),
+                    ],
+                  );
+
+                }else{
+                  return HomeSkeleton();
+                }
+
+  }),
             ),
           ),
         ),

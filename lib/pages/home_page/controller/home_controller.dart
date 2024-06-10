@@ -37,8 +37,10 @@ checkSharedPreference();
 
       if (response.statusCode == 200) {
         menuElement.value = menuListFromJson(response.body);
+        isLoading.value = false;
         print("Fetched menu list: ${menuElement.length} items");
       } else {
+        isLoading.value = false;
         print('Error: ${response.statusCode}');
       }
     } catch (e) {
