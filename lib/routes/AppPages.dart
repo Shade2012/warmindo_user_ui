@@ -50,7 +50,9 @@ class AppPages {
   AppPages._();
 
   // static const INITIAL = Routes.SPLASH_SCREEN;
+
   static const INITIAL = Routes.BOTTOM_NAVBAR;
+
 
 
   static final routes = [

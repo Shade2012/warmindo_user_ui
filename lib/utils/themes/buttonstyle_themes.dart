@@ -88,6 +88,20 @@ ButtonStyle redeembutton2() {
     ),
   );
 }
+ButtonStyle editPhoneNumber() {
+  return ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+      EdgeInsets.only(top: 15, bottom: 15),
+    ),
+    shape: MaterialStateProperty.all<OutlinedBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
+  );
+}
+
 ButtonStyle button_no() {
   return ButtonStyle(
     backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
