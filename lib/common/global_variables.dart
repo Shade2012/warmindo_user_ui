@@ -4,4 +4,5 @@ class GlobalVariables {
   static const apiSendOtp = 'https://warmindo.pradiptaahmad.tech/api/users/send-otp';
   static const apiVerifyOtp = 'https://warmindo.pradiptaahmad.tech/api/users/verify-otp';
   static const apiLogin = 'https://warmindo.pradiptaahmad.tech/api/users/login';
+  static const apiUpdatePhoneNumber = 'http://warmindo.pradiptaahmad.tech/api/users/update';
 }

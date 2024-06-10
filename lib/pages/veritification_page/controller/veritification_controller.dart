@@ -3,12 +3,19 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/common/global_variables.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 
+import '../../login_page/controller/login_controller.dart';
+import '../../register_page/controller/register_controller.dart';
+
 class VeritificationController extends GetxController {
+  final RegisterController registerController = Get.put(RegisterController());
+  final LoginController loginController = Get.put(LoginController());
+
   final TextEditingController code1Controller = TextEditingController();
   final TextEditingController code2Controller = TextEditingController();
   final TextEditingController code3Controller = TextEditingController();
@@ -19,6 +26,7 @@ class VeritificationController extends GetxController {
   RxString codeOtp = ''.obs;
   RxBool isLoading = false.obs;
   RxString phoneNumber = ''.obs;
+
 Future<void> printShared () async {
 
 }
@@ -27,6 +35,7 @@ Future<void> printShared () async {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
 
     sendOtp();
 
@@ -196,6 +205,74 @@ Future<void> printShared () async {
       isLoading.value = false;
     }
   }
+  Future<void> editPhoneNumber({required String phoneNumber}) async {
+    final url = Uri.parse(GlobalVariables.apiUpdatePhoneNumber);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token2');
+    final client = http.Client();
+
+    try {
+      isLoading.value = true;
+      final response = await client.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({'phone_number': phoneNumber}),
+      );
+
+      final responseData = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        print(responseData);
+        print(response.statusCode);
+        print('object');
+        if(loginController.phone_number.value == ''){
+          registerController.phone_number.value = responseData['user']['phone_number'];
+        } else if (registerController.phone_number.value == ''){
+          loginController.phone_number.value = responseData['user']['phone_number'];
+        }
+        print('login phone number : ${loginController.phone_number.value}');
+        print('register phone number : ${registerController.phone_number.value}');
+
+        Get.back();
+        Get.snackbar(
+          'Success',
+          'Edit Nomor HP Berhasil',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+
+      } else {
+        print(responseData);
+        print(response.statusCode);
+        Get.snackbar(
+          'Error',
+          'Nomor Hp Sudah ada',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Error occurred: $e',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+
+
 
 }
 

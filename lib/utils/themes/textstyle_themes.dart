@@ -157,7 +157,7 @@ TextStyle blueLinkRegular = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: bluelinkTextColor,
         fontWeight: FontWeight.normal,
-        fontSize: figmaFontsize(15)));
+        fontSize: figmaFontsize(14)));
 
 
 TextStyle descriptionTextStyle = GoogleFonts.oxygen(
