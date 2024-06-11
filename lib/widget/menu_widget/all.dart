@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../common/model/menu_list_API_model.dart';
 import '../../pages/menu_page/controller/menu_controller.dart';
+import '../../pages/menu_page/shimmer/menushimmer.dart';
 import '../../utils/themes/textstyle_themes.dart';
 import '../dashed_divider.dart';
 import 'menucard_widget.dart';

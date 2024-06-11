@@ -1,23 +1,23 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:warmindo_user_ui/pages/guest_home_page/view/guest_home_detail_page.dart';
+import 'package:flutter/material.dart';
+import '../../../common/global_variables.dart';
 import '../../../common/model/menu_list_API_model.dart';
-import '../../../common/model/menu_model.dart';
+import '../view/guest_home_detail_page.dart';
 
-class GuestHomeController extends GetxController {
-  static const String baseUrl = 'https://warmindo.pradiptaahmad.tech/api/menus';
+class GuestHomeDetailController extends GetxController {
   RxList<MenuList> menuElement = <MenuList>[].obs;
   RxBool isLoading = true.obs;
   RxBool isConnected = true.obs;
+
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
-    fetchProduct();
     checkConnectivity();
   }
+
+
   void checkConnectivity() async {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       isConnected.value = result != ConnectivityResult.none;
@@ -32,28 +32,27 @@ class GuestHomeController extends GetxController {
       fetchProduct();
     }
   }
-  void fetchProduct() async {
+
+  Future<void> fetchProduct() async {
     try {
+      isLoading.value = true; // Set loading to true before fetching data
+
       final response = await http.get(
-        Uri.parse('https://warmindo.pradiptaahmad.tech/api/menus'),
-      ).timeout(Duration(seconds: 5));
+        Uri.parse(GlobalVariables.apiMenuUrl),
+      );
 
       if (response.statusCode == 200) {
         menuElement.value = menuListFromJson(response.body);
-        isLoading.value = false;
         print("Fetched menu list: ${menuElement.length} items");
-        // You can call the button function here if you want to print the menuList
-        // button();
       } else {
         print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print(e);
+      print('Exception: $e');
+    } finally {
+      isLoading.value = false; // Set loading to false after data is fetched
     }
   }
-  void navigateToFilteredMenu(BuildContext context, int priceThreshold) {
-    final filteredMenu = menuElement.where((menu) => menu.price == priceThreshold).toList();
-    Get.to(GuestFilteredMenuPage(filteredMenu: filteredMenu, price: priceThreshold)
-    );
-  }
+
+
 }

@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
@@ -13,6 +14,7 @@ import '../../../common/model/cartmodel.dart';
 
 
 class HistoryController extends GetxController {
+  RxBool isConnected = false.obs;
   final CartController cartController = Get.put(CartController());
   final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final RxList<Order> orders = <Order>[].obs;
@@ -31,8 +33,21 @@ class HistoryController extends GetxController {
     });
     // Initialize orders with order001 and order002
     initializeOrders();
+    checkConnectivity();
   }
+  void checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    isConnected.value = connectivityResult != ConnectivityResult.none;
 
+    // Listen for connectivity changes
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      isConnected.value = result != ConnectivityResult.none;
+      if (isConnected.value) {
+        // Fetch cart or other data
+        // fetchProduct();
+      }
+    });
+  }
   void initializeOrders() {
     orders.assignAll(orderList);
   }

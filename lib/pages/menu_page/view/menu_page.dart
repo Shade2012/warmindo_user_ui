@@ -18,6 +18,7 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     final int initialTabIndex = Get.arguments ?? 0;
 
     return DefaultTabController(
@@ -72,6 +73,16 @@ class MenuPage extends StatelessWidget {
           ),
         ),
         body: Obx(() {
+          if (!controller.isConnected.value) {
+            return Center(
+              child: Container(
+                child: Text(
+                  'Tidak ada koneksi internet mohon check koneksi internet anda',
+                  style: boldTextStyle,textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          }
           if (controller.searchResults.isNotEmpty) {
             return Search(
               categoryName: 'Search Results',

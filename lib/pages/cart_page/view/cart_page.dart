@@ -42,7 +42,17 @@ class CartPage extends StatelessWidget {
           ),
           margin: EdgeInsets.all(20),
           child: Obx(() {
-            if (controller.cartItems.isEmpty) {
+            if (!controller.isConnected.value) {
+              return Center(
+                child: Container(
+                  margin: EdgeInsets.only(top: screenHeight * 0.4),
+                  child: Text(
+                    'Tidak ada koneksi internet mohon check koneksi internet anda',
+                    style: boldTextStyle,textAlign: TextAlign.center,
+                  ),
+                ),
+              );
+            }else if(controller.cartItems.isEmpty) {
               return Center(
                 child: Container(
                   height: screenHeight * 0.75,
@@ -67,8 +77,9 @@ class CartPage extends StatelessWidget {
                 ),
               );
             } else {
-              return CartData();
+            return CartData();
             }
+
           }),
         ),
       ),

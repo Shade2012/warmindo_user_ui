@@ -1,8 +1,7 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:get/get_rx/get_rx.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/common/global_variables.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
@@ -12,19 +11,36 @@ class HomeController extends GetxController {
   RxString txtUsername = "".obs;
   late final SharedPreferences prefs;
   RxList<MenuList> menuElement = <MenuList>[].obs;
-
   RxBool isLoading = true.obs;
+  RxBool isConnected = true.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    checkSharedPreference();
+    checkConnectivity();
+  }
+
   void checkSharedPreference() async {
     prefs = await SharedPreferences.getInstance();
     if (prefs != null) {
       txtUsername.value = prefs.getString('username') ?? '';
     }
   }
-  @override
-  void onInit() {
-    super.onInit();
-checkSharedPreference();
-    fetchProduct();
+
+  void checkConnectivity() async {
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      isConnected.value = result != ConnectivityResult.none;
+      if (isConnected.value) {
+        fetchProduct();
+      }
+    });
+
+    var connectivityResult = await Connectivity().checkConnectivity();
+    isConnected.value = connectivityResult != ConnectivityResult.none;
+    if (isConnected.value) {
+      fetchProduct();
+    }
   }
 
   Future<void> fetchProduct() async {
@@ -37,31 +53,20 @@ checkSharedPreference();
 
       if (response.statusCode == 200) {
         menuElement.value = menuListFromJson(response.body);
-        isLoading.value = false;
         print("Fetched menu list: ${menuElement.length} items");
       } else {
-        isLoading.value = false;
         print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print(e);
+      print('Exception: $e');
     } finally {
       isLoading.value = false; // Set loading to false after data is fetched
     }
   }
 
-
-
-
   void navigateToFilteredMenu(BuildContext context, int priceThreshold) {
     final filteredMenu = menuElement.where((menu) => menu.price == priceThreshold).toList();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => FilteredMenuPage(filteredMenu: filteredMenu, price: priceThreshold),
-      ),
+    Get.to(FilteredMenuPage(filteredMenu: filteredMenu, price: priceThreshold)
     );
   }
 }
-
-

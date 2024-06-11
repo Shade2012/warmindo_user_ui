@@ -7,6 +7,7 @@ import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.da
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/pages/guest_menu_page/controller/guest_menu_controller.dart';
+import 'package:warmindo_user_ui/pages/menu_page/shimmer/menushimmer.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/dashed_divider.dart';
 import 'package:warmindo_user_ui/widget/menu_widget/all.dart';
@@ -59,33 +60,34 @@ class MenuSecondCategory extends StatelessWidget {
             SizedBox(height: 10),
             Obx(() {
               if(menuController.isLoading.value || guestMenuController.isLoading.value){
-                return GridView.count(
-                  crossAxisCount: 2,
-                  shrinkWrap: true,
-                  childAspectRatio: MediaQuery.of(context).size.width /
-                      (MediaQuery.of(context).size.height / 1.60),
-                  physics: NeverScrollableScrollPhysics(),
-                  children: [
-                    Container(
-                        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                        child: Skeleton(width: 60, radius: 20)),
-                    Container(
-                        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                        child: Skeleton(width: 60, radius: 20)),
-                    Container(
-                        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                        child: Skeleton(width: 60, radius: 20)),
-                    Container(
-                        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                        child: Skeleton(width: 60, radius: 20)),
-                    Container(
-                        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                        child: Skeleton(width: 60, radius: 20)),
-                    Container(
-                        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                        child: Skeleton(width: 60, radius: 20)),
-                  ],
-                );
+                return MenuShimmer();
+                // return GridView.count(
+                //   crossAxisCount: 2,
+                //   shrinkWrap: true,
+                //   childAspectRatio: MediaQuery.of(context).size.width /
+                //       (MediaQuery.of(context).size.height / 1.60),
+                //   physics: NeverScrollableScrollPhysics(),
+                //   children: [
+                //     Container(
+                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                //         child: Skeleton(width: 60, radius: 20)),
+                //     Container(
+                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                //         child: Skeleton(width: 60, radius: 20)),
+                //     Container(
+                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                //         child: Skeleton(width: 60, radius: 20)),
+                //     Container(
+                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                //         child: Skeleton(width: 60, radius: 20)),
+                //     Container(
+                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                //         child: Skeleton(width: 60, radius: 20)),
+                //     Container(
+                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                //         child: Skeleton(width: 60, radius: 20)),
+                //   ],
+                // );
               }else{
                 if(categoryName == "Snack"){
                   return SnackMenu(menuList: menuList, isGuest: isGuest,);

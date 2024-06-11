@@ -51,7 +51,7 @@ class AppPages {
 
   // static const INITIAL = Routes.SPLASH_SCREEN;
 
-  static const INITIAL = Routes.BOTTOM_NAVBAR;
+  static const INITIAL = Routes.GUEST_MENU_PAGE;
 
 
 
