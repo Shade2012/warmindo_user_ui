@@ -13,6 +13,7 @@ import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 import '../../common/model/cartmodel.dart';
 import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../pages/menu_page/controller/menu_controller.dart';
+import '../../routes/AppPages.dart';
 import '../../utils/themes/color_themes.dart';
 import '../../utils/themes/image_themes.dart';
 import '../dashed_divider.dart';
@@ -80,10 +81,13 @@ class MenuCategory extends StatelessWidget {
               final menuQuantity = cartItem?.quantity.value ?? 0;
               return GestureDetector(
                 onTap: () {
-                  Get.to(DetailMenuPage(
-                    menu: menu,
-                    isGuest: isGuest,
-                  ));
+                  Get.toNamed(
+                    Routes.DETAIL_MENU_PAGE,
+                    arguments: {
+                      'menu': menu,
+                      'isGuest': isGuest,
+                    },
+                  );
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),

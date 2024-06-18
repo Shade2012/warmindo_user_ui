@@ -61,19 +61,19 @@ class HomePage extends StatelessWidget {
                         style: boldTextStyle2,
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        MakananWidget(),
-                        MinumanWidget(),
-                        SnackWidget(),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: CarouselSlider(
-                        options: CarouselOptions(
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      MakananWidget(false),
+                      MinumanWidget(false),
+                      SnackWidget(false),
+                    ],
+                  ),
+                  SizedBox(height: 20,),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: CarouselSlider(
+                      options: CarouselOptions(
                           viewportFraction: 1,
                           autoPlay: true,
                           enlargeCenterPage: true,

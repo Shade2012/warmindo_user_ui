@@ -3,12 +3,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 
+import '../pages/guest_navigator_page/controller/guest_navigator_controller.dart';
+import '../pages/navigator_page/controller/navigator_controller.dart';
 import '../utils/themes/icon_themes.dart';
 import '../utils/themes/textstyle_themes.dart';
-Widget SnackWidget(){
+Widget SnackWidget(bool isGuest){
+  final NavigatorController controller = Get.find<NavigatorController>();
+  final GuestNavigatorController guestController = Get.find<GuestNavigatorController>();
   return GestureDetector(
-
-    onTap:()=> Get.toNamed(Routes.MENU_PAGE,arguments: 3),
+    onTap:(){
+      if(isGuest == true){
+        guestController.goToGuestMenuPage(argument: 3);
+      }else{
+        controller.goToMenuPage(argument: 3);
+      }
+      },
     child: Container(
       child: Column(
         children: [

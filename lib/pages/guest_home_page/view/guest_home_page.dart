@@ -53,7 +53,7 @@ class GuestHomePage extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Selamat Pagi", style: regularTextStyle),
+                     Text("Selamat Pagi", style: regularTextStyle),
                     Container(
                       margin: EdgeInsets.only(bottom: 40),
                       child: Text("Guest", style: boldTextStyle2),
@@ -61,19 +61,19 @@ class GuestHomePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        MakananWidget(),
-                        MinumanWidget(),
-                        SnackWidget(),
+                    MakananWidget(true),
+                    MinumanWidget(true),
+                    SnackWidget(true),
                       ],
                     ),
-                    SizedBox(height: 20,),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: CarouselSlider(
-                        options: CarouselOptions(
-                          viewportFraction: 1,
-                          autoPlay: true,
-                          enlargeCenterPage: true,
+                SizedBox(height: 20,),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                      viewportFraction: 1,
+                      autoPlay: true,
+                      enlargeCenterPage: true,
                         ),
                         items: [
                           RoundedImage(

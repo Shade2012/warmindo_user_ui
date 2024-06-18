@@ -9,6 +9,7 @@ import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
 import '../pages/home_page/controller/home_controller.dart';
+import '../routes/AppPages.dart';
 import '../utils/themes/color_themes.dart';
 import '../utils/themes/image_themes.dart';
 import 'cart.dart';
@@ -37,7 +38,14 @@ class ReusableCard extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     return  GestureDetector(
       onTap: (){
-        Get.to(DetailMenuPage(menu: product, isGuest: isGuest,));
+        // Get.to(DetailMenuPage(menu: product, isGuest: isGuest,));
+        Get.toNamed(
+          Routes.DETAIL_MENU_PAGE,
+          arguments: {
+            'menu': product,
+            'isGuest': isGuest,
+          },
+        );
       },
       child: Container(
         width: width,

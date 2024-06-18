@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:warmindo_user_ui/pages/guest_navigator_page/controller/guest_navigator_controller.dart';
 import 'package:warmindo_user_ui/pages/menu_page/controller/menu_controller.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
@@ -13,6 +14,7 @@ import '../controller/guest_menu_controller.dart';
 
 class GuestMenuPage extends StatelessWidget {
   GuestMenuPage({Key? key}) : super(key: key);
+  final GuestNavigatorController navigatorController = Get.find<GuestNavigatorController>();
   final GuestMenuController controller = Get.put(GuestMenuController());
   final MenuPageController menuPageController = Get.put(MenuPageController());
 
@@ -20,58 +22,68 @@ class GuestMenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final int initialTabIndex = Get.arguments ?? 0;
 
-    return DefaultTabController(
-      initialIndex: initialTabIndex,
-      length: 4,
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(110),
-          child: AppBar(
-            backgroundColor: ColorResources.primaryColor,
-            title: CustomSearchBar(
-              hintText: 'Mau makan apa hari ini?',
-              controller: controller.search.value,
-              onChanged: (query) {
-                controller.searchFilter(query);
-              },
-            ),
-            automaticallyImplyLeading: false,
-            bottom: TabBar(
-              labelPadding: EdgeInsets.only(bottom: 10),
-              indicatorPadding: EdgeInsets.only(bottom: 10),
-              indicatorColor: ColorResources.backgroundCardColor,
-              tabs: [
-                Tab(
-                  child: Text(
-                    'All',
-                    style: categoryMenuTextStyle,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didPop) async {
+        if(didPop){
+          navigatorController.goToGuestHomePage();
+          return;
+        }
+        navigatorController.goToGuestHomePage();
+        return;
+      },
+      child: DefaultTabController(
+        initialIndex: navigatorController.guestMenuPageArgument.value,
+        length: 4,
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(110),
+            child: AppBar(
+              backgroundColor: ColorResources.primaryColor,
+              title: CustomSearchBar(
+                hintText: 'Mau makan apa hari ini?',
+                controller: controller.search.value,
+                onChanged: (query) {
+                  controller.searchFilter(query);
+                },
+              ),
+              automaticallyImplyLeading: false,
+              bottom: TabBar(
+                labelPadding: EdgeInsets.only(bottom: 10),
+                indicatorPadding: EdgeInsets.only(bottom: 10),
+                indicatorColor: ColorResources.backgroundCardColor,
+                tabs: [
+                  Tab(
+                    child: Text(
+                      'All',
+                      style: categoryMenuTextStyle,
+                    ),
                   ),
-                ),
-                Tab(
-                  child: Text(
-                    'Minuman',
-                    style: categoryMenuTextStyle,
-                    overflow: TextOverflow.ellipsis,
+                  Tab(
+                    child: Text(
+                      'Minuman',
+                      style: categoryMenuTextStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                Tab(
-                  child: Text(
-                    'Makanan',
-                    style: categoryMenuTextStyle,
-                    overflow: TextOverflow.ellipsis,
+                  Tab(
+                    child: Text(
+                      'Makanan',
+                      style: categoryMenuTextStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                Tab(
-                  child: Text(
-                    'Snack',
-                    style: categoryMenuTextStyle,
+                  Tab(
+                    child: Text(
+                      'Snack',
+                      style: categoryMenuTextStyle,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        body: Obx(() {
+          body: Obx(() {
           if (!controller.isConnected.value) {
             return Center(
               child: Container(
@@ -116,6 +128,8 @@ class GuestMenuPage extends StatelessWidget {
             );
           }
         }),
+        ),
+
       ),
     );
   }

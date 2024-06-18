@@ -24,6 +24,7 @@ class BottomNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:false,
       body:
       Obx(() => pages[controller.currentIndex.value]),
       floatingActionButton: FloatingActionButton(
@@ -46,7 +47,7 @@ class BottomNavbar extends StatelessWidget {
         items: [
           BottomNavigationBarItem(
             icon: Obx(() => SvgPicture.asset(controller.currentIndex.value == 0 ? IconThemes.iconhomeSelected : IconThemes.iconhome)),
-            label: 'Home',
+            label: 'Beranda',
           ),
           BottomNavigationBarItem(
             icon: Obx(() => SvgPicture.asset(controller.currentIndex.value == 1 ? IconThemes.iconmenuSelected : IconThemes.iconmenu)),
@@ -58,11 +59,11 @@ class BottomNavbar extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
-            label: 'History',
+            label: 'Pesanan',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Profile',
+            label: 'Profil',
           ),
         ],
       )
