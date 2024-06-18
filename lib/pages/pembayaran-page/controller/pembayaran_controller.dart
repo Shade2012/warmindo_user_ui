@@ -54,13 +54,13 @@ void makePayment({
       nameMenu: item.productName,
       price: item.price.toDouble(),
       image: item.productImage,
-      quantity: item.quantity, category: '', description: '',
+      quantity: item.quantity.value, category: '', description: '',
     )).toList();
 
     Order order = Order(
       id: generateOrderId(),
       menus: orderedMenus,
-      status: 'In Progress'.obs,
+      status: 'Sedang Diproses'.obs,
       orderMethod: 'Takeaway',
       paymentMethod: paymentMethod,
 
@@ -78,7 +78,9 @@ void makePayment({
 
 
 void saveOrderToHistory(Order order) {
-  historyController.orders.add(order);
+  final existingItemIndex = historyController.orders.indexWhere((orderlist) => orderlist.status == order.status);
+  historyController.saveOrderToHistory(order);
+  // historyController.orders.add(order);
 }
 }
 

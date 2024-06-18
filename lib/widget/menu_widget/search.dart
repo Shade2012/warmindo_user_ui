@@ -9,6 +9,8 @@ import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 
+import '../../common/model/cartmodel.dart';
+import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../pages/menu_page/controller/menu_controller.dart';
 import '../../utils/themes/color_themes.dart';
 import '../../utils/themes/image_themes.dart';
@@ -17,6 +19,7 @@ import '../myCustomPopUp/myPopup_controller.dart';
 
 
 class Search extends StatelessWidget {
+  final CartController cartController = Get.put(CartController());
   final MenuPageController menuController = Get.put(MenuPageController());
   final popUpcontroller = Get.put(MyCustomPopUpController());
   final String categoryName;
@@ -35,6 +38,7 @@ class Search extends StatelessWidget {
     final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,6 +55,7 @@ class Search extends StatelessWidget {
           ),
 
           Obx((){
+
             return menuController.isLoading.value ?
             GridView.count(
               crossAxisCount: 2,
@@ -83,6 +88,9 @@ class Search extends StatelessWidget {
               itemCount: menuList.length,
               itemBuilder: (context, index) {
                 final menu = menuList[index];
+                final cartItem = cartController.cartItems
+                    .firstWhereOrNull((item) => item.productId == menu.menuId);
+                final menuQuantity = cartItem?.quantity.value ?? 0;
                 return GestureDetector(
                   onTap: () {
                     Get.to(DetailMenuPage(menu: menu, isGuest: isGuest,));
@@ -145,23 +153,63 @@ class Search extends StatelessWidget {
                                       currencyFormat.format(menu.price),
                                       style: menuPriceTextStyle,
                                     ),
-                                    InkWell(
-                                      onTap: () {
-                                        if(isGuest == true){
-                                          popUpcontroller.showCustomModalForGuest(context);
-                                        }else{
-                                          popUpcontroller.showCustomModalForItem(menu, context);
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius: BorderRadius.circular(5),
+                                    Spacer(),
+                                    Visibility(
+                                      visible: menuQuantity > 0,
+                                      child: InkWell(
+                                        onTap: () {
+                                          if (isGuest) {
+                                            popUpcontroller
+                                                .showCustomModalForGuest(context);
+                                          } else {
+                                            popUpcontroller.showCustomModalForItem(menu, context,cartItem!);
+                                          }
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 2),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(color: Colors.black),
+                                            borderRadius:
+                                            BorderRadius.circular(5),
+                                          ),
+                                          child: Text(
+                                            menuQuantity.toString(),
+                                            style: boldTextStyle,
+                                          ),
                                         ),
-                                        child: Icon(
-                                          Icons.add,
-                                          color: Colors.white,
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: menuQuantity == 0,
+                                      child: InkWell(
+                                        onTap: () {
+                                          if (isGuest) {
+                                            popUpcontroller
+                                                .showCustomModalForGuest(context);
+                                          } else {
+                                            final cartItem = CartItem(
+                                              productId: menu.menuId,
+                                              productName: menu.nameMenu,
+                                              price: menu.price.toInt(),
+                                              quantity: 1.obs,
+                                              productImage: menu.image,
+                                            );
+                                            popUpcontroller.showCustomModalForItem(menu, context,cartItem);
+                                          }
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                            BorderRadius.circular(5),
+                                          ),
+                                          child: Icon(
+                                            Icons.add,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),

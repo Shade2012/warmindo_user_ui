@@ -4,69 +4,105 @@ import 'package:get/get.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 
 
+import '../../common/model/cartmodel.dart';
+import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../utils/themes/textstyle_themes.dart';
-import 'counter_controller.dart';
+import '../reusable_dialog.dart';
+
 
 class CounterWidget extends StatelessWidget {
-  final CounterController controller = Get.put(CounterController());
+  final CartItem cartItem;
+  final cartController = Get.find<CartController>();
 
-
+  CounterWidget({required this.cartItem});
   @override
   Widget build(BuildContext context) {
+    int cartItemIndex = cartController.cartItems.indexWhere((item) => item.productId == cartItem.productId);
+
     return Container(
-      child: Row(
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              controller.subtract();
-
-            },
-            backgroundColor: ColorResources.primaryColor,
-            mini: true,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+      child: Obx(() {
+        if(cartItemIndex >= cartController.cartItems.length){
+          return Container(
+            child: Text(
+              'Kosong',
+              style: boldTextStyle,
             ),
-            child: Center(
-              child: Icon(
-                Icons.remove,
-                color: Colors.white,
+          );
+        }
+        return Row(
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                if(cartController.cartItems[cartItemIndex].quantity == 1){
+                  showDialog(context: context, builder: (BuildContext context){
+                    return ReusableDialog(
+                      title: 'Pesan',
+                      content: 'Apakah anda yakin untuk menghapus item ini dari keranjang?',
+                      cancelText: "Tidak",
+                      confirmText: "Iya",
+                      onCancelPressed: () {
+                        cartController.cartItems[cartItemIndex].quantity = 1.obs;
+                        Get.back();
+                      },
+                      onConfirmPressed: () {
+                        cartController.cartItems[cartItemIndex].quantity = 0.obs;
+                        cartController.removeItemFromCart(cartController.cartItems[cartItemIndex]);
+                        Get.back();
+                        Get.back();
+                      },
+                    );
+                  });
+                }else{
+                  cartController.decrementQuantityPopup(cartItemIndex);
+                }
+                print(cartItem.quantity);
+              },
+              backgroundColor: ColorResources.primaryColor,
+              mini: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.remove,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            width: 16,
-          ),
-          Obx(() => Text(
-            '${controller.quantity}',
-            style: boldTextStyle,
-          ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              controller.add();
-
-            },
-            backgroundColor:  ColorResources.primaryColor,
-            mini: true,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+            SizedBox(
+              width: 16,
             ),
-            child: Center(
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
+                Text(
+                  '${cartController.cartItems[cartItemIndex].quantity}',
+                  style: boldTextStyle,
+                ),
+            SizedBox(
+              width: 20,
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                cartController.incrementQuantityPopup(cartItemIndex);
+                print(cartItem.quantity);
+              },
+              backgroundColor: ColorResources.primaryColor,
+              mini: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
+            SizedBox(
+              width: 20,
+            ),
 
-        ],
-      ),
+          ],
+        );
+      }),
     );
   }
 }

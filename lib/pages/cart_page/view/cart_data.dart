@@ -35,7 +35,7 @@ class CartData extends StatelessWidget {
               itemCount: controller.cartItems.length,
               itemBuilder: (BuildContext context, int index) {
                 final cartItem = controller.cartItems[index];
-                final totalItemPrice = cartItem.price * cartItem.quantity;
+                final totalItemPrice = cartItem.price * cartItem.quantity.value;
                 return Container(
                   padding: EdgeInsets.all(20),
                   child: Row(
@@ -66,7 +66,7 @@ class CartData extends StatelessWidget {
                                   ),
                                 ),
                                 InkWell(
-                                    onTap: () {controller.removeItemFromCart(index);},
+                                    onTap: () {controller.removeItemFromCart(cartItem);},
                                     child: SvgPicture.asset(
                                       IconThemes.icon_trash,
                                       color: Colors.red,))
@@ -110,7 +110,7 @@ class CartData extends StatelessWidget {
                             for (CartItem cartItem
                             in controller.cartItems) {
                               totalPrice +=
-                                  cartItem.price * cartItem.quantity;
+                                  cartItem.price * cartItem.quantity.value;
                             }
                             return Text(
                                 currencyFormat.format(totalPrice),
@@ -137,7 +137,7 @@ class CartData extends StatelessWidget {
                                 Obx(() {
                                   double totalPrice = 0;
                                   for (CartItem cartItem in controller.cartItems) {
-                                    totalPrice += cartItem.price * cartItem.quantity;
+                                    totalPrice += cartItem.price * cartItem.quantity.value;
                                   }
 
                                   return Text(

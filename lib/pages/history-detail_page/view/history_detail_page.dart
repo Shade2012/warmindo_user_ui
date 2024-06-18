@@ -26,7 +26,7 @@ class HistoryDetailPage extends StatelessWidget {
     switch (status.toLowerCase()) {
       case 'selesai':
         return ColorResources.labelcomplete;
-      case 'in progress':
+      case 'sedang diproses':
         return ColorResources.labelinprogg;
       case 'menunggu batal':
         return ColorResources.labelcancel;

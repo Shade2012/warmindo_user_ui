@@ -22,7 +22,7 @@ class MyCustomPopUpController extends GetxController {
   final CartController cartController = Get.put(CartController());
   final CounterController counterController = Get.put(CounterController());
 
-  void showCustomModalForItem(MenuList product, BuildContext context) {
+  void showCustomModalForItem(MenuList product, BuildContext context,CartItem cartItem) {
     Future.delayed(Duration(milliseconds: 200), () {
       isLoading.value = false;
     });
@@ -30,7 +30,7 @@ class MyCustomPopUpController extends GetxController {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-       return MyCustomPopUp(product: product);
+       return MyCustomPopUp(product: product, cartItem: cartItem,);
       }
     );
     counterController.reset();
@@ -48,17 +48,18 @@ class MyCustomPopUpController extends GetxController {
 
   }
 
-  void addToCart(MenuList product) {
+  void addToCart(CartItem product) {
     cartController.addToCart(CartItem(
-      productId: product.menuId,
-      productName: product.nameMenu,
+      productId: product.productId,
+      productName: product.productName,
       price: product.price.toInt(),
-      quantity: counterController.quantity?.value ?? 0,
-      productImage: product.image,
+      quantity: product.quantity,
+      productImage: product.productImage,
     ));
     counterController.reset();
     print('Item added to cart');
-    Get.back();
     print('Navigating to CartPage');
   }
+
+
 }

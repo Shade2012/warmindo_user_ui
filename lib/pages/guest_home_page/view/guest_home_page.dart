@@ -28,27 +28,44 @@ class GuestHomePage extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.only(left: 20, right: 20, top: 50),
-            child: Obx(() => controller.isLoading.value?
-            HomeSkeleton() :
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Selamat Pagi", style: regularTextStyle),
-                Container(
-                  margin: EdgeInsets.only(bottom: 40),
-                  child: Text("Guest", style: boldTextStyle2),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: RefreshIndicator(
+          onRefresh: () async {
+            controller.fetchProduct();
+          },
+          child: SingleChildScrollView(
+            child: Container(
+              margin: EdgeInsets.only(left: 20, right: 20, top: 50),
+              child: Obx((){
+                if (!controller.isConnected.value) {
+                  return Center(
+                    child: Container(
+                      margin: EdgeInsets.only(top: screenHeight * 0.4),
+                      child: Text(
+                        'Tidak ada koneksi internet mohon check koneksi internet anda',
+                        style: boldTextStyle,textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
+                }
+                if(controller.isLoading.value){
+                  return HomeSkeleton();
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                     Text("Selamat Pagi", style: regularTextStyle),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 40),
+                      child: Text("Guest", style: boldTextStyle2),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
                     MakananWidget(true),
                     MinumanWidget(true),
                     SnackWidget(true),
-                  ],
-                ),
+                      ],
+                    ),
                 SizedBox(height: 20,),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
@@ -57,46 +74,47 @@ class GuestHomePage extends StatelessWidget {
                       viewportFraction: 1,
                       autoPlay: true,
                       enlargeCenterPage: true,
+                        ),
+                        items: [
+                          RoundedImage(
+                            imageUrl: Images.promo1,
+                            onPressed: () {
+                              controller.navigateToFilteredMenu(context, 10000);
+                            },
+                          ),
+                          RoundedImage(
+                            imageUrl: Images.promo2,
+                            onPressed: () {
+                              controller.navigateToFilteredMenu(context, 15000);
+                            },
+                          ),
+                          RoundedImage(
+                            imageUrl: Images.promo3,
+                            onPressed: () {
+                              controller.navigateToFilteredMenu(context, 20000);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                    items: [
-                      RoundedImage(
-                        imageUrl: Images.promo1,
-                        onPressed: () {
-                          controller.navigateToFilteredMenu(context, 10000);
-                        },
-                      ),
-                      RoundedImage(
-                        imageUrl: Images.promo2,
-                        onPressed: () {
-                          controller.navigateToFilteredMenu(context, 15000);
-                        },
-                      ),
-                      RoundedImage(
-                        imageUrl: Images.promo3,
-                        onPressed: () {
-                          controller.navigateToFilteredMenu(context, 20000);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
-                SizedBox(height: 20,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ReusableCard(width: screenWidth * 0.43,context: context, product: controller.menuElement[0],isGuest: true, ),
-                    ReusableCard(width: screenWidth * 0.43 ,context: context, product: controller.menuElement[1],isGuest: true,),
+                    Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
+                    SizedBox(height: 20,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ReusableCard(width: screenWidth * 0.43,height: screenHeight * 0.29, context: context, product: controller.menuElement[0],isGuest: true,),
+                        ReusableCard(width: screenWidth * 0.43,height: screenHeight * 0.29,context: context, product: controller.menuElement[1],isGuest: true,),
 
+                      ],
+                    ),
+                    SizedBox(height: 20,),
+                    Text("Favorite Snack", style: LoginboldTextStyle),
+                    SizedBox(height: 20,),
+                    GuestSnack(),
+                    SizedBox(height: 20,)
                   ],
-                ),
-                SizedBox(height: 20,),
-                Text("Favorite Snack", style: LoginboldTextStyle),
-                SizedBox(height: 20,),
-                GuestSnack(),
-                SizedBox(height: 20,)
-              ],
-            ),
+                );
+              }),
             ),
           ),
         ),

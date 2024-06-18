@@ -51,8 +51,10 @@ class AppPages {
   late Order order2;
   AppPages._();
 
-  // static const INITIAL = Routes.SPLASH_SCREEN;
   static const INITIAL = Routes.SPLASH_SCREEN;
+
+
+
 
 
   static final routes = [

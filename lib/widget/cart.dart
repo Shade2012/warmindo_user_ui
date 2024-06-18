@@ -1,14 +1,8 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
-
 import '../pages/cart_page/controller/cart_controller.dart';
 import '../common/model/cartmodel.dart';
-import '../common/model/menu_model.dart';
-import '../utils/themes/icon_themes.dart';
 import 'myCustomPopUp/myCustomPopup.dart';
 import 'myCustomPopUp/myPopup_controller.dart';
 
@@ -19,14 +13,28 @@ class Cart extends StatelessWidget {
   final BuildContext context;
   final MenuList product;
 
-  Cart({required this.context,required this.product});
+  Cart({required this.context, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    final cartItem = cartController.cartItems.firstWhereOrNull((item) => item.productId == product.menuId);
 
     return GestureDetector(
       onTap: () {
-        popUpcontroller.showCustomModalForItem(product, context);
+        if (cartItem == null) {
+          final newCartItem = CartItem(
+            productId: product.menuId,
+            productName: product.nameMenu,
+            price: product.price.toInt(),
+            quantity: 1.obs,
+            productImage: product.image,
+          );
+          popUpcontroller.addToCart(newCartItem);
+          popUpcontroller.showCustomModalForItem(product, context, newCartItem);
+        } else {
+          popUpcontroller.showCustomModalForItem(product, context, cartItem);
+        }
+
         print(cartController.cartItems.value);
       },
       child: Container(

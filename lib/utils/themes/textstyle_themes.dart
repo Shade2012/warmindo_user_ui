@@ -141,6 +141,12 @@ TextStyle boldphoneNumberTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(14)));
 
+TextStyle bold12 = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(12)));
+
 TextStyle boldcodeTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,

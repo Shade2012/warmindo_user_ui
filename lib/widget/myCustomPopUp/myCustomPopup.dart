@@ -20,8 +20,9 @@ import 'myPopup_controller.dart';
 
 class MyCustomPopUp extends StatelessWidget {
   final MenuList product;
+  final CartItem cartItem;
 
-  MyCustomPopUp({required this.product});
+  MyCustomPopUp({required this.product, required this.cartItem,});
   final MyCustomPopUpController controller = Get.put(MyCustomPopUpController());
   final CounterController controllerCounter = Get.put(CounterController());
   @override
@@ -112,18 +113,18 @@ class MyCustomPopUp extends StatelessWidget {
                               children: [
                                 Obx(() => Container(
                                   child: Text(
-                                    (currencyFormat.format(controllerCounter.quantity.value * product.price)) ,
+                                    (currencyFormat.format(cartItem.quantity * product.price)) ,
                                     style: onboardingHeaderTextStyle,
                                   ),
                                 ),
                                 ),
-                                CounterWidget()
+                                 CounterWidget(cartItem:cartItem )
                               ],
                             ),
                             SizedBox(height: 15,),
                             GestureDetector(
                               onTap: (){
-                                controller.addToCart(product);
+                        Get.back();
                               },
                               child: Container(
                                   decoration: BoxDecoration(
@@ -133,7 +134,7 @@ class MyCustomPopUp extends StatelessWidget {
 
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height / 14,
-                                  child: Center(child: Text("Tambah Ke Keranjang",style: whiteboldTextStyle, ))
+                                  child: Center(child: Text("Perbarui Keranjang",style: whiteboldTextStyle, ))
                               ),
                             ),
                           ],

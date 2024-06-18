@@ -48,6 +48,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   http:
   shared_preferences: ^2.2.3
+  connectivity_plus: ^3.0.3
 
 dev_dependencies:
   flutter_test:

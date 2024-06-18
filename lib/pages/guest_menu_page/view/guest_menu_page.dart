@@ -84,41 +84,52 @@ class GuestMenuPage extends StatelessWidget {
             ),
           ),
           body: Obx(() {
-            if (controller.searchResults.isNotEmpty) {
-              return Search(
-                categoryName: 'Search Results',
-                menuList: controller.searchResults,
-                context: context,
-                isGuest: true,
-              );
-            } else {
-              return TabBarView(
-                children: [
-                  MenuSecondCategory(
-                    categoryName: 'All',
-                    menuList: controller.menuElement,
-                    isGuest: true,
-                  ),
-                  MenuSecondCategory(
-                    categoryName: 'Minuman',
-                    menuList: controller.menuElement.where((menu) => menu.category.toLowerCase() == 'minuman').toList(),
-                    isGuest: true,
-                  ),
-                  MenuSecondCategory(
-                    categoryName: 'Makanan',
-                    menuList: controller.menuElement.where((menu) => menu.category.toLowerCase() == 'makanan').toList(),
-                    isGuest: true,
-                  ),
-                  MenuSecondCategory(
-                    categoryName: 'Snack',
-                    menuList: controller.menuElement.where((menu) => menu.category.toLowerCase() == 'snack').toList(),
-                    isGuest: true,
-                  ),
-                ],
-              );
-            }
-          }),
+          if (!controller.isConnected.value) {
+            return Center(
+              child: Container(
+                child: Text(
+                  'Tidak ada koneksi internet mohon check koneksi internet anda',
+                  style: boldTextStyle,textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          }
+          if (controller.searchResults.isNotEmpty) {
+            return Search(
+              categoryName: 'Search Results',
+              menuList: controller.searchResults,
+              context: context,
+              isGuest: true,
+            );
+          } else {
+            return TabBarView(
+              children: [
+                MenuSecondCategory(
+                  categoryName: 'All',
+                  menuList: controller.menuElement,
+                  isGuest: true,
+                ),
+                MenuSecondCategory(
+                  categoryName: 'Minuman',
+                  menuList: controller.menuElement.where((menu) => menu.category.toLowerCase() == 'minuman').toList(),
+                  isGuest: true,
+                ),
+                MenuSecondCategory(
+                  categoryName: 'Makanan',
+                  menuList: controller.menuElement.where((menu) => menu.category.toLowerCase() == 'makanan').toList(),
+                  isGuest: true,
+                ),
+                MenuSecondCategory(
+                  categoryName: 'Snack',
+                  menuList: controller.menuElement.where((menu) => menu.category.toLowerCase() == 'snack').toList(),
+                  isGuest: true,
+                ),
+              ],
+            );
+          }
+        }),
         ),
+
       ),
     );
   }

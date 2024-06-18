@@ -1,50 +1,86 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 
 import '../../../common/model/cartmodel.dart';
 
 class CartController extends GetxController {
-
-
-  RxInt quantity = 1.obs;
-  // final RxList<CartItem> cartItems = cartList.obs;
+  RxBool isConnected = true.obs;
   final RxList<CartItem> cartItems = <CartItem>[].obs;
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    checkConnectivity();
+  }
+  void addToCart(CartItem product) {
+    final existingItemIndex = cartItems.indexWhere((item) => item.productId == product.productId);
 
-
-  void addToCart(CartItem item) {
-    final existingItemIndex = cartItems.indexWhere((cartItem) => cartItem.productId == item.productId);
     if (existingItemIndex != -1) {
-      cartItems[existingItemIndex].quantity += item.quantity;
+      incrementQuantityPopup(existingItemIndex);
     } else {
-      cartItems.add(item);
+      // Add the product directly to the cartItems list
+      cartItems.add(product);
     }
+
+    print('Item added to cart');
+    print('Navigating to CartPage');
+  }
+
+
+  void checkConnectivity() async {
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      isConnected.value = result != ConnectivityResult.none;
+      if (isConnected.value) {
+        //fetch cart
+        // fetchProduct();
+      }
+    });
+
+    var connectivityResult = await Connectivity().checkConnectivity();
+    isConnected.value = connectivityResult != ConnectivityResult.none;
+    if (isConnected.value) {
+      //fetch cart
+    }
+  }
+
+  void removeItemFromCart(CartItem item) {
+    cartItems.remove(item);
     cartItems.refresh();
   }
 
-  // Remove an item from the cart
-  void removeItemFromCart(int index) {
-    cartItems.removeAt(index);
+  void incrementQuantity(CartItem item) {
+    item.quantity++;
     cartItems.refresh();
   }
 
-  // Increment the quantity of an item at a specific index
-  void incrementQuantity(int index) {
-    cartItems[index].quantity++;
-    cartItems.refresh();
+  void decrementQuantity(CartItem item) {
+    if (item.quantity > 0) {
+      item.quantity--;
+
+      if (item.quantity == 0) {
+        // If the quantity becomes zero, remove the item from the cart
+        removeItemFromCart(item);
+      }
+      cartItems.refresh();
+    }
   }
 
-  // Decrement the quantity of an item at a specific index
-  void decrementQuantity(int index) {
+  void incrementQuantityPopup(int index) {
     if (index >= 0 && index < cartItems.length) {
-      if (cartItems[index].quantity > 0) {
-        cartItems[index].quantity--;
+      cartItems[index].quantity.value++;
+    }
+  }
 
-        if (cartItems[index].quantity == 0) {
-          // If the quantity becomes zero, remove the item from the cart
-          removeItemFromCart(index);
-        }
-        cartItems.refresh();
+  void decrementQuantityPopup(int index) {
+    if (index >= 0 && index < cartItems.length) {
+      if (cartItems[index].quantity.value > 0) {
+        cartItems[index].quantity.value--;
+      } else if (cartItems[index].quantity.value == 1){
+        removeItemFromCart(cartItems[index]);
       }
     }
+
   }
+
 }

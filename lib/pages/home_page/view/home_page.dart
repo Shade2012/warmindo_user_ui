@@ -1,12 +1,7 @@
-
-import 'dart:ffi';
-
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/home_controller.dart';
 import 'package:warmindo_user_ui/pages/home_page/shimmer/homeshimmer.dart';
 import 'package:warmindo_user_ui/pages/home_page/view/home_snack.dart';
@@ -29,28 +24,44 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: controller.fetchProduct,
+          onRefresh: () async {
+            controller.fetchProduct();
+          },
           child: SingleChildScrollView(
             child: Container(
               margin: EdgeInsets.only(left: 20, right: 20, top: 50),
-              child: Obx(() => controller.isLoading.value
-                  ? HomeSkeleton()
-                  : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Selamat Pagi", style: regularTextStyle),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 40),
-                    child: Text(
-                      controller.txtUsername.value.toLowerCase().substring(0, 1).toUpperCase() +
-                          controller.txtUsername.value.toLowerCase().substring(1),
-                      style: boldTextStyle2,
+              child: Obx(() {
+                if (!controller.isConnected.value) {
+                  return Center(
+                    child: Container(
+                      margin: EdgeInsets.only(top: screenHeight * 0.4),
+                      child: Text(
+                        'Tidak ada koneksi internet mohon check koneksi internet anda',
+                        style: boldTextStyle,textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                  Row(
+                  );
+                }
+                if (controller.isLoading.value) {
+                  return HomeSkeleton();
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Selamat Pagi", style: regularTextStyle),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 40),
+                      child: Text(
+                        controller.txtUsername.value.toLowerCase().substring(0, 1).toUpperCase() +
+                            controller.txtUsername.value.toLowerCase().substring(1),
+                        style: boldTextStyle2,
+                      ),
+                    ),
+                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       MakananWidget(false),
@@ -63,50 +74,65 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20.0),
                     child: CarouselSlider(
                       options: CarouselOptions(
-                        viewportFraction: 1,
-                        autoPlay: true,
-                        enlargeCenterPage: true,
+                          viewportFraction: 1,
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                        ),
+                        items: [
+                          RoundedImage(
+                            imageUrl: Images.promo1,
+                            onPressed: () {
+                              controller.navigateToFilteredMenu(context, 10000);
+                            },
+                          ),
+                          RoundedImage(
+                            imageUrl: Images.promo2,
+                            onPressed: () {
+                              controller.navigateToFilteredMenu(context, 15000);
+                            },
+                          ),
+                          RoundedImage(
+                            imageUrl: Images.promo3,
+                            onPressed: () {
+                              controller.navigateToFilteredMenu(context, 20000);
+                            },
+                          ),
+                        ],
                       ),
-                      items: [
-                        RoundedImage(
-                          imageUrl: Images.promo1,
-                          onPressed: () {
-                            controller.navigateToFilteredMenu(context, 10000);
-                          },
-                        ),
-                        RoundedImage(
-                          imageUrl: Images.promo2,
-                          onPressed: () {
-                            controller.navigateToFilteredMenu(context, 15000);
-                          },
-                        ),
-                        RoundedImage(
-                          imageUrl: Images.promo3,
-                          onPressed: () {
-                            controller.navigateToFilteredMenu(context, 20000);
-                          },
-                        ),
-                      ],
                     ),
-                  ),
-                  Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
-                  SizedBox(height: 20,),
-                  if (controller.menuElement.length > 1)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ReusableCard(width: screenWidth * 0.43, context: context, product: controller.menuElement[0], isGuest: false,),
-                        ReusableCard(width: screenWidth * 0.43, context: context, product: controller.menuElement[1], isGuest: false,),
-                      ],
+                    Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
+                    SizedBox(height: 20),
+                    if (controller.menuElement.length > 1)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ReusableCard(
+                            width: screenWidth * 0.43,
+                            height: screenHeight * 0.29,
+                            context: context,
+                            product: controller.menuElement[0],
+                            isGuest: false,
+                          ),
+                          ReusableCard(
+                            width: screenWidth * 0.43,
+                            height: screenHeight * 0.29,
+                            context: context,
+                            product: controller.menuElement[1],
+                            isGuest: false,
+                          ),
+                        ],
+                      ),
+                    SizedBox(height: 20),
+                    Text("Favorite Snack", style: LoginboldTextStyle),
+                    SizedBox(height: 20),
+                    Visibility(
+                      visible: controller.menuElement.length > 1,
+                      child: HomeSnack(),
                     ),
-                  SizedBox(height: 20,),
-                  Text("Favorite Snack", style: LoginboldTextStyle),
-                  SizedBox(height: 20,),
-                  HomeSnack(),
-                  SizedBox(height: 20,),
-                ],
-              ),
-              ),
+                    SizedBox(height: 20),
+                  ],
+                );
+              }),
             ),
           ),
         ),
@@ -114,5 +140,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-
