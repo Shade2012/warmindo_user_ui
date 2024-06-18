@@ -10,6 +10,7 @@ import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 
 import '../../pages/menu_page/controller/menu_controller.dart';
+import '../../routes/AppPages.dart';
 import '../../utils/themes/color_themes.dart';
 import '../../utils/themes/image_themes.dart';
 import '../dashed_divider.dart';
@@ -62,10 +63,13 @@ class MenuCategory extends StatelessWidget {
               final menu = filteredMenuList[index];
               return GestureDetector(
                 onTap: () {
-                  Get.to(DetailMenuPage(
-                    menu: menu,
-                    isGuest: isGuest,
-                  ));
+                  Get.toNamed(
+                    Routes.DETAIL_MENU_PAGE,
+                    arguments: {
+                      'menu': menu,
+                      'isGuest': isGuest,
+                    },
+                  );
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),

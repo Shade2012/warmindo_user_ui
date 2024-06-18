@@ -53,9 +53,9 @@ class HomePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      MakananWidget(),
-                      MinumanWidget(),
-                      SnackWidget(),
+                      MakananWidget(false),
+                      MinumanWidget(false),
+                      SnackWidget(false),
                     ],
                   ),
                   SizedBox(height: 20,),

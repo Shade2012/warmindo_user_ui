@@ -4,7 +4,9 @@ import 'package:warmindo_user_ui/pages/cart_page/binding/cart_binding.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
 import 'package:warmindo_user_ui/pages/change-password_page/binding/change_pass_binding.dart';
 import 'package:warmindo_user_ui/pages/change-password_page/view/change_pass_page.dart';
-
+import 'package:warmindo_user_ui/pages/detail-menu_page/binding/detail_menu_binding.dart';
+import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
+import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/binding/edit_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/view/edit_profile_page.dart';
 import 'package:warmindo_user_ui/pages/guest_home_page/binding/guest_home_binding.dart';
@@ -100,6 +102,12 @@ class AppPages {
         name: _Paths.CART_PAGE,
         page: () => CartPage(),
         binding: CartBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.DETAIL_MENU_PAGE,
+        page: () => DetailMenuPage(menu: Get.arguments['menu'], isGuest: Get.arguments['isGuest'],),
+        binding: DETAILMENUBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(

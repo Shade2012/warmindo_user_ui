@@ -5,7 +5,7 @@ abstract class _Paths {
   static const CART_PAGE = '/cart-page';
   static const PEMBAYARAN_PAGE = '/pembayaran-page';
   static const CHANGEPASS_PAGE = '/change-pass-page';
-  static const DETAILMENU_PAGE = '/detail-menu-page';
+  static const DETAIL_MENU_PAGE = '/detail-menu-page';
   static const EDITPROFILE_PAGE = '/edit-profile-page';
   static const HISTORYDETAIL_PAGE = '/history-detail-page';
   static const HISTORY_PAGE = '/history-page';
@@ -32,7 +32,7 @@ abstract class Routes {
   static const CART_PAGE = _Paths.CART_PAGE;
   static const PEMBAYARAN_PAGE = _Paths.PEMBAYARAN_PAGE;
   static const CHANGEPASS_PAGE = _Paths.CHANGEPASS_PAGE;
-  static const DETAILMENU_PAGE = _Paths.DETAILMENU_PAGE;
+  static const DETAIL_MENU_PAGE = _Paths.DETAIL_MENU_PAGE;
   static const EDITPROFILE_PAGE = _Paths.EDITPROFILE_PAGE;
   static const HISTORYDETAIL_PAGE = _Paths.HISTORYDETAIL_PAGE;
   static const HISTORY_PAGE = _Paths.HISTORY_PAGE;

@@ -44,9 +44,9 @@ class GuestHomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    MakananWidget(),
-                    MinumanWidget(),
-                    SnackWidget(),
+                    MakananWidget(true),
+                    MinumanWidget(true),
+                    SnackWidget(true),
                   ],
                 ),
                 SizedBox(height: 20,),
