@@ -33,6 +33,16 @@ class HistoryDetailFilterPage extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(10),
         child:Obx(() {
+          if (!controller.isConnected.value) {
+            return Center(
+              child: Container(
+                child: Text(
+                  'Tidak ada koneksi internet mohon check koneksi internet anda',
+                  style: boldTextStyle,textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          }
           if (controller.isLoading.value) {
             return ListView.separated(
               itemCount: 4,
@@ -95,6 +105,7 @@ class HistoryDetailFilterPage extends StatelessWidget {
                     },
                   ),
                 ),
+
               ],
             );
           }

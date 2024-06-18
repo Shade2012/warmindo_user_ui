@@ -1,10 +1,18 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 
 import '../../../common/model/cartmodel.dart';
 
 class CartController extends GetxController {
+  RxBool isConnected = true.obs;
   final RxList<CartItem> cartItems = <CartItem>[].obs;
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    checkConnectivity();
+  }
   void addToCart(CartItem product) {
     final existingItemIndex = cartItems.indexWhere((item) => item.productId == product.productId);
 
@@ -20,7 +28,21 @@ class CartController extends GetxController {
   }
 
 
+  void checkConnectivity() async {
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      isConnected.value = result != ConnectivityResult.none;
+      if (isConnected.value) {
+        //fetch cart
+        // fetchProduct();
+      }
+    });
 
+    var connectivityResult = await Connectivity().checkConnectivity();
+    isConnected.value = connectivityResult != ConnectivityResult.none;
+    if (isConnected.value) {
+      //fetch cart
+    }
+  }
 
   void removeItemFromCart(CartItem item) {
     cartItems.remove(item);

@@ -72,6 +72,16 @@ class GuestMenuPage extends StatelessWidget {
           ),
         ),
         body: Obx(() {
+          if (!controller.isConnected.value) {
+            return Center(
+              child: Container(
+                child: Text(
+                  'Tidak ada koneksi internet mohon check koneksi internet anda',
+                  style: boldTextStyle,textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          }
           if (controller.searchResults.isNotEmpty) {
             return Search(
               categoryName: 'Search Results',

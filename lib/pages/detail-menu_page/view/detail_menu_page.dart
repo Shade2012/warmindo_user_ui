@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/common/model/menu_model.dart';
+import 'package:warmindo_user_ui/pages/detail-menu_page/shimmer/bottom_detail_menu_shimmer.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
 import '../../../common/model/cartmodel.dart';
@@ -11,13 +12,19 @@ import '../../../utils/themes/image_themes.dart';
 import '../../../widget/appBar.dart';
 import '../../../widget/myCustomPopUp/myPopup_controller.dart';
 import '../../cart_page/controller/cart_controller.dart';
+import '../controller/detail_menu_controller.dart';
+import '../shimmer/detail_menu_shimmer.dart';
 
 class DetailMenuPage extends StatelessWidget {
-  final CartController cartController = Get.put(CartController());
+  final CartController cartController = Get.find();
+  final DetailMenuController controller = Get.put(DetailMenuController());
   final MenuList menu;
   final bool isGuest;
 
-  DetailMenuPage({Key? key, required this.menu, required this.isGuest}) : super(key: key);
+  DetailMenuPage({Key? key, required this.menu, required this.isGuest}) : super(key: key) {
+    // Fetch the products filtered by the provided menuId
+    controller.fetchProduct(menu.menuId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,53 +38,99 @@ class DetailMenuPage extends StatelessWidget {
         title: 'Details',
         style: headerRegularStyle,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: screenHeight * 0.3,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      child: Image.network(
-                        menu.image,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await controller.fetchProduct(menu.menuId);
+        },
+        child: SingleChildScrollView(
+          child: Obx(() {
+            if (!controller.isConnected.value) {
+              return Center(
+                child: Container(
+                  margin: EdgeInsets.only(top: screenHeight * 0.3),
+                  child: Text(
+                    'Tidak ada koneksi internet mohon check koneksi internet anda',
+                    style: boldTextStyle, textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 10),
-                  Text(menu.nameMenu, style: boldTextStyle2),
-                  Text(menu.category, style: regulargreyText),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ),
+              );
+            }
+            if (controller.isLoading.value) {
+              return MenuDetailSkeleton();
+            }
+            if (controller.menu.isEmpty) {
+              return Center(
+                child: Container(
+                  margin: EdgeInsets.only(top: screenHeight * 0.4),
+                  child: Text(
+                    'Menu not found',
+                    style: boldTextStyle, textAlign: TextAlign.center,
+                  ),
+                ),
+              );
+            }
+            final menuItem = controller.menu.first;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
+                      Container(
+                        width: double.infinity,
+                        height: screenHeight * 0.3,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          child: Image.network(
+                            menuItem.image,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(menuItem.nameMenu, style: boldTextStyle2),
+                      Text(menuItem.category, style: regulargreyText),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(Icons.star_rounded, color: Colors.orange, size: 23),
-                          Text(menu.ratings.toString(), style: descriptionratingTextStyle),
+                          Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Icon(Icons.star_rounded, color: Colors.orange, size: 23),
+                              Text(menuItem.ratings.toString(), style: descriptionratingTextStyle),
+                            ],
+                          ),
                         ],
                       ),
+                      SizedBox(height: 10),
+                      Divider(),
+                      Text('Deskripsi', style: boldTextStyle),
+                      Text(menuItem.description, style: onboardingskip)
                     ],
                   ),
-                  SizedBox(height: 10),
-                  Divider(),
-                  Text('Deskripsi', style: boldTextStyle),
-                  Text(menu.description, style: onboardingskip)
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+          }),
         ),
       ),
       bottomNavigationBar: Obx(() {
+        if (!controller.isConnected.value) {
+          return Center(
+            child: Container(
+              child: Text(
+                'Tidak ada koneksi internet mohon check koneksi internet anda',
+                style: boldTextStyle, textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        }
+        if (controller.isLoading.value) {
+          return BottomMenuDetailSkeleton();
+        }
         final cartItem = cartController.cartItems.firstWhereOrNull((item) => item.productId == menu.menuId);
         final menuQuantity = cartItem?.quantity.value ?? 0;
         return Container(

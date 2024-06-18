@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -14,12 +15,29 @@ class MenuPageController extends GetxController {
   RxList<MenuList> menuElement = <MenuList>[].obs;
   RxList<MenuList> searchResults = <MenuList>[].obs;
   RxBool isLoading = true.obs;
-  String lastQuery = '';  // Store the last query
+  String lastQuery = '';
+  RxBool isConnected = true.obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchProduct();
+    checkConnectivity();
+  }
+
+  void checkConnectivity() async {
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      isConnected.value = result != ConnectivityResult.none;
+      if (isConnected.value) {
+        fetchProduct();
+      }
+    });
+
+    var connectivityResult = await Connectivity().checkConnectivity();
+    isConnected.value = connectivityResult != ConnectivityResult.none;
+    if (isConnected.value) {
+      fetchProduct();
+    }
   }
 
   Future<void> fetchProduct() async {
