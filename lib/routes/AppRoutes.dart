@@ -25,6 +25,8 @@ abstract class _Paths {
   static const GUEST_NAVIGATOR_PAGE = '/guest-bottom-navbar';
   static const GUEST_PROFILE_PAGE = '/guest-profile-page';
   static const DETAIL_VOUCHER_PAGE = '/detail-voucher-page';
+  static const PROFILE_VERIFICATION_PAGE = '/verification-profile-Page.dart';
+  static const FORGOT_PASSWORD_PAGE = '/forgot-password-page.dart';
 }
 
 abstract class Routes {
@@ -52,4 +54,6 @@ abstract class Routes {
   static const GUEST_NAVIGATOR_PAGE = _Paths.GUEST_NAVIGATOR_PAGE;
   static const GUEST_PROFILE_PAGE = _Paths.GUEST_PROFILE_PAGE;
   static const DETAIL_VOUCHER_PAGE = _Paths.DETAIL_VOUCHER_PAGE;
+  static const PROFILE_VERIFICATION_PAGE = _Paths.PROFILE_VERIFICATION_PAGE;
+  static const FORGOT_PASSWORD_PAGE = _Paths.FORGOT_PASSWORD_PAGE;
 }

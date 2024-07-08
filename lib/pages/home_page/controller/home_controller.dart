@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,7 @@ import '../view/home_detaile_page.dart';
 
 class HomeController extends GetxController {
   RxString txtUsername = "".obs;
+  RxString token = "".obs;
   late final SharedPreferences prefs;
   RxList<MenuList> menuElement = <MenuList>[].obs;
   RxBool isLoading = true.obs;
@@ -17,22 +20,50 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    checkSharedPreference();
     checkConnectivity();
   }
 
-  void checkSharedPreference() async {
-    prefs = await SharedPreferences.getInstance();
-    if (prefs != null) {
-      txtUsername.value = prefs.getString('username') ?? '';
+  Future<void> fetchname() async {
+    try {
+      isLoading.value = true; // Set loading to true before fetching data
+
+      final response = await http.get(Uri.parse(GlobalVariables.apiDetailUser),headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      });
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        if (data['success']) {
+          // Extract the name from the response
+          txtUsername.value = data['user']['name'];
+          print("Fetched username: ${txtUsername.value}");
+        } else {
+          print('Error: ${data['message']}');
+        }
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+    } finally {
+      isLoading.value = false; // Set loading to false after data is fetched
     }
   }
 
   void checkConnectivity() async {
+    prefs = await SharedPreferences.getInstance();
+    if (prefs != null) {
+      txtUsername.value = prefs.getString('username') ?? '';
+      token.value = prefs.getString('token') ?? '';
+    }
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       isConnected.value = result != ConnectivityResult.none;
       if (isConnected.value) {
         fetchProduct();
+        fetchname();
       }
     });
 
@@ -40,6 +71,7 @@ class HomeController extends GetxController {
     isConnected.value = connectivityResult != ConnectivityResult.none;
     if (isConnected.value) {
       fetchProduct();
+      fetchname();
     }
   }
 

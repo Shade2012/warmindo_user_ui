@@ -1,8 +1,7 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:warmindo_user_ui/common/model/history.dart';
 import 'package:get/get.dart';
+import 'package:warmindo_user_ui/common/model/history.dart';
 import 'package:warmindo_user_ui/pages/history_page/widget/order_box.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/appBar.dart';
@@ -11,9 +10,7 @@ import '../../history_page/controller/history_controller.dart';
 
 class HistoryDetailFilterPage extends StatelessWidget {
   final HistoryController controller = Get.put(HistoryController());
-  Color selectedTextColor = Colors.white;
-  Color dropdownTextColor = Colors.black;
-  List<String> titles = <String>[
+  final List<String> titles = <String>[
     'Terbaru',
     'Terlama',
   ];
@@ -29,16 +26,17 @@ class HistoryDetailFilterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarCustom(title: 'History $status',style: headerRegularStyle,),
+      appBar: AppbarCustom(title: 'Riwayat Pesenan $status',style: headerRegularStyle,),
       body: Container(
         padding: EdgeInsets.all(10),
-        child:Obx(() {
+        child: Obx(() {
           if (!controller.isConnected.value) {
             return Center(
               child: Container(
                 child: Text(
                   'Tidak ada koneksi internet mohon check koneksi internet anda',
-                  style: boldTextStyle,textAlign: TextAlign.center,
+                  style: boldTextStyle,
+                  textAlign: TextAlign.center,
                 ),
               ),
             );
@@ -54,7 +52,9 @@ class HistoryDetailFilterPage extends StatelessWidget {
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: 20,);
+                return SizedBox(
+                  height: 20,
+                );
               },
             );
           } else {
@@ -79,23 +79,27 @@ class HistoryDetailFilterPage extends StatelessWidget {
                     decoration: CustomDropdownDecoration(
                       listItemStyle: boldTextStyle,
                       listItemDecoration: ListItemDecoration(
-                          selectedColor: Colors.black),
+                        selectedColor: Colors.black,
+                      ),
                     ),
                     initialItem: controller.selectedTimes.value,
                     items: titles,
                     onChanged: (String? newValue) {
                       if (newValue != null) {
                         controller.printOrdersLength();
-                        controller.changeCategory(newValue);
+                        controller.changeTime(newValue);
                       }
                     },
                   ),
                 ),
                 Container(
                   margin: EdgeInsets.all(10),
-                  child: Obx(() =>
-                      Text(controller.selectedTimes.value.toString(),
-                        style: headerBold,),),
+                  child: Obx(
+                        () => Text(
+                      controller.selectedTimes.value,
+                      style: headerBold,
+                    ),
+                  ),
                 ),
                 Flexible(
                   child: ListView.builder(
@@ -105,12 +109,10 @@ class HistoryDetailFilterPage extends StatelessWidget {
                     },
                   ),
                 ),
-
               ],
             );
           }
         }),
-
       ),
     );
   }

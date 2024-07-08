@@ -9,6 +9,7 @@ import '../../../utils/themes/buttonstyle_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/image_themes.dart';
+import '../../../widget/google_sign_in/google_sign_in.dart';
 
 class LoginPage extends GetView<LoginController> {
   final TextEditingController ctrUsername = TextEditingController();
@@ -30,8 +31,6 @@ class LoginPage extends GetView<LoginController> {
     TextEditingController controller2,
     String? Function(String)? validator,
   ) {
-// Control the obscure text visibility
-
     return Container(
       margin: EdgeInsets.only(top: 20, bottom: 20),
       child: Obx(
@@ -102,6 +101,13 @@ class LoginPage extends GetView<LoginController> {
                     "Isi Username mu", ctrUsername, null),
                 Password(Icons.lock_outline, "Password", "Isi Password mu",
                     ctrPassword, isPassword),
+                Center(
+                    child: InkWell(
+                      onTap: (){
+                        Get.toNamed(Routes.FORGOT_PASSWORD_PAGE);
+                      },
+                        child: Text('Lupa Password',style: boldTextStyle,))),
+                SizedBox(height: 20,),
                 Container(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -149,7 +155,7 @@ class LoginPage extends GetView<LoginController> {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        'Atau Daftar',
+                        'Atau Daftar Lewat',
                         style: boldTextStyle,
                       ),
                       SizedBox(width: 10),
@@ -161,24 +167,7 @@ class LoginPage extends GetView<LoginController> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 40, bottom: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5), // Shadow color
-                        spreadRadius: 3, // Spread radius
-                        blurRadius: 3, // Blur radius
-                        offset: Offset(0, 3), // Offset
-                      ),
-                    ],
-                  ),
-                  padding: EdgeInsets.all(5),
-                  height: 60,
-                  child: Image.asset(Images.google),
-                )
+                GoogleSignInButton()
               ],
             ),
           ),

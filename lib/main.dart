@@ -15,10 +15,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Warmindo User UI',
-      home: Testing(),
       debugShowCheckedModeBanner: false,
-      // initialRoute: AppPages.INITIAL,
-      // getPages: AppPages.routes,
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
     );
   }
 }

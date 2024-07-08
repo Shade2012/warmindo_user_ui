@@ -28,7 +28,7 @@ class HistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppbarCustom(title: 'Order dan History', style: headerRegularStyle,),
+      appBar: AppbarCustom(title: 'Pesanan dan Riwayat', style: headerRegularStyle,),
       body: Container(
         padding: EdgeInsets.all(10),
         child:

@@ -8,6 +8,7 @@ class VerificationStatusPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      elevation: 0,
       backgroundColor: Colors.white, // Background color
       contentPadding: EdgeInsets.zero,
       content: SingleChildScrollView(

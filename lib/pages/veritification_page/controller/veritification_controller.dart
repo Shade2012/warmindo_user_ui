@@ -131,7 +131,6 @@ Future<void> printShared () async {
     }
   }
   Future<void> verifyOtp() async {
-
     final url = Uri.parse(GlobalVariables.apiVerifyOtp);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token2');

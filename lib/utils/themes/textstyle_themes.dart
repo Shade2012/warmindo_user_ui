@@ -129,6 +129,7 @@ TextStyle headerboldverifyTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(38)));
 
+
 TextStyle subheaderverifyTextStyle = GoogleFonts.oxygen(
     textStyle:TextStyle(
         color: primaryTextColor,

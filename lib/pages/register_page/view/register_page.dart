@@ -10,6 +10,7 @@ import '../../../routes/AppPages.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/image_themes.dart';
+import '../../../widget/google_sign_in/google_sign_in.dart';
 
 
 
@@ -200,24 +201,7 @@ class RegisterPage extends GetView<RegisterController>{
                         ],
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 40,bottom: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5), // Shadow color
-                            spreadRadius: 3, // Spread radius
-                            blurRadius: 3, // Blur radius
-                            offset: Offset(0, 3), // Offset
-                          ),
-                        ],
-                      ),
-                      padding: EdgeInsets.all(5),
-                      height: 60,
-                      child: Image.asset(Images.google),
-                    )
+                    GoogleSignInButton()
                   ],
                 ),
               ),

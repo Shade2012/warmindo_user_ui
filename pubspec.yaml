@@ -48,6 +48,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   http:
   google_sign_in: ^5.0.6
+  image_picker: ^1.1.2
   shared_preferences: ^2.2.3
   connectivity_plus: ^3.0.3
 

@@ -1,51 +1,73 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
-
 import '../../../common/global_variables.dart';
 import 'package:http/http.dart' as http;
-
 import '../../profile_page/controller/profile_controller.dart';
-class EditProfileController extends GetxController {
-  final ProfileController profileController = Get.put(ProfileController());
-  final fullNameController = TextEditingController();
-  final emailController = TextEditingController();
+
+class ForgotPasswordController extends GetxController {
+  final confirmPassword = TextEditingController();
+  final newPassword = TextEditingController();
   final phoneNumberController = TextEditingController();
-  final usernameController = TextEditingController();
+  final isFilled = false.obs;
   RxBool isConnected = true.obs;
   SharedPreferences? prefs;
-  Rx<File> selectedImage = Rx<File>(File(''));
   RxBool isLoading = true.obs;
-  RxString txtUsername = "".obs;
-  RxString txtName = "".obs;
-  RxString txtEmail = "".obs;
   RxString txtNomorHp = "".obs;
+  RxString codeOtp = ''.obs;
   RxString token = "".obs;
-  RxString imgProfile = "".obs;
+  final TextEditingController code13Controller = TextEditingController();
+  final TextEditingController code14Controller = TextEditingController();
+  final TextEditingController code15Controller = TextEditingController();
+  final TextEditingController code16Controller = TextEditingController();
+  final TextEditingController code17Controller = TextEditingController();
+  final TextEditingController code18Controller = TextEditingController();
+
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     checkConnectivity();
+    code13Controller.addListener(updateFilledStatus);
+    code14Controller.addListener(updateFilledStatus);
+    code15Controller.addListener(updateFilledStatus);
+    code16Controller.addListener(updateFilledStatus);
+    code17Controller.addListener(updateFilledStatus);
+    code18Controller.addListener(updateFilledStatus);
   }
+
+  void updateFilledStatus() {
+    if (code13Controller.text.isNotEmpty &&
+        code14Controller.text.isNotEmpty &&
+        code15Controller.text.isNotEmpty &&
+        code16Controller.text.isNotEmpty &&
+        code17Controller.text.isNotEmpty &&
+        code18Controller.text.isNotEmpty) {
+      isFilled.value = true;
+    } else {
+      isFilled.value = false;
+    }
+    codeOtp.value = ('${code13Controller.text}${code14Controller.text}${code15Controller.text}${code16Controller.text}${code17Controller.text}${code18Controller.text}');
+    print('OTP Updated: ${codeOtp.value}'); // Debugging line
+  }
+
   Future<void> initializePrefs() async {
     if (prefs == null) {
       prefs = await SharedPreferences.getInstance();
     }
   }
+
   void checkSharedPreference() async {
     await initializePrefs();
     if (prefs != null) {
       token.value = prefs!.getString('token') ?? '';
       try {
         isLoading.value = true; // Set loading to true before fetching data
-        final response = await http.get(Uri.parse(GlobalVariables.apiDetailUser),headers: {
+        final response = await http.get(Uri.parse(GlobalVariables.apiDetailUser), headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
@@ -54,16 +76,8 @@ class EditProfileController extends GetxController {
           final data = jsonDecode(response.body);
 
           if (data['success']) {
-            txtName.value = data['user']['name'];
-            txtUsername.value = data['user']['username'];
-            txtEmail.value = data['user']['email'];
             txtNomorHp.value = data['user']['phone_number'];
-            imgProfile.value = data['user']['profile_picture'] ?? '';
-            usernameController.text = txtUsername.value;
-            fullNameController.text = txtName.value;
             phoneNumberController.text = txtNomorHp.value;
-            emailController.text = txtEmail.value;
-            print("Fetched username: ${txtUsername.value}");
           } else {
             print('Error: ${data['message']}');
           }
@@ -77,10 +91,10 @@ class EditProfileController extends GetxController {
       }
     }
   }
+
   void checkConnectivity() async {
     await initializePrefs();
     if (prefs != null) {
-      txtUsername.value = prefs!.getString('username') ?? '';
       token.value = prefs!.getString('token') ?? '';
     }
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
@@ -96,34 +110,20 @@ class EditProfileController extends GetxController {
       checkSharedPreference();
     }
   }
-  Future<void> editProfile({
-    String? name,
-    String? username,
-    String? email,
+
+  Future<void> editPhoneNumber({
     String? phone_number,
-    File? image,
   }) async {
     final url = Uri.parse(GlobalVariables.apiUpdatePhoneNumber);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     final client = http.Client();
-
     try {
       isLoading.value = true;
-
       // Prepare the body of the request
       final Map<String, dynamic> requestBody = {
-        'name': name,
-        'username': username,
         'phone_number': phone_number,
-        'email': email,
       };
-
-      // Conditionally add the profile_picture if the image is not null
-      if (image != null) {
-        requestBody['profile_picture'] = image;
-      }
-
       final response = await client.post(
         url,
         headers: {
@@ -136,16 +136,10 @@ class EditProfileController extends GetxController {
 
       final responseData = jsonDecode(response.body);
       print(response.statusCode);
-      if(response.statusCode == 500){
-        print(response.body);
-        isLoading.value = false;
-      }
       if (response.statusCode == 200) {
         isLoading.value = false;
         print(responseData);
         print(response.statusCode);
-        profileController.checkSharedPreference();
-        Get.toNamed(Routes.BOTTOM_NAVBAR);
         Get.snackbar(
           'Success',
           'Berhasil Dirubah',
@@ -153,30 +147,6 @@ class EditProfileController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
-        print(image);
-      } else if (response.statusCode == 400) {
-        isLoading.value = false;
-        print(responseData);
-        print(response.statusCode);
-        Get.snackbar(
-          'Error',
-          'Password Saat ini tidak sesuai',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-      } else if (response.statusCode == 422) {
-        isLoading.value = false;
-        print(responseData);
-        print(response.statusCode);
-        Get.snackbar(
-          'Error',
-          'Password Tidak Sama',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-        print(image);
       }
     } catch (e) {
       isLoading.value = false;
@@ -187,26 +157,73 @@ class EditProfileController extends GetxController {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
-      print(image);
     } finally {
       isLoading.value = false;
     }
   }
 
-  void getImage(ImageSource imageSource) async {
-    final pickedFile = await ImagePicker().pickImage(source: imageSource);
-    if (pickedFile != null) {
-      selectedImage.value = File(pickedFile.path); // Store image as File
-    } else {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+  // Temporary function
+  Future<void> editPassword({
+    String? newPassword,
+    String? confirmPassword,
+  }) async {
+    final url = Uri.parse(GlobalVariables.apiUpdatePhoneNumber);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final client = http.Client();
+
+    try {
+      isLoading.value = true;
+
+      // Prepare the body of the request
+      final Map<String, dynamic> requestBody = {
+        // 'name': name,
+        // 'username': username,
+        // 'phone_number': phone_number,
+        // 'email': email,
+      };
+
+      // Conditionally add the profile_picture if the image is not null
+      final response = await client.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      final responseData = jsonDecode(response.body);
+      print(response.statusCode);
+      if (response.statusCode == 500) {
+        print(response.body);
+        isLoading.value = false;
+      }
+      if (response.statusCode == 200) {
+        isLoading.value = false;
+        print(responseData);
+        print(response.statusCode);
+        Get.toNamed(Routes.BOTTOM_NAVBAR);
         Get.snackbar(
-          'Error',
-          'Tidak ada gambar yang dipilih',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
+          'Success',
+          'Berhasil Dirubah',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
           colorText: Colors.white,
         );
-      });
+      }
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        'Error occurred: $e',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
     }
   }
 }

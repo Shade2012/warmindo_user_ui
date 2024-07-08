@@ -9,6 +9,8 @@ import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.da
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/binding/edit_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/view/edit_profile_page.dart';
+import 'package:warmindo_user_ui/pages/forgot_password/binding/forgot_password_binding.dart';
+import 'package:warmindo_user_ui/pages/forgot_password/view/forgot_password_page.dart';
 import 'package:warmindo_user_ui/pages/guest_home_page/binding/guest_home_binding.dart';
 import 'package:warmindo_user_ui/pages/guest_home_page/view/guest_home_page.dart';
 import 'package:warmindo_user_ui/pages/guest_menu_page/binding/guest_menu_binding.dart';
@@ -40,6 +42,8 @@ import 'package:warmindo_user_ui/pages/register_page/binding/register_binding.da
 import 'package:warmindo_user_ui/pages/register_page/view/register_page.dart';
 import 'package:warmindo_user_ui/pages/splash_page/binding/splash_binding.dart';
 import 'package:warmindo_user_ui/pages/splash_page/view/splash_page.dart';
+import 'package:warmindo_user_ui/pages/verification_profile_page/binding/verification_profile_binding.dart';
+import 'package:warmindo_user_ui/pages/verification_profile_page/view/verification_profile_Page.dart';
 import 'package:warmindo_user_ui/pages/veritification_page/binding/veritification_binding.dart';
 import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_page.dart';
 
@@ -52,9 +56,6 @@ class AppPages {
   AppPages._();
 
   static const INITIAL = Routes.SPLASH_SCREEN;
-
-
-
 
 
   static final routes = [
@@ -83,6 +84,12 @@ class AppPages {
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
+        name: _Paths.PROFILE_VERIFICATION_PAGE,
+        page: () => VerificationProfilePage(),
+        binding: VeritificationProfileBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
         name: _Paths.HOME_PAGE,
         page: () => HomePage(),
         binding: HomeBinding(),
@@ -98,6 +105,12 @@ class AppPages {
         name: _Paths.LOGIN_PAGE,
         page: () => LoginPage(),
         binding: LoginPageBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 150)),
+    GetPage(
+        name: _Paths.FORGOT_PASSWORD_PAGE,
+        page: () => ForgotPasswordPage(),
+        binding: ForgotPasswordBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 150)),
     GetPage(
