@@ -52,7 +52,7 @@ class HistoryDetailPage extends StatelessWidget {
     }
     return Scaffold(
 
-      appBar: AppbarCustom(title: 'History Details',style: headerRegularStyle,),
+      appBar: AppbarCustom(title: 'Detail Riwayat',style: headerRegularStyle,),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(20),

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 
+import '../controller/change_pass_controller.dart';
+
 class ChangePasswordPage extends StatelessWidget {
+  final ChangePasswordController controller = Get.put(ChangePasswordController());
   final _formKey = GlobalKey<FormState>();
   final _currentPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
@@ -33,7 +37,7 @@ class ChangePasswordPage extends StatelessWidget {
                   "Masukkan password lama",
                   _currentPasswordController,
                   (value) {
-                    if ( value.isEmpty) {
+                    if (value.isEmpty) {
                       return "Password Lama diperlukan";
                     }
                     return null;
@@ -86,19 +90,9 @@ class ChangePasswordPage extends StatelessWidget {
                           content: Text("Password Lama Kosong"),
                         ),
                       );
-                    } else if(_newPasswordController.text != _confirmNewPasswordController.text){
-                      ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Password tidak sama"),
-                      ),
-                    );
-                    } else if(_newPasswordController.text.isNotEmpty && _confirmNewPasswordController.text.isNotEmpty && _currentPasswordController.text.isNotEmpty){
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Password Berhasil dirubah"),
-                          ),
-                      );
-                    }else if(_newPasswordController.text.isEmpty){
+                    }
+
+                    else if(_newPasswordController.text.isEmpty){
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Password baru Kosong"),
@@ -107,9 +101,12 @@ class ChangePasswordPage extends StatelessWidget {
                     }else if(_confirmNewPasswordController.text.isEmpty){
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Password baru Kosong"),
+                          content: Text("Konfirmasi password Kosong"),
                         ),
                       );
+                    }
+                    else {
+                      controller.confirmPassword(password: _newPasswordController.text, current_password: _currentPasswordController.text, password_confirmation: _confirmNewPasswordController.text);
                     }
                   },
                   child: Text("Ubah Password"),

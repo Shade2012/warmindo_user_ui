@@ -99,6 +99,7 @@ class GuestHomePage extends StatelessWidget {
                     ),
                     Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
                     SizedBox(height: 20,),
+                    if (controller.menuElement.length > 1)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -110,7 +111,9 @@ class GuestHomePage extends StatelessWidget {
                     SizedBox(height: 20,),
                     Text("Favorite Snack", style: LoginboldTextStyle),
                     SizedBox(height: 20,),
-                    GuestSnack(),
+                    Visibility(
+                        visible: controller.menuElement.length > 1,
+                        child: GuestSnack()),
                     SizedBox(height: 20,)
                   ],
                 );

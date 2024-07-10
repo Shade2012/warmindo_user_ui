@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:warmindo_user_ui/pages/testing.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 
 void main() {

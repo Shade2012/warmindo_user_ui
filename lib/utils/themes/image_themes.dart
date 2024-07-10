@@ -33,8 +33,8 @@ class Images {
   static const String pesanan_menunggu_batal = 'assets/images/menunggu_batal.png';
   static const String pesanan_batal = 'assets/images/batal_pesanan.png';
 
-
-
+  static const String forgot_password_1 = 'assets/images/forgot_password_1.png';
+  static const String forgot_password_2 = 'assets/images/forgot_password_2.png';
 }
 
 
