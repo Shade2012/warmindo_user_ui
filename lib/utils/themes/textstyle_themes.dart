@@ -13,6 +13,19 @@ Color secondaryTextColor = Color(0xFFffffff);
 Color greyTextColor = Color(0xFF696969);
 Color greenTextColor = Color(0xFF007F6D);
 Color bluelinkTextColor = Color(0xFF289BF6);
+const Color redTextColor = Color(0xFFC62828);
+
+TextStyle BottomNavbarSelectedTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: redTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(12)));
+
+TextStyle BottomNavbarUnselectedTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: ColorResources.unselectedItemColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(12)));
 
 TextStyle boldgreyText = GoogleFonts.oxygen(
     textStyle: TextStyle(

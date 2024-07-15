@@ -9,6 +9,7 @@ import 'package:warmindo_user_ui/pages/navigator_page/controller/navigator_contr
 import 'package:warmindo_user_ui/pages/profile_page/view/profile_page.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/icon_themes.dart';
+import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
 class BottomNavbar extends StatelessWidget {
   final NavigatorController controller = Get.put(NavigatorController());
@@ -66,6 +67,8 @@ class BottomNavbar extends StatelessWidget {
             label: 'Profil',
           ),
         ],
+        selectedLabelStyle: BottomNavbarSelectedTextStyle ,
+        unselectedLabelStyle:BottomNavbarUnselectedTextStyle ,
       )
       ),
     );

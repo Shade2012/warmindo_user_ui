@@ -7,6 +7,7 @@ import 'package:warmindo_user_ui/pages/guest_navigator_page/controller/guest_nav
 import 'package:warmindo_user_ui/pages/guest_profile_page/view/guest_profile_page.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/icon_themes.dart';
+import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
 class GuestNavigatorPage extends StatelessWidget {
   final GuestNavigatorController controller = Get.put(GuestNavigatorController());
@@ -53,6 +54,8 @@ class GuestNavigatorPage extends StatelessWidget {
             label: 'Profile',
           ),
         ],
+        selectedLabelStyle: BottomNavbarSelectedTextStyle,
+        unselectedLabelStyle: BottomNavbarUnselectedTextStyle,
       )),
     );
   }
