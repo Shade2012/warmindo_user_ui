@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -30,6 +31,7 @@ class ProfilePage extends StatelessWidget {
           },
           child: SingleChildScrollView(
             child: Container(
+              margin: EdgeInsets.only(top: screenHeight* 0.08),
               width: screenWidth,
               height: screenHeight * 0.9,
               color: ColorResources.primaryColor,
@@ -94,7 +96,7 @@ class ProfilePage extends StatelessWidget {
 
                                ),
                                child: Text(
-                                 'Edit Profile',
+                                 'Edit Profil',
                                  style: editProfileTextStyle,
                                ),
                              ),
@@ -103,7 +105,7 @@ class ProfilePage extends StatelessWidget {
                        );
                      }
                    }),
-                   Expanded(
+                   Flexible(
                      child: Container(
                          width: screenWidth,
                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 40),
@@ -118,7 +120,7 @@ class ProfilePage extends StatelessWidget {
                            children: [
                              ListTile(
                                leading: Icon(Icons.person),
-                               title: Text('Veritification'),
+                               title: Text('Verifikasi'),
                                trailing: Icon(Icons.info_outlined),
                                onTap: () {
                                  showDialog(
@@ -132,7 +134,7 @@ class ProfilePage extends StatelessWidget {
                              SizedBox(height: 30),
                              ListTile(
                                leading: Icon(Icons.security),
-                               title: Text('Change Password'),
+                               title: Text('Ganti Password'),
                                trailing: Icon(Icons.chevron_right),
                                onTap: () {
                                  Get.toNamed(Routes.CHANGEPASS_PAGE);
@@ -141,7 +143,7 @@ class ProfilePage extends StatelessWidget {
                              SizedBox(height: 30),
                              ListTile(
                                leading: Icon(Icons.policy),
-                               title: Text('Policy'),
+                               title: Text('Kebijakan'),
                                trailing: Icon(Icons.chevron_right),
                                onTap: () {
                                  Get.toNamed(Routes.POLICY_PAGE);
@@ -150,7 +152,7 @@ class ProfilePage extends StatelessWidget {
                              SizedBox(height: 30),
                              ListTile(
                                leading: Icon(Icons.logout),
-                               title: Text('Logout'),
+                               title: Text('Keluar'),
                                trailing: Icon(Icons.chevron_right),
                                onTap: () {
                                  showDialog(
