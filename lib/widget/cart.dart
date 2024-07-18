@@ -17,22 +17,18 @@ class Cart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartItem = cartController.cartItems.firstWhereOrNull((item) => item.productId == product.menuId);
-
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        await cartController.fetchCart();
+
+        final cartItem = cartController.cartItems.firstWhereOrNull((item) => item.productId == product.menuId);
+        final menuQuantity = cartItem?.quantity.value ?? 0;
+
         if (cartItem == null) {
-          final newCartItem = CartItem(
-            productId: product.menuId,
-            productName: product.nameMenu,
-            price: product.price.toInt(),
-            quantity: 1.obs,
-            productImage: product.image,
-          );
-          popUpcontroller.addToCart(newCartItem);
-          popUpcontroller.showCustomModalForItem(product, context, newCartItem);
+          popUpcontroller.addToCart(menuId: product.menuId, quantity: 1);
+          popUpcontroller.showCustomModalForItem(product, context, 1, cartid: 0); // Show with initial quantity 1
         } else {
-          popUpcontroller.showCustomModalForItem(product, context, cartItem);
+          popUpcontroller.showCustomModalForItem(product, context, menuQuantity, cartid: cartItem.cartId ?? 0);
         }
 
         print(cartController.cartItems.value);
@@ -53,3 +49,5 @@ class Cart extends StatelessWidget {
     );
   }
 }
+
+

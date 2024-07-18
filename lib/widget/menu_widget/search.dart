@@ -162,7 +162,7 @@ class Search extends StatelessWidget {
                                             popUpcontroller
                                                 .showCustomModalForGuest(context);
                                           } else {
-                                            popUpcontroller.showCustomModalForItem(menu, context,cartItem!);
+                                            popUpcontroller.showCustomModalForItem(menu, context,menuQuantity, cartid: cartItem!.cartId ?? 0);
                                           }
                                         },
                                         child: Container(
@@ -189,14 +189,7 @@ class Search extends StatelessWidget {
                                             popUpcontroller
                                                 .showCustomModalForGuest(context);
                                           } else {
-                                            final cartItem = CartItem(
-                                              productId: menu.menuId,
-                                              productName: menu.nameMenu,
-                                              price: menu.price.toInt(),
-                                              quantity: 1.obs,
-                                              productImage: menu.image,
-                                            );
-                                            popUpcontroller.showCustomModalForItem(menu, context,cartItem);
+                                            popUpcontroller.showCustomModalForItem(menu, context,menuQuantity, cartid: cartItem!.cartId ?? 0);
                                           }
                                         },
                                         child: Container(

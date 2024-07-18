@@ -20,9 +20,9 @@ import 'myPopup_controller.dart';
 
 class MyCustomPopUp extends StatelessWidget {
   final MenuList product;
-  final CartItem cartItem;
-
-  MyCustomPopUp({required this.product, required this.cartItem,});
+  final RxInt quantity;
+  final int cartid;
+  MyCustomPopUp({required this.product, required this.quantity, required this.cartid,});
   final MyCustomPopUpController controller = Get.put(MyCustomPopUpController());
   final CounterController controllerCounter = Get.put(CounterController());
   @override
@@ -108,35 +108,8 @@ class MyCustomPopUp extends StatelessWidget {
                           children: [
                             Text("Harga",style: onboardingskip,),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Obx(() => Container(
-                                  child: Text(
-                                    (currencyFormat.format(cartItem.quantity * product.price)) ,
-                                    style: onboardingHeaderTextStyle,
-                                  ),
-                                ),
-                                ),
-                                 CounterWidget(cartItem:cartItem )
-                              ],
-                            ),
-                            SizedBox(height: 15,),
-                            GestureDetector(
-                              onTap: (){
-                        Get.back();
-                              },
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: ColorResources.btnonboard,
-                                      borderRadius: BorderRadius.all(Radius.circular(10))
-                                  ),
+                            CounterWidget( quantity: quantity, menu: product, cartId: cartid, ),
 
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height / 14,
-                                  child: Center(child: Text("Perbarui Keranjang",style: whiteboldTextStyle, ))
-                              ),
-                            ),
                           ],
                         ),
                       ),

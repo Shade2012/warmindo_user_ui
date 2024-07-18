@@ -66,7 +66,8 @@ class CartData extends StatelessWidget {
                                   ),
                                 ),
                                 InkWell(
-                                    onTap: () {controller.removeItemFromCart(cartItem);},
+                                    onTap: () {
+                                      controller.removeItemFromCart(cartItem);},
                                     child: SvgPicture.asset(
                                       IconThemes.icon_trash,
                                       color: Colors.red,))
@@ -97,7 +98,6 @@ class CartData extends StatelessWidget {
               children: [
                 SizedBox(height: 20),
                 Obx(() {
-
                   return Column(
                     children: [
                       Row(

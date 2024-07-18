@@ -93,7 +93,9 @@ class ProfileController extends GetxController {
       prefs!.remove('username');
       prefs!.remove('token2');
       prefs!.remove('token');
+      prefs!.remove('user_id');
       Get.offAllNamed(Routes.SPLASH_SCREEN);
     }
   }
 }
+

@@ -166,7 +166,7 @@ class DetailMenuPage extends StatelessWidget {
                     if (isGuest) {
                       popUpController.showCustomModalForGuest(context);
                     } else {
-                      popUpController.showCustomModalForItem(menu, context, cartItem!);
+                      popUpController.showCustomModalForItem(menu, context,menuQuantity, cartid: cartItem!.cartId ?? 0 );
                     }
                   },
                   child: Container(
@@ -184,18 +184,12 @@ class DetailMenuPage extends StatelessWidget {
                 visible: menuQuantity == 0,
                 child: InkWell(
                   onTap: () {
+                    print(cartItem);
                     if (isGuest) {
                       popUpController.showCustomModalForGuest(context);
                     } else {
-                      final newCartItem = CartItem(
-                        productId: menu.menuId,
-                        productName: menu.nameMenu,
-                        price: menu.price.toInt(),
-                        quantity: 1.obs,
-                        productImage: menu.image,
-                      );
-                      popUpController.addToCart(newCartItem);
-                      popUpController.showCustomModalForItem(menu, context, newCartItem);
+                      popUpController.addToCart(menuId: menu.menuId,quantity: 1);
+                      popUpController.showCustomModalForItem(menu, context, 1, cartid: cartItem!.cartId ?? 0);
                     }
                   },
                   child: Container(

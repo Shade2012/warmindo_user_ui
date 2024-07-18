@@ -6,4 +6,14 @@ class GlobalVariables {
   static const apiLogin = 'https://warmindo.pradiptaahmad.tech/api/users/login';
   static const apiUpdatePhoneNumber = 'http://warmindo.pradiptaahmad.tech/api/users/update';
   static const apiDetailUser = 'http://warmindo.pradiptaahmad.tech/api/users/details';
+  //cart
+  static const apiCartStore = 'https://warmindo.pradiptaahmad.tech/api/carts/store';
+  static const apiCartDetail = 'https://warmindo.pradiptaahmad.tech/api/carts?user_id=';
+  static const apiCartDelete = 'https://warmindo.pradiptaahmad.tech/api/carts/';
+  static const apiCartEdit = 'https://warmindo.pradiptaahmad.tech/api/carts/';
+  static const userQuery = '?user_id=';
+  static const quantityQuery = '&quantity=';
+
+
+
 }

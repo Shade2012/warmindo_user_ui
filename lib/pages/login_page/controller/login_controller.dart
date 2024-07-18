@@ -63,6 +63,7 @@ class LoginController extends GetxController {
             prefs.setString('token', '${responseData['token']}');
             prefs.setString('username', '${responseData['user']['username']}');
             prefs.setString('name', '${responseData['user']['name']}');
+            prefs.setString('user_id', '${responseData['user']['id']}');
             Get.offAllNamed(Routes.BOTTOM_NAVBAR);
           }
         } else{
