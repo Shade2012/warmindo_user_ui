@@ -164,7 +164,7 @@ class MenuCategory extends StatelessWidget {
                                                   popUpcontroller
                                                       .showCustomModalForGuest(context);
                                                 } else {
-                                                  popUpcontroller.showCustomModalForItem(menu, context,cartItem!);
+                                                  popUpcontroller.showCustomModalForItem(menu, context,menuQuantity, cartid: cartItem!.cartId ?? 0);
                                                 }
                                               },
                                               child: Container(
@@ -186,29 +186,26 @@ class MenuCategory extends StatelessWidget {
                                           Visibility(
                                             visible: menuQuantity == 0,
                                             child: InkWell(
-                                              onTap: () {
+                                              onTap: () async {
                                                 if (isGuest) {
-                                                  popUpcontroller
-                                                      .showCustomModalForGuest(context);
+                                                  popUpcontroller.showCustomModalForGuest(context);
                                                 } else {
-                                                  final cartItem = CartItem(
-                                                    productId: menu.menuId,
-                                                    productName: menu.nameMenu,
-                                                    price: menu.price.toInt(),
-                                                    quantity: 1.obs,
-                                                    productImage: menu.image,
-                                                  );
-
-                                                  popUpcontroller.addToCart(cartItem);
-                                                  popUpcontroller.showCustomModalForItem(menu, context,cartItem);
+                                                  final newCartItem = await cartController.addCart(menuID: menu.menuId, quantity: 1);
+                                                  if (newCartItem != null) {
+                                                    print('Cart item ID: ${newCartItem.cartId}');
+                                                    print('Cart item product name: ${newCartItem.productName}');
+                                                    popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: newCartItem.cartId ?? 0);
+                                                  } else {
+                                                    print(newCartItem);
+                                                    print("Error: newCartItem is null after adding to the cart.");
+                                                  }
                                                 }
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.all(2),
                                                 decoration: BoxDecoration(
                                                   color: Colors.black,
-                                                  borderRadius:
-                                                  BorderRadius.circular(5),
+                                                  borderRadius: BorderRadius.circular(5),
                                                 ),
                                                 child: Icon(
                                                   Icons.add,
@@ -216,7 +213,10 @@ class MenuCategory extends StatelessWidget {
                                                 ),
                                               ),
                                             ),
+
+
                                           ),
+
                                         ],
                                       ),
                                     ),

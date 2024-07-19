@@ -125,7 +125,7 @@ class HistoryController extends GetxController {
       return CartItem(
         productName: menu.nameMenu,
         productImage: menu.image,
-        price: menu.price.toInt(),
+        price: menu.price.toDouble(),
         quantity: menu.quantity.obs,
         productId: menu.menuId,
       );

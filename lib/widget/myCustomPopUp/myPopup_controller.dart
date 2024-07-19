@@ -13,6 +13,7 @@ import 'myCustomPopup.dart';
 
 class MyCustomPopUpController extends GetxController {
   RxBool isLoading = true.obs;
+  RxInt quantity = 0.obs;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -22,7 +23,7 @@ class MyCustomPopUpController extends GetxController {
   final CartController cartController = Get.put(CartController());
   final CounterController counterController = Get.put(CounterController());
 
-  void showCustomModalForItem(MenuList product, BuildContext context,CartItem cartItem) {
+    void showCustomModalForItem(MenuList product, BuildContext context,int quantity,{required int cartid}) {
     Future.delayed(Duration(milliseconds: 200), () {
       isLoading.value = false;
     });
@@ -30,16 +31,17 @@ class MyCustomPopUpController extends GetxController {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-       return MyCustomPopUp(product: product, cartItem: cartItem,);
+       return MyCustomPopUp(product: product, quantity: quantity.obs, cartid: cartid,);
       }
     );
-    counterController.reset();
+  }
+  void updateQuantity(int newQuantity) {
+    quantity.value = newQuantity;
   }
   void showCustomModalForGuest(BuildContext context) {
     Future.delayed(Duration(milliseconds: 200), () {
       isLoading.value = false;
     });
-
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -48,17 +50,14 @@ class MyCustomPopUpController extends GetxController {
 
   }
 
-  void addToCart(CartItem product) {
-    cartController.addToCart(CartItem(
-      productId: product.productId,
-      productName: product.productName,
-      price: product.price.toInt(),
-      quantity: product.quantity,
-      productImage: product.productImage,
-    ));
+  void addToCart({required int menuId, required int quantity}) async {
+    final newCartItem = await cartController.addCart(menuID: menuId, quantity: quantity);
     counterController.reset();
-    print('Item added to cart');
-    print('Navigating to CartPage');
+    if (newCartItem != null) {
+      print('Item added to cart: ${newCartItem.productName}');
+    } else {
+      print('Failed to add item to cart');
+    }
   }
 
 
