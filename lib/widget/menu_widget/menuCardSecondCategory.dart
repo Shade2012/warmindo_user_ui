@@ -50,13 +50,6 @@ class MenuSecondCategory extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Text(
-                categoryName,
-                style: headerBold,
-              ),
-            ),
             SizedBox(height: 10),
             Obx(() {
               if(menuController.isLoading.value || guestMenuController.isLoading.value){
