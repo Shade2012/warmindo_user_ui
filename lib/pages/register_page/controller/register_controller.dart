@@ -37,7 +37,7 @@ class RegisterController extends GetxController {
           'password': password,
         }),
       );
-
+      final responseData = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseData = jsonDecode(response.body);
         print(responseData);
@@ -46,23 +46,24 @@ class RegisterController extends GetxController {
         prefs.setString('token2', responseData['token']);
         phone_number.value = responseData['data']['phone_number'];
         Get.toNamed(Routes.VERITIFICATION_PAGE);
-      } else if (response.statusCode == 422) {
-        final responseData = jsonDecode(response.body);
-        print('Error: ${responseData['message']}');
+      }
+      else if(responseData['success'] == false) {
+        final List<String> errorMessages = [];
+
+        if (responseData['errors']['username'] != null) {
+          errorMessages.add((responseData['errors']['username'] as List).join('\n'));
+        }
+        if (responseData['errors']['email'] != null) {
+          errorMessages.add((responseData['errors']['email'] as List).join('\n'));
+        }
+        if (responseData['errors']['phone_number'] != null) {
+          errorMessages.add((responseData['errors']['phone_number'] as List).join('\n'));
+        }
+
         Get.snackbar(
           'Error',
-          responseData['message'],
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-      } else {
-        final responseData = jsonDecode(response.body);
-        print('Error: ${response.statusCode}');
-        Get.snackbar(
-          'Error',
-          '${responseData['message']}',
-          snackPosition: SnackPosition.BOTTOM,
+          errorMessages.join('\n'),
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
