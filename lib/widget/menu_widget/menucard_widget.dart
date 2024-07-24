@@ -13,17 +13,20 @@ import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 import '../../common/model/cartmodel.dart';
 import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../pages/menu_page/controller/menu_controller.dart';
+import '../../pages/verification_profile_page/controller/verification_profile_controller.dart';
+import '../../pages/verification_profile_page/view/verification_profile_Page.dart';
 import '../../routes/AppPages.dart';
 import '../../utils/themes/color_themes.dart';
 import '../../utils/themes/image_themes.dart';
 import '../dashed_divider.dart';
 import '../myCustomPopUp/myPopup_controller.dart';
+import '../reusable_dialog.dart';
 
 class MenuCategory extends StatelessWidget {
   final MenuPageController menuController = Get.put(MenuPageController());
   final CartController cartController = Get.put(CartController());
-  final MyCustomPopUpController popUpcontroller =
-  Get.put(MyCustomPopUpController());
+  final MyCustomPopUpController popUpcontroller = Get.put(MyCustomPopUpController());
+  // final VerificationProfileController controller = Get.find<VerificationProfileController>();
 
   final String? secondCategory;
   final bool isGuest;
@@ -190,15 +193,55 @@ class MenuCategory extends StatelessWidget {
                                                 if (isGuest) {
                                                   popUpcontroller.showCustomModalForGuest(context);
                                                 } else {
-                                                  final newCartItem = await cartController.addCart(menuID: menu.menuId, quantity: 1);
-                                                  if (newCartItem != null) {
-                                                    print('Cart item ID: ${newCartItem.cartId}');
-                                                    print('Cart item product name: ${newCartItem.productName}');
-                                                    popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: newCartItem.cartId ?? 0);
-                                                  } else {
-                                                    print(newCartItem);
-                                                    print("Error: newCartItem is null after adding to the cart.");
+                                                  if(cartController.userPhone.value == ''){
+                                                    print(cartController.token);
+                                                    showDialog(context: context, builder: (BuildContext context){
+                                                      return  ReusableDialog(
+                                                          title: 'Pesan',
+                                                          content: 'Nomor Hp anda belum terdaftar tolong isi terlebih dahulu',
+                                                          cancelText: 'Nanti',
+                                                          confirmText: 'Oke',
+                                                          onCancelPressed: (){
+                                                            Get.back();
+                                                          },
+                                                          onConfirmPressed: (){
+                                                            Get.toNamed(Routes.PROFILE_VERIFICATION_PAGE, arguments: {
+                                                              'isEdit': false.obs,
+                                                            });
+                                                          }
+                                                          );
+                                                });
                                                   }
+                                                  else{
+                                                    if (cartController.userPhoneVerified.value == '') {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext context) {
+                                                            return ReusableDialog(
+                                                                title: 'Pesan',
+                                                                content:
+                                                                'Nomor Hp anda belum terverifikasi tolong verifikasi terlebih dahulu',
+                                                                cancelText: 'Nanti',
+                                                                confirmText: 'Oke',
+                                                                onCancelPressed: () {
+                                                                  Get.back();
+                                                                },
+                                                                onConfirmPressed: () {
+                                                                  cartController.goToVerification();
+                                                                });
+                                                          });
+                                                    }
+                                                    else {
+                                                      final newCartItem = await cartController.addCart(menuID: menu.menuId, quantity: 1);
+                                                      if (newCartItem != null) {
+                                                        popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: newCartItem.cartId ?? 0);
+                                                      } else {
+                                                        print(newCartItem);
+                                                        print("Error: newCartItem is null after adding to the cart.");
+                                                      }
+                                                    }
+                                                  }
+
                                                 }
                                               },
                                               child: Container(

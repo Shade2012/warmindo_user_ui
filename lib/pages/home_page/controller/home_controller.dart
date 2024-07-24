@@ -85,6 +85,7 @@ class HomeController extends GetxController {
     if (prefs != null) {
       txtUsername.value = prefs.getString('username') ?? '';
       token.value = prefs.getString('token') ?? '';
+      prefs.setString('token2','${token.value = prefs.getString('token')?? ''}') ?? '';
       id.value = prefs.getString('user_id') ?? '';
     }
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {

@@ -85,7 +85,7 @@ class AppPages {
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
         name: _Paths.PROFILE_VERIFICATION_PAGE,
-        page: () => VerificationProfilePage(),
+        page: () => VerificationProfilePage(isEdit: Get.arguments['isEdit'],),
         binding: VeritificationProfileBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
@@ -154,7 +154,7 @@ class AppPages {
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
         name: _Paths.VERITIFICATION_PAGE,
-        page: () => VerificationPage(),
+        page: () => VerificationPage(isLogged: Get.arguments['isLogged'],),
         binding: VeritificationBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),

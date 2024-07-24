@@ -43,6 +43,7 @@ class EditProfileController extends GetxController {
     await initializePrefs();
     if (prefs != null) {
       token.value = prefs!.getString('token') ?? '';
+      print('ini adalah tokennya : $token');
       try {
         isLoading.value = true; // Set loading to true before fetching data
         final response = await http.get(Uri.parse(GlobalVariables.apiDetailUser),headers: {
@@ -57,7 +58,7 @@ class EditProfileController extends GetxController {
             txtName.value = data['user']['name'];
             txtUsername.value = data['user']['username'];
             txtEmail.value = data['user']['email'];
-            txtNomorHp.value = data['user']['phone_number'];
+            txtNomorHp.value = data['user']['phone_number'] ?? '';
             imgProfile.value = data['user']['profile_picture'] ?? '';
             usernameController.text = txtUsername.value;
             fullNameController.text = txtName.value;

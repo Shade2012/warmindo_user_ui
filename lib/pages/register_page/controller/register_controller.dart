@@ -45,7 +45,7 @@ class RegisterController extends GetxController {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token2', responseData['token']);
         phone_number.value = responseData['data']['phone_number'];
-        Get.toNamed(Routes.VERITIFICATION_PAGE);
+        Get.toNamed(Routes.VERITIFICATION_PAGE, arguments: {'isLogged': false.obs,});
       }
       else if(responseData['success'] == false) {
         final List<String> errorMessages = [];

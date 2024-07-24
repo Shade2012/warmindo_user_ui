@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
 import 'package:warmindo_user_ui/pages/login_page/controller/login_controller.dart';
 import 'package:warmindo_user_ui/pages/register_page/controller/register_controller.dart';
 import 'package:warmindo_user_ui/pages/veritification_page/controller/veritification_controller.dart';
@@ -16,11 +17,15 @@ import '../../../utils/themes/buttonstyle_themes.dart';
 import '../../../utils/themes/color_themes.dart';
 
 class VerificationPage extends GetView<VeritificationController> {
+
   final RegisterController registerController = Get.put(RegisterController());
   final LoginController loginController = Get.put(LoginController());
-
+  final CartController cartController = Get.find<CartController>();
+  final RxBool isLogged;
+  VerificationPage({required this.isLogged});
   @override
   Widget build(BuildContext context) {
+
     return Stack(
       children: [
         Scaffold(
@@ -147,9 +152,18 @@ class VerificationPage extends GetView<VeritificationController> {
                         Obx(() {
                           return Container(
                             width: double.infinity,
-                            child: ElevatedButton(onPressed: (){
+                            child: ElevatedButton(onPressed:  ()async{
                               if(controller.isFilled.value == true){
-                                controller.verifyOtp();
+                              await controller.verifyOtp();
+                                if(controller.isSuccess.value == 'success'){
+                                  if(isLogged.value == false){
+                                    Get.offNamed(Routes.LOGIN_PAGE);
+                                  }else{
+                                    await cartController.fetchUser();
+                                    Get.offNamed(Routes.BOTTOM_NAVBAR);
+                                  }
+                                }
+
                                 print('Verification code: ${controller.codeOtp.value}');
                               }else{
                                 return;
