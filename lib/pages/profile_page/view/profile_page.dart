@@ -131,14 +131,22 @@ class ProfilePage extends StatelessWidget {
                                  );
                                },
                              ),
-                             SizedBox(height: 30),
-                             ListTile(
-                               leading: Icon(Icons.security),
-                               title: Text('Ganti Password'),
-                               trailing: Icon(Icons.chevron_right),
-                               onTap: () {
-                                 Get.toNamed(Routes.CHANGEPASS_PAGE);
-                               },
+
+                             Visibility(
+                               visible:profileController.isLoginGoogle.value != 'true',
+                               child: Column(
+                                 children: [
+                                   SizedBox(height: 30),
+                                   ListTile(
+                                     leading: Icon(Icons.security),
+                                     title: Text('Ganti Password'),
+                                     trailing: Icon(Icons.chevron_right),
+                                     onTap: () {
+                                       Get.toNamed(Routes.CHANGEPASS_PAGE);
+                                     },
+                                   ),
+                                 ],
+                               ),
                              ),
                              SizedBox(height: 30),
                              ListTile(

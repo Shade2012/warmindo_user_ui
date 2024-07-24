@@ -18,7 +18,8 @@ import '../../../utils/themes/color_themes.dart';
 import '../widget/pop_up_verification.dart';
 
 class VerificationProfilePage extends GetView<VerificationProfileController> {
-
+  final RxBool isEdit;
+  VerificationProfilePage({required this.isEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +54,21 @@ class VerificationProfilePage extends GetView<VerificationProfileController> {
                         Column(
                           children: [
                             SizedBox(),
-                            Text(
-                              'Ubah Nomor HP',
-                              style: headerboldverifyTextStyle,
-                              textAlign: TextAlign.start,
-                            ),
+                            Obx((){
+                              if(isEdit.value == true){
+                                return Text(
+                                  'Ubah Nomor HP',
+                                  style: headerboldverifyTextStyle,
+                                  textAlign: TextAlign.start,
+                                );
+                              }else {
+                                return Text(
+                                  'Tambahkan Nomor HP',
+                                  style: headerboldverifyTextStyle,
+                                  textAlign: TextAlign.start,
+                                );
+                              }
+                            }),
                             Divider(),
                             SizedBox(height: 10,),
                             Column(
@@ -96,18 +107,11 @@ class VerificationProfilePage extends GetView<VerificationProfileController> {
                               child: ElevatedButton(
                                   onPressed: (){
                                     if(controller.formKey.currentState!.validate()){
-                                      controller.editPhoneNumber(phone_number: controller.phoneNumberController.text);
-                                      controller.sendOtp();
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return PopUpVerification();
-                                        },
-                                      );
+                                      controller.editPhoneNumber(phone_number: controller.phoneNumberController.text,context: context);
                                     }else{
                                       return null;
                                     }
-                              },style: verificationButton(), child: Text('Verifikasi',style: whiteboldTextStyle15,))) ,
+                              },style: verificationButton(), child: Text('Confirmasi',style: whiteboldTextStyle15,))) ,
                         )
                       ],
                     ),

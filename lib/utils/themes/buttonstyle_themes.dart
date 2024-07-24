@@ -70,7 +70,22 @@ ButtonStyle redeembutton() {
     ),
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+    ),
+  );
+}
+ButtonStyle black_secWhite() {
+  return ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+    minimumSize: MaterialStateProperty.all<Size>(Size(211,46)),
+    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+      EdgeInsets.all(10.0),
+    ),
+    shape: MaterialStateProperty.all<OutlinedBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
       ),
     ),
   );

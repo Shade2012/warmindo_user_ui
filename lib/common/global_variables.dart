@@ -14,6 +14,7 @@ class GlobalVariables {
   static const userQuery = '?user_id=';
   static const quantityQuery = '&quantity=';
 
-
+  static const apiUpdatePhoneNumber2 ='http://warmindo.pradiptaahmad.tech/api/users/updatePhone';
+  static const googleSignin = 'https://warmindo.pradiptaahmad.tech/api/users/google-login';
 
 }

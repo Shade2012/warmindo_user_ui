@@ -14,6 +14,7 @@ class ProfileController extends GetxController {
   RxString txtUsername = "".obs;
   RxString txtName = "".obs;
   RxString token = "".obs;
+  RxString isLoginGoogle = "".obs;
   RxBool isConnected = true.obs;
   SharedPreferences? prefs;
 
@@ -33,6 +34,7 @@ class ProfileController extends GetxController {
     await initializePrefs();
     if (prefs != null) {
       token.value = prefs!.getString('token') ?? '';
+      isLoginGoogle.value = prefs!.getString('isLoginGoogle') ?? '';
 
       try {
         isLoading.value = true; // Set loading to true before fetching data
@@ -91,6 +93,7 @@ class ProfileController extends GetxController {
     if (prefs != null) {
       await GoogleSignIn().signOut();
       prefs!.remove('username');
+      prefs!.remove('isLoginGoogle');
       prefs!.remove('token2');
       prefs!.remove('token');
       prefs!.remove('user_id');

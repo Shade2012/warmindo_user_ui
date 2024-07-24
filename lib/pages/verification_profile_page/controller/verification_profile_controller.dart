@@ -6,11 +6,16 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/controller/edit_profile_controller.dart';
+import 'package:warmindo_user_ui/routes/AppPages.dart';
 
 import '../../../common/global_variables.dart';
+import '../../menu_page/controller/menu_controller.dart';
+import '../widget/pop_up_verification.dart';
 class VerificationProfileController extends GetxController{
   final formKey = GlobalKey<FormState>();
+  final CartController cartController = Get.find<CartController>();
   final EditProfileController profileController = Get.put(EditProfileController());
   final phoneNumberController = TextEditingController();
   final TextEditingController code7Controller = TextEditingController();
@@ -230,10 +235,51 @@ class VerificationProfileController extends GetxController{
       checkSharedPreference();
     }
   }
+  Future<void> confirmEditPhone() async {
+    print('lagi di confirmasi phone');
+    final url = Uri.parse(GlobalVariables.apiVerifyOtp);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final client = http.Client();
+    try {
+      isLoading.value = true;
+      // Prepare the body of the request
+      final Map<String, dynamic> requestBody = {
+        'otp':codeOtp.value
+      };
+      final response = await client.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(requestBody),
+      );
+      if(response.statusCode == 200){
+        await cartController.fetchUser();
+        print(response.body);
+        Get.back();
+        Get.offNamed(Routes.BOTTOM_NAVBAR);
+      }
+      print(response.body);
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        'Error occurred: $e',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
   Future<void> editPhoneNumber({
-    String? phone_number,
+    String? phone_number,required BuildContext context
   }) async {
-    final url = Uri.parse(GlobalVariables.apiUpdatePhoneNumber);
+    final url = Uri.parse(GlobalVariables.apiUpdatePhoneNumber2);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     final client = http.Client();
@@ -252,7 +298,39 @@ class VerificationProfileController extends GetxController{
         },
         body: jsonEncode(requestBody),
       );
-      print(response.body);
+
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        await cartController.fetchUser();
+        sendOtp();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return PopUpVerification();
+          },
+        );
+        // Handle success response
+        print(response.body);
+      } else {
+        // Check for specific error message
+        if (responseBody['message'] == "The phone number has already been taken.") {
+          Get.snackbar(
+            'Error',
+            'The phone number has already been taken.',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        } else {
+          Get.snackbar(
+            'Error',
+            'An unexpected error occurred.',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+      }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar(
@@ -266,5 +344,4 @@ class VerificationProfileController extends GetxController{
       isLoading.value = false;
     }
   }
-
 }

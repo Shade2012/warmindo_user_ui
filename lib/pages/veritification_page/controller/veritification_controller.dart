@@ -23,22 +23,16 @@ class VeritificationController extends GetxController {
   final TextEditingController code5Controller = TextEditingController();
   final TextEditingController code6Controller = TextEditingController();
   final isFilled = false.obs;
+  RxString isSuccess = ''.obs;
   RxString codeOtp = ''.obs;
   RxBool isLoading = false.obs;
   RxString phoneNumber = ''.obs;
-
-Future<void> printShared () async {
-
-}
 
 @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-
-
     sendOtp();
-
     code1Controller.addListener(updateFilledStatus);
     code2Controller.addListener(updateFilledStatus);
     code3Controller.addListener(updateFilledStatus);
@@ -84,7 +78,7 @@ Future<void> printShared () async {
       // request.files.add(http.MultipartFile.fromPath('file_field', 'file_path'));
 
       var response = await http.Response.fromStream(await request.send());
-
+      print('token: ${token}');
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
         if(responseBody['status'] == 'failed'){
@@ -102,6 +96,7 @@ Future<void> printShared () async {
         print('Response: ${response.body}');
       } else {
         // Error occurred
+        print(token);
         print('Failed to send OTP: ${response.statusCode}');
         print('Response: ${response.body}');
 
@@ -150,6 +145,7 @@ Future<void> printShared () async {
         }),
       );
       final responseData = jsonDecode(response.body);
+      isSuccess.value = responseData['status'];
       if (response.statusCode == 200) {
      if(responseData['status'] == 'failed'){
        print('OTP verification failed');
@@ -172,11 +168,12 @@ Future<void> printShared () async {
          colorText: Colors.white,
        );
        print('Response: ${response.body}');
-       Get.offNamed(Routes.LOGIN_PAGE);
-       await prefs.remove('token2');
+       // Get.offNamed(Routes.LOGIN_PAGE);
+       await prefs.setString('token2', '');
      }
       } else {
         // Error occurred
+        print('token: $token');
         print('Failed to send OTP: ${response.statusCode}');
         print('Response: ${response.body}');
         // Show error snackbar
@@ -269,9 +266,5 @@ Future<void> printShared () async {
       isLoading.value = false;
     }
   }
-
-
-
-
 }
 

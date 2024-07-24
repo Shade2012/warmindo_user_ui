@@ -52,7 +52,7 @@ class PopUpVerification extends StatelessWidget {
                     width:screenWidth,
                     child: ElevatedButton(onPressed: (){
                       if(controller.isFilled.value == true){
-                        controller.verifyOtp();
+                        controller.confirmEditPhone();
                         print('Verification code: ${controller.codeOtp.value}');
                       }else{
                         return;

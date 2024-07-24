@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
 import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/common/model/menu_model.dart';
@@ -33,6 +34,7 @@ class MenuSecondCategory extends StatelessWidget {
   }) : super(key: key);
 
   final MenuPageController menuController = Get.find<MenuPageController>();
+  final CartController cartController = Get.find<CartController>();
   final GuestMenuController guestMenuController = Get.find<GuestMenuController>();
 
   @override
@@ -43,6 +45,7 @@ class MenuSecondCategory extends StatelessWidget {
 
     return RefreshIndicator(
       onRefresh: () async {
+        await cartController.fetchUser();
         await menuController.fetchProduct();
         await guestMenuController.fetchProduct();
       },
