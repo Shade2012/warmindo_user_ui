@@ -17,7 +17,6 @@ class RegisterController extends GetxController {
   final ctrPhoneNumber2 = RxString("");
   final ctrEmail2 = RxString("");
   final ctrPhone2 = RxString("");
-  final token = RxString("");
   RxString phone_number = "".obs;
 
   Future<void> registerUser(String name, String username, String phoneNumber, String email, String password) async {
@@ -43,8 +42,9 @@ class RegisterController extends GetxController {
         print(responseData);
         print(response.statusCode);
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('token2', responseData['token']);
+        await prefs.setString('token', responseData['token']);
         phone_number.value = responseData['data']['phone_number'];
+        print('token di register shared prefrence prefs : ${prefs.getString('token')}');
         Get.toNamed(Routes.VERITIFICATION_PAGE, arguments: {'isLogged': false.obs,});
       }
       else if(responseData['success'] == false) {

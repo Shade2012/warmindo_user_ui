@@ -11,10 +11,12 @@ import '../../../utils/themes/textstyle_themes.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../widget/google_sign_in/google_sign_in.dart';
+import '../../login_page/controller/login_controller.dart';
 
 
 
 class RegisterPage extends GetView<RegisterController>{
+  final LoginController loginController = Get.put(LoginController());
   final TextEditingController ctrName = TextEditingController();
   final TextEditingController ctrUsername = TextEditingController();
   final TextEditingController ctrEmail = TextEditingController();
@@ -65,7 +67,8 @@ class RegisterPage extends GetView<RegisterController>{
 
     return Container(
       margin: EdgeInsets.only(top: 20,bottom: 20),
-      child: Obx(()=> TextField(
+      child: Obx(()=> TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: controller2,
         obscureText: controller.obscureText.value,
         decoration: InputDecoration(
@@ -80,7 +83,7 @@ class RegisterPage extends GetView<RegisterController>{
           hintText: hint,
           labelText: label,
           prefixIcon: Icon(icon),
-          labelStyle: boldTextStyle,
+          labelStyle: bold14,
           hintStyle: TextStyle(
             color: primaryTextColor,
             fontSize: 12,
@@ -142,6 +145,7 @@ class RegisterPage extends GetView<RegisterController>{
                                     Get.back();
                                   },
                                   onConfirmPressed: () {
+                                    loginController.phone_number.value = '';
                                     Get.back();
                                     controller.ctrPhone2.value = ctrNumberPhone.text;
                                     controller.registerUser(

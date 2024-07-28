@@ -35,7 +35,7 @@ class Cart extends StatelessWidget {
                   return ReusableDialog(
                       title: 'Pesan',
                       content:
-                      'Nomor Hp anda belum terdaftar tolong isi terlebih dahulu',
+                      'Nomor telepon Anda belum tersimpan. Silakan masukkan nomor WA anda yang aktif untuk melanjutkan',
                       cancelText: 'Nanti',
                       confirmText: 'Oke',
                       onCancelPressed: () {
@@ -43,10 +43,8 @@ class Cart extends StatelessWidget {
                       },
                       onConfirmPressed: () {
                         Get.toNamed(
-                            Routes.PROFILE_VERIFICATION_PAGE,
-                            arguments: {
-                              'isEdit': false.obs,
-                            });
+                            Routes.EDITPROFILE_PAGE,
+                        );
                       });
                 });
           }else{
@@ -57,7 +55,7 @@ class Cart extends StatelessWidget {
                     return ReusableDialog(
                         title: 'Pesan',
                         content:
-                        'Nomor Hp anda belum terverifikasi tolong verifikasi terlebih dahulu',
+                        'Nomor telepon anda belum terverifikasi, verifikasi terlebih dahulu untuk melanjutkan',
                         cancelText: 'Nanti',
                         confirmText: 'Oke',
                         onCancelPressed: () {
@@ -68,7 +66,7 @@ class Cart extends StatelessWidget {
                         });
                   });
             }else{
-              // popUpcontroller.addToCart(menuId: product.menuId, quantity: 1);
+              popUpcontroller.addToCart(menuId: product.menuId, quantity: 1);
               popUpcontroller.showCustomModalForItem(product, context, 1, cartid: 0);// Show with initial quantity 1
             }
           }

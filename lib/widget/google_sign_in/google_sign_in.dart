@@ -15,7 +15,7 @@ import '../../utils/themes/image_themes.dart';
 
 
 class GoogleSignInButton extends StatelessWidget {
-  final LoginController loginController = Get.find();
+  final LoginController loginController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return InkWell(

@@ -4,6 +4,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/state_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/widget/myCustomPopUp/myCustomPopup.dart';
@@ -16,8 +18,8 @@ import '../../menu_page/controller/menu_controller.dart';
 class CartController extends GetxController {
   late final SharedPreferences prefs;
   RxBool isConnected = true.obs;
-  final MenuPageController menuController = Get.find<MenuPageController>();
-  RxString id = ''.obs;
+  final MenuPageController menuController = Get.put(MenuPageController());
+  int id = 0;
   RxString userPhone = ''.obs;
   RxString userPhoneVerified = ''.obs;
   RxString token = "".obs;
@@ -57,7 +59,8 @@ class CartController extends GetxController {
     }
   }
   Future<void> fetchUser() async {
-    token.value = prefs!.getString('token') ?? 't';
+    token.value = prefs!.getString('token') ?? '';
+    print('print token di fetchUser Cart $token');
     try {
       final response = await http.get(
         Uri.parse('${GlobalVariables.apiDetailUser}'),headers: {
@@ -71,57 +74,63 @@ class CartController extends GetxController {
         final data = jsonDecode(response.body);
         userPhone.value = data['user']['phone_number'] ?? '';
         userPhoneVerified.value = data['user']['phone_verified_at'] ?? '';
+        id = data['user']['id'] ?? '';
+
+        print(data['user']);
         print('phone verified di controller ${userPhoneVerified.value}');
       }else {
         print('Error: ${response.statusCode}');
       }
     } catch (e) {
       print(e);
+      print('ada error di fetch user');
 
     }
   }
   Future<CartItem?> addCart({required int menuID, required int quantity}) async {
     isLoading.value = true;
+
     final url = Uri.parse(GlobalVariables.apiCartStore);
-
     final client = http.Client();
+    print(id);
     try {
-        final response = await client.post(
-          url,
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({
-            'user_id': id.value,
-            'menuID': menuID,
-            'quantity': quantity,
-          }),
+      final response = await client.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'user_id': id,
+          'menuID': menuID,
+          'quantity': quantity,
+        }),
+      );
+
+      print('Response status code: ${response.statusCode}');
+      print('Response body: ${jsonDecode(response.body)}');
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        int menuId = responseData['data']['menuID'];
+        int cartId = responseData['data']['cart_id'];
+        final menu = menuController.menuElement.firstWhere((menu) => menu.menuId == menuId);
+        final newCartItem2 = CartItem(
+          productId: menu.menuId,
+          productName: menu.nameMenu,
+          price: menu.price.toDouble(),
+          quantity: 1.obs,
+          productImage: menu.image,
+          cartId: cartId,
         );
-        print('Response status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
+        print('testing : $newCartItem2');
+        cartItems.add(newCartItem2);
 
-        if (response.statusCode == 200) {
-          final responseData = jsonDecode(response.body);
-          int menuId= responseData['data']['menuID'];
-          int cartId= responseData['data']['cart_id'];
-          final menu = menuController.menuElement.firstWhere((menu) => menu.menuId == menuId);
-          final newCartItem2 = CartItem(
-            productId: menu.menuId,
-            productName: menu.nameMenu,
-            price: menu.price.toDouble(),
-            quantity: 1.obs,
-            productImage: menu.image,
-            cartId:cartId,
-          );
-          print('testing : $newCartItem2');
-          cartItems.add(newCartItem2);
+        cartItems.refresh();
 
-          cartItems.refresh();
-
-        } else {
-          print('Error: ${response.statusCode}');
-          return null;
-        }
-
-
+        // Return the created CartItem
+        return newCartItem2;
+      } else {
+        print('Error: ${response.statusCode}');
+        return null;
+      }
     } catch (e) {
       print('Error: $e');
       Get.snackbar(
@@ -137,6 +146,7 @@ class CartController extends GetxController {
       isLoading.value = false;
     }
   }
+
 
   Future<void> removeCart({required int idCart,}) async {
     isLoading.value = true;
@@ -207,20 +217,17 @@ class CartController extends GetxController {
   }
   void goToVerification() async{
     Get.back();
-    await prefs.setString('token2', '${prefs.getString('token')}');
-    Get.toNamed(Routes.VERITIFICATION_PAGE,arguments: {'isLogged': true.obs,});
+    Get.toNamed(Routes.EDITPROFILE_PAGE);
   }
   void checkConnectivity() async {
     prefs = await SharedPreferences.getInstance();
-    id.value = prefs.getString('user_id') ?? '';
-   await prefs.setString('token2', '${prefs.getString('token')}');
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
       isConnected.value = result != ConnectivityResult.none;
       if (isConnected.value) {
         //fetch cart
         // fetchProduct();
-      fetchUser();
-        fetchCart();
+       await fetchUser();
+       await fetchCart();
       }
     });
 
@@ -228,8 +235,8 @@ class CartController extends GetxController {
     isConnected.value = connectivityResult != ConnectivityResult.none;
     if (isConnected.value) {
       //fetch cart
-      fetchUser();
-      fetchCart();
+      await fetchUser();
+      await fetchCart();
     }
   }
 

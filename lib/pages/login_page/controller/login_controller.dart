@@ -53,7 +53,7 @@ class LoginController extends GetxController {
                     Get.back();
                   },
                   onConfirmPressed: (){
-                    prefs.setString('token2', '${responseData['token']}');
+                    prefs.setString('token', '${responseData['token']}');
                     phone_number.value = responseData['user']['phone_number'];
                     Get.toNamed(Routes.VERITIFICATION_PAGE, arguments: {
                                                     'isLogged': false.obs,

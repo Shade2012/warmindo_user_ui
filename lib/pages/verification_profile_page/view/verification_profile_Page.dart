@@ -15,9 +15,11 @@ import 'package:warmindo_user_ui/widget/otp_textfield.dart';
 import 'package:flutter/gestures.dart';
 import '../../../utils/themes/buttonstyle_themes.dart';
 import '../../../utils/themes/color_themes.dart';
+import '../../edit-profile/controller/edit_profile_controller.dart';
 import '../widget/pop_up_verification.dart';
 
 class VerificationProfilePage extends GetView<VerificationProfileController> {
+  final EditProfileController profileController = Get.put(EditProfileController());
   final RxBool isEdit;
   VerificationProfilePage({required this.isEdit});
 
@@ -49,8 +51,17 @@ class VerificationProfilePage extends GetView<VerificationProfileController> {
                   return Form(
                     key: controller.formKey,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(height: 20,),
+                        InkWell(
+                          child: Ink(
+                              child: Icon(Icons.arrow_back_ios_new)),
+                          onTap: (){
+                            Get.back();
+                          },
+                        ),
+                        SizedBox(height: screenHeight * 0.26,),
                         Column(
                           children: [
                             SizedBox(),

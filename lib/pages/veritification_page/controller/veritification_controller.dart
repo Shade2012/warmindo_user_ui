@@ -9,12 +9,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/common/global_variables.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 
+import '../../cart_page/controller/cart_controller.dart';
 import '../../login_page/controller/login_controller.dart';
 import '../../register_page/controller/register_controller.dart';
 
 class VeritificationController extends GetxController {
   final RegisterController registerController = Get.put(RegisterController());
   final LoginController loginController = Get.put(LoginController());
+  final CartController cartController = Get.put(CartController());
 
   final TextEditingController code1Controller = TextEditingController();
   final TextEditingController code2Controller = TextEditingController();
@@ -32,7 +34,9 @@ class VeritificationController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    sendOtp();
+    Future.delayed(Duration(seconds: 1), () {
+      sendOtp();
+    });
     code1Controller.addListener(updateFilledStatus);
     code2Controller.addListener(updateFilledStatus);
     code3Controller.addListener(updateFilledStatus);
@@ -66,16 +70,14 @@ class VeritificationController extends GetxController {
   Future<void> sendOtp() async {
   try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token2');
+      final token = prefs.getString('token');
+      print('token di register shared prefrence prefs : ${prefs.getString('token')}');
       final uri = Uri.parse(GlobalVariables.apiSendOtp);
       var request = http.MultipartRequest('POST', uri)
         ..headers['Authorization'] = 'Bearer $token'
         ..headers['Content-Type'] = 'multipart/form-data'
         ..headers['Accept'] = 'application/json';
 
-      // Add any fields or files if necessary
-      // request.fields['field_name'] = 'field_value';
-      // request.files.add(http.MultipartFile.fromPath('file_field', 'file_path'));
 
       var response = await http.Response.fromStream(await request.send());
       print('token: ${token}');
@@ -86,7 +88,8 @@ class VeritificationController extends GetxController {
             snackPosition: SnackPosition.TOP,
             backgroundColor: Colors.red,
             colorText: Colors.white,);
-        } else  if(responseBody['status'] == 'success') {
+        } else
+          if(responseBody['status'] == 'success') {
             Get.snackbar('Pesan', 'Kode OTP Behasil dikirim',
               snackPosition: SnackPosition.TOP,
               backgroundColor: Colors.green,
@@ -128,7 +131,7 @@ class VeritificationController extends GetxController {
   Future<void> verifyOtp() async {
     final url = Uri.parse(GlobalVariables.apiVerifyOtp);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token2');
+    final token = prefs.getString('token');
     final client = http.Client();
     try {
       isLoading.value = true;
@@ -169,7 +172,8 @@ class VeritificationController extends GetxController {
        );
        print('Response: ${response.body}');
        // Get.offNamed(Routes.LOGIN_PAGE);
-       await prefs.setString('token2', '');
+       registerController.phone_number.value = '';
+       loginController.phone_number.value = '';
      }
       } else {
         // Error occurred
@@ -199,12 +203,13 @@ class VeritificationController extends GetxController {
       );
     } finally {
       isLoading.value = false;
-    }
+        }
   }
   Future<void> editPhoneNumber({required String phoneNumber}) async {
-    final url = Uri.parse(GlobalVariables.apiUpdatePhoneNumber);
+    final url = Uri.parse(GlobalVariables.apiUpdatePhoneNumber2);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token2');
+    final token = prefs.getString('token');
+
     final client = http.Client();
 
     try {

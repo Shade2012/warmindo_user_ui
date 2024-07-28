@@ -208,19 +208,14 @@ class DetailMenuPage extends StatelessWidget {
                             builder: (BuildContext context) {
                               return ReusableDialog(
                                   title: 'Pesan',
-                                  content:
-                                      'Nomor Hp anda belum terdaftar tolong isi terlebih dahulu',
+                                  content: 'Nomor Hp anda belum terdaftar tolong isi terlebih dahulu',
                                   cancelText: 'Nanti',
                                   confirmText: 'Oke',
                                   onCancelPressed: () {
                                     Get.back();
                                   },
                                   onConfirmPressed: () {
-                                    Get.toNamed(
-                                        Routes.PROFILE_VERIFICATION_PAGE,
-                                        arguments: {
-                                          'isEdit': false.obs,
-                                        });
+                                    Get.toNamed(Routes.EDITPROFILE_PAGE);
                                   });
                             });
                       }

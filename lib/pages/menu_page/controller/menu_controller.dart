@@ -11,18 +11,24 @@ import '../../../common/model/search_model.dart';
 
 
 class MenuPageController extends GetxController {
-  var search = TextEditingController().obs;
+  final TextEditingController search = TextEditingController();
   RxList<MenuList> menuElement = <MenuList>[].obs;
   RxList<MenuList> searchResults = <MenuList>[].obs;
   RxBool isLoading = true.obs;
   String lastQuery = '';
   RxBool isConnected = true.obs;
+  RxString searchObx = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
+
     fetchProduct();
     checkConnectivity();
+    search.addListener(() {
+      searchObx.value = search.text;
+      searchFilter(search.text);
+    });
   }
 
   void checkConnectivity() async {

@@ -161,6 +161,12 @@ TextStyle bold12 = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(12)));
 
+TextStyle bold14 = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));
+
 TextStyle boldcodeTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,
@@ -243,6 +249,13 @@ TextStyle normalPolicyTextStyle = GoogleFonts.oxygen(
         color: primaryTextColor,
         fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(14)));
+
+
+TextStyle headerRegular = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.normal,
+        fontSize: figmaFontsize(22)));
 
 TextStyle blackvoucherTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(

@@ -139,7 +139,8 @@ class MenuCategory extends StatelessWidget {
                           subtitle:
                               Padding(
                                 padding: EdgeInsets.only(bottom: screenHeight * 0.054),
-                                child:    Column(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
@@ -172,7 +173,7 @@ class MenuCategory extends StatelessWidget {
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
-                                                    horizontal: 10, vertical: 2),
+                                                    horizontal: 5, vertical: 2),
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   border: Border.all(color: Colors.black),
@@ -205,9 +206,7 @@ class MenuCategory extends StatelessWidget {
                                                             Get.back();
                                                           },
                                                           onConfirmPressed: (){
-                                                            Get.toNamed(Routes.PROFILE_VERIFICATION_PAGE, arguments: {
-                                                              'isEdit': false.obs,
-                                                            });
+                                                            Get.toNamed(Routes.EDITPROFILE_PAGE,);
                                                           }
                                                           );
                                                 });

@@ -13,6 +13,7 @@ class ProfileController extends GetxController {
   RxBool isLoading = true.obs;
   RxString txtUsername = "".obs;
   RxString txtName = "".obs;
+  RxString image = "".obs;
   RxString token = "".obs;
   RxString isLoginGoogle = "".obs;
   RxBool isConnected = true.obs;
@@ -52,6 +53,7 @@ class ProfileController extends GetxController {
           if (data['success']) {
             txtName.value = data['user']['name'];
             txtUsername.value = data['user']['username'];
+            image.value = data['user']['profile_picture'];
             print("Fetched username: ${txtUsername.value}");
           } else {
             print('Error: ${data['message']}');
