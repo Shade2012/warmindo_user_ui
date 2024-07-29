@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
+import 'package:warmindo_user_ui/pages/menu_page/controller/menu_controller.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 
 import '../../common/model/cartmodel.dart';
@@ -15,6 +16,7 @@ class CounterWidget extends StatelessWidget {
   late final RxInt quantity;
   late final int cartId;
   final cartController = Get.put(CartController());
+  final menuController = Get.put(MenuPageController());
 
   CounterWidget({required this.quantity, required this.menu, required this.cartId});
 
@@ -59,10 +61,11 @@ class CounterWidget extends StatelessWidget {
                                 onCancelPressed: () {
                                   Get.back();
                                 },
-                                onConfirmPressed: () {
+                                onConfirmPressed: () async {
                                   // Remove from cart
                                   cartController.removeItemFromCartWithID(cartId);
                                   quantity.value = 0; // Directly update the value
+                                 menuController.checkConnectivity();
                                   Get.back();
                                   Get.back();
                                 },
@@ -122,10 +125,11 @@ class CounterWidget extends StatelessWidget {
               height: 15,
             ),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 final cartItem = cartController.cartItems.firstWhereOrNull((item) => item.productId == menu.menuId);
                 cartController.editCart(idCart: cartId, quantity: quantity.value);
                 cartItem?.quantity.value = quantity.value;
+                menuController.checkConnectivity();
                 Get.back();
               },
               child: Container(

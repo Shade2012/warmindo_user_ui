@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:warmindo_user_ui/pages/edit-profile/controller/edit_profile_controller.dart';
 import 'package:warmindo_user_ui/pages/profile_page/controller/profile_controller.dart';
 import 'package:warmindo_user_ui/pages/profile_page/shimmer/profile_shimmer.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
@@ -15,6 +18,7 @@ import 'package:warmindo_user_ui/widget/popup_veritification.dart';
 import 'package:warmindo_user_ui/widget/reusable_dialog.dart';
 
 class ProfilePage extends StatelessWidget {
+  final EditProfileController editProfileController = Get.put(EditProfileController());
   final ProfileController profileController = Get.put(ProfileController());
   ProfilePage({Key? key});
 
@@ -64,13 +68,32 @@ class ProfilePage extends StatelessWidget {
                            children: [
                              ClipRRect(
                                borderRadius: BorderRadius.circular(8),
-                               child: Image.asset(
-                                 Images.profile,
-                                 width: 125,
-                                 height: 125,
-                                 fit: BoxFit.cover,
-                                 alignment: Alignment.center,
-                               ),
+                               child: Obx(() {
+                                 return Container(
+                                   width: 125,
+                                   height: 145,
+                                   decoration: BoxDecoration(
+                                     color: Colors.grey[200],
+                                     border: Border.all(width: 5,color: Colors.white60)
+                                   ),
+
+                                   child: profileController.image.value == ''
+                                       ? Image.asset(
+                                     Images.profile,
+                                     width: 125,
+                                     height: 125,
+                                     fit: BoxFit.cover,
+                                     alignment: Alignment.center,
+                                   )
+                                       : Image.network(
+                                     '${profileController.image.value}',
+                                     width: 125,
+                                     height: 125,
+                                     fit: BoxFit.cover,
+                                     alignment: Alignment.center,
+                                   ),
+                                 );
+                               }),
                              ),
                              SizedBox(height: 15),
                              Text(
@@ -83,7 +106,9 @@ class ProfilePage extends StatelessWidget {
                              ),
                              SizedBox(height: screenHeight * 0.002),
                              ElevatedButton(
-                               onPressed: () {
+                               onPressed: () async {
+                                 editProfileController.selectedImage.value = File('');
+                                  editProfileController.fetchUser();
                                  Get.toNamed(Routes.EDITPROFILE_PAGE);
                                },
                                style: ElevatedButton.styleFrom(

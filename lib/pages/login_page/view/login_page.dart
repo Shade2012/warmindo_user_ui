@@ -10,8 +10,10 @@ import '../../../utils/themes/textstyle_themes.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../widget/google_sign_in/google_sign_in.dart';
+import '../../register_page/controller/register_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
+  final RegisterController registerController = Get.put(RegisterController());
   final TextEditingController ctrUsername = TextEditingController();
   final TextEditingController ctrPassword = TextEditingController();
   LoginPage({super.key});
@@ -34,7 +36,8 @@ class LoginPage extends GetView<LoginController> {
     return Container(
       margin: EdgeInsets.only(top: 20, bottom: 20),
       child: Obx(
-        () => TextField(
+        () => TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: controller2,
           obscureText: controller.obscureText.value,
           decoration: InputDecoration(
@@ -115,6 +118,7 @@ class LoginPage extends GetView<LoginController> {
                         if (ctrPassword.text.isNotEmpty &&
                             ctrUsername.text.isNotEmpty &&
                             isPassword(ctrPassword.text) == null) {
+                          registerController.phone_number.value = '';
                           controller.loginUser(ctrUsername.text, ctrPassword.text);
                         } else {
                           Get.snackbar("Warning",

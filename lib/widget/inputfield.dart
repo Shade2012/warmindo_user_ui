@@ -12,7 +12,8 @@ Widget myText(
     ) {
   return Container(
     margin: EdgeInsets.only(top: 20, bottom: 20),
-    child: TextField(
+    child: TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
@@ -25,7 +26,7 @@ Widget myText(
         hintText: hint,
         labelText: label,
         prefixIcon: Icon(icon),
-        labelStyle: boldTextStyle,
+        labelStyle: bold14,
         hintStyle: GoogleFonts.oxygen(
           textStyle: TextStyle(color: primaryTextColor, fontSize: 12),
         ),

@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
+import 'package:warmindo_user_ui/pages/edit-profile/widget/textform.dart';
 import 'package:warmindo_user_ui/pages/verification_profile_page/view/verification_profile_Page.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
@@ -17,7 +18,6 @@ import '../../../widget/uploadImage.dart';
 import '../controller/edit_profile_controller.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  final CartController cartController = Get.find<CartController>();
   final EditProfileController controller = Get.put(EditProfileController());
   final _formKey = GlobalKey<FormState>();
   void getImage(ImageSource source) {
@@ -51,7 +51,8 @@ class EditProfileScreen extends StatelessWidget {
                         ),
                       ),
                     );
-                  } else {
+                  } else
+                  {
                     return Column(
                       children: [
                         Container(
@@ -59,15 +60,28 @@ class EditProfileScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Center(
-                                  child: Text(
-                                    "Edit Profil",
-                                    style: subheaderRegularStyle,
+                                Container(
+                                  width: screenWidth * 0.56,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      InkWell(
+                                        onTap:(){
+                                          Get.toNamed(Routes.BOTTOM_NAVBAR);
+                                        },
+                                          child: Icon(Icons.arrow_back_ios_new_rounded,color: Colors.white,)),
+                                      Center(
+                                        child: Text(
+                                          "Edit Profil",
+                                          style: subheaderRegularStyle,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
@@ -98,15 +112,14 @@ class EditProfileScreen extends StatelessWidget {
                                                 borderRadius: BorderRadius.all(Radius.circular(100)),
                                                 child: Obx(() {
                                                   if (controller.imgProfile.value == '') {
-                                                    return controller.selectedImage.value != null &&
-                                                        controller.selectedImage.value!.path.isNotEmpty ?
-                                                    Image.file(File(controller.selectedImage.value!.path), fit: BoxFit.cover,)
-                                                        : Image.asset(Images.profile, fit: BoxFit.cover,);
-                                                  } else {
+                                                    return controller.selectedImage.value != null && controller.selectedImage.value!.path.isNotEmpty
+                                                        ? Image.file(File(controller.selectedImage.value!.path), fit: BoxFit.cover,) : Image.asset(Images.profile, );
+                                                  } else{
                                                     return controller.selectedImage.value != null &&
                                                             controller.selectedImage.value!.path.isNotEmpty ?
                                                     Image.file(File(controller.selectedImage.value!.path), fit: BoxFit.cover,)
-                                                        : Image.network(controller.imgProfile.value, fit: BoxFit.cover,
+                                                        : Image.network('https://warmindo.pradiptaahmad.tech/image/${controller.imgProfile.value}', fit: BoxFit.cover,
+                                                    // Image.network(controller.imgProfile.value, fit: BoxFit.cover,
                                                           );
                                                   }
                                                 }),
@@ -147,17 +160,6 @@ class EditProfileScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 20.0),
-                                TextFormField(
-                                  controller: controller.fullNameController,
-                                  decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.white),),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.white),),
-                                    labelText: "Nama Lengkap",
-                                    labelStyle: TextStyle(color: Colors.white),),
-                                  style: TextStyle(color: Colors.white),
-                                ),
                               ],
                             ),
                           ),
@@ -165,58 +167,20 @@ class EditProfileScreen extends StatelessWidget {
                         Container(
                           color: Colors.white,
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Form(
+                          child:
+                          Form(
                             key: _formKey,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(height: 20.0),
-                                Text("Username", style: regularInputTextStyle,),
-                                const SizedBox(height: 10.0),
-                                TextFormField(
-                                  controller: controller.usernameController,
-                                  style: regulargreyText,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 10.0),
-                                Text("Email", style: regularInputTextStyle,),
-                                const SizedBox(height: 10.0),
-                                TextFormField(
-                                  controller: controller.emailController,
-                                  style: regularInputTextStyle,
-                                  keyboardType: TextInputType.emailAddress,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.contains("@")) {
-                                      return null;
-                                    }
-                                    return "Invalid email address";
-                                  },
-                                ),
-                                const SizedBox(height: 10.0),
-                                Text("Nomor Hp", style: regularInputTextStyle,
-                                ),
-                                const SizedBox(height: 10.0),
+                                myTextFormField(TextInputType.text, 'Nama Lengkap', controller.fullNameController, regulargreyText, 3),
+                                myTextFormField(TextInputType.text, 'Username', controller.usernameController, regulargreyText, 3),
+                                myTextFormField(TextInputType.emailAddress, 'Email', controller.emailController, regulargreyText, 1),
                                 Container(
                                   width: screenWidth,
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Expanded(
                                         child: Obx(() {
@@ -226,56 +190,21 @@ class EditProfileScreen extends StatelessWidget {
                                                 Get.toNamed(Routes.PROFILE_VERIFICATION_PAGE, arguments: {'isEdit': false.obs,},);
                                               },
                                               child: AbsorbPointer(
-                                                child: TextFormField(
-                                                  controller: controller.phoneNumberController,
-                                                  style: regularInputTextStyle,
-                                                  keyboardType: TextInputType.phone,
-                                                  decoration: InputDecoration(
-                                                    contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
-                                                    border: OutlineInputBorder(
-                                                      borderSide: BorderSide(color: Colors.grey),
-                                                    ),
-                                                    focusedBorder:
-                                                    OutlineInputBorder(
-                                                      borderSide: BorderSide(color: Colors.grey),
-                                                    ),
-                                                  ),
-                                                  validator: (value) {
-                                                    if (value!.length < 11) {
-                                                      return "Nomor Hp tidak valid";
-                                                    }
-                                                    return null;
-                                                  },
-                                                ),
+                                                child:
+                                                myTextFormField(TextInputType.phone, 'Nomor Hp', controller.phoneNumberController, regulargreyText, 0),
                                               ),
                                             );
                                           }else{
                                             return GestureDetector(
                                               onTap: () {
-                                                Get.toNamed(
-                                                  Routes.PROFILE_VERIFICATION_PAGE, arguments: {'isEdit': true.obs,},);
+                                                if(controller.user_phone_verified.value != ''){
+                                                  Get.toNamed(Routes.PROFILE_VERIFICATION_PAGE, arguments: {'isEdit': true.obs,},);
+                                                }else{
+                                                  Get.toNamed(Routes.PROFILE_VERIFICATION_PAGE, arguments: {'isEdit': false.obs,},);
+                                                }
                                               },
                                               child: AbsorbPointer(
-                                                child: TextFormField(
-                                                  controller: controller.phoneNumberController,
-                                                  style: regularInputTextStyle,
-                                                  keyboardType: TextInputType.phone,
-                                                  decoration: InputDecoration(
-                                                    contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0), // Adjust padding here
-                                                    border: OutlineInputBorder(
-                                                      borderSide: BorderSide(color: Colors.grey),
-                                                    ),
-                                                    focusedBorder: OutlineInputBorder(
-                                                      borderSide: BorderSide(color: Colors.grey),
-                                                    ),
-                                                  ),
-                                                  validator: (value) {
-                                                    if (value!.length < 11) {
-                                                      return "Nomor Hp tidak valid";
-                                                    }
-                                                    return null;
-                                                  },
-                                                ),
+                                                child: myTextFormField(TextInputType.phone, 'Nomor Hp', controller.phoneNumberController, regulargreyText, 0),
                                               ),
                                             );
                                           }
@@ -286,7 +215,7 @@ class EditProfileScreen extends StatelessWidget {
                                           margin: EdgeInsets.only(left: 10),
                                           child: ElevatedButton(
                                             onPressed: () {
-                                              if(cartController.userPhoneVerified.value == ''){
+                                              if(controller.user_phone_verified.value == ''){
                                               Get.toNamed(Routes.VERITIFICATION_PAGE,arguments: {'isLogged': true.obs,});
                                               }else{
                                                 Get.snackbar('Pesan', 'Nomor Hp sudah terverifikasi',backgroundColor: Colors.white);
@@ -301,7 +230,6 @@ class EditProfileScreen extends StatelessWidget {
                                                 )),
                                             style: redeembutton(),
                                           )),
-
                                     ],
                                   ),
                                 ),
@@ -309,22 +237,18 @@ class EditProfileScreen extends StatelessWidget {
                                 Center(
                                   child: ElevatedButton(
                                     style:black_secWhite(),
-                                    onPressed: () {
+                                    onPressed: () async {
                                       if (_formKey.currentState!.validate()) {
                                         print('berhasil tahap 1');
-                                        if (controller.selectedImage.value.path == '') {
-                                          controller.editProfile(
-                                              name: controller.fullNameController.text,
-                                              username: controller.usernameController.text,
-                                              email: controller.emailController.text,
-                                              phone_number: controller.phoneNumberController.text);
+                                        if (controller.selectedImage.value?.path == '') {
+                                          await controller.editProfile(name: controller.fullNameController.text, username: controller.usernameController.text, email: controller.emailController.text,);
+                                          print('image ada');
                                         } else {
-                                          controller.editProfile(
-                                              name: controller.fullNameController.text,
-                                              username: controller.usernameController.text,
-                                              email: controller.emailController.text,
-                                              image: controller.selectedImage.value,
-                                              phone_number: controller.phoneNumberController.text);
+                                        await controller.editProfile(name: controller.fullNameController.text, username: controller.usernameController.text, email: controller.emailController.text, image: controller.selectedImage.value,);
+                                        print('image saat ini : ${controller.selectedImage.value}');
+                                          controller.selectedImage.value = File('');
+                                        print('image setelah proses kossong : ${controller.selectedImage.value}');
+                                          print('image kosong');
                                         }
                                       }
                                     },

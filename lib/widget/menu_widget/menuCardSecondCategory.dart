@@ -46,6 +46,7 @@ class MenuSecondCategory extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () async {
         await cartController.fetchUser();
+        await cartController.fetchCart();
         await menuController.fetchProduct();
         await guestMenuController.fetchProduct();
       },

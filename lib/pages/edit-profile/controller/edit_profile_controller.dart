@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
-
+import 'package:http/http.dart';
+import 'package:path/path.dart';
 import '../../../common/global_variables.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,7 +21,7 @@ class EditProfileController extends GetxController {
   final usernameController = TextEditingController();
   RxBool isConnected = true.obs;
   SharedPreferences? prefs;
-  Rx<File> selectedImage = Rx<File>(File(''));
+  Rx<File?> selectedImage = Rx<File?>(null);
   RxBool isLoading = true.obs;
   RxString txtUsername = "".obs;
   RxString txtName = "".obs;
@@ -28,6 +29,7 @@ class EditProfileController extends GetxController {
   RxString txtNomorHp = "".obs;
   RxString token = "".obs;
   RxString imgProfile = "".obs;
+  RxString user_phone_verified = "".obs;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -39,43 +41,46 @@ class EditProfileController extends GetxController {
       prefs = await SharedPreferences.getInstance();
     }
   }
+  void fetchUser() async{
+    token.value = prefs!.getString('token') ?? '';
+    try {
+      isLoading.value = true; // Set loading to true before fetching data
+      final response = await http.get(Uri.parse(GlobalVariables.apiDetailUser),headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      });
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        if (data['success']) {
+          txtName.value = data['user']['name'];
+          txtUsername.value = data['user']['username'];
+          txtEmail.value = data['user']['email'];
+          txtNomorHp.value = data['user']['phone_number'] ?? '';
+          imgProfile.value = data['user']['profile_picture'] ?? '';
+          user_phone_verified.value = data['user']['phone_verified_at'] ?? '';
+          usernameController.text = txtUsername.value;
+          fullNameController.text = txtName.value;
+          phoneNumberController.text = txtNomorHp.value;
+          emailController.text = txtEmail.value;
+          print("Fetched username: ${txtUsername.value}");
+        } else {
+          print('Error: ${data['message']}');
+        }
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+    } finally {
+      isLoading.value = false; // Set loading to false after data is fetched
+    }
+  }
   void checkSharedPreference() async {
     await initializePrefs();
     if (prefs != null) {
-      token.value = prefs!.getString('token') ?? '';
-      print('ini adalah tokennya : $token');
-      try {
-        isLoading.value = true; // Set loading to true before fetching data
-        final response = await http.get(Uri.parse(GlobalVariables.apiDetailUser),headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
-        });
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-
-          if (data['success']) {
-            txtName.value = data['user']['name'];
-            txtUsername.value = data['user']['username'];
-            txtEmail.value = data['user']['email'];
-            txtNomorHp.value = data['user']['phone_number'] ?? '';
-            imgProfile.value = data['user']['profile_picture'] ?? '';
-            usernameController.text = txtUsername.value;
-            fullNameController.text = txtName.value;
-            phoneNumberController.text = txtNomorHp.value;
-            emailController.text = txtEmail.value;
-            print("Fetched username: ${txtUsername.value}");
-          } else {
-            print('Error: ${data['message']}');
-          }
-        } else {
-          print('Error: ${response.statusCode}');
-        }
-      } catch (e) {
-        print('Exception: $e');
-      } finally {
-        isLoading.value = false; // Set loading to false after data is fetched
-      }
+      fetchUser();
     }
   }
   void checkConnectivity() async {
@@ -97,54 +102,56 @@ class EditProfileController extends GetxController {
       checkSharedPreference();
     }
   }
+
   Future<void> editProfile({
     String? name,
     String? username,
     String? email,
-    String? phone_number,
     File? image,
   }) async {
     final url = Uri.parse(GlobalVariables.apiUpdatePhoneNumber);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    final client = http.Client();
 
     try {
       isLoading.value = true;
 
-      // Prepare the body of the request
-      final Map<String, dynamic> requestBody = {
-        'name': name,
-        'username': username,
-        'phone_number': phone_number,
-        'email': email,
-      };
-
-      // Conditionally add the profile_picture if the image is not null
-      if (image != null) {
-        requestBody['profile_picture'] = image;
-      }
-
-      final response = await client.post(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
+      // Create a multipart request
+      var request = http.MultipartRequest('POST', url)
+        ..headers.addAll({
           'Authorization': 'Bearer $token',
-        },
-        body: jsonEncode(requestBody),
-      );
+        })
+        ..fields['name'] = name ?? ''
+        ..fields['username'] = username ?? ''
+        ..fields['email'] = email ?? '';
 
-      final responseData = jsonDecode(response.body);
-      print(response.statusCode);
-      if(response.statusCode == 500){
-        print(response.body);
-        isLoading.value = false;
+      if (image != null) {
+        request.files.add(http.MultipartFile(
+          'profile_picture',
+          image.readAsBytes().asStream(),
+          image.lengthSync(),
+          filename: 'product_image.jpg',
+        ));
       }
+
+      print('Request URL: $url');
+      print('Request Headers: ${request.headers}');
+      print('Request Fields: ${request.fields}');
+      print('Request Files: ${request.files}');
+
+      // Send the request
+      var response = await http.Response.fromStream(await request.send());
+
+      // Reset selectedImage to null after sending the request
+
+
+      // Log response details
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      // Handle the response
       if (response.statusCode == 200) {
         isLoading.value = false;
-        print(responseData);
-        print(response.statusCode);
         profileController.checkSharedPreference();
         Get.toNamed(Routes.BOTTOM_NAVBAR);
         Get.snackbar(
@@ -154,11 +161,8 @@ class EditProfileController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
-        print(image);
       } else if (response.statusCode == 400) {
         isLoading.value = false;
-        print(responseData);
-        print(response.statusCode);
         Get.snackbar(
           'Error',
           'Password Saat ini tidak sesuai',
@@ -168,8 +172,6 @@ class EditProfileController extends GetxController {
         );
       } else if (response.statusCode == 422) {
         isLoading.value = false;
-        print(responseData);
-        print(response.statusCode);
         Get.snackbar(
           'Error',
           'Password Tidak Sama',
@@ -177,22 +179,33 @@ class EditProfileController extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-        print(image);
+      } else {
+        isLoading.value = false;
+        print('error biasa : ${response.body}');
+        Get.snackbar(
+          'Error biasa',
+          'Error: ${response.statusCode} ${response.body}',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar(
-        'Error',
+        'Error Catch',
         'Error occurred: $e',
         snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
-      print(image);
+      print('$e');
     } finally {
       isLoading.value = false;
     }
   }
+
+
 
   void getImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
@@ -210,4 +223,5 @@ class EditProfileController extends GetxController {
       });
     }
   }
+
 }

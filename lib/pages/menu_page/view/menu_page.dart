@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/menu_page/controller/menu_controller.dart';
@@ -40,7 +42,7 @@ class MenuPage extends StatelessWidget {
               backgroundColor: ColorResources.primaryColor,
               title: CustomSearchBar(
                 hintText: 'Mau makan apa hari ini?',
-                controller: controller.search.value,
+                controller: controller.search,
                 onChanged: (query) {
                   controller.searchFilter(query);
                 },
@@ -82,14 +84,19 @@ class MenuPage extends StatelessWidget {
             ),
           ),
           body: Obx(() {
-            if (controller.searchResults.isNotEmpty) {
-              return Search(
-                categoryName: 'Search Results',
-                menuList: controller.searchResults,
-                context: context,
-                isGuest: false,
-              );
-            }  else if (!controller.isConnected.value) {
+            if(controller.searchObx.value != ''){
+              if (controller.searchResults.length == 0) {
+                return
+                    Center(child: Text('Produk tidak ditemukan'),);
+              }else  {
+                return Search(
+                  categoryName: 'Search Results',
+                  menuList: controller.searchResults,
+                  context: context,
+                  isGuest: false,
+                );
+              }
+            } else if (!controller.isConnected.value) {
             return Center(
               child: Container(
                 child: Text(
@@ -99,14 +106,7 @@ class MenuPage extends StatelessWidget {
               ),
             );
           }
-          if (controller.searchResults.isNotEmpty) {
-            return Search(
-              categoryName: 'Search Results',
-              menuList: controller.searchResults,
-              context: context,
-              isGuest: false,
-            );
-          } 
+
             else {
               return TabBarView(
                 children: [

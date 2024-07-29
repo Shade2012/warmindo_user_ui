@@ -104,6 +104,7 @@ class ReusableCard extends StatelessWidget {
                 subtitle:
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // SizedBox(height: 3,),
                     Text(product.description,  maxLines: 2,
