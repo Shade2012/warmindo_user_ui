@@ -60,7 +60,7 @@ class MyCustomPopUp extends StatelessWidget {
                 children: [
                   Center(
                     child: Container(
-                      width: screenWidth * 0.7,
+                      width: screenWidth * 0.68,
                       height: 5,
                       decoration: BoxDecoration(
                           color: Colors.black,
