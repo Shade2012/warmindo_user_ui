@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -107,6 +108,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> fetchProduct() async {
+    isLoading.value = true;
     try {
 
       final response = await http.get(
@@ -121,7 +123,9 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       print('Exception: $e');
+      print(menuElement.value);
     } finally {
+      isLoading.value = false;
     }
   }
 

@@ -122,7 +122,7 @@ class VerificationProfilePage extends GetView<VerificationProfileController> {
                                     }else{
                                       return null;
                                     }
-                              },style: verificationButton(), child: Text('Confirmasi',style: whiteboldTextStyle15,))) ,
+                              },style: verificationButton(), child: Text('Konfirmasi',style: whiteboldTextStyle15,))) ,
                         )
                       ],
                     ),

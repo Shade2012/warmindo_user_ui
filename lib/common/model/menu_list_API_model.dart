@@ -84,7 +84,7 @@ class MenuList {
   });
 
   factory MenuList.fromJson(Map<String, dynamic> json) => MenuList(
-    menuId: json["menuID"],
+    menuId: json["id"],
     image: json["image"],
     nameMenu: json["name_menu"],
     price: double.parse(json["price"]), // Parsing string to double

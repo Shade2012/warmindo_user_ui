@@ -32,6 +32,7 @@ class HomePage extends StatelessWidget {
             controller.fetchProduct();
           },
           child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),// Wrap with SingleChildScrollView
             child: Container(
               margin: EdgeInsets.only(left: 20, right: 20, top: 50),
               child: Obx(() {
