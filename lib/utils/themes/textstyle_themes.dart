@@ -200,7 +200,7 @@ TextStyle vouchertextStyle = GoogleFonts.oxygen(
 
 
 TextStyle priceTextStyle =  GoogleFonts.oxygen(textStyle: TextStyle(
-    color: greenTextColor,
+    color: Colors.black,
     fontWeight: FontWeight.normal,
     fontSize: figmaFontsize(14)));
 
@@ -304,6 +304,12 @@ TextStyle categoryMenuBarTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: secondaryTextColor,
         fontWeight: FontWeight.w300,
+        fontSize: figmaFontsize(17)));
+
+TextStyle bold17 = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(17)));
 
 TextStyle categoryMenuTextStyle = GoogleFonts.oxygen(

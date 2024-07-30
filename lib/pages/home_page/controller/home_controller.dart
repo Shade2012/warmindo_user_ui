@@ -8,12 +8,13 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/common/global_variables.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
+import 'package:warmindo_user_ui/pages/home_page/controller/schedule_controller.dart';
 import '../../../common/model/cartmodel.dart';
 import '../../cart_page/controller/cart_controller.dart';
 import '../view/home_detaile_page.dart';
 
 class HomeController extends GetxController {
-
+final ScheduleController scheduleController = Get.put(ScheduleController());
   RxString txtUsername = "".obs;
   RxString token = "".obs;
   late final SharedPreferences prefs;
@@ -23,9 +24,10 @@ class HomeController extends GetxController {
   RxBool isConnected = true.obs;
   RxString id = ''.obs;
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    checkConnectivity();
+    await scheduleController.fetchSchedule();
+    await checkConnectivity();
   }
   Future<void> fetchCart() async {
 
@@ -81,7 +83,7 @@ class HomeController extends GetxController {
     }
   }
 
-  void checkConnectivity() async {
+  Future<void> checkConnectivity() async {
     prefs = await SharedPreferences.getInstance();
     if (prefs != null) {
       txtUsername.value = prefs.getString('username') ?? '';
