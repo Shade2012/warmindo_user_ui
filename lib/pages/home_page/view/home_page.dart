@@ -29,12 +29,13 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            controller.fetchProduct();
+            await controller.scheduleController.fetchSchedule();
+            await controller.fetchProduct();
           },
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),// Wrap with SingleChildScrollView
             child: Container(
-              margin: EdgeInsets.only(left: 20, right: 20, top: 50),
+              margin: EdgeInsets.only(left: 20, right: 20, top: 30),
               child: Obx(() {
                 if (!controller.isConnected.value) {
                   return Center(
@@ -53,6 +54,13 @@ class HomePage extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      children: [
+                        Text('Status Toko: ',style: bold17,),
+                        Text( controller.scheduleController.jadwalElement[0].is_open ? 'Buka' : 'Tutup',style: bold17,),
+                      ],
+                    ),
+                    SizedBox(height: 20,),
                     Text("Selamat Pagi", style: regularTextStyle),
                     Container(
                       margin: EdgeInsets.only(bottom: 40),
