@@ -22,106 +22,110 @@ class MyCustomPopUp extends StatelessWidget {
   final MenuList product;
   final RxInt quantity;
   final int cartid;
-  MyCustomPopUp({required this.product, required this.quantity, required this.cartid,});
+  final ScrollController scrollController;
+
+  MyCustomPopUp({
+    required this.product,
+    required this.quantity,
+    required this.cartid,
+    required this.scrollController,
+  });
+
   final MyCustomPopUpController controller = Get.put(MyCustomPopUpController());
   final CounterController controllerCounter = Get.put(CounterController());
+
   @override
   Widget build(BuildContext context) {
     final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
-    return SingleChildScrollView(
-      child: Container(
-          height: MediaQuery.of(context).size.height  / 1.2, // Adjust the percentage as needed
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
-          ),
-          child: Obx(() {
-            if(controller.isLoading.value == true){
-              return MyPopupShimmer();
-            }else{
-              return SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+      child: Obx(() {
+        if (controller.isLoading.value) {
+          return MyPopupShimmer();
+        } else {
+          return SingleChildScrollView(
+            controller: scrollController,
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    child: FadeInImage(
+                      width: double.infinity,
+                      height: 250,
+                      placeholder: AssetImage(Images.logo),
+                      image: NetworkImage(product.image),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(product.nameMenu, style: onboardingHeaderTextStyle),
+                  SizedBox(height: 10),
+                  Text(product.category, style: onboardingskip),
+                  SizedBox(height: 10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            child:Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: ClipRRect(
-                                child: FadeInImage(
-                                  width: double.infinity,height: 250,
-                                  placeholder: AssetImage(Images.logo),
-                                  image:NetworkImage(product.image),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10,),
-                          Text(
-                            product.nameMenu,
-                            style: onboardingHeaderTextStyle,
-                          ),
-                          SizedBox(height: 10,),
-                          Text(
-                            product.category,
-                            style: onboardingskip,
-                          ),
-                          SizedBox(height: 10,),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                              Text('4.6', style: ratingTextStyle),
-                            ],
-                          ),
-                          Divider(),
-                          Text("Deskripsi",style: boldTextStyle,),
-                          SizedBox(height: 10,),
-                          Text(product.description,style: onboardingskip,maxLines: 3,overflow: TextOverflow.ellipsis,),
-                          SizedBox(height: 20,),
-                        ],
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 3,
-                              blurRadius: 4,
-                              offset: Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Harga",style: onboardingskip,),
-
-                            CounterWidget( quantity: quantity, menu: product, cartId: cartid, ),
-
-                          ],
-                        ),
-                      ),
+                      Icon(Icons.star_rounded, color: Colors.orange, size: 20),
+                      Text('4.6', style: ratingTextStyle),
                     ],
                   ),
-                ),
-              );
-            }
-          })
-      ),
+                  Divider(),
+                  Text("Deskripsi", style: boldTextStyle),
+                  SizedBox(height: 10),
+                  Text(
+                    product.description,
+                    style: onboardingskip,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'lorem ipsum lorem ipsim\n' * 7,
+                    style: onboardingskip,
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 3,
+                          blurRadius: 4,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Harga", style: onboardingskip),
+                        CounterWidget(
+                          quantity: quantity,
+                          menu: product,
+                          cartId: cartid,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+      }),
     );
-
   }
 }
+
 

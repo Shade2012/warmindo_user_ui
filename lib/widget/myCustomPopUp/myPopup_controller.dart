@@ -23,18 +23,34 @@ class MyCustomPopUpController extends GetxController {
   final CartController cartController = Get.put(CartController());
   final CounterController counterController = Get.put(CounterController());
 
-    void showCustomModalForItem(MenuList product, BuildContext context,int quantity,{required int cartid}) {
+  void showCustomModalForItem(MenuList product, BuildContext context, int quantity, {required int cartid}) {
     Future.delayed(Duration(milliseconds: 200), () {
       isLoading.value = false;
     });
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
-       return MyCustomPopUp(product: product, quantity: quantity.obs, cartid: cartid,);
-      }
+        return DraggableScrollableSheet(
+          initialChildSize: 0.5,
+          minChildSize: 0.25,
+          maxChildSize: 1,
+          expand: true,
+          builder: (BuildContext context, ScrollController scrollController) {
+            return MyCustomPopUp(
+              product: product,
+              quantity: quantity.obs,
+              cartid: cartid,
+              scrollController: scrollController,
+            );
+          },
+        );
+      },
     );
   }
+
   void updateQuantity(int newQuantity) {
     quantity.value = newQuantity;
   }
