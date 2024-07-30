@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:intl/intl.dart';
@@ -36,6 +37,7 @@ class MyCustomPopUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     return Container(
       decoration: BoxDecoration(
@@ -56,6 +58,16 @@ class MyCustomPopUp extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Center(
+                    child: Container(
+                      width: screenWidth * 0.7,
+                      height: 5,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                        borderRadius: BorderRadius.circular(5)
+                      ),
+                    ),
+                  ),
                   ClipRRect(
                     child: FadeInImage(
                       width: double.infinity,
@@ -88,7 +100,7 @@ class MyCustomPopUp extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'lorem ipsum lorem ipsim\n' * 7,
+                    'lorem ipsum lorem ipsim\n' * 20,
                     style: onboardingskip,
                   ),
                   SizedBox(height: 20),
