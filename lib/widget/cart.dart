@@ -4,11 +4,13 @@ import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/widget/reusable_dialog.dart';
 import '../pages/cart_page/controller/cart_controller.dart';
 import '../common/model/cartmodel.dart';
+import '../pages/home_page/controller/schedule_controller.dart';
 import '../routes/AppPages.dart';
 import 'myCustomPopUp/myCustomPopup.dart';
 import 'myCustomPopUp/myPopup_controller.dart';
 
 class Cart extends StatelessWidget {
+  final scheduleController = Get.find<ScheduleController>();
   final cartController = Get.put(CartController());
   final popUpcontroller = Get.put(MyCustomPopUpController());
 
@@ -25,7 +27,9 @@ class Cart extends StatelessWidget {
 
         final cartItem = cartController.cartItems.firstWhereOrNull((item) => item.productId == product.menuId);
         final menuQuantity = cartItem?.quantity.value ?? 0;
-
+        if(scheduleController.jadwalElement[0].is_open == false){
+          Get.snackbar('Pesan', 'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti',colorText: Colors.black);
+        }else{
         if (cartItem == null) {
 
           if (cartController.userPhone.value == '') {
@@ -75,6 +79,7 @@ class Cart extends StatelessWidget {
         }
 
         print(cartController.cartItems.value);
+      }
       },
       child: Container(
         width: 35,

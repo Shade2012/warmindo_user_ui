@@ -16,5 +16,6 @@ class GlobalVariables {
 
   static const apiUpdatePhoneNumber2 ='http://warmindo.pradiptaahmad.tech/api/users/updatePhone';
   static const googleSignin = 'https://warmindo.pradiptaahmad.tech/api/users/google-login';
+  static const apiSchedule = 'http://warmindo.pradiptaahmad.tech/api/store-statuses/';
 
 }

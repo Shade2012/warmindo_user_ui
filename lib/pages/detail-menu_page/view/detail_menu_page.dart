@@ -14,10 +14,12 @@ import '../../../widget/appBar.dart';
 import '../../../widget/myCustomPopUp/myPopup_controller.dart';
 import '../../../widget/reusable_dialog.dart';
 import '../../cart_page/controller/cart_controller.dart';
+import '../../home_page/controller/schedule_controller.dart';
 import '../controller/detail_menu_controller.dart';
 import '../shimmer/detail_menu_shimmer.dart';
 
 class DetailMenuPage extends StatelessWidget {
+  final scheduleController = Get.find<ScheduleController>();
   final CartController cartController = Get.find();
   final DetailMenuController controller = Get.put(DetailMenuController());
   final MenuList menu;
@@ -85,6 +87,13 @@ class DetailMenuPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        foregroundDecoration: scheduleController.jadwalElement[0].is_open
+                            ? null
+                            : BoxDecoration(
+                          color: Colors.grey,
+                          backgroundBlendMode: BlendMode.saturation,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
                         width: double.infinity,
                         height: screenHeight * 0.3,
                         child: ClipRRect(
@@ -106,7 +115,10 @@ class DetailMenuPage extends StatelessWidget {
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
                               Icon(Icons.star_rounded,
-                                  color: Colors.orange, size: 23),
+                                  color:
+                                  scheduleController.jadwalElement[0].is_open
+                                      ? Colors.orange
+                                      : Colors.grey, size: 23),
                               Text(menuItem.ratings.toString(),
                                   style: descriptionratingTextStyle),
                             ],
@@ -174,12 +186,16 @@ class DetailMenuPage extends StatelessWidget {
                 visible: menuQuantity > 0,
                 child: InkWell(
                   onTap: () {
-                    if (isGuest) {
-                      popUpController.showCustomModalForGuest(context);
-                    } else {
-                      popUpController.showCustomModalForItem(
-                          menu, context, menuQuantity,
-                          cartid: cartItem!.cartId ?? 0);
+                    if(scheduleController.jadwalElement[0].is_open == false){
+                      Get.snackbar('Pesan', 'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti ',colorText: Colors.black);
+                    }else{
+                      if (isGuest) {
+                        popUpController.showCustomModalForGuest(context);
+                      } else {
+                        popUpController.showCustomModalForItem(
+                            menu, context, menuQuantity,
+                            cartid: cartItem!.cartId ?? 0);
+                      }
                     }
                   },
                   child: Container(
@@ -198,54 +214,57 @@ class DetailMenuPage extends StatelessWidget {
                 visible: menuQuantity == 0,
                 child: InkWell(
                   onTap: () async {
-                    print(cartItem);
-                    if (isGuest) {
-                      popUpController.showCustomModalForGuest(context);
-                    } else {
-                      if (cartController.userPhone.value == '') {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return ReusableDialog(
-                                  title: 'Pesan',
-                                  content: 'Nomor Hp anda belum terdaftar tolong isi terlebih dahulu',
-                                  cancelText: 'Nanti',
-                                  confirmText: 'Oke',
-                                  onCancelPressed: () {
-                                    Get.back();
-                                  },
-                                  onConfirmPressed: () {
-                                    Get.toNamed(Routes.EDITPROFILE_PAGE);
-                                  });
-                            });
-                      }
-                      else{
-                        if (cartController.userPhoneVerified.value == '') {
+                    if(scheduleController.jadwalElement[0].is_open == false){
+                      Get.snackbar('Pesan', 'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti ',colorText: Colors.black);
+                    }else{
+                      if (isGuest) {
+                        popUpController.showCustomModalForGuest(context);
+                      } else {
+                        if (cartController.userPhone.value == '') {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
                                 return ReusableDialog(
                                     title: 'Pesan',
-                                    content:
-                                    'Nomor Hp anda belum terverifikasi tolong verifikasi terlebih dahulu',
+                                    content: 'Nomor Hp anda belum terdaftar tolong isi terlebih dahulu',
                                     cancelText: 'Nanti',
                                     confirmText: 'Oke',
                                     onCancelPressed: () {
                                       Get.back();
                                     },
                                     onConfirmPressed: () {
-                                      cartController.goToVerification();
+                                      Get.toNamed(Routes.EDITPROFILE_PAGE);
                                     });
                               });
                         }
-                        else {
-                          final newCartItem = await cartController.addCart(menuID: menu.menuId, quantity: 1);
-                          if (newCartItem != null) {
-                            // popUpController.addToCart(menuId: menu.menuId, quantity: 1);
-                            popUpController.showCustomModalForItem(menu, context, 1, cartid: newCartItem.cartId ?? 0);
-                          } else {
-                            print(newCartItem);
-                            print("Error: newCartItem is null after adding to the cart.");
+                        else{
+                          if (cartController.userPhoneVerified.value == '') {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ReusableDialog(
+                                      title: 'Pesan',
+                                      content:
+                                      'Nomor Hp anda belum terverifikasi tolong verifikasi terlebih dahulu',
+                                      cancelText: 'Nanti',
+                                      confirmText: 'Oke',
+                                      onCancelPressed: () {
+                                        Get.back();
+                                      },
+                                      onConfirmPressed: () {
+                                        cartController.goToVerification();
+                                      });
+                                });
+                          }
+                          else {
+                            final newCartItem = await cartController.addCart(menuID: menu.menuId, quantity: 1);
+                            if (newCartItem != null) {
+                              // popUpController.addToCart(menuId: menu.menuId, quantity: 1);
+                              popUpController.showCustomModalForItem(menu, context, 1, cartid: newCartItem.cartId ?? 0);
+                            } else {
+                              print(newCartItem);
+                              print("Error: newCartItem is null after adding to the cart.");
+                            }
                           }
                         }
                       }

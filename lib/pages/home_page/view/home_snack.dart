@@ -8,24 +8,42 @@ import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/cart.dart';
 import '../../detail-menu_page/view/detail_menu_page.dart';
 import '../controller/home_controller.dart';
+import '../controller/schedule_controller.dart';
+
 class HomeSnack extends StatelessWidget {
-  final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+  final currencyFormat =
+      NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final HomeController controller = Get.put(HomeController());
-   HomeSnack({Key? key}) : super(key: key);
+  final scheduleController = Get.find<ScheduleController>();
+  HomeSnack({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final menuItem = controller.menuElement.firstWhere((item) => item.menuId == 2,);
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    final menuItem = controller.menuElement.firstWhere(
+      (item) => item.menuId == 2,
+    );
     if (menuItem == null) {
       return Center(child: Text('Menu item not found'));
     }
 
-    return GestureDetector(
+    return   GestureDetector(
       onTap: () {
-        Get.to(DetailMenuPage(menu: menuItem, isGuest: false,));
+        Get.to(DetailMenuPage(
+          menu: menuItem,
+          isGuest: false,
+        ));
       },
       child: Container(
         padding: EdgeInsets.only(left: 10),
+        foregroundDecoration: scheduleController.jadwalElement[0].is_open
+            ? null
+            : BoxDecoration(
+          color: Colors.grey,
+          backgroundBlendMode: BlendMode.saturation,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -45,33 +63,53 @@ class HomeSnack extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(menuItem.nameMenu, style: regularInputTextStyle),
-                  SizedBox(height: 3,),
+                  SizedBox(
+                    height: 3,
+                  ),
                   Text(
-                    menuItem.description,maxLines: 2,
+                    menuItem.description,
+                    maxLines: 2,
                     style: descriptionTextStyle,
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                          Text(menuItem.ratings.toString(), style: ratingTextStyle),
+                          Icon(
+                            Icons.star_rounded,
+                            color:
+                            scheduleController.jadwalElement[0].is_open
+                                ? Colors.orange
+                                : Colors.grey,
+                            size: 20,
+                          ),
+                          Text(menuItem.ratings.toString(),
+                              style: ratingTextStyle),
                         ],
                       ),
                       Spacer(),
-                      Text(currencyFormat.format(menuItem.price), style: priceTextStyle),
+                      Text(currencyFormat.format(menuItem.price),
+                          style: priceTextStyle),
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                 ],
               ),
             ),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Stack(
               children: [
                 Container(
@@ -94,8 +132,11 @@ class HomeSnack extends StatelessWidget {
                   right: 8,
                   child: Container(
                     child: GestureDetector(
-                      onTap: (){},
-                      child: Cart(context: context, product: menuItem,),
+                      onTap: () {},
+                      child: Cart(
+                        context: context,
+                        product: menuItem,
+                      ),
                     ),
                   ),
                 ),
