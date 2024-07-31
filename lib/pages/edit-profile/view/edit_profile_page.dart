@@ -113,7 +113,7 @@ class EditProfileScreen extends StatelessWidget {
                                                 child: Obx(() {
                                                   if (controller.imgProfile.value == '') {
                                                     return controller.selectedImage.value != null && controller.selectedImage.value!.path.isNotEmpty
-                                                        ? Image.file(File(controller.selectedImage.value!.path), fit: BoxFit.cover,) : Image.asset(Images.profile, );
+                                                        ? Image.file(File(controller.selectedImage.value!.path), fit: BoxFit.cover,) : Image.network('https://ui-avatars.com/api/?background=random&color=ffffff&name=${controller.txtName.value}&size=128',fit: BoxFit.cover, );
                                                   } else{
                                                     return controller.selectedImage.value != null &&
                                                             controller.selectedImage.value!.path.isNotEmpty ?
