@@ -245,7 +245,7 @@ class VerificationProfileController extends GetxController{
       isLoading.value = true;
       // Prepare the body of the request
       final Map<String, dynamic> requestBody = {
-        'otp':codeOtp.value
+        'otp': codeOtp.value
       };
       final response = await client.post(
         url,
@@ -256,15 +256,34 @@ class VerificationProfileController extends GetxController{
         },
         body: jsonEncode(requestBody),
       );
-      if(response.statusCode == 200){
-        await cartController.fetchUser();
-        print(response.body);
-        Get.back();
-        Get.offNamed(Routes.BOTTOM_NAVBAR);
+
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+        if (responseBody['status'] == 'failed') {
+          Get.snackbar(
+            'Failed',
+            'Otp salah',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        } else {
+          await cartController.fetchUser();
+          print(response.body);
+          Get.back();
+          Get.offNamed(Routes.BOTTOM_NAVBAR);
+        }
+      } else {
+        Get.snackbar(
+          'Error',
+          'Error occurred: ${response.statusCode}',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
       }
       print(response.body);
     } catch (e) {
-      isLoading.value = false;
       Get.snackbar(
         'Error',
         'Error occurred: $e',

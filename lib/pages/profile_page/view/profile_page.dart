@@ -78,8 +78,8 @@ class ProfilePage extends StatelessWidget {
                                    ),
 
                                    child: profileController.image.value == ''
-                                       ? Image.asset(
-                                     Images.profile,
+                                       ? Image.network(
+                                     'https://ui-avatars.com/api/?background=random&color=ffffff&name=${profileController.txtName.value}&size=128',
                                      width: 125,
                                      height: 125,
                                      fit: BoxFit.cover,
