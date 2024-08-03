@@ -1,11 +1,15 @@
 import 'package:get/get.dart';
 
+import '../../home_page/controller/schedule_controller.dart';
+
 class GuestNavigatorController extends GetxController {
+  final scheduleController = Get.put(ScheduleController());
   var currentIndex = 0.obs;
   var guestMenuPageArgument = 0.obs;
 
-  void changeIndex(int index) {
+  void changeIndex(int index) async {
     currentIndex.value = index;
+    scheduleController.fetchSchedule();
   }
 
   void goToGuestHomePage() {

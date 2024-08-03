@@ -95,6 +95,7 @@ class ProfileController extends GetxController {
     if (prefs != null) {
       await GoogleSignIn().signOut();
       prefs!.remove('username');
+      prefs!.remove('token3');
       prefs!.remove('isLoginGoogle');
       prefs!.remove('token2');
       prefs!.remove('token');

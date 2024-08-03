@@ -7,10 +7,12 @@ import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../detail-menu_page/view/detail_menu_page.dart';
 import '../../home_page/controller/home_controller.dart';
+import '../../home_page/controller/schedule_controller.dart';
 import '../controller/guest_home_controller.dart';
 class GuestSnack extends StatelessWidget {
   final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final GuestHomeController controller = Get.put(GuestHomeController());
+  final scheduleController = Get.find<ScheduleController>();
    GuestSnack({Key? key}) : super(key: key);
 
   @override
@@ -25,6 +27,13 @@ class GuestSnack extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.only(left: 10),
+        foregroundDecoration: scheduleController.jadwalElement[0].is_open
+            ? null
+            : BoxDecoration(
+          color: Colors.grey,
+          backgroundBlendMode: BlendMode.saturation,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(

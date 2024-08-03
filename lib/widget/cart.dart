@@ -31,7 +31,6 @@ class Cart extends StatelessWidget {
           Get.snackbar('Pesan', 'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti',colorText: Colors.black);
         }else{
         if (cartItem == null) {
-
           if (cartController.userPhone.value == '') {
             showDialog(
                 context: context,
@@ -70,11 +69,13 @@ class Cart extends StatelessWidget {
                         });
                   });
             }else{
+              popUpcontroller.fetchTopping();
               popUpcontroller.addToCart(menuId: product.menuId, quantity: 1);
               popUpcontroller.showCustomModalForItem(product, context, 1, cartid: 0);// Show with initial quantity 1
             }
           }
         } else {
+          popUpcontroller.fetchTopping();
           popUpcontroller.showCustomModalForItem(product, context, menuQuantity, cartid: cartItem.cartId ?? 0);
         }
 

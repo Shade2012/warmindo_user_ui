@@ -5,20 +5,22 @@ import 'package:http/http.dart' as http;
 import 'package:warmindo_user_ui/pages/guest_home_page/view/guest_home_detail_page.dart';
 import '../../../common/model/menu_list_API_model.dart';
 import '../../../common/model/menu_model.dart';
+import '../../home_page/controller/schedule_controller.dart';
 
 class GuestHomeController extends GetxController {
+  final ScheduleController scheduleController = Get.put(ScheduleController());
   static const String baseUrl = 'https://warmindo.pradiptaahmad.tech/api/menus';
   RxList<MenuList> menuElement = <MenuList>[].obs;
   RxBool isLoading = true.obs;
   RxBool isConnected = true.obs;
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    fetchProduct();
-    checkConnectivity();
+    await scheduleController.fetchSchedule();
+    await checkConnectivity();
   }
-  void checkConnectivity() async {
+  Future<void>  checkConnectivity() async {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       isConnected.value = result != ConnectivityResult.none;
       if (isConnected.value) {
@@ -32,7 +34,7 @@ class GuestHomeController extends GetxController {
       fetchProduct();
     }
   }
-  void fetchProduct() async {
+  Future<void> fetchProduct() async {
     try {
       final response = await http.get(
         Uri.parse('https://warmindo.pradiptaahmad.tech/api/menus'),

@@ -18,4 +18,10 @@ class GlobalVariables {
   static const googleSignin = 'https://warmindo.pradiptaahmad.tech/api/users/google-login';
   static const apiSchedule = 'http://warmindo.pradiptaahmad.tech/api/store-statuses/';
 
+  static const apiTopping = 'http://warmindo.pradiptaahmad.tech/api/toppings/';
+  static const apiSendPhoneNumber = 'http://warmindo.pradiptaahmad.tech/api/users/send-otp-phonenumber';
+  static const apiForgotPassword = 'http://warmindo.pradiptaahmad.tech/api/users/forgot-password';
+
+
 }
+

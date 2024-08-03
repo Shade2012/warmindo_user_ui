@@ -84,7 +84,7 @@ class HistoryCategory extends StatelessWidget {
                     fontSize: 16.0,
                     color: labelColor
                 ),),
-                Text('Total Order Status $totalOrders : ', style: boldTextStyle),
+                Text('Total Order Status : $totalOrders ', style: boldTextStyle),
               ],
             ),
           ],

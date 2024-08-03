@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "731059652063",
+    "project_id": "warmindo-api-70927",
+    "storage_bucket": "warmindo-api-70927.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731059652063:android:d203b9b567705b16fb706a",
+        "android_client_info": {
+          "package_name": "com.example.warmindo_user_ui"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEazuDf2zVJ3q2ync7BnOKUfp6pkvab5k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

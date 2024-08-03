@@ -6,14 +6,18 @@ import 'package:get/get.dart';
 import '../../../utils/themes/buttonstyle_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/appBar.dart';
+
 class ForgotPasswordPage extends StatelessWidget {
   final ForgotPasswordController controller = Get.put(ForgotPasswordController());
-   ForgotPasswordPage({Key? key}) : super(key: key);
+  ForgotPasswordPage({Key? key}) : super(key: key);
+
+  // Create a GlobalKey for the form
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarCustom(title: 'Lupa Password',style: headerRegularStyle,),
+      appBar: AppbarCustom(title: 'Lupa Password', style: headerRegularStyle),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(20),
@@ -23,40 +27,56 @@ class ForgotPasswordPage extends StatelessWidget {
               Container(
                 width: 400,
                 height: 300,
-                child: Image.asset(Images.forgot_password_1,fit: BoxFit.cover,),
+                child: Image.asset(Images.forgot_password_1, fit: BoxFit.cover),
               ),
-              Text('Silahkan Isi Nomor HP anda yang sudah terdaftar di akun kami',style: boldTextStyle,),
+              Text('Silahkan Isi Nomor HP anda yang sudah terdaftar di akun kami', style: boldTextStyle),
               const SizedBox(height: 10.0),
-              Text("Nomor HP",style: regularInputTextStyle,),
+              Text("Nomor HP", style: regularInputTextStyle),
               const SizedBox(height: 10.0),
-              TextFormField(
-                controller: controller.phoneNumberController,style: regularInputTextStyle,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0), // Adjust padding here
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+              Form(
+                key: _formKey, // Assign the form key
+                child: TextFormField(
+                  controller: controller.phoneNumberController,
+                  style: regularInputTextStyle,
+                  keyboardType: TextInputType.phone,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
+                  validator: (value) {
+                    if (value!.length < 9) {
+                      return 'Nomor Hp tidak valid';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if(value!.length < 9){
-                    return 'Nomor Hp tidak valid';
-                  }
-                  return null ;
-                },
-
               ),
               const SizedBox(height: 20.0),
-              Container(
-                width: double.infinity,
-                child: ElevatedButton(onPressed: (){
-
-                  //
-                  Get.to(ForgotPasswordSecondPage());
-                }, style: editPhoneNumber(),child: Text('Kirim',style: whiteboldTextStyle15,)),
+              Obx(()=> Container(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        controller.sendOtp(phone_number: controller.phoneNumberController.text);
+                      }
+                    },
+                    style: editPhoneNumber(),
+                    child:controller.isLoading.value ? SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 3,
+                      ),
+                    ) : Text('Kirim', style: whiteboldTextStyle15),
+                  ),
+                ),
               )
             ],
           ),

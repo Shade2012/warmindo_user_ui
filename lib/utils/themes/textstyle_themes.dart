@@ -92,6 +92,7 @@ TextStyle boldTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(15)));
 
+
 TextStyle otpcode = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,

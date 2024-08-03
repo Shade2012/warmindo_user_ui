@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
 import 'package:warmindo_user_ui/pages/guest_navigator_page/controller/guest_navigator_controller.dart';
 import 'package:warmindo_user_ui/pages/menu_page/controller/menu_controller.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
@@ -16,6 +17,7 @@ class GuestMenuPage extends StatelessWidget {
   GuestMenuPage({Key? key}) : super(key: key);
   final GuestNavigatorController navigatorController = Get.find<GuestNavigatorController>();
   final GuestMenuController controller = Get.put(GuestMenuController());
+  final CartController cartController = Get.put(CartController());
   final MenuPageController menuPageController = Get.put(MenuPageController());
 
   @override
@@ -42,7 +44,7 @@ class GuestMenuPage extends StatelessWidget {
               backgroundColor: ColorResources.primaryColor,
               title: CustomSearchBar(
                 hintText: 'Mau makan apa hari ini?',
-                controller: controller.search.value,
+                controller: controller.search,
                 onChanged: (query) {
                   controller.searchFilter(query);
                 },
@@ -94,13 +96,18 @@ class GuestMenuPage extends StatelessWidget {
               ),
             );
           }
-          if (controller.searchResults.isNotEmpty) {
-            return Search(
-              categoryName: 'Search Results',
-              menuList: controller.searchResults,
-              context: context,
-              isGuest: true,
-            );
+         else if(controller.searchObx.value != ''){
+            if (controller.searchResults.length == 0) {
+              return
+                Center(child: Text('Produk tidak ditemukan'),);
+            }else  {
+              return Search(
+                categoryName: 'Search Results',
+                menuList: controller.searchResults,
+                context: context,
+                isGuest: true,
+              );
+            }
           } else {
             return TabBarView(
               children: [

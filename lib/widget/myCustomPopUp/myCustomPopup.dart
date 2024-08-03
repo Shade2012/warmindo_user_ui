@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/common/model/cartmodel.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
@@ -10,6 +11,7 @@ import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/widget/counter/counter.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/widget/myCustomPopUp/shimmer.dart';
+import 'package:warmindo_user_ui/widget/myCustomPopUp/topping.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../routes/AppPages.dart';
@@ -49,7 +51,9 @@ class MyCustomPopUp extends StatelessWidget {
       ),
       child: Obx(() {
         if (controller.isLoading.value) {
-          return MyPopupShimmer();
+          return SingleChildScrollView(
+            controller: scrollController,
+              child: MyPopupShimmer());
         } else {
           return SingleChildScrollView(
             controller: scrollController,
@@ -60,10 +64,10 @@ class MyCustomPopUp extends StatelessWidget {
                 children: [
                   Center(
                     child: Container(
-                      width: screenWidth * 0.68,
+                      width: screenWidth * 0.6,
                       height: 5,
                       decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Colors.grey,
                         borderRadius: BorderRadius.circular(5)
                       ),
                     ),
@@ -98,11 +102,53 @@ class MyCustomPopUp extends StatelessWidget {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 20),
-                  Text(
-                    'lorem ipsum lorem ipsim\n' * 20,
-                    style: onboardingskip,
+                  Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Topping',style: boldTextStyle),
+                      InkWell(
+                        onTap: (){
+                          Get.to(ToppingDetail(toppingList: controller.toppingList));
+                        },
+                          child: Text('Lihat Semua',style: blueLinkRegular)),
+                    ],
                   ),
+                  SizedBox(height: 10),
+                  ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: 3,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      final toppingItem = controller.toppingList[index];
+                      return Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                            Text(toppingItem.nameTopping,style: boldphoneNumberTextStyle,),
+                              Row(
+                                children: [
+                                  Text('+${toppingItem.priceTopping}',style: boldTextStyle,),
+                                  Obx(() => Checkbox(
+                                    activeColor: Colors.black,
+                                      value: toppingItem.isSelected.value, // This should be a boolean property in your toppingItem model
+                                      onChanged: (bool? value) {
+                                        toppingItem.isSelected.value = value!;
+                                        int quantity = toppingItem.isSelected.value ? 1 : 0;
+                                        print('Topping name: ${toppingItem.nameTopping}\nTopping is selected value: ${toppingItem.isSelected.value}\n Topping quantity : ${quantity}');
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          Divider(),
+                        ],
+                      );
+                  }, ),
+                  Divider(),
                   SizedBox(height: 20),
                   Container(
                     padding: EdgeInsets.all(10),
