@@ -96,7 +96,8 @@ class MenuPage extends StatelessWidget {
                   isGuest: false,
                 );
               }
-            } else if (!controller.isConnected.value) {
+            }
+            else if (!controller.isConnected.value) {
             return Center(
               child: Container(
                 child: Text(

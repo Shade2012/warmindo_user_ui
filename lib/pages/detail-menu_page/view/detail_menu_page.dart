@@ -70,7 +70,7 @@ class DetailMenuPage extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.only(top: screenHeight * 0.4),
                   child: Text(
-                    'Menu not found',
+                    'Menu tidak ditemukan',
                     style: boldTextStyle,
                     textAlign: TextAlign.center,
                   ),

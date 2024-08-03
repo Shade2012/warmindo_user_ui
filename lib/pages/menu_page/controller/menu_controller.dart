@@ -20,7 +20,7 @@ class MenuPageController extends GetxController {
   RxString searchObx = ''.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
 
     fetchProduct();

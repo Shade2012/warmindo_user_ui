@@ -63,8 +63,6 @@ class RegisterPage extends GetView<RegisterController>{
       TextEditingController controller2,
       String? Function(String)? validator,
       ) {
-// Control the obscure text visibility
-
     return Container(
       margin: EdgeInsets.only(top: 20,bottom: 20),
       child: Obx(()=> TextFormField(

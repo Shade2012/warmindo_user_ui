@@ -9,10 +9,11 @@ import '../../../utils/themes/icon_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/counter/counterCart.dart';
 
+import '../../home_page/controller/schedule_controller.dart';
 import '../controller/cart_controller.dart';
 import 'package:get/get.dart';
 class CartData extends StatelessWidget {
-
+  final scheduleController = Get.find<ScheduleController>();
   final CartController controller = Get.put(CartController());
 
    CartData({Key? key}) : super(key: key);
@@ -156,7 +157,11 @@ class CartData extends StatelessWidget {
                 }),
                 InkWell(
                   onTap: (){
-                    Get.toNamed(Routes.PEMBAYARAN_PAGE);
+                    if(scheduleController.jadwalElement[0].is_open == false){
+                      Get.snackbar('Pesan', 'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti',colorText: Colors.black);
+                    }else{
+                      Get.toNamed(Routes.PEMBAYARAN_PAGE);
+                    }
                   },
                   child: Container(
                     width: double.infinity,

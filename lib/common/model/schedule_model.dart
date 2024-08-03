@@ -73,7 +73,7 @@ class ScheduleList {
     days: json["days"],
     start_time: json["start_time"],
     end_time: json["end_time"],
-    temporary_closure_duration: int.parse(json["temporary_closure_duration"]),
+    temporary_closure_duration: json["temporary_closure_duration"] != null ? int.parse(json["temporary_closure_duration"]) : null,
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );

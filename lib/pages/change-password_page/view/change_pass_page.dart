@@ -36,45 +36,45 @@ class ChangePasswordPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 20.0),
                         typePass(
-                          TextInputType.text,
-                          "Password Lama",
-                          "Masukkan password lama",
-                          _currentPasswordController,
-                          (value) {
-                            if (value.isEmpty) {
-                              return "Password Lama diperlukan";
-                            }
-                            return null;
-                          },
+                            TextInputType.text,
+                            "Password Lama",
+                            _currentPasswordController,
+                                (value) {
+                              if (value!.isEmpty) {
+                                return "Password Lama diperlukan";
+                              }
+                              return null;
+                            }, false.obs
                         ),
                         const SizedBox(height: 20.0),
                         typePass(
-                          TextInputType.text,
-                          "Password Baru",
-                          "Masukkan password baru",
-                          _newPasswordController,
-                          (value) {
-                            if (value.isEmpty) {
-                              return "Password Baru diperlukan";
-                            }
-                            return null;
-                          },
+                            TextInputType.text,
+                            "Password Baru",
+                            _newPasswordController,
+                                (value) {
+                              if (value!.isEmpty) {
+                                return "Password Baru diperlukan";
+                              }
+                              if (value.length < 8) {
+                                return "Password Baru harus terdiri dari minimal 8 karakter";
+                              }
+                              return null;
+                            }, false.obs
                         ),
                         const SizedBox(height: 20.0),
                         typePass(
-                          TextInputType.text,
-                          "Konfirmasi Password Baru",
-                          "Konfirmasi password baru",
-                          _confirmNewPasswordController,
-                          (value) {
-                            if (value.isEmpty) {
-                              return "Konfirmasi Password Baru diperlukan";
-                            }
-                            if (_newPasswordController.text != value) {
-                              return "Password Baru dan Konfirmasi Password Baru tidak sama";
-                            }
-                            return null;
-                          },
+                            TextInputType.text,
+                            "Konfirmasi Password Baru",
+                            _confirmNewPasswordController,
+                                (value) {
+                              if (value!.isEmpty) {
+                                return "Konfirmasi Password Baru diperlukan";
+                              }
+                              if (_newPasswordController.text != value) {
+                                return "Password Baru dan Konfirmasi Password Baru tidak sama";
+                              }
+                              return null;
+                            }, false.obs
                         ),
                         const SizedBox(height: 20.0),
                         ElevatedButton(
@@ -88,29 +88,12 @@ class ChangePasswordPage extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            if (_currentPasswordController.text.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Password Lama Kosong"),
-                                ),
+                            if (_formKey.currentState!.validate()) {
+                              controller.confirmPassword(
+                                password: _newPasswordController.text,
+                                current_password: _currentPasswordController.text,
+                                password_confirmation: _confirmNewPasswordController.text,
                               );
-                            }
-
-                            else if(_newPasswordController.text.isEmpty){
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Password baru Kosong"),
-                                ),
-                              );
-                            }else if(_confirmNewPasswordController.text.isEmpty){
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Konfirmasi password Kosong"),
-                                ),
-                              );
-                            }
-                            else {
-                              controller.confirmPassword(password: _newPasswordController.text, current_password: _currentPasswordController.text, password_confirmation: _confirmNewPasswordController.text);
                             }
                           },
                           child: Text("Ubah Password"),
@@ -147,15 +130,16 @@ class ChangePasswordPage extends StatelessWidget {
 Widget typePass(
     TextInputType keyboardType,
     String label,
-    String hint,
     TextEditingController controller,
-    String? Function(String)? validator,
+    String? Function(String?)? validator,
+    RxBool obscureText,
     ) {
   return Container(
-    margin: EdgeInsets.only(top: 20, bottom: 20),
-    child: TextFormField(
+    child: Obx(() => TextFormField(
       controller: controller,
       keyboardType: keyboardType,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      obscureText: obscureText.value,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -166,18 +150,20 @@ Widget typePass(
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black),
         ),
-        hintText: hint,
-
+        suffixIcon: IconButton(
+          onPressed: () {
+            obscureText.value = !obscureText.value;
+          },
+          icon: Icon(obscureText.value ? Icons.visibility : Icons.visibility_off),
+          color: Colors.black,
+        ),
         labelText: label,
         labelStyle: TextStyle(
           color: Colors.grey, // Label color is always grey
         ),
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 12,fontWeight: FontWeight.normal),
-        errorStyle: TextStyle(color: Colors.black), // Error text color is black
-
+        hintStyle: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.normal),
       ),
-    ),
+      validator: validator,
+    )),
   );
 }
-
-

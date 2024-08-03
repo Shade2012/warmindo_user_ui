@@ -45,8 +45,7 @@ class MenuCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currencyFormat =
-    NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 

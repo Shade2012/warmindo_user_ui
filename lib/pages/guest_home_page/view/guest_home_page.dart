@@ -30,7 +30,8 @@ class GuestHomePage extends StatelessWidget {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            controller.fetchProduct();
+            await controller.scheduleController.fetchSchedule();
+            await controller.fetchProduct();
           },
           child: SingleChildScrollView(
             child: Container(
@@ -53,6 +54,12 @@ class GuestHomePage extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      children: [
+                        Text('Status Toko: ',style: bold17,),
+                        Text( controller.scheduleController.jadwalElement[0].is_open ? 'Buka' : 'Tutup',style: bold17,),
+                      ],
+                    ),
                      Text("Selamat Pagi", style: regularTextStyle),
                     Container(
                       margin: EdgeInsets.only(bottom: 40),

@@ -33,19 +33,35 @@ class ForgotPasswordLastPage extends StatelessWidget {
                 height: 300,
                 child: Image.asset(Images.forgot_password_1,fit: BoxFit.cover,),
               ),
-              Text('Password anda yang baru harus berbeda dengan password sebelum nya',style: boldTextStyle,),
-              const SizedBox(height: 10.0),
-              Text("Password",style: regularInputTextStyle,),
-              const SizedBox(height: 10.0),
-              Password(Icons.lock_outline, "Password Baru", "Isi Password mu",1 ,controller.newPassword, isPassword),
-              Password(Icons.lock_outline, "Konfirmasi Password", "Isi Password mu", 2,controller.confirmPassword, isPassword),
+              Text('Password disarankan berbeda dengan password lama',style: regularTextStyle,),
+              const SizedBox(height: 20.0),
+              Password(Icons.lock_outline, "Password Baru",controller.newPassword, false.obs, isPassword),
+              const SizedBox(height: 20.0),
+              Password(Icons.lock_outline, "Konfirmasi Password", controller.confirmPassword, false.obs, isPassword),
               const SizedBox(height: 20.0),
               Container(
                 width: double.infinity,
-                child: ElevatedButton(onPressed: (){
-                  //
-                  Get.to(ForgotPasswordSecondPage());
-                }, style: editPhoneNumber(),child: Text('Kirim',style: whiteboldTextStyle15,)),
+                child: Obx(()=> ElevatedButton(onPressed: (){
+                    if(controller.newPassword.text != controller.confirmPassword.text){
+                      Get.snackbar(
+                        'Pesan',
+                        'Password tidak sama',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white,
+                      );
+                    }else{
+                      controller.forgotPassword(newPassword: controller.newPassword.text,confirmPassword: controller.confirmPassword.text);
+                    }
+                  }, style: editPhoneNumber(), child:controller.isLoading.value ? SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 3,
+                  ),
+                ) : Text('Konfirmasi', style: whiteboldTextStyle15),),
+                ),
               )
             ],
           ),
@@ -56,31 +72,34 @@ class ForgotPasswordLastPage extends StatelessWidget {
   Widget Password(
       IconData icon,
       String label,
-      String hint,
-      int id,
       TextEditingController controller2,
+      RxBool obscureText,
       String? Function(String)? validator,
       ) {
     return Container(
-      margin: EdgeInsets.only(top: 20, bottom: 20),
-      child: Obx(
-            () => TextField(
-          controller: controller2,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            hintText: hint,
-            labelText: label,
-            prefixIcon: Icon(icon),
-            labelStyle: boldTextStyle,
-            hintStyle: TextStyle(
-              color: primaryTextColor,
-              fontSize: 12,
-            ),
-            errorText: validator != null ? validator(controller2.text) : null,
+      child: Obx(()=> TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        controller: controller2,
+        obscureText: obscureText.value,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
           ),
+          suffixIcon: IconButton(onPressed: (){
+            obscureText.value =! obscureText.value;
+          },
+            icon: Icon( obscureText.value?Icons.visibility:Icons.visibility_off),color: Colors.black,),
+          // suffixIcon: ),
+          labelText: label,
+          prefixIcon: Icon(icon),
+          labelStyle: bold14,
+          hintStyle: TextStyle(
+            color: primaryTextColor,
+            fontSize: 12,
+          ),
+          errorText: validator != null ? validator(controller2.text) : null,
         ),
+      ),
       ),
     );
   }

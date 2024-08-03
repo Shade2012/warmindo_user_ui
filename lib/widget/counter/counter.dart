@@ -7,6 +7,7 @@ import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 
 import '../../common/model/cartmodel.dart';
 import '../../pages/cart_page/controller/cart_controller.dart';
+import '../../pages/home_page/controller/schedule_controller.dart';
 import '../../utils/themes/textstyle_themes.dart';
 import '../reusable_dialog.dart';
 
@@ -17,7 +18,7 @@ class CounterWidget extends StatelessWidget {
   late final int cartId;
   final cartController = Get.put(CartController());
   final menuController = Get.put(MenuPageController());
-
+  final scheduleController = Get.find<ScheduleController>();
   CounterWidget({required this.quantity, required this.menu, required this.cartId});
 
   @override
@@ -126,11 +127,15 @@ class CounterWidget extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                final cartItem = cartController.cartItems.firstWhereOrNull((item) => item.productId == menu.menuId);
-                cartController.editCart(idCart: cartId, quantity: quantity.value);
-                cartItem?.quantity.value = quantity.value;
-                menuController.checkConnectivity();
-                Get.back();
+                if(scheduleController.jadwalElement[0].is_open == true){
+                  final cartItem = cartController.cartItems.firstWhereOrNull((item) => item.productId == menu.menuId);
+                  cartController.editCart(idCart: cartId, quantity: quantity.value);
+                  cartItem?.quantity.value = quantity.value;
+                  menuController.checkConnectivity();
+                  Get.back();
+                }else{
+                  Get.snackbar('Pesan', 'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti ',colorText: Colors.black);
+                }
               },
               child: Container(
                 decoration: BoxDecoration(

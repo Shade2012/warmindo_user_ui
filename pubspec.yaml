@@ -43,6 +43,9 @@ dependencies:
   carousel_slider:
   intl: ^0.17.0
   timezone: ^0.9.4
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.10
+  flutter_local_notifications:
   url_launcher:
   animated_custom_dropdown:
   shimmer:

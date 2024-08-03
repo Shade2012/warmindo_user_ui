@@ -9,15 +9,18 @@ import 'package:warmindo_user_ui/routes/AppPages.dart';
 import '../../../common/global_variables.dart';
 import 'package:http/http.dart' as http;
 import '../../profile_page/controller/profile_controller.dart';
+import '../view/forgot_password_last_page.dart';
+import '../view/forgot_password_page_second.dart';
 
 class ForgotPasswordController extends GetxController {
+  var obscureText = true.obs;
   final confirmPassword = TextEditingController();
   final newPassword = TextEditingController();
   final phoneNumberController = TextEditingController();
   final isFilled = false.obs;
   RxBool isConnected = true.obs;
   SharedPreferences? prefs;
-  RxBool isLoading = true.obs;
+  RxBool isLoading = false.obs;
   RxString txtNomorHp = "".obs;
   RxString codeOtp = ''.obs;
   RxString token = "".obs;
@@ -31,7 +34,6 @@ class ForgotPasswordController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    checkConnectivity();
     code13Controller.addListener(updateFilledStatus);
     code14Controller.addListener(updateFilledStatus);
     code15Controller.addListener(updateFilledStatus);
@@ -55,71 +57,91 @@ class ForgotPasswordController extends GetxController {
     print('OTP Updated: ${codeOtp.value}'); // Debugging line
   }
 
-  Future<void> initializePrefs() async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
-  }
 
-  void checkSharedPreference() async {
-    await initializePrefs();
-    if (prefs != null) {
-      token.value = prefs!.getString('token') ?? '';
-      try {
-        isLoading.value = true; // Set loading to true before fetching data
-        final response = await http.get(Uri.parse(GlobalVariables.apiDetailUser), headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
-        });
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
 
-          if (data['success']) {
-            txtNomorHp.value = data['user']['phone_number'];
-            phoneNumberController.text = txtNomorHp.value;
-          } else {
-            print('Error: ${data['message']}');
-          }
-        } else {
-          print('Error: ${response.statusCode}');
-        }
-      } catch (e) {
-        print('Exception: $e');
-      } finally {
-        isLoading.value = false; // Set loading to false after data is fetched
-      }
-    }
-  }
 
-  void checkConnectivity() async {
-    await initializePrefs();
-    if (prefs != null) {
-      token.value = prefs!.getString('token') ?? '';
-    }
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      isConnected.value = result != ConnectivityResult.none;
-      if (isConnected.value) {
-        checkSharedPreference();
-      }
-    });
-
-    var connectivityResult = await Connectivity().checkConnectivity();
-    isConnected.value = connectivityResult != ConnectivityResult.none;
-    if (isConnected.value) {
-      checkSharedPreference();
-    }
-  }
-
-  Future<void> editPhoneNumber({
-    String? phone_number,
-  }) async {
-    final url = Uri.parse(GlobalVariables.apiUpdatePhoneNumber);
+  Future<void> verifyOtp() async {
+    final url = Uri.parse(GlobalVariables.apiVerifyOtp);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final token = prefs.getString('token3');
     final client = http.Client();
     try {
       isLoading.value = true;
+      final response = await client.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+
+        body: jsonEncode({
+          'otp': codeOtp.value,
+        }),
+      );
+      final responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        if(responseData['status'] == 'failed'){
+          print('OTP verification failed');
+          print('Response: ${response.body}');
+          Get.snackbar(
+            'Error',
+            'Kode OTP salah',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+        else if (responseData['status'] == 'success'){
+          print('OTP verification succeeded');
+          Get.snackbar(
+            'Success',
+            'Verifikasi Berhasil',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+          print('Response: ${response.body}');
+          Get.to(ForgotPasswordLastPage());
+        }
+      } else {
+        // Error occurred
+        print('token: $token');
+        print('Failed to send OTP: ${response.statusCode}');
+        print('Response: ${response.body}');
+        // Show error snackbar
+        Get.snackbar(
+          'Error',
+          'Ada Kesalahan',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      // Handle error
+      print('Error occurred while sending OTP: $e');
+
+      // Show error snackbar
+      Get.snackbar(
+        'Error',
+        '$e',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+  Future<void> sendOtp({String? phone_number,}) async {
+    final url = Uri.parse(GlobalVariables.apiSendPhoneNumber);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isLoading.value = true;
+    final client = http.Client();
+    try {
+
       // Prepare the body of the request
       final Map<String, dynamic> requestBody = {
         'phone_number': phone_number,
@@ -129,30 +151,52 @@ class ForgotPasswordController extends GetxController {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
         },
         body: jsonEncode(requestBody),
       );
 
       final responseData = jsonDecode(response.body);
       print(response.statusCode);
+      print(responseData);
+      print(responseData['token']);
       if (response.statusCode == 200) {
-        isLoading.value = false;
-        print(responseData);
-        print(response.statusCode);
+        if(responseData['status'] == 'failed'){
+          Get.snackbar(
+            'Pesan',
+            'Tolong tunggu 5 menit',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }else {
+          prefs.setString('token3', '${responseData['token']}');
+          Get.to(ForgotPasswordSecondPage());
+          isLoading.value = false;
+          print(responseData);
+          print(response.statusCode);
+          Get.snackbar(
+            'Success',
+            'Otp berhasil dikirim',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }
+      }else{
         Get.snackbar(
-          'Success',
-          'Berhasil Dirubah',
+          'Error',
+          'Nomor Hp tidak ditemukan',
           snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.red,
           colorText: Colors.white,
         );
       }
     } catch (e) {
       isLoading.value = false;
+      print('error $e di forgot password 1');
       Get.snackbar(
         'Error',
-        'Error occurred: $e',
+        'Nomor Hp tidak ditemukan',
         snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -161,15 +205,68 @@ class ForgotPasswordController extends GetxController {
       isLoading.value = false;
     }
   }
+  Future<void> sendOtpWithoutPhoneNumber() async {
+    final url = Uri.parse(GlobalVariables.apiSendOtp);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token3');
+    print(token);
+    isLoading.value = true;
+    final client = http.Client();
+    try {
 
-  // Temporary function
-  Future<void> editPassword({
+      // Prepare the body of the request
+      final response = await client.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization':'Bearer $token'
+        },
+      );
+
+      final responseData = jsonDecode(response.body);
+      print(response.statusCode);
+      print(responseData);
+      if (response.statusCode == 200) {
+        prefs.setString('token2','${responseData['token']}');
+        isLoading.value = false;
+        Get.snackbar(
+          'Success',
+          'Otp Berhasil dikirim',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+      }else{
+        Get.snackbar(
+          'Error',
+          'Tunggu 5 Menit',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      isLoading.value = false;
+      print('error $e di forgot password 1');
+      Get.snackbar(
+        'Error',
+        'Tunggu 5 Menit',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+  Future<void> forgotPassword({
     String? newPassword,
     String? confirmPassword,
   }) async {
-    final url = Uri.parse(GlobalVariables.apiUpdatePhoneNumber);
+    final url = Uri.parse(GlobalVariables.apiForgotPassword);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final token = prefs.getString('token3');
     final client = http.Client();
 
     try {
@@ -177,13 +274,10 @@ class ForgotPasswordController extends GetxController {
 
       // Prepare the body of the request
       final Map<String, dynamic> requestBody = {
-        // 'name': name,
-        // 'username': username,
-        // 'phone_number': phone_number,
-        // 'email': email,
+        'new_password': newPassword,
+        'new_password_confirmation': confirmPassword,
       };
 
-      // Conditionally add the profile_picture if the image is not null
       final response = await client.post(
         url,
         headers: {
@@ -204,10 +298,10 @@ class ForgotPasswordController extends GetxController {
         isLoading.value = false;
         print(responseData);
         print(response.statusCode);
-        Get.toNamed(Routes.BOTTOM_NAVBAR);
+        Get.offNamed(Routes.LOGIN_PAGE);
         Get.snackbar(
           'Success',
-          'Berhasil Dirubah',
+          'Password Berhasil Dirubah',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.green,
           colorText: Colors.white,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +13,7 @@ import '../../../common/global_variables.dart';
 import '../../../routes/AppPages.dart';
 
 class LoginController extends GetxController {
+  final firebaseMessaging = FirebaseMessaging.instance;
   RxBool isLoading = false.obs;
   var obscureText = true.obs;
   final ctrUsername2 = RxString("");
@@ -19,12 +21,18 @@ class LoginController extends GetxController {
   RxString phone_number = "".obs;
 
   Future<void> loginUser(String username, String password) async {
+    String? notificationToken;
+    await firebaseMessaging.getToken().then((value){
+      notificationToken = value;
+    });
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading.value = true;
     final url = Uri.parse(GlobalVariables.apiLogin);
 
     final client = http.Client();
     try {
+      print('token fcm di login : $notificationToken');
       final response = await client.post(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -70,7 +78,7 @@ class LoginController extends GetxController {
             Get.offAllNamed(Routes.BOTTOM_NAVBAR);
           }
         } else{
-          Get.snackbar("Error", 'Akun tidak ada');
+          Get.snackbar("Error", 'Password atau username salah');
         }
       } else if (response.statusCode == 422) {
         final responseData = jsonDecode(response.body);
@@ -86,7 +94,7 @@ class LoginController extends GetxController {
         print('Error: ${response.statusCode}');
         Get.snackbar(
           'Error',
-          'Akun tidak ditemukan',
+          'Password atau username salah',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,

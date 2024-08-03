@@ -52,12 +52,29 @@ class ForgotPasswordSecondPage extends StatelessWidget {
               const SizedBox(height: 20.0),
               Container(
                 width: double.infinity,
-                child: ElevatedButton(onPressed: (){
-                  //
-                  print('code : ${controller.codeOtp}');
-                  Get.to(ForgotPasswordLastPage());
-                }, style: editPhoneNumber(),child: Text('Verifikasi',style: whiteboldTextStyle15,)),
+                child: Obx(()=> ElevatedButton(onPressed: (){
+                    if(controller.isFilled.value == true){
+                    print('code : ${controller.codeOtp}');
+                    controller.verifyOtp();
+                    }else{
+                      return null;
+                    }
+                  }, style: verifyOTPStyle(controller.isFilled.value),  child:controller.isLoading.value ? SizedBox(
+                  width: 24,
+                  height: 24,
+                    child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 3,
+                                    ),
+                  ) : Text('Verifikasi', style: whiteboldTextStyle15),),
+                ),
               ),
+              const SizedBox(height: 20.0),
+              InkWell(
+                onTap: (){
+                  controller.sendOtpWithoutPhoneNumber();
+                },
+                  child: Center(child: Text('Resend code',style: bluelinkTextStyle,),))
             ],
           ),
         ),
