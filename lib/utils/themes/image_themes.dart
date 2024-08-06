@@ -35,6 +35,8 @@ class Images {
 
   static const String forgot_password_1 = 'assets/images/forgot_password_1.png';
   static const String forgot_password_2 = 'assets/images/forgot_password_2.png';
+  static const String tunai = 'assets/images/tunai_image.png';
+
 }
 
 

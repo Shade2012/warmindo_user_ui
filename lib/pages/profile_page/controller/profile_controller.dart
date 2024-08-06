@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
@@ -14,6 +15,8 @@ class ProfileController extends GetxController {
   RxString txtUsername = "".obs;
   RxString txtName = "".obs;
   RxString image = "".obs;
+  RxString user_verified = '0'.obs;
+  // "user_verified": "1",
   RxString token = "".obs;
   RxString isLoginGoogle = "".obs;
   RxBool isConnected = true.obs;
@@ -54,6 +57,7 @@ class ProfileController extends GetxController {
             txtName.value = data['user']['name'];
             txtUsername.value = data['user']['username'];
             image.value = data['user']['profile_picture'];
+            user_verified.value = data['user']['user_verified'];
             print("Fetched username: ${txtUsername.value}");
           } else {
             print('Error: ${data['message']}');

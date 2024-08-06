@@ -26,15 +26,23 @@ RxBool isLoading = false.obs;
 RxBool selected = false.obs;
 RxBool selectedButton1 = false.obs;
 RxBool selectedButton2 = false.obs;
+RxBool selectedButton3 = false.obs;
 
   void button1 (){
     selectedButton1.value = true;
     selectedButton2.value = false;
+    selectedButton3.value = false;
   }
 void button2 (){
   selectedButton2.value = true;
   selectedButton1.value = false;
+  selectedButton3.value = false;
 }
+  void button3 (){
+    selectedButton2.value = false;
+    selectedButton1.value = false;
+    selectedButton3.value = true;
+  }
 int generateOrderId() {
   return DateTime.now().millisecondsSinceEpoch; // Example: Using timestamp as order ID
 }
@@ -43,7 +51,9 @@ int generateOrderId() {
       return 'OVO';
     } else if (selectedButton2.value) {
       return 'DANA';
-    } else {
+    }  else if (selectedButton3.value) {
+        return 'Tunai';
+  } else {
       // Default payment method if neither button is selected
       return 'Default Payment Method';
     }
