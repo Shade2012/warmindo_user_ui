@@ -29,7 +29,7 @@ class ToppingList {
   final int toppingID;
   final String nameTopping;
   final int priceTopping;
-  final int stockTopping;
+  final String? stockTopping;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   var isSelected = false.obs;
@@ -38,17 +38,25 @@ class ToppingList {
     required this.toppingID,
     required this.nameTopping,
     required this.priceTopping,
-    required this.stockTopping,
+    this.stockTopping,
     bool? isSelected,
     this.createdAt,
     this.updatedAt,
   });
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is ToppingList && other.toppingID == toppingID;
+  }
+
+  @override
+  int get hashCode => toppingID.hashCode;
 
   factory ToppingList.fromJson(Map<String, dynamic> json) => ToppingList(
-    toppingID: json["id"],
-    nameTopping: json["name_topping"],
-    priceTopping: json["price"],
-    stockTopping: int.parse(json["stock_topping"]),
+    toppingID: json["id"]?? '',
+    nameTopping: json["name_topping"] ?? '',
+    priceTopping: json["price"] ?? '',
+    stockTopping: json["stock_topping"] ?? '',
     createdAt: json["created_at"] != null ? DateTime.parse(json["created_at"]) : null,
     updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : null,
   );

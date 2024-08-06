@@ -8,6 +8,7 @@ import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.da
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/pages/guest_menu_page/controller/guest_menu_controller.dart';
+import 'package:warmindo_user_ui/pages/home_page/controller/schedule_controller.dart';
 import 'package:warmindo_user_ui/pages/menu_page/shimmer/menushimmer.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/dashed_divider.dart';
@@ -34,7 +35,9 @@ class MenuSecondCategory extends StatelessWidget {
   }) : super(key: key);
 
   final MenuPageController menuController = Get.find<MenuPageController>();
+  final ScheduleController scheduleController  = Get.find<ScheduleController>();
   final CartController cartController = Get.find<CartController>();
+  final MyCustomPopUpController popUpController = Get.put(MyCustomPopUpController());
   final GuestMenuController guestMenuController = Get.find<GuestMenuController>();
 
   @override
@@ -45,9 +48,12 @@ class MenuSecondCategory extends StatelessWidget {
 
     return RefreshIndicator(
       onRefresh: () async {
+        await scheduleController.fetchSchedule();
         await cartController.fetchUser();
         await cartController.fetchCart();
         await menuController.fetchProduct();
+        await popUpController.fetchVarian();
+        await popUpController.fetchVarian();
         await guestMenuController.fetchProduct();
       },
       child: SingleChildScrollView(

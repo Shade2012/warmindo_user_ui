@@ -41,7 +41,6 @@ class ScheduleController extends GetxController {
       final response = await http.get(
         Uri.parse(GlobalVariables.apiSchedule),
       );
-      print(response.body);
       if (response.statusCode == 200) {
         scheduleElement.value = scheduleListFromJson(response.body);
         final List<ScheduleList> jadwalHariIni = scheduleElement.where((item) => item.days == hariIni).toList();
@@ -49,8 +48,6 @@ class ScheduleController extends GetxController {
         if (jadwalHariIni.isNotEmpty) {
           // Filter the scheduleElement list to only include today's schedule
           jadwalElement = jadwalHariIni;
-          print('Jadwal Element ditemukan. Jumlah jadwal: ${jadwalElement}');
-          print('Jadwal hari ini ditemukan. Jumlah jadwal: ${jadwalHariIni}');
         } else {
           print('Tidak ada jadwal untuk hari ini');
         }

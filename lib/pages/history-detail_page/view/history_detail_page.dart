@@ -10,7 +10,9 @@ import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
+import 'package:warmindo_user_ui/widget/myCustomPopUp/myPopup_controller.dart';
 
+import '../../../common/model/varians.dart';
 import '../../../utils/themes/buttonstyle_themes.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../widget/appBar.dart';
@@ -21,6 +23,7 @@ import '../../../common/model/menu_model.dart';
 
 class HistoryDetailPage extends StatelessWidget {
   final HistoryController controller = Get.put(HistoryController());
+  final MyCustomPopUpController popUpController = Get.put(MyCustomPopUpController());
   final Order order;
   Color _getLabelColor(String status) {
     switch (status.toLowerCase()) {
@@ -144,6 +147,13 @@ class HistoryDetailPage extends StatelessWidget {
                             itemCount: order.menus.length,
                             separatorBuilder: (BuildContext context, int index) => SizedBox(height: 20),
                             itemBuilder: (context, index) {
+                              int toppingTotalPrice = 0;
+
+                              if (order.menus[index].toppings != null) {
+                                for (var topping in order.menus[index].toppings!) {
+                                  toppingTotalPrice += topping.priceTopping;
+                                }
+                              }
                               return Row(
                                 children: [
                                   Container(
@@ -154,12 +164,12 @@ class HistoryDetailPage extends StatelessWidget {
                                       child: Image.network(order.menus[index].image, fit: BoxFit.cover,),
                                     ),
                                   ),
-                                  SizedBox(width: 10), // Add space between image and text
+                                  SizedBox(width: 10),
                                   Container(
                                     width: screenWidth * 0.51,
                                     height:screenHeight * 0.11,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
@@ -170,7 +180,31 @@ class HistoryDetailPage extends StatelessWidget {
                                             Text('${order.menus[index].quantity}x',style: boldTextStyle,),
                                           ],
                                         ),
-                                        Text('${currencyFormat.format(order.menus[index].price)}',style: boldTextStyle,),
+                                        Visibility(
+                                            visible: order.menus[index].variantId != null,
+                                          child: Builder(
+                                            builder: (context) {
+                                              final varian = popUpController.varianList.firstWhereOrNull((element) => element.varianID ==order.menus[index].variantId );
+                                              return Text(varian?.nameVarian ?? "Unknown");
+                                            },
+                                          ),),
+                                        Visibility(
+                                          visible: order.menus[index].toppings!.isNotEmpty,
+                                          child: SizedBox(
+                                            height:24,
+                                            child: ListView(
+                                              scrollDirection: Axis.horizontal,
+                                              children:[
+                              Text(
+                                order.menus[index].toppings!.map((topping) => topping.nameTopping).join(', '),
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 14),
+                              ),
+                              ]
+                                            ),
+                                          ),
+                                        ),
+                                        Text('${currencyFormat.format(order.menus[index].price + toppingTotalPrice)}',style: boldTextStyle,),
                                         // Text(currencyFormat.format(totalPrice),style: boldTextStyle,)
                                       ],
                                     ),
@@ -186,7 +220,7 @@ class HistoryDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Total",style: boldTextStyle,),
-                              Text(controller.calculateTotalPrice(order).toString(),style: boldTextStyle,),
+                              Text(currencyFormat.format(order.totalprice),style: boldTextStyle,),
                             ],
                           ),
                           SizedBox(height: 10,),

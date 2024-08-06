@@ -136,4 +136,32 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
     Get.to(FilteredMenuPage(filteredMenu: filteredMenu, price: priceThreshold)
     );
   }
+
+MenuList getHighestRatingMenu(List<MenuList> menuElements, int categoryId) {
+  final categoryMap = {
+    1: 'Makanan',
+    2: 'Minuman',
+    3: 'Snack',
+  };
+  final categoryName = categoryMap[categoryId];
+  if (categoryName == null) {
+    throw ArgumentError('Invalid category ID');
+  }
+  final filteredItems = menuElements.where((item) => item.category == categoryName).toList();
+
+  if (filteredItems.isEmpty) {
+    return MenuList(
+      menuId: 0,
+      image: 'default_image.png',
+      nameMenu: 'No items found',
+      price: 0,
+      category: categoryName,
+      description: 'No description available',
+    );
+  }
+  filteredItems.sort((a, b) => b.ratings?.compareTo(a.ratings ?? 0) ?? 0);
+
+  return filteredItems.first;
+}
+
 }

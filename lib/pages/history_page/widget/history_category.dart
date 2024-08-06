@@ -41,55 +41,64 @@ class HistoryCategory extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     final HistoryController controller = Get.find();
     final labelColor = _getLabelColor(status);
-    int totalOrders = orders.where((o) => o.status.value.toLowerCase() == status.toLowerCase()).length;
 
-    return GestureDetector(
-      onTap: (){
-        Get.to(() => HistoryDetailFilterPage(status: status, orders: controller.getOrdersByStatus(status)));
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 0,
-              blurRadius: 4,
-              offset: Offset(0, 1),
-            ),
-          ],
-          color: ColorResources.backgroundCardColor,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: screenWidth / 4.3,
-              height: screenHeight * 0.11,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(10),bottomLeft: Radius.circular(10)),
-                child: Image.asset(controller.imageChange(status)),
+
+    return Obx(() {
+      // Calculate totalOrders based on the observable list
+      final totalOrders = controller.orders
+          .where((o) => o.status.value.toLowerCase() == status.toLowerCase())
+          .length;
+
+      return GestureDetector(
+        onTap: () {
+          Get.to(() => HistoryDetailFilterPage(
+            status: status,
+          ));
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 0,
+                blurRadius: 4,
+                offset: Offset(0, 1),
               ),
-            ),
-            SizedBox(width: 10,),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(status, style: GoogleFonts.oxygen(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
-                    color: labelColor
-                ),),
-                Text('Total Order Status : $totalOrders ', style: boldTextStyle),
-              ],
-            ),
-          ],
+            ],
+            color: ColorResources.backgroundCardColor,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: screenWidth / 4.3,
+                height: screenHeight * 0.11,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
+                  child: Image.asset(controller.imageChange(status)),
+                ),
+              ),
+              SizedBox(width: 10,),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(status, style: GoogleFonts.oxygen(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                      color: labelColor
+                  ),),
+                  Text('Total Order Status : $totalOrders', style: boldTextStyle),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

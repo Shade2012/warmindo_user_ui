@@ -8,9 +8,10 @@ class GlobalVariables {
   static const apiDetailUser = 'http://warmindo.pradiptaahmad.tech/api/users/details';
   //cart
   static const apiCartStore = 'https://warmindo.pradiptaahmad.tech/api/carts/store';
-  static const apiCartDetail = 'https://warmindo.pradiptaahmad.tech/api/carts?user_id=';
+  static const apiCartDetail = 'https://warmindo.pradiptaahmad.tech/api/carts/showcarts';
   static const apiCartDelete = 'https://warmindo.pradiptaahmad.tech/api/carts/';
-  static const apiCartEdit = 'https://warmindo.pradiptaahmad.tech/api/carts/';
+  static const apiCartEdit = 'https://warmindo.pradiptaahmad.tech/api/carts/update/';
+
   static const userQuery = '?user_id=';
   static const quantityQuery = '&quantity=';
 
@@ -21,6 +22,8 @@ class GlobalVariables {
   static const apiTopping = 'http://warmindo.pradiptaahmad.tech/api/toppings/';
   static const apiSendPhoneNumber = 'http://warmindo.pradiptaahmad.tech/api/users/send-otp-phonenumber';
   static const apiForgotPassword = 'http://warmindo.pradiptaahmad.tech/api/users/forgot-password';
+  static const apiVarian = 'http://warmindo.pradiptaahmad.tech/api/variants/';
+
 
 
 }

@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
+import 'package:warmindo_user_ui/widget/myCustomPopUp/myPopup_controller.dart';
 
+import '../../../common/model/cart_model2.dart';
 import '../../../common/model/cartmodel.dart';
 import '../../../routes/AppPages.dart';
 import '../../../utils/themes/color_themes.dart';
@@ -15,6 +19,7 @@ import 'package:get/get.dart';
 class CartData extends StatelessWidget {
   final scheduleController = Get.find<ScheduleController>();
   final CartController controller = Get.put(CartController());
+  final MyCustomPopUpController popUpController = Get.put(MyCustomPopUpController());
 
    CartData({Key? key}) : super(key: key);
 
@@ -29,14 +34,22 @@ class CartData extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.only(top: 10),
-            height: screenHeight * 0.5,
+            height: screenHeight * 0.58,
             child: ListView.builder(
               shrinkWrap: true, // Add this line
               // Add this line
-              itemCount: controller.cartItems.length,
+              itemCount: controller.cartItems2.length,
               itemBuilder: (BuildContext context, int index) {
-                final cartItem = controller.cartItems[index];
-                final totalItemPrice = cartItem.price * cartItem.quantity.value;
+                final cartItem = controller.cartItems2[index];
+                int toppingTotalPrice = 0;
+
+                if (cartItem.selectedToppings != null) {
+                  for (var topping in cartItem.selectedToppings!) {
+                    toppingTotalPrice += topping.priceTopping;
+                  }
+                }
+                final totalItemPrice = (cartItem.price + toppingTotalPrice) * cartItem.quantity.value;
+                print(cartItem);
                 return Container(
                   padding: EdgeInsets.all(20),
                   child: Row(
@@ -52,39 +65,85 @@ class CartData extends StatelessWidget {
                       ),
                       SizedBox(width: 10),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    cartItem.productName,
-                                    style: boldTextStyle,
-                                    overflow: TextOverflow.ellipsis,
+                        child:
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      cartItem.productName,
+                                      style: boldTextStyle,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                          onTap: () {
+                                            final product = controller.menuController.menuElement.firstWhere((element) => element.menuId == cartItem.productId);
+                                            popUpController.showCustomModalForItem(product, context, cartItem.quantity.value, cartid: cartItem.cartId ?? 0);
+                                            controller.isLoading.value = true;
+                                            },
+                                          child: Icon(Icons.edit,size: 30,color: Colors.orange,)),
+                                      InkWell(
+                                          onTap: () {
+                                            controller.removeItemFromCart(cartItem);
+                                            controller.isLoading.value = true;
+                                            },
+                                          child: SvgPicture.asset(
+                                            IconThemes.icon_trash,
+                                            color: Colors.red,)),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              Visibility(
+                                visible: cartItem.selectedVarian?.nameVarian != null,
+                                child: Container(
+                                    child: Text(cartItem.selectedVarian?.nameVarian ?? "")),
+                              ),
+                              Visibility(
+                                visible: cartItem.selectedToppings != null && cartItem.selectedToppings!.isNotEmpty,
+                                child: Container(
+
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  child: SingleChildScrollView(
+                                    child: Text.rich(
+                                      TextSpan(
+                                        children: List.generate(cartItem.selectedToppings!.length, (index) {
+                                          final topping = cartItem.selectedToppings![index];
+                                          final isLast = index == cartItem.selectedToppings!.length - 1;
+                                          return TextSpan(
+                                            text: isLast ? topping.nameTopping : '${topping.nameTopping} + ',
+                                            style: TextStyle(overflow: TextOverflow.ellipsis),
+                                          );
+                                        }),
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
                                   ),
                                 ),
-                                InkWell(
-                                    onTap: () {
-                                      controller.removeItemFromCart(cartItem);},
-                                    child: SvgPicture.asset(
-                                      IconThemes.icon_trash,
-                                      color: Colors.red,))
-                              ],
-                            ),
-                            SizedBox(height: screenHeight / 15,),
-                            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  currencyFormat.format(totalItemPrice),
-                                  style: boldTextStyle,
-                                ),
-                                CounterWidget2(index: index),
-                              ],
-                            ),
-                          ],
+                              ),
+                              SizedBox(height: screenHeight * 0.046,),
+                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    currencyFormat.format(totalItemPrice),
+                                    style: boldTextStyle,
+                                  ),
+                                  CounterWidget2(index: index),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -101,26 +160,6 @@ class CartData extends StatelessWidget {
                 Obx(() {
                   return Column(
                     children: [
-                      Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Subtotal", style: boldTextStyle),
-                          Obx(() {
-                            double totalPrice = 0;
-                            for (CartItem cartItem
-                            in controller.cartItems) {
-                              totalPrice +=
-                                  cartItem.price * cartItem.quantity.value;
-                            }
-                            return Text(
-                                currencyFormat.format(totalPrice),
-                                style: boldTextStyle);
-                          }),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Divider(),
                       SizedBox(height: 10),
                       Row(
                         mainAxisAlignment:
@@ -131,19 +170,27 @@ class CartData extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                    '(${controller.cartItems.length} Items)'),
+                                    '(${controller.cartItems2.length} Items)'),
                                 SizedBox(
                                   width: 5,
                                 ),
                                 Obx(() {
                                   double totalPrice = 0;
-                                  for (CartItem cartItem in controller.cartItems) {
-                                    totalPrice += cartItem.price * cartItem.quantity.value;
+
+                                  for (CartItem2 cartItem in controller.cartItems2) {
+                                    int toppingTotalPrice = 0;
+                                    if (cartItem.selectedToppings != null) {
+                                      for (var topping in cartItem.selectedToppings!) {
+                                        toppingTotalPrice += topping.priceTopping;
+                                      }
+                                    }
+                                    totalPrice += (cartItem.price + toppingTotalPrice) * cartItem.quantity.value;
                                   }
 
                                   return Text(
-                                      currencyFormat.format(totalPrice),
-                                      style: boldTextStyle);
+                                    currencyFormat.format(totalPrice),
+                                    style: boldTextStyle,
+                                  );
                                 }),
                               ]),
                         ],

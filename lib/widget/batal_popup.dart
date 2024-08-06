@@ -6,9 +6,11 @@ import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/widget/ReusableTextBox.dart';
 
 import '../common/model/history.dart';
+import '../pages/history_page/controller/history_controller.dart';
 import '../utils/themes/buttonstyle_themes.dart';
 import '../utils/themes/textstyle_themes.dart';
 class BatalPopup extends StatelessWidget {
+  final HistoryController historyController = Get.put(HistoryController());
   final TextEditingController ctrAlasan = TextEditingController();
   final Order order;
 
@@ -54,6 +56,7 @@ class BatalPopup extends StatelessWidget {
                     } else {
                       order.status.value = "Menunggu Batal";
                       order.alasan_batal!.value = '${ctrAlasan.text}';
+                      historyController.orders.refresh();
                       Get.back();
                     }
                   },style: button_cancel(), child: Container(

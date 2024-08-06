@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
+import '../../../common/model/menu_list_API_model.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
@@ -10,14 +11,14 @@ import '../../home_page/controller/home_controller.dart';
 import '../../home_page/controller/schedule_controller.dart';
 import '../controller/guest_home_controller.dart';
 class GuestSnack extends StatelessWidget {
+  final MenuList menuItem;
   final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final GuestHomeController controller = Get.put(GuestHomeController());
   final scheduleController = Get.find<ScheduleController>();
-   GuestSnack({Key? key}) : super(key: key);
+   GuestSnack({Key? key, required this.menuItem}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final menuItem = controller.menuElement.firstWhere((item) => item.menuId == 2,);
     if (menuItem == null) {
       return Center(child: Text('Menu item not found'));
     }

@@ -5,6 +5,8 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
+import 'package:warmindo_user_ui/common/model/toppings.dart';
+
 List<MenuList> menuListFromJson(String str) {
   final jsonData = json.decode(str);
   return List<MenuList>.from(jsonData["data"]["menu"].map((item) => MenuList.fromJson(item)));
@@ -56,7 +58,7 @@ class MenuList {
   final int menuId;
   final String image;
   final String nameMenu;
-  final double price;
+  final int price;
   final String category;
   final int? stock;
   final double? ratings;
@@ -64,6 +66,8 @@ class MenuList {
   final String? second_category;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final int? variantId;
+  final List<ToppingList>? toppings;
   int quantity;
 
   MenuList(
@@ -79,15 +83,16 @@ class MenuList {
     this.createdAt,
     this.updatedAt,
         this.second_category,
-        this.quantity = 1
-
+        this.quantity = 1,
+        this.variantId,
+        this.toppings = const [],
   });
 
   factory MenuList.fromJson(Map<String, dynamic> json) => MenuList(
     menuId: json["id"],
     image: json["image"],
     nameMenu: json["name_menu"],
-    price: double.parse(json["price"]), // Parsing string to double
+    price: int.parse(json["price"]), // Parsing string to double
     category: json["category"],
     stock: int.parse(json["stock"]), // Parsing string to int
     ratings: double.parse(json["ratings"]), // Parsing string to double

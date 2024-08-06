@@ -15,9 +15,11 @@ import '../../../utils/themes/icon_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/appBar.dart';
+import '../../../widget/myCustomPopUp/myPopup_controller.dart';
 
 class CartPage extends StatelessWidget {
   final CartController controller = Get.put(CartController());
+  final MyCustomPopUpController popUpController = Get.put(MyCustomPopUpController());
   CartPage({super.key});
 
   @override
@@ -29,7 +31,10 @@ class CartPage extends StatelessWidget {
       appBar: AppBar(title: Text('Keranjang',style: headerRegularStyle,),centerTitle: true,automaticallyImplyLeading: false,),
       body: RefreshIndicator(
         onRefresh: () async {
-          controller.fetchCart();
+          await popUpController.fetchVarian();
+          await popUpController.fetchTopping();
+          await controller.fetchCart();
+          print('ini token:${controller.token.value}');
         },
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),// Wrap with SingleChildScrollView
@@ -58,7 +63,7 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
                 );
-              }else if(controller.cartItems.isEmpty) {
+              }else if(controller.cartItems2.isEmpty) {
                 return Center(
                   child: Container(
                     height: screenHeight * 0.75,
