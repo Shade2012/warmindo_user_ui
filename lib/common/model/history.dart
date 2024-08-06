@@ -2,6 +2,8 @@
 
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/common/model/menu_model.dart';
+import 'package:warmindo_user_ui/common/model/toppings.dart';
+import 'package:warmindo_user_ui/common/model/varians.dart';
 
 import '../../utils/themes/image_themes.dart';
 import 'menu_list_API_model.dart';
@@ -9,6 +11,7 @@ import 'voucher_model.dart';
 
 class Order {
   final int id;
+  final int totalprice;
   final bool paid;
   final List<MenuList> menus;
   // final List<Voucher>? vouchers;
@@ -19,9 +22,12 @@ class Order {
   final String? paymentMethod;
   final String? orderMethod;
   RxBool isRatingDone;
+  final List<VarianList>? selectedVarian;
+  List<ToppingList>? selectedToppings;
 
   Order({
     required this.id,
+    required this.totalprice,
     required this.menus,
     required this.status,
     required this.orderMethod,
@@ -31,8 +37,16 @@ class Order {
     required this.alasan_batal,
     this.reason,
     this.paymentMethod,
-    bool isRatingDone = false, // Initialize as regular boolean value
+    this.selectedVarian,
+    this.selectedToppings,
+    bool isRatingDone = false,
   }) : isRatingDone = isRatingDone.obs;
+
+  @override
+  String toString() {
+    return 'OrderList(orderID: $id, menus: $menus, status: $status, orderMethod: $orderMethod, paid: $paid, catatan: $catatan, alasan_batal: $alasan_batal, reason: $reason,paymentMethod: $paymentMethod,selectedVarian: $selectedVarian,selectedToppings: $selectedToppings,isRatingDone: $isRatingDone)';
+  }
+
 }
 
 
@@ -69,7 +83,7 @@ List<Order> orderList = [
       ],
       status: "Batal".obs,
       orderMethod: "Takeaway",
-      paymentMethod: "OVO", paid: true, catatan: 'Serondengnya dikit aja',alasan_batal: 'Sudah dibelikan makan oleh orang tua'.obs
+      paymentMethod: "OVO", paid: true, catatan: 'Serondengnya dikit aja',alasan_batal: 'Sudah dibelikan makan oleh orang tua'.obs, totalprice: 14000
   ),
   Order(
       id: 002,
@@ -88,7 +102,7 @@ List<Order> orderList = [
       status: "Selesai".obs,
       orderMethod: "Takeaway",
       paymentMethod: "DANA",
-      paid: true, catatan: '-', alasan_batal: ''.obs
+      paid: true, catatan: '-', alasan_batal: ''.obs, totalprice: 10000
   ),
   Order(
       id: 003,
@@ -107,7 +121,7 @@ List<Order> orderList = [
       status: "Menunggu Batal".obs,
       orderMethod: "Takeaway",
       paymentMethod: "DANA",
-      paid: true, catatan: '-',alasan_batal: 'Sudah dibelikan makan oleh orang tua'.obs
+      paid: true, catatan: '-',alasan_batal: 'Sudah dibelikan makan oleh orang tua'.obs, totalprice: 10000
   ),
   Order(
       id: 004,
@@ -126,7 +140,7 @@ List<Order> orderList = [
       status: "Sedang Diproses".obs,
       orderMethod: "Takeaway",
       paymentMethod: "DANA",
-      paid: true, catatan: 'Serondengnya banyakin', alasan_batal: ''.obs
+      paid: true, catatan: 'Serondengnya banyakin', alasan_batal: ''.obs, totalprice: 10000
   ),
   Order(
       id: 005,
@@ -145,7 +159,7 @@ List<Order> orderList = [
       status: "Pesanan Siap".obs,
       orderMethod: "Takeaway",
       paymentMethod: "DANA",
-      paid: true, catatan: '-', alasan_batal: ''.obs
+      paid: true, catatan: '-', alasan_batal: ''.obs, totalprice: 10000
   ),
 ];
 

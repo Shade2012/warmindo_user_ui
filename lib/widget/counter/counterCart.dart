@@ -15,7 +15,8 @@ class CounterWidget2 extends StatelessWidget {
   CounterWidget2({required this.index });
   @override
   Widget build(BuildContext context) {
-    final cartItem = cartController.cartItems[index];
+    final cartItem = cartController.cartItems2[index];
+    print(cartItem.productName);
     return  Container(
       child:  Row(
         children: [
@@ -30,6 +31,7 @@ class CounterWidget2 extends StatelessWidget {
             child: GestureDetector(
               onTap: (){
     cartController.decrementQuantity(cartItem);
+    cartController.isLoading.value = true;
     },
               child: Icon(
                 Icons.remove,
@@ -62,6 +64,7 @@ class CounterWidget2 extends StatelessWidget {
               child: GestureDetector(
                 onTap: (){
                   cartController.incrementQuantity(cartItem);
+                  cartController.isLoading.value = true;
                 },
                 child: Icon(
                   Icons.add,

@@ -13,5 +13,6 @@ class IconThemes {
   static const String cartLogo = 'assets/icon/cart_logo.svg';
   static const String icon_trash = 'assets/icon/trash.svg';
   static const String icon_empty = 'assets/icon/icon_empty.png';
+  static const String pencil = 'assets/icon/pencil.png';
 }
 

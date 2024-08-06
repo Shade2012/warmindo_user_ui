@@ -1,15 +1,20 @@
+import 'dart:convert';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:warmindo_user_ui/common/model/varians.dart';
 import '../../../common/global_variables.dart';
 import '../../../common/model/menu_model.dart';
+import '../../../common/model/toppings.dart';
 
 class DetailMenuController extends GetxController {
   RxList<MenuList> menu = <MenuList>[].obs;
   RxBool isConnected = true.obs;
   RxBool isLoading = true.obs;
-
+  RxList<ToppingList> toppingList = <ToppingList>[].obs;
+  RxList<VarianList> varianList = <VarianList>[].obs;
   @override
   void onInit() {
     super.onInit();
@@ -38,12 +43,64 @@ class DetailMenuController extends GetxController {
       isLoading.value = false;
     }
   }
+  Future<void> fetchTopping () async{
+    isLoading.value = true;
+    try {
+      final response = await http.get(
+          Uri.parse(GlobalVariables.apiTopping),headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+      );
 
+      if (response.statusCode == 200) {
+        toppingList.value = toppingListFromJson(response.body);
+        final data = jsonDecode(response.body);
+        print('ini response topping: \n $data');
+        print('ini list topping : \n${toppingList.value}');
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+
+    } finally {
+      isLoading.value = false;
+    }
+  }
+  Future<void> fetchVarian () async{
+    isLoading.value = true;
+    try {
+      final response = await http.get(
+          Uri.parse(GlobalVariables.apiVarian),headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+      );
+
+      if (response.statusCode == 200) {
+        varianList.value = varianListFromJson(response.body);
+        final data = jsonDecode(response.body);
+
+        print('ini response varian: \n $data');
+        print('ini list varian : \n${varianList.value}');
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+
+    } finally {
+      isLoading.value = false;
+    }
+  }
   void checkConnectivity() async {
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
       isConnected.value = result != ConnectivityResult.none;
       if (isConnected.value) {
         // fetchProduct();
+        await fetchTopping();
+        await fetchVarian();
       }
     });
 
@@ -51,6 +108,8 @@ class DetailMenuController extends GetxController {
     isConnected.value = connectivityResult != ConnectivityResult.none;
     if (isConnected.value) {
       // fetchProduct();
+      await fetchTopping();
+      await fetchVarian();
     }
   }
 }

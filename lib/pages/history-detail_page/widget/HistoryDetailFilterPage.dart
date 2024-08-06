@@ -9,111 +9,83 @@ import '../../../widget/shimmer/shimmer.dart';
 import '../../history_page/controller/history_controller.dart';
 
 class HistoryDetailFilterPage extends StatelessWidget {
-  final HistoryController controller = Get.put(HistoryController());
+  final HistoryController controller = Get.find(); // Use Get.find() to access the existing instance
   final List<String> titles = <String>[
     'Terbaru',
     'Terlama',
   ];
   final String status;
-  final List<Order> orders;
 
   HistoryDetailFilterPage({
     Key? key,
     required this.status,
-    required this.orders,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarCustom(title: 'Riwayat Pesenan $status',style: headerRegularStyle,),
+      appBar: AppbarCustom(title: 'Riwayat Pesenan $status', style: headerRegularStyle),
       body: Container(
         padding: EdgeInsets.all(10),
-        child: Obx(() {
-          if (!controller.isConnected.value) {
-            return Center(
-              child: Container(
-                child: Text(
-                  'Tidak ada koneksi internet mohon check koneksi internet anda',
-                  style: boldTextStyle,
-                  textAlign: TextAlign.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0,
+                    blurRadius: 4,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: CustomDropdown(
+                decoration: CustomDropdownDecoration(
+                  listItemStyle: boldTextStyle,
+                  listItemDecoration: ListItemDecoration(
+                    selectedColor: Colors.black,
+                  ),
+                ),
+                initialItem: controller.selectedTimes.value,
+                items: titles,
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    controller.changeTime(newValue);
+                  }
+                },
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(10),
+              child: Obx(
+                    () => Text(
+                  controller.selectedTimes.value,
+                  style: headerBold,
                 ),
               ),
-            );
-          }
-          if (controller.isLoading.value) {
-            return ListView.separated(
-              itemCount: 4,
-              itemBuilder: (context, index) {
-                return Skeleton(
-                  width: double.infinity,
-                  height: 170,
-                  radius: 10,
+            ),
+            Expanded(
+              child: Obx(() {
+                final filteredOrders = controller.orders
+                    .where((order) => order.status.value == status)
+                    .toList();
+                return ListView.builder(
+                  itemCount: filteredOrders.length,
+                  itemBuilder: (context, index) {
+                    return OrderBox(order: filteredOrders[index]);
+                  },
                 );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  height: 20,
-                );
-              },
-            );
-          } else {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 0,
-                        blurRadius: 4,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: CustomDropdown(
-                    decoration: CustomDropdownDecoration(
-                      listItemStyle: boldTextStyle,
-                      listItemDecoration: ListItemDecoration(
-                        selectedColor: Colors.black,
-                      ),
-                    ),
-                    initialItem: controller.selectedTimes.value,
-                    items: titles,
-                    onChanged: (String? newValue) {
-                      if (newValue != null) {
-                        controller.printOrdersLength();
-                        controller.changeTime(newValue);
-                      }
-                    },
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: Obx(
-                        () => Text(
-                      controller.selectedTimes.value,
-                      style: headerBold,
-                    ),
-                  ),
-                ),
-                Flexible(
-                  child: ListView.builder(
-                    itemCount: orders.length,
-                    itemBuilder: (context, index) {
-                      return OrderBox(order: orders[index]);
-                    },
-                  ),
-                ),
-              ],
-            );
-          }
-        }),
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }
+
 }

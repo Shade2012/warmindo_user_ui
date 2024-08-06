@@ -27,15 +27,13 @@ class DetailMenuPage extends StatelessWidget {
 
   DetailMenuPage({Key? key, required this.menu, required this.isGuest})
       : super(key: key) {
-    // Fetch the products filtered by the provided menuId
-    controller.fetchProduct(menu.menuId);
   }
 
   @override
   Widget build(BuildContext context) {
     final popUpController = Get.put(MyCustomPopUpController());
     final currencyFormat =
-        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -65,19 +63,6 @@ class DetailMenuPage extends StatelessWidget {
             if (controller.isLoading.value) {
               return MenuDetailSkeleton();
             }
-            if (controller.menu.isEmpty) {
-              return Center(
-                child: Container(
-                  margin: EdgeInsets.only(top: screenHeight * 0.4),
-                  child: Text(
-                    'Menu tidak ditemukan',
-                    style: boldTextStyle,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              );
-            }
-            final menuItem = controller.menu.first;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -99,14 +84,14 @@ class DetailMenuPage extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           child: Image.network(
-                            menuItem.image,
+                            menu.image,
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
                       SizedBox(height: 10),
-                      Text(menuItem.nameMenu, style: boldTextStyle2),
-                      Text(menuItem.category, style: regulargreyText),
+                      Text(menu.nameMenu, style: boldTextStyle2),
+                      Text(menu.category, style: regulargreyText),
                       SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,7 +104,7 @@ class DetailMenuPage extends StatelessWidget {
                                   scheduleController.jadwalElement[0].is_open
                                       ? Colors.orange
                                       : Colors.grey, size: 23),
-                              Text(menuItem.ratings.toString(),
+                              Text(menu.ratings.toString(),
                                   style: descriptionratingTextStyle),
                             ],
                           ),
@@ -128,7 +113,65 @@ class DetailMenuPage extends StatelessWidget {
                       SizedBox(height: 10),
                       Divider(),
                       Text('Deskripsi', style: boldTextStyle),
-                      Text(menuItem.description, style: onboardingskip)
+                      Text(menu.description, style: onboardingskip),
+                      Visibility(
+                          visible: controller.varianList.any((varian) => varian.category == menu.nameMenu),
+                          child:
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Divider(),
+                              Text('Varian', style: boldTextStyle),
+                              SizedBox(height: 10,),
+                              Obx((){
+                                final varianList = controller.varianList.value.where((element) => element.category == menu.nameMenu).toList();
+                                return Wrap(
+                                    spacing: 10.0,
+                                    runSpacing: 10.0,
+                                    children: List.generate(varianList.length, (index) {
+                                      final varian = varianList[index];
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                        child: Text(varian.nameVarian, style: TextStyle(color: Colors.black)),
+                                      );
+                                    })
+                                );
+                              }),
+                            ],
+                          )),
+                      Visibility(
+                          visible: menu.category == 'Makanan',
+                          child:
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Divider(),
+                              Text('Topping', style: boldTextStyle),
+                              SizedBox(height: 10,),
+                              Obx(()=>
+                                  Wrap(
+                                    spacing: 10.0,
+                                    runSpacing: 10.0,
+                                    children: List.generate(controller.toppingList.length, (index) {
+                                      final topping = controller.toppingList[index];
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                        child: Text(topping.nameTopping, style: TextStyle(color: Colors.black)),
+                                      );
+                                    })
+                                  ),
+                              ),
+                            ],
+                          )),
+
                     ],
                   ),
                 ),
@@ -152,7 +195,7 @@ class DetailMenuPage extends StatelessWidget {
         if (controller.isLoading.value) {
           return BottomMenuDetailSkeleton();
         }
-        final cartItem = cartController.cartItems
+        final cartItem = cartController.cartItems2
             .firstWhereOrNull((item) => item.productId == menu.menuId);
         final menuQuantity = cartItem?.quantity.value ?? 0;
         return Container(
@@ -206,7 +249,7 @@ class DetailMenuPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child:
-                        Text('${menuQuantity.toString()} Item', style: bold12),
+                    Text('${menuQuantity.toString()} Item', style: bold12),
                   ),
                 ),
               ),
@@ -239,9 +282,7 @@ class DetailMenuPage extends StatelessWidget {
                         }
                         else{
                           if (cartController.userPhoneVerified.value == '') {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
+                            showDialog(context: context, builder: (BuildContext context) {
                                   return ReusableDialog(
                                       title: 'Pesan',
                                       content:
@@ -255,21 +296,19 @@ class DetailMenuPage extends StatelessWidget {
                                         cartController.goToVerification();
                                       });
                                 });
-                          }
-                          else {
-                            final newCartItem = await cartController.addCart(menuID: menu.menuId, quantity: 1);
-                            if (newCartItem != null) {
-                              // popUpController.addToCart(menuId: menu.menuId, quantity: 1);
-                              popUpController.showCustomModalForItem(menu, context, 1, cartid: newCartItem.cartId ?? 0);
-                            } else {
-                              print(newCartItem);
-                              print("Error: newCartItem is null after adding to the cart.");
-                            }
+                          }else{
+                            bool variantRequired = popUpController.varianList.any((varian) => varian.category == menu.nameMenu);
+                            if(variantRequired){
+        popUpController.showCustomModalForItem(menu, context, 1, cartid: 0);
+        } else {
+        final newCartItem = await cartController.addToCart2(productId: menu.menuId, productName: menu.nameMenu, productImage: menu.image, price: menu.price, quantity: 1,);
+        popUpController.showCustomModalForItem(menu, context, 1, cartid: newCartItem?.cartId ?? 0);
+        }
+        }
                           }
                         }
                       }
-                    }
-                  },
+                    },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                     decoration: BoxDecoration(

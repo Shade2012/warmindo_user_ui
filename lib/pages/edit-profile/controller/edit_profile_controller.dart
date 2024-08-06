@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:path/path.dart' as path;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -126,11 +126,13 @@ class EditProfileController extends GetxController {
         ..fields['email'] = email ?? '';
 
       if (image != null) {
+        final fileExtension = path.extension(image.path);
+        final fileName = 'profile_picture$fileExtension';
         request.files.add(http.MultipartFile(
           'profile_picture',
           image.readAsBytes().asStream(),
           image.lengthSync(),
-          filename: 'product_image.jpg',
+          filename: fileName,
         ));
       }
 

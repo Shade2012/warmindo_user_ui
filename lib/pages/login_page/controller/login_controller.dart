@@ -39,6 +39,7 @@ class LoginController extends GetxController {
         body: jsonEncode({
           'login': username,
           'password': password,
+          'notification_token': notificationToken
         }),
       );
 //200 and 401

@@ -8,6 +8,7 @@ import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/ReusableTextBox.dart';
 import 'package:warmindo_user_ui/widget/map/view/map_view.dart';
+import '../../../common/model/cart_model2.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../widget/appBar.dart';
 import '../../cart_page/controller/cart_controller.dart';
@@ -175,18 +176,27 @@ class PembayaranPage extends GetView<PembayaranController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                            '(${cartController.cartItems.length} Items)'),
+                            '(${cartController.cartItems2.length} Items)'),
                         SizedBox(
                           width: 5,
                         ),
                         Obx(() {
                           double totalPrice = 0;
-                          for (CartItem cartItem in cartController.cartItems) {
-                            totalPrice += cartItem.price * cartItem.quantity.value;
+
+                          for (CartItem2 cartItem in cartController.cartItems2) {
+                            int toppingTotalPrice = 0;
+                            if (cartItem.selectedToppings != null) {
+                              for (var topping in cartItem.selectedToppings!) {
+                                toppingTotalPrice += topping.priceTopping;
+                              }
+                            }
+                            totalPrice += (cartItem.price + toppingTotalPrice) * cartItem.quantity.value;
                           }
+
                           return Text(
-                              currencyFormat.format(totalPrice),
-                              style: boldTextStyle);
+                            currencyFormat.format(totalPrice),
+                            style: boldTextStyle,
+                          );
                         }),
                       ]),
                 ],
@@ -194,46 +204,65 @@ class PembayaranPage extends GetView<PembayaranController> {
               SizedBox(height: 20),
               Divider(),
               SizedBox(height: 20),
-              InkWell(
-                onTap: () {
-                  if (!controller.selected.value) {
-                    Get.snackbar(
-                      'Pesan',
-                      'Silakan pilih metode pemesananya terlebih dahulu',
-                      backgroundColor: Colors.orange,
-                      colorText: Colors.white,
-                    );
-                    return;
-                  }
+               InkWell(
+                  onTap: () {
+                    if (!controller.selected.value) {
+                      Get.snackbar(
+                        'Pesan',
+                        'Silakan pilih metode pemesananya terlebih dahulu',
+                        backgroundColor: Colors.orange,
+                        colorText: Colors.white,
+                      );
+                      return;
+                    }
 
 
-                  if (!controller.selectedButton1.value && !controller.selectedButton2.value) {
-                    Get.snackbar(
-                      'Pesan',
-                      'Silakan pilih metode pembayaranya terlebih dahulu',
-                      backgroundColor: Colors.orange,
-                      colorText: Colors.white,
-                    );
-                    return; // Return to prevent further execution
-                  }
-
-                  // Make the payment
-                  controller.makePayment(catatan: controller.ctrCatatan.text);
-                },
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  child: Text(
-                    "Bayar",
-                    style: categoryMenuTextStyle,
-                    textAlign: TextAlign.center,
+                    if (!controller.selectedButton1.value && !controller.selectedButton2.value) {
+                      Get.snackbar(
+                        'Pesan',
+                        'Silakan pilih metode pembayaranya terlebih dahulu',
+                        backgroundColor: Colors.orange,
+                        colorText: Colors.white,
+                      );
+                      return; // Return to prevent further execution
+                    }
+                    if( controller.isLoading.value == false){
+                      controller.isLoading.value = true;
+                      controller.makePayment(catatan: controller.ctrCatatan.text);
+                    }else{
+                      return null;
+                    }
+                  },
+                  child: Obx(()=>
+                      Container(
+                        height: 40,
+                        width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.all(Radius.circular(10))
+                      ),
+                        child: controller.isLoading.value
+                            ? Center(
+                          child: Container(
+                            width: 20, // Adjust the width to your preference
+                            height: 20, // Adjust the height to your preference
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 3, // Adjust the stroke width if needed
+                            ),
+                          ),
+                        )
+                            : Center(
+                              child: Text(
+                                                        "Bayar",
+                                                        style: categoryMenuTextStyle,
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                            ),
+                      ),
                   ),
                 ),
-              )
+
 
             ],
           ),

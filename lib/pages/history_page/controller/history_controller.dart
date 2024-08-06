@@ -84,16 +84,6 @@ class HistoryController extends GetxController {
   }
 
 
-  String calculateTotalPrice(Order order) {
-    int totalPrice = 0;
-    for (MenuList menu in order.menus) {
-      totalPrice += menu.price.toInt() * menu.quantity;
-    }
-
-    // Check if the order has a voucher
-
-    return currencyFormat.format(totalPrice) ;
-  }
   String getButtonText(Order order) {
     if(order.status == 'Selesai' || order.status == "Batal")
     {
@@ -125,7 +115,7 @@ class HistoryController extends GetxController {
       return CartItem(
         productName: menu.nameMenu,
         productImage: menu.image,
-        price: menu.price.toDouble(),
+        price: menu.price,
         quantity: menu.quantity.obs,
         productId: menu.menuId,
       );

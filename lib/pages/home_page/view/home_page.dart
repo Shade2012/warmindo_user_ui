@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/home_controller.dart';
 import 'package:warmindo_user_ui/pages/home_page/shimmer/homeshimmer.dart';
 import 'package:warmindo_user_ui/pages/home_page/view/home_snack.dart';
+import 'package:warmindo_user_ui/widget/myCustomPopUp/myPopup_controller.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 import 'package:warmindo_user_ui/widget/cart.dart';
 import 'package:warmindo_user_ui/widget/makanan_widget.dart';
@@ -20,6 +21,7 @@ import '../../detail-menu_page/view/detail_menu_page.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
+  final MyCustomPopUpController popUpController = Get.put(MyCustomPopUpController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,8 @@ class HomePage extends StatelessWidget {
         child: RefreshIndicator(
           onRefresh: () async {
             await controller.scheduleController.fetchSchedule();
+            await popUpController.fetchVarian();
+            await popUpController.fetchTopping();
             await controller.fetchProduct();
           },
           child: SingleChildScrollView(
@@ -56,8 +60,13 @@ class HomePage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text('Status Toko: ',style: bold17,),
-                        Text( controller.scheduleController.jadwalElement[0].is_open ? 'Buka' : 'Tutup',style: bold17,),
+                        Text('Status Toko ',style: bold17,),
+                        Text(
+                          controller.scheduleController.jadwalElement[0].is_open ? 'Buka' : 'Tutup',
+                          style: bold17.copyWith(
+                            color: controller.scheduleController.jadwalElement[0].is_open ? Colors.green : Colors.red,
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(height: 20,),
@@ -119,14 +128,14 @@ class HomePage extends StatelessWidget {
                             width: screenWidth * 0.43,
                             height: screenHeight * 0.29,
                             context: context,
-                            product: controller.menuElement[0],
+                            product: controller.getHighestRatingMenu(controller.menuElement,1),
                             isGuest: false,
                           ),
                           ReusableCard(
                             width: screenWidth * 0.43,
                             height: screenHeight * 0.29,
                             context: context,
-                            product: controller.menuElement[1],
+                            product: controller.getHighestRatingMenu(controller.menuElement,2),
                             isGuest: false,
                           ),
                         ],
@@ -136,7 +145,7 @@ class HomePage extends StatelessWidget {
                     SizedBox(height: 20),
                     Visibility(
                       visible: controller.menuElement.length > 1,
-                      child: HomeSnack(),
+                      child: HomeSnack(menuItem: controller.getHighestRatingMenu(controller.menuElement,3),),
                     ),
                     SizedBox(height: 20),
                   ],

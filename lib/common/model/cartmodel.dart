@@ -25,7 +25,7 @@ class CartItem {
   final int productId;
   final String productName;
   final String productImage;
-  final double price;
+  final int price;
   RxInt quantity;
 
   CartItem({
@@ -43,7 +43,7 @@ class CartItem {
       productId: json['menu']['menuID'],
       productName: json['menu']['name_menu'],
       productImage: json['menu']['image'],
-      price: double.parse(json['menu']['price']),
+      price: json['menu']['price'],
       quantity: int.parse(json['quantity']).obs,
     );
   }

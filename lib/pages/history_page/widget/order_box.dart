@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
@@ -42,7 +43,7 @@ class OrderBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     final HistoryController controller = Get.find(); // Get the instance of HistoryController
     final labelColor = _getLabelColor(order.status.value);
 
@@ -69,6 +70,7 @@ class OrderBox extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -85,7 +87,7 @@ class OrderBox extends StatelessWidget {
                       );
                     }),
                     Text(
-                      controller.calculateTotalPrice(order).toString(),
+                      currencyFormat.format(order.totalprice),
                       style: boldTextStyle,
                     ),
                   ],
@@ -170,7 +172,7 @@ class OrderBox extends StatelessWidget {
                       );
                     }),
                     Text(
-                      controller.calculateTotalPrice(order).toString(),
+                      currencyFormat.format(order.totalprice),
                       style: boldTextStyle,
                     ),
                   ],

@@ -1,25 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:intl/intl.dart';
-import 'package:warmindo_user_ui/common/model/cartmodel.dart';
-import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
-import 'package:warmindo_user_ui/common/model/menu_model.dart';
-import 'package:warmindo_user_ui/widget/counter/counter.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/myCustomPopUp/shimmer.dart';
-import 'package:warmindo_user_ui/widget/myCustomPopUp/topping.dart';
-import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
+import '../../common/model/menu_list_API_model.dart';
 import '../../pages/cart_page/controller/cart_controller.dart';
-import '../../routes/AppPages.dart';
-import '../../utils/themes/color_themes.dart';
-import '../../utils/themes/image_themes.dart';
-import '../../utils/themes/textstyle_themes.dart';
+import '../counter/counter.dart';
 import '../counter/counter_controller.dart';
 import 'myPopup_controller.dart';
+
+import 'topping.dart';
 
 class MyCustomPopUp extends StatelessWidget {
   final MenuList product;
@@ -41,6 +31,7 @@ class MyCustomPopUp extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -53,7 +44,8 @@ class MyCustomPopUp extends StatelessWidget {
         if (controller.isLoading.value) {
           return SingleChildScrollView(
             controller: scrollController,
-              child: MyPopupShimmer());
+            child: MyPopupShimmer(),
+          );
         } else {
           return SingleChildScrollView(
             controller: scrollController,
@@ -67,8 +59,8 @@ class MyCustomPopUp extends StatelessWidget {
                       width: screenWidth * 0.6,
                       height: 5,
                       decoration: BoxDecoration(
-                          color: Colors.grey,
-                        borderRadius: BorderRadius.circular(5)
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(5),
                       ),
                     ),
                   ),
@@ -76,7 +68,7 @@ class MyCustomPopUp extends StatelessWidget {
                     child: FadeInImage(
                       width: double.infinity,
                       height: 250,
-                      placeholder: AssetImage(Images.logo),
+                      placeholder: AssetImage('assets/images/logo.png'),
                       image: NetworkImage(product.image),
                       fit: BoxFit.cover,
                     ),
@@ -102,53 +94,98 @@ class MyCustomPopUp extends StatelessWidget {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Topping',style: boldTextStyle),
-                      InkWell(
-                        onTap: (){
-                          Get.to(ToppingDetail(toppingList: controller.toppingList));
-                        },
-                          child: Text('Lihat Semua',style: blueLinkRegular)),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: 3,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final toppingItem = controller.toppingList[index];
-                      return Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                            Text(toppingItem.nameTopping,style: boldphoneNumberTextStyle,),
-                              Row(
-                                children: [
-                                  Text('+${toppingItem.priceTopping}',style: boldTextStyle,),
-                                  Obx(() => Checkbox(
-                                    activeColor: Colors.black,
-                                      value: toppingItem.isSelected.value, // This should be a boolean property in your toppingItem model
-                                      onChanged: (bool? value) {
-                                        toppingItem.isSelected.value = value!;
-                                        int quantity = toppingItem.isSelected.value ? 1 : 0;
-                                        print('Topping name: ${toppingItem.nameTopping}\nTopping is selected value: ${toppingItem.isSelected.value}\n Topping quantity : ${quantity}');
-                                      },
+                  Visibility(
+                    visible: controller.varianList.any((varian) => varian.category == product.nameMenu),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Divider(),
+                        Text('Varian', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 10),
+                        Text('Harus Dipilih', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 10),
+                        Obx(() {
+                          final varianList = controller.varianList.where((element) => element.category == product.nameMenu).toList();
+                          return Wrap(
+                            spacing: 10.0,
+                            runSpacing: 10.0,
+                            children: List.generate(varianList.length, (index) {
+                              final varian = varianList[index];
+                              final isSelected = controller.selectedVarian[product.menuId] == varian;
+                              print('Checking varian ${varian.nameVarian}, isSelected: $isSelected');
+                              return GestureDetector(
+                                onTap: () {
+                                  controller.selectedVarian[product.menuId] = varian;
+                                  controller.selectedVarian.refresh();
+                                  print('Selected varian: ${varian.nameVarian}');
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: isSelected ? Colors.white : Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                      color: isSelected ? Colors.black : Colors.transparent,
+                                      width: 3.0,
                                     ),
                                   ),
-                                ],
-                              )
-                            ],
-                          ),
-                          Divider(),
-                        ],
+                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  child: Text(varian.nameVarian, style: TextStyle(color: Colors.black)),
+                                ),
+                              );
+                            }),
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
+              Visibility(
+                visible: product.category == 'Makanan',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Divider(),
+                    Text('Topping', style: boldTextStyle),
+                    SizedBox(height: 10),
+                    Obx(() {
+                      return ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: controller.toppingList.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final toppingItem = controller.toppingList[index];
+                          return Obx(() {
+                            final isSelected = controller.selectedToppings[product.menuId]?.any((topping) => topping.toppingID == toppingItem.toppingID) ?? false;
+                            return Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(toppingItem.nameTopping, style: boldphoneNumberTextStyle),
+                                    Row(
+                                      children: [
+                                        Text('+${toppingItem.priceTopping}', style: boldTextStyle),
+                                        Checkbox(
+                                          activeColor: Colors.black,
+                                          value: isSelected,
+                                          onChanged: (bool? value) {
+                                            controller.toggleTopping(product.menuId, toppingItem);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Divider(),
+                              ],
+                            );
+                          });
+                        },
                       );
-                  }, ),
-                  Divider(),
+                    }),
+                  ],
+                ),
+              ),
+
                   SizedBox(height: 20),
                   Container(
                     padding: EdgeInsets.all(10),
@@ -167,7 +204,7 @@ class MyCustomPopUp extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Harga", style: onboardingskip),
+                        Text("Harga", style: TextStyle(fontSize: 16, color: Colors.grey)),
                         CounterWidget(
                           quantity: quantity,
                           menu: product,
@@ -185,5 +222,3 @@ class MyCustomPopUp extends StatelessWidget {
     );
   }
 }
-
-

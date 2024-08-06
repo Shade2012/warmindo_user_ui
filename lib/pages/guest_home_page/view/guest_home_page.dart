@@ -13,6 +13,7 @@ import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/minuman_widget.dart';
+import '../../../widget/myCustomPopUp/myPopup_controller.dart';
 import '../../../widget/reusable_card.dart';
 import '../../../widget/rounded_image.dart';
 import '../../../widget/snack_widget.dart';
@@ -22,6 +23,7 @@ import '../../home_page/shimmer/homeshimmer.dart';
 class GuestHomePage extends StatelessWidget {
   final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final GuestHomeController controller = Get.put(GuestHomeController());
+  final MyCustomPopUpController popUpController = Get.put(MyCustomPopUpController());
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -31,6 +33,8 @@ class GuestHomePage extends StatelessWidget {
         child: RefreshIndicator(
           onRefresh: () async {
             await controller.scheduleController.fetchSchedule();
+            await popUpController.fetchVarian();
+            await popUpController.fetchTopping();
             await controller.fetchProduct();
           },
           child: SingleChildScrollView(
@@ -110,8 +114,8 @@ class GuestHomePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ReusableCard(width: screenWidth * 0.43,height: screenHeight * 0.29, context: context, product: controller.menuElement[0],isGuest: true,),
-                        ReusableCard(width: screenWidth * 0.43,height: screenHeight * 0.29,context: context, product: controller.menuElement[1],isGuest: true,),
+                        ReusableCard(width: screenWidth * 0.43,height: screenHeight * 0.29, context: context, product: controller.getHighestRatingMenu(controller.menuElement,1),isGuest: true,),
+                        ReusableCard(width: screenWidth * 0.43,height: screenHeight * 0.29,context: context, product:controller.getHighestRatingMenu(controller.menuElement,2),isGuest: true,),
 
                       ],
                     ),
@@ -120,7 +124,7 @@ class GuestHomePage extends StatelessWidget {
                     SizedBox(height: 20,),
                     Visibility(
                         visible: controller.menuElement.length > 1,
-                        child: GuestSnack()),
+                        child: GuestSnack(menuItem: controller.getHighestRatingMenu(controller.menuElement,3))),
                     SizedBox(height: 20,)
                   ],
                 );
