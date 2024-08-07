@@ -87,7 +87,7 @@ class CartData extends StatelessWidget {
                                           onTap: () {
                                             final product = controller.menuController.menuElement.firstWhere((element) => element.menuId == cartItem.productId);
                                             popUpController.showCustomModalForItem(product, context, cartItem.quantity.value, cartid: cartItem.cartId ?? 0);
-                                            controller.isLoading.value = true;
+                                            // controller.isLoading.value = true;
                                             },
                                           child: Icon(Icons.edit,size: 30,color: Colors.orange,)),
                                       InkWell(

@@ -118,7 +118,7 @@ class EditProfileScreen extends StatelessWidget {
                                                     return controller.selectedImage.value != null &&
                                                             controller.selectedImage.value!.path.isNotEmpty ?
                                                     Image.file(File(controller.selectedImage.value!.path), fit: BoxFit.cover,)
-                                                        : Image.network('https://warmindo.pradiptaahmad.tech/image/${controller.imgProfile.value}', fit: BoxFit.cover,
+                                                        : Image.network('${controller.imgProfile.value}', fit: BoxFit.cover,
                                                     // Image.network(controller.imgProfile.value, fit: BoxFit.cover,
                                                           );
                                                   }
