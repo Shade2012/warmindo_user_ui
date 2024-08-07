@@ -43,21 +43,27 @@ class FirebaseApi{
 
 
   Future<void> initNotifications() async {
-    await firebaseMessaging.requestPermission(
-      alert: true,
-      sound: true,
-      badge: true,
-      provisional: false,
-    );
+    try {
+      await firebaseMessaging.requestPermission(
+        alert: true,
+        sound: true,
+        badge: true,
+        provisional: false,
+      );
 
-    final fCMToken = await firebaseMessaging.getToken();
-    print('Token : $fCMToken');
+      final fCMToken = await firebaseMessaging.getToken();
+      print('Token : $fCMToken');
 
-    FirebaseMessaging.onMessage.listen(FirebaseApi.handleMessage);
-    FirebaseMessaging.onBackgroundMessage(handleBackgroundMessaging);
+      FirebaseMessaging.onMessage.listen(FirebaseApi.handleMessage);
+      FirebaseMessaging.onBackgroundMessage(handleBackgroundMessaging);
 
-    await InitLocalNotifications();
+      await InitLocalNotifications();
+    } catch (e) {
+      print('Error initializing notifications: $e');
+      print('error disini');
+    }
   }
+
 
 
 
