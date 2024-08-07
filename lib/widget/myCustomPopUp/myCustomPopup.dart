@@ -5,6 +5,7 @@ import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/myCustomPopUp/shimmer.dart';
 import '../../common/model/menu_list_API_model.dart';
 import '../../pages/cart_page/controller/cart_controller.dart';
+import '../../utils/themes/color_themes.dart';
 import '../counter/counter.dart';
 import '../counter/counter_controller.dart';
 import 'myPopup_controller.dart';
@@ -121,15 +122,15 @@ class MyCustomPopUp extends StatelessWidget {
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: isSelected ? Colors.white : Colors.grey[300],
+                                    color: isSelected ? ColorResources.primaryColor : Colors.white,
                                     borderRadius: BorderRadius.circular(5),
                                     border: Border.all(
-                                      color: isSelected ? Colors.black : Colors.transparent,
-                                      width: 3.0,
+                                      color: isSelected ? Colors.grey : Colors.grey,
+                                      width: 1.0,
                                     ),
                                   ),
                                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                  child: Text(varian.nameVarian, style: TextStyle(color: Colors.black)),
+                                  child: Text(varian.nameVarian, style: TextStyle(color: isSelected ? Colors.white : Colors.black)),
                                 ),
                               );
                             }),
