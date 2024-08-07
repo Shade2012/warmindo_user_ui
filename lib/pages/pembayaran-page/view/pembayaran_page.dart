@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/controller/pembayaran_controller.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_view.dart';
+import 'package:warmindo_user_ui/pages/profile_page/controller/profile_controller.dart';
 
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/ReusableTextBox.dart';
@@ -17,6 +18,7 @@ import '../../../common/model/cartmodel.dart';
 class PembayaranPage extends GetView<PembayaranController> {
 
   final CartController cartController = Get.put(CartController());
+  final ProfileController profileController = Get.put(ProfileController());
 
 
   @override
@@ -161,6 +163,42 @@ class PembayaranPage extends GetView<PembayaranController> {
                         ),
                       ),
                     ),
+                    Visibility(
+                      visible: profileController.user_verified.value == '1',
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              border: controller.selectedButton3.value ? Border.all(
+                                  color: Colors.black,
+                                  width: 2
+                              ) : null,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.4),
+                                  spreadRadius: 0,
+                                  blurRadius: 2,
+                                  offset: Offset(0, 1), // changes position of shadow
+                                ),
+                              ]
+                          ),
+                          margin: EdgeInsets.only(left: 10),
+                          child: InkWell(
+                            onTap: (){
+                              controller.button3();
+                            },
+                            child: Ink(
+                              child: Image.asset(
+                                width: screenWidth / 7,
+                                height: screenWidth /6.6,
+                                Images.tunai,
+                                fit: BoxFit.fill,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                          ),
+                        ))
                   ],
                 );
               }),
@@ -217,7 +255,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                     }
 
 
-                    if (!controller.selectedButton1.value && !controller.selectedButton2.value) {
+                    if (!controller.selectedButton1.value && !controller.selectedButton2.value && !controller.selectedButton3.value) {
                       Get.snackbar(
                         'Pesan',
                         'Silakan pilih metode pembayaranya terlebih dahulu',

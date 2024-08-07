@@ -31,7 +31,7 @@ class ProfilePage extends StatelessWidget {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            profileController.checkSharedPreference();
+            profileController.checkConnectivity();
           },
           child: SingleChildScrollView(
             child: Container(
@@ -146,16 +146,32 @@ class ProfilePage extends StatelessWidget {
                              ListTile(
                                leading: Icon(Icons.person),
                                title: Text('Verifikasi'),
-                               trailing: Icon(Icons.info_outlined),
-                               onTap: () {
-                                 showDialog(
-                                   context: context,
-                                   builder: (BuildContext context) {
-                                     return VerificationStatusPopup();
-                                   },
-                                 );
-                               },
+                               trailing: SizedBox(
+                                 width: 100, // Adjust the width as needed
+                                 child: Row(
+                                   mainAxisAlignment: MainAxisAlignment.end,
+                                   children: [
+                                     Visibility(
+                                       visible: profileController.user_verified.value == '1',
+                                       child: Icon(Icons.verified_rounded,color: Colors.black,),
+                                     ),
+                                     SizedBox(width: 8), // Add some spacing between icons
+                                     InkWell(
+                                       onTap: () {
+                                         showDialog(
+                                           context: context,
+                                           builder: (BuildContext context) {
+                                             return VerificationStatusPopup();
+                                           },
+                                         );
+                                       },
+                                       child: Icon(Icons.info_outlined),
+                                     ),
+                                   ],
+                                 ),
+                               ),
                              ),
+
 
                              Visibility(
                                visible:profileController.isLoginGoogle.value != 'true',
