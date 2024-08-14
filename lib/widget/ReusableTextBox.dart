@@ -5,25 +5,41 @@ class ReusableTextBox extends StatelessWidget {
   final String title;
   final TextEditingController controller;
 
-  ReusableTextBox({required this.title, required this.controller});
+  ReusableTextBox({required this.title, required this.controller}) {
+    controller.addListener(() {
+      if (controller.text.length < '$title: '.length) {
+        controller.text = '$title: ';
+        controller.selection = TextSelection.fromPosition(
+          TextPosition(offset: controller.text.length),
+        );
+      } else if (!controller.text.startsWith('$title: ')) {
+        String newText = '$title: ' + controller.text.replaceFirst('$title: ', '');
+        controller.text = newText;
+        controller.selection = TextSelection.fromPosition(
+          TextPosition(offset: newText.length),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextField(
-          controller: controller,
-          maxLines: 5,
-          style: regulargreyText,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-            ),
-            prefixIcon: Padding(
-              padding: EdgeInsets.only(left: 12.0, bottom: 84), // Adjust padding
-              child: Text('${title}: ',
-                style:boldgreyText,
+        Container(
+          color: Colors.white,
+          child: TextFormField(
+            controller: controller,
+            maxLines: 5,
+            style: regulargreyText,
+            decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
               ),
             ),
           ),

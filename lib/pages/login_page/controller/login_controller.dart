@@ -18,15 +18,19 @@ class LoginController extends GetxController {
   var obscureText = true.obs;
   final ctrUsername2 = RxString("");
   final ctrPassword2 = RxString("");
+  final notifToken = RxString("");
   RxString phone_number = "".obs;
 
   Future<void> loginUser(String username, String password) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     String? notificationToken;
     await firebaseMessaging.getToken().then((value){
       notificationToken = value;
+      prefs.setString('notif_token', '$notificationToken');
     });
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+
     isLoading.value = true;
     final url = Uri.parse(GlobalVariables.apiLogin);
 

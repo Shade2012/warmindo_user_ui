@@ -16,10 +16,9 @@ import '../../../widget/counter/counterCart.dart';
 import '../../home_page/controller/schedule_controller.dart';
 import '../controller/cart_controller.dart';
 import 'package:get/get.dart';
-class CartData extends StatelessWidget {
+class CartData extends GetView<CartController> {
   final scheduleController = Get.find<ScheduleController>();
-  final CartController controller = Get.put(CartController());
-  final MyCustomPopUpController popUpController = Get.put(MyCustomPopUpController());
+  final popUpController = Get.find<MyCustomPopUpController>();
 
    CartData({Key? key}) : super(key: key);
 

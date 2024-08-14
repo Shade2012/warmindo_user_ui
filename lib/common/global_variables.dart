@@ -24,7 +24,9 @@ class GlobalVariables {
   static const apiForgotPassword = 'http://warmindo.pradiptaahmad.tech/api/users/forgot-password';
   static const apiVarian = 'http://warmindo.pradiptaahmad.tech/api/variants/';
 
-
+  static const postOrder = 'https://warmindo.pradiptaahmad.tech/api/orders/store';
+  static const postOrderDetail = 'https://warmindo.pradiptaahmad.tech/api/order-details/create';
+  static const postPayment = 'https://warmindo.pradiptaahmad.tech/api/payment/create';
 
 }
 

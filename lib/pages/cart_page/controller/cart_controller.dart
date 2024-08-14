@@ -30,6 +30,7 @@ class CartController extends GetxController {
   RxString responseData = "".obs;
   final RxList<CartItem> cartItems = <CartItem>[].obs;
   final RxList<CartItem2> cartItems2 = <CartItem2>[].obs;
+  final RxBool isLoading = true.obs;
 
   @override
   void onInit() {
@@ -37,7 +38,7 @@ class CartController extends GetxController {
     super.onInit();
     checkConnectivity();
   }
-  final RxBool isLoading = true.obs;
+
 
   Future<void> fetchCart() async {
     try {
@@ -383,6 +384,7 @@ class CartController extends GetxController {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
       isConnected.value = result != ConnectivityResult.none;
       if (isConnected.value) {
+        isLoading.value = true;
         //fetch cart
         // fetchProduct();
        await fetchUser();
