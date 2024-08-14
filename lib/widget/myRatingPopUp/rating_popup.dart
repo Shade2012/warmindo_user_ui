@@ -5,6 +5,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/widget/myRatingPopUp/rating_controller.dart';
 
+import '../../common/model/history2_model.dart';
 import '../../pages/history_page/controller/history_controller.dart';
 import '../../common/model/history.dart';
 import '../../common/model/menu_model.dart';
@@ -14,11 +15,11 @@ import '../../utils/themes/textstyle_themes.dart';
 class RatingCard extends StatelessWidget {
   final HistoryController controller = Get.find<HistoryController>();
   final RatingController ratingController = Get.put(RatingController());
-  final Order order;
+  final Order2 order;
   late List<double> ratingsList = []; // Declare ratingsList here
 
   RatingCard({Key? key, required this.order}) : super(key: key) {
-    ratingsList = List<double>.filled(order.menus.length, 0.0); // Initialize ratingsList
+    ratingsList = List<double>.filled(order.orderDetails.length, 0.0); // Initialize ratingsList
   }
 
   bool checkIfRatingIsGreaterThanZero(List<double> ratingsList) {
@@ -94,9 +95,9 @@ class RatingCard extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       physics: AlwaysScrollableScrollPhysics(),
-      itemCount: order.menus.length,
+      itemCount: order.orderDetails.length,
       itemBuilder: (BuildContext context, int index) {
-        final menu = order.menus[index];
+        final menu = order.orderDetails[index];
         return Row(
           children: [
             Container(

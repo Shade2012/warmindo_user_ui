@@ -3,14 +3,8 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/state_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:warmindo_user_ui/widget/myCustomPopUp/myCustomPopup.dart';
-import 'package:warmindo_user_ui/widget/myCustomPopUp/myPopup_controller.dart';
-import 'package:warmindo_user_ui/widget/reusable_dialog.dart';
 import '../../../common/global_variables.dart';
 import '../../../common/model/cart_model2.dart';
 import '../../../common/model/cartmodel.dart';
@@ -44,29 +38,24 @@ class CartController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await http.get(
-          Uri.parse('${GlobalVariables.apiCartDetail}'), headers: {
+      final response = await http.get(Uri.parse(GlobalVariables.apiCartDetail), headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
-      }).timeout(Duration(seconds: 10));
+      }).timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(response.body)['data'];
-        print(data.toString());
         responseData.value = data.toString();
         cartItems2.clear();
         for (var item in data) {
           cartItems2.add(CartItem2.fromJson(item));
         }
-        print('ini adalah isi dari cart items $cartItems2');
-        print("Fetched cart items: ${cartItems2.length} items");
       } else {
         print('Error: ${response.statusCode}');
       }
     } catch (e) {
       print(e);
-      print('error');
     } finally {
       isLoading.value = false;
     }
@@ -77,12 +66,12 @@ class CartController extends GetxController {
     print('print token di fetchUser Cart $token');
     try {
       final response = await http.get(
-        Uri.parse('${GlobalVariables.apiDetailUser}'),headers: {
+        Uri.parse(GlobalVariables.apiDetailUser),headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       }
-      ).timeout(Duration(seconds: 10));
+      );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);

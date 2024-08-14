@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:warmindo_user_ui/common/model/history.dart';
+import 'package:warmindo_user_ui/common/model/history2_model.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
@@ -9,7 +10,7 @@ import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import '../../history-detail_page/widget/HistoryDetailFilterPage.dart';
 
 class HistoryCategory extends StatelessWidget {
-  final List<Order> orders;
+  final List<Order2> orders;
   HistoryCategory({
     Key? key,
     required this.status,
@@ -25,6 +26,8 @@ class HistoryCategory extends StatelessWidget {
         return ColorResources.labelcomplete;
       case 'sedang diproses':
         return ColorResources.labelinprogg;
+      case 'menunggu pembayaran':
+        return Colors.grey;
       case 'menunggu batal':
       case 'batal':
         return ColorResources.labelcancel;
@@ -45,7 +48,7 @@ class HistoryCategory extends StatelessWidget {
 
     return Obx(() {
       // Calculate totalOrders based on the observable list
-      final totalOrders = controller.orders
+      final totalOrders = controller.orders2
           .where((o) => o.status.value.toLowerCase() == status.toLowerCase())
           .length;
 

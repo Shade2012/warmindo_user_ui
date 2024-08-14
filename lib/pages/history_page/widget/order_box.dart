@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:warmindo_user_ui/common/model/history2_model.dart';
 import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
 import 'package:warmindo_user_ui/common/model/history.dart';
@@ -21,7 +22,7 @@ class OrderBox extends StatelessWidget {
     required this.order,
   }) : super(key: key);
 
-  final Order order;
+  final Order2 order;
 
   Color _getLabelColor(String status) {
 
@@ -44,6 +45,7 @@ class OrderBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    int totalPrice = int.parse(order.totalprice);
     final HistoryController controller = Get.find(); // Get the instance of HistoryController
     final labelColor = _getLabelColor(order.status.value);
 
@@ -87,7 +89,7 @@ class OrderBox extends StatelessWidget {
                       );
                     }),
                     Text(
-                      currencyFormat.format(order.totalprice),
+                      currencyFormat.format(totalPrice),
                       style: boldTextStyle,
                     ),
                   ],
@@ -96,7 +98,7 @@ class OrderBox extends StatelessWidget {
                 ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: order.menus.length,
+                  itemCount: order.orderDetails.length,
                   separatorBuilder: (BuildContext context, int index) =>
                   const SizedBox(height: 20),
                   itemBuilder: (context, index) {
@@ -108,7 +110,7 @@ class OrderBox extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              order.menus[index].image,
+                              order.orderDetails[index].image,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -120,8 +122,8 @@ class OrderBox extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(order.menus[index].nameMenu, style: boldTextStyle),
-                              Text('(${order.menus[index].quantity} Items)'),
+                              Text(order.orderDetails[index].nameMenu, style: boldTextStyle),
+                              Text('(${order.orderDetails[index].quantity} Items)'),
                             ],
                           ),
                         ),
@@ -172,7 +174,7 @@ class OrderBox extends StatelessWidget {
                       );
                     }),
                     Text(
-                      currencyFormat.format(order.totalprice),
+                      currencyFormat.format(totalPrice),
                       style: boldTextStyle,
                     ),
                   ],
@@ -181,7 +183,7 @@ class OrderBox extends StatelessWidget {
                 ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: order.menus.length,
+                  itemCount: order.orderDetails.length,
                   separatorBuilder: (BuildContext context, int index) =>
                   const SizedBox(height: 20),
                   itemBuilder: (context, index) {
@@ -193,7 +195,7 @@ class OrderBox extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              order.menus[index].image,
+                              order.orderDetails[index].image,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -205,8 +207,8 @@ class OrderBox extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(order.menus[index].nameMenu, style: boldTextStyle),
-                              Text('(${order.menus[index].quantity} Items)'),
+                              Text(order.orderDetails[index].nameMenu, style: boldTextStyle),
+                              Text('(${order.orderDetails[index].quantity} Items)'),
                             ],
                           ),
                         ),

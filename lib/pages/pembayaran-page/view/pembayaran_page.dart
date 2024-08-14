@@ -119,14 +119,19 @@ class PembayaranPage extends GetView<PembayaranController> {
                         onTap: (){
                           controller.button2();
                         },
-                        child: Ink(
-                          child: Image.asset(
-                            width: screenWidth / 7,
-                            height: screenWidth /6.6,
-                            Images.cashless,
-                            fit: BoxFit.fill,
-                            alignment: Alignment.center,
-                          ),
+                        child: Column(
+                          children: [
+                            Ink(
+                              child: Image.asset(
+                                width: screenWidth / 7,
+                                height: screenWidth /6.6,
+                                Images.cashless,
+                                fit: BoxFit.fill,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                            Center(child: Text('Cashless',style: boldTextStyle,),)
+                          ],
                         ),
                       ),
                     ),
@@ -153,14 +158,19 @@ class PembayaranPage extends GetView<PembayaranController> {
                             onTap: (){
                               controller.button3();
                             },
-                            child: Ink(
-                              child: Image.asset(
-                                width: screenWidth / 7,
-                                height: screenWidth /6.6,
-                                Images.tunai,
-                                fit: BoxFit.fill,
-                                alignment: Alignment.center,
-                              ),
+                            child: Column(
+                              children: [
+                                Ink(
+                                  child: Image.asset(
+                                    width: screenWidth / 6,
+                                    height: screenWidth /6.6,
+                                    Images.tunai,
+                                    fit: BoxFit.fill,
+                                    alignment: Alignment.center,
+                                  ),
+                                ),
+                                Center(child: Text('Tunai',style: boldTextStyle,),)
+                              ],
                             ),
                           ),
                         ),
@@ -236,6 +246,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                           String catatanValue = fullText.replaceFirst('Catatan : ', '').trim();
                           print(catatanValue);
                           controller.makePayment2(catatan: catatanValue, isTunai: true);
+                          // controller.makePayment(catatan: catatanValue);
                         }else{
                           return null;
                         }
@@ -247,7 +258,8 @@ class PembayaranPage extends GetView<PembayaranController> {
                         String fullText = controller.ctrCatatan.text;
                         String catatanValue = fullText.replaceFirst('Catatan : ', '').trim();
                         print(catatanValue);
-                        controller.makePayment2(catatan: catatanValue, isTunai: false);
+                        controller.makePayment(catatan: catatanValue);
+                        // controller.makePayment2(catatan: catatanValue, isTunai: false);
                       }else{
                         return null;
                       }
