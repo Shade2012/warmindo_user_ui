@@ -28,5 +28,6 @@ class GlobalVariables {
   static const postOrderDetail = 'https://warmindo.pradiptaahmad.tech/api/order-details/create';
   static const postPayment = 'https://warmindo.pradiptaahmad.tech/api/payment/create';
 
+  static const apiHistory = 'https://warmindo.pradiptaahmad.tech/api/users/get-history';
 }
 

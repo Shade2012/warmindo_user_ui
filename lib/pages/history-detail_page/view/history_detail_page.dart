@@ -7,11 +7,11 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/myCustomPopUp/myPopup_controller.dart';
 
+import '../../../common/model/history2_model.dart';
 import '../../../common/model/varians.dart';
 import '../../../utils/themes/buttonstyle_themes.dart';
 import '../../../utils/themes/color_themes.dart';
@@ -24,7 +24,7 @@ import '../../../common/model/menu_model.dart';
 class HistoryDetailPage extends StatelessWidget {
   final HistoryController controller = Get.put(HistoryController());
   final MyCustomPopUpController popUpController = Get.put(MyCustomPopUpController());
-  final Order order;
+  final Order2 order;
   Color _getLabelColor(String status) {
     switch (status.toLowerCase()) {
       case 'selesai':
@@ -46,11 +46,12 @@ class HistoryDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    int totalPrice = int.parse(order.totalprice);
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     int totalQuantity = 0;
-    for (MenuList menu in order.menus) {
+    for (MenuList menu in order.orderDetails) {
       totalQuantity += menu.quantity;
     }
     return Scaffold(
@@ -144,13 +145,13 @@ class HistoryDetailPage extends StatelessWidget {
                           ListView.separated(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: order.menus.length,
+                            itemCount: order.orderDetails.length,
                             separatorBuilder: (BuildContext context, int index) => SizedBox(height: 20),
                             itemBuilder: (context, index) {
                               int toppingTotalPrice = 0;
 
-                              if (order.menus[index].toppings != null) {
-                                for (var topping in order.menus[index].toppings!) {
+                              if (order.orderDetails[index].toppings != null) {
+                                for (var topping in order.orderDetails[index].toppings!) {
                                   toppingTotalPrice += topping.priceTopping;
                                 }
                               }
@@ -161,7 +162,7 @@ class HistoryDetailPage extends StatelessWidget {
                                     height: screenHeight * 0.11,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      child: Image.network(order.menus[index].image, fit: BoxFit.cover,),
+                                      child: Image.network(order.orderDetails[index].image, fit: BoxFit.cover,),
                                     ),
                                   ),
                                   SizedBox(width: 10),
@@ -172,39 +173,45 @@ class HistoryDetailPage extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Flexible(child: Text(order.menus[index].nameMenu, style: boldTextStyle,maxLines: 2,overflow: TextOverflow.ellipsis,)),
-                                            Text('${order.menus[index].quantity}x',style: boldTextStyle,),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Flexible(child: Text(order.orderDetails[index].nameMenu, style: boldTextStyle,maxLines: 2,overflow: TextOverflow.ellipsis,)),
+                                                Text('${order.orderDetails[index].quantity}x',style: boldTextStyle,),
+                                              ],
+                                            ),
+                                            Visibility(
+                                              visible: order.orderDetails[index].variantId != null,
+                                              child: Builder(
+                                                builder: (context) {
+                                                  final varian = popUpController.varianList.firstWhereOrNull((element) => element.varianID ==order.orderDetails[index].variantId );
+                                                  return Text(varian?.nameVarian ?? "Unknown");
+                                                },
+                                              ),),
+                                            Visibility(
+                                              visible: order.orderDetails[index].toppings!.isNotEmpty,
+                                              child: SizedBox(
+                                                height:24,
+                                                child: ListView(
+                                                    scrollDirection: Axis.horizontal,
+                                                    children:[
+                                                      Text(
+                                                        order.orderDetails[index].toppings!.map((topping) => topping.nameTopping).join(', '),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: const TextStyle(fontSize: 14),
+                                                      ),
+                                                    ]
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
-                                        Visibility(
-                                            visible: order.menus[index].variantId != null,
-                                          child: Builder(
-                                            builder: (context) {
-                                              final varian = popUpController.varianList.firstWhereOrNull((element) => element.varianID ==order.menus[index].variantId );
-                                              return Text(varian?.nameVarian ?? "Unknown");
-                                            },
-                                          ),),
-                                        Visibility(
-                                          visible: order.menus[index].toppings!.isNotEmpty,
-                                          child: SizedBox(
-                                            height:24,
-                                            child: ListView(
-                                              scrollDirection: Axis.horizontal,
-                                              children:[
-                              Text(
-                                order.menus[index].toppings!.map((topping) => topping.nameTopping).join(', '),
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 14),
-                              ),
-                              ]
-                                            ),
-                                          ),
-                                        ),
-                                        Text('${currencyFormat.format(order.menus[index].price + toppingTotalPrice)}',style: boldTextStyle,),
+
+                                        Text('${currencyFormat.format(order.orderDetails[index].price + toppingTotalPrice)}',style: boldTextStyle,),
                                         // Text(currencyFormat.format(totalPrice),style: boldTextStyle,)
                                       ],
                                     ),
@@ -220,7 +227,7 @@ class HistoryDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Total",style: boldTextStyle,),
-                              Text(currencyFormat.format(order.totalprice),style: boldTextStyle,),
+                              Text(currencyFormat.format(totalPrice),style: boldTextStyle,),
                             ],
                           ),
                           SizedBox(height: 10,),
@@ -236,7 +243,7 @@ class HistoryDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Metode Pembayaran",style: boldTextStyle,),
-                              Text(order.paymentMethod.toString(),style: boldTextStyle,),
+                              Text(order.paymentMethod.toString() ?? '',style: boldTextStyle,),
                             ],
                           ),
                           SizedBox(height: 20,),

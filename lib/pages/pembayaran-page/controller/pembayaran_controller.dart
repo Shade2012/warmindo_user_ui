@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
+import 'package:warmindo_user_ui/common/model/history2_model.dart';
 import 'package:warmindo_user_ui/common/model/toppings.dart';
 import 'package:warmindo_user_ui/common/model/varians.dart';
 
@@ -83,31 +83,14 @@ void makePayment({required String catatan}) async  {
       toppings: item.selectedToppings
     )).toList();
 
-  List<VarianList> varianList = cartController.cartItems2
-      .where((item) => item.selectedVarian != null) // Filter out items with null selectedVarian
-      .map((item) => item.selectedVarian!) // Extract the VarianList from each CartItem2
-      .toList();
-
-  List<ToppingList> toppingList = cartController.cartItems2
-      .expand((item) => item.selectedToppings ?? [])  // Use 'expand' to flatten the list
-      .map((topping) => ToppingList(
-    toppingID: topping.toppingID,
-    nameTopping: topping.nameTopping,
-    priceTopping: topping.priceTopping,
-  ))
-      .toList();
-    Order order = Order(
+    Order2 order = Order2(
       id: generateOrderId(),
-      menus: orderedMenus,
+      orderDetails: orderedMenus,
       status: 'Sedang Diproses'.obs,
       orderMethod: 'Takeaway',
       paymentMethod: paymentMethod,
-      selectedToppings: toppingList,
-      selectedVarian: varianList,
-
-      paid: true,
       catatan: catatan ?? '-', alasan_batal: ''.obs,
-      totalprice: totalPrice2,
+      totalprice:  totalPrice2.toString(),
 
     );
 
@@ -148,7 +131,6 @@ Future<void> postOrder({required String catatan}) async{
 }
 
 Future<void> postOrderDetail({required String catatan}) async{
-  SharedPreferences prefs = await SharedPreferences.getInstance();
   print('Order ID di post order detail atas:${orderID.value}');
     final url = GlobalVariables.postOrderDetail;
     final headers = {
@@ -289,8 +271,8 @@ Future<void> postOrderDetail({required String catatan}) async{
 
 
   }
-void saveOrderToHistory(Order order) {
-  final existingItemIndex = historyController.orders.indexWhere((orderlist) => orderlist.status == order.status);
+void saveOrderToHistory(Order2 order) {
+  final existingItemIndex = historyController.orders2.indexWhere((orderlist) => orderlist.status == order.status);
   historyController.saveOrderToHistory(order);
   // historyController.orders.add(order);
 }

@@ -1,5 +1,7 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/common/model/history.dart';
 import 'package:warmindo_user_ui/pages/history_page/widget/order_box.dart';
@@ -24,7 +26,7 @@ class HistoryDetailFilterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarCustom(title: 'Riwayat Pesenan $status', style: headerRegularStyle),
+      appBar: AppbarCustom(title: 'Riwayat Pesanan $status', style: headerRegularStyle),
       body: Container(
         padding: EdgeInsets.all(10),
         child: Column(
@@ -71,8 +73,8 @@ class HistoryDetailFilterPage extends StatelessWidget {
             ),
             Expanded(
               child: Obx(() {
-                final filteredOrders = controller.orders
-                    .where((order) => order.status.value == status)
+                final filteredOrders = controller.orders2
+                    .where((order) => order.status.value == status.toLowerCase())
                     .toList();
                 return ListView.builder(
                   itemCount: filteredOrders.length,
@@ -89,3 +91,4 @@ class HistoryDetailFilterPage extends StatelessWidget {
   }
 
 }
+
