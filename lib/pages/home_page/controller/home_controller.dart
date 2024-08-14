@@ -83,7 +83,7 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
     }
   }
 
-  Future<void> checkConnectivity() async {
+  Future<void>  checkConnectivity() async {
     prefs = await SharedPreferences.getInstance();
     if (prefs != null) {
       txtUsername.value = prefs.getString('username') ?? '';

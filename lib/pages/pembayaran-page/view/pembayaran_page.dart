@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/controller/pembayaran_controller.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_view.dart';
 import 'package:warmindo_user_ui/pages/profile_page/controller/profile_controller.dart';
@@ -101,40 +102,6 @@ class PembayaranPage extends GetView<PembayaranController> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10)),
-                          border: controller.selectedButton1.value ? Border.all(
-                              color: Colors.black,
-                              width: 2
-                          ) : null,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.4),
-                              spreadRadius: 0,
-                              blurRadius: 2,
-                              offset: Offset(0, 1),
-                            ),
-                          ]
-                      ),
-                      child: InkWell(
-                        onTap: (){
-                          controller.button1();
-                        },
-                        child: Ink(
-                          child: Image.asset(
-                            width: screenWidth / 7,
-                            height: screenWidth /6.6,
-                            Images.ovo,
-                            fit: BoxFit.fill,
-                            alignment: Alignment.center,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10,),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
                           border: controller.selectedButton2.value ? Border.all(
                               color: Colors.black,
                               width: 2
@@ -156,16 +123,14 @@ class PembayaranPage extends GetView<PembayaranController> {
                           child: Image.asset(
                             width: screenWidth / 7,
                             height: screenWidth /6.6,
-                            Images.dana,
+                            Images.cashless,
                             fit: BoxFit.fill,
                             alignment: Alignment.center,
                           ),
                         ),
                       ),
                     ),
-                    Visibility(
-                      visible: profileController.user_verified.value == '1',
-                        child: Container(
+                    Container(
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -198,7 +163,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                               ),
                             ),
                           ),
-                        ))
+                        ),
                   ],
                 );
               }),
@@ -253,23 +218,41 @@ class PembayaranPage extends GetView<PembayaranController> {
                       );
                       return;
                     }
-
-
-                    if (!controller.selectedButton1.value && !controller.selectedButton2.value && !controller.selectedButton3.value) {
+                    if (!controller.selectedButton2.value && !controller.selectedButton3.value) {
                       Get.snackbar(
                         'Pesan',
                         'Silakan pilih metode pembayaranya terlebih dahulu',
                         backgroundColor: Colors.orange,
                         colorText: Colors.white,
                       );
-                      return; // Return to prevent further execution
-                    }
-                    if( controller.isLoading.value == false){
-                      controller.isLoading.value = true;
-                      controller.makePayment(catatan: controller.ctrCatatan.text);
+                    }else if(controller.selectedButton3.value){
+                      if(profileController.user_verified.value == '0'){
+                        Get.snackbar('Pesan', 'User belum terverifikasi, anda bisa mendapatnya setelah memesan selama 15 kali atau meminta ke Warmindo');
+                      }else{
+                        if( controller.isLoading.value == false){
+                          controller.isLoading.value = true;
+                          print('tunai');
+                          String fullText = controller.ctrCatatan.text;
+                          String catatanValue = fullText.replaceFirst('Catatan : ', '').trim();
+                          print(catatanValue);
+                          controller.makePayment2(catatan: catatanValue, isTunai: true);
+                        }else{
+                          return null;
+                        }
+                      }
                     }else{
-                      return null;
+                      print('cashless');
+                      if( controller.isLoading.value == false){
+                        controller.isLoading.value = true;
+                        String fullText = controller.ctrCatatan.text;
+                        String catatanValue = fullText.replaceFirst('Catatan : ', '').trim();
+                        print(catatanValue);
+                        controller.makePayment2(catatan: catatanValue, isTunai: false);
+                      }else{
+                        return null;
+                      }
                     }
+
                   },
                   child: Obx(()=>
                       Container(
@@ -289,19 +272,13 @@ class PembayaranPage extends GetView<PembayaranController> {
                               strokeWidth: 3, // Adjust the stroke width if needed
                             ),
                           ),
-                        )
-                            : Center(
-                              child: Text(
-                                                        "Bayar",
-                                                        style: categoryMenuTextStyle,
-                                                        textAlign: TextAlign.center,
-                                                      ),
+                        ):Center(
+                              child: Text("Bayar", style: categoryMenuTextStyle, textAlign: TextAlign.center,
+                              ),
                             ),
                       ),
                   ),
                 ),
-
-
             ],
           ),
         ),
