@@ -40,6 +40,8 @@ class ColorResources {
 
   //Homepage Color
 static const Color backgroundCardColor = Color.fromARGB(255, 255, 255, 255);
+  static const Color open = Color.fromARGB(255, 198, 237, 188);
+  static const Color close = Color.fromARGB(255, 237, 188, 188);
 
   //Profile
   static const Color profileBg = Color(0xFFD15353);
@@ -61,3 +63,4 @@ static const Color backgroundCardColor = Color.fromARGB(255, 255, 255, 255);
   static const Color labelcomplete = Color(0xFF007F3A);
   static const Color labelcancel = Color(0xFFC62828);
 }
+

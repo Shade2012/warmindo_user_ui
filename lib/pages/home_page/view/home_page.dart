@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/home_controller.dart';
 import 'package:warmindo_user_ui/pages/home_page/shimmer/homeshimmer.dart';
 import 'package:warmindo_user_ui/pages/home_page/view/home_snack.dart';
+import 'package:warmindo_user_ui/pages/home_page/widget/home_status.dart';
 import 'package:warmindo_user_ui/widget/myCustomPopUp/myPopup_controller.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 import 'package:warmindo_user_ui/widget/cart.dart';
@@ -31,16 +32,20 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
+            controller.isLoading.value = true;
             await controller.scheduleController.fetchSchedule();
             await popUpController.fetchVarian();
             await popUpController.fetchTopping();
+            await controller.fetchname();
             await controller.fetchProduct();
+            // controller.scheduleController.jadwalElement.clear();
           },
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),// Wrap with SingleChildScrollView
             child: Container(
               margin: EdgeInsets.only(left: 20, right: 20, top: 30),
               child: Obx(() {
+
                 if (!controller.isConnected.value) {
                   return Center(
                     child: Container(
@@ -52,24 +57,18 @@ class HomePage extends StatelessWidget {
                     ),
                   );
                 }
+
                 if (controller.isLoading.value) {
                   return HomeSkeleton();
                 }
+                if(controller.scheduleController.jadwalElement.isEmpty){
+                  return Container(
+                      height: screenHeight * 0.7 ,child: Center(child: Text('Server sedang sibuk, silahkan reload',style: boldTextStyle,),));
+                }
                 return Column(
+
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text('Status Toko ',style: bold17,),
-                        Text(
-                          controller.scheduleController.jadwalElement[0].is_open ? 'Buka' : 'Tutup',
-                          style: bold17.copyWith(
-                            color: controller.scheduleController.jadwalElement[0].is_open ? Colors.green : Colors.red,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20,),
                     Text("Selamat Pagi", style: regularTextStyle),
                     Container(
                       margin: EdgeInsets.only(bottom: 40),
@@ -79,6 +78,7 @@ class HomePage extends StatelessWidget {
                         style: boldTextStyle2,
                       ),
                     ),
+
                    Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -88,6 +88,8 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 20,),
+                    HomeStatus(),
+                    SizedBox(height: 20,),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: CarouselSlider(

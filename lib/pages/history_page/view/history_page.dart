@@ -5,13 +5,11 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/history_page/shimmer/history_shimmer.dart';
 import 'package:warmindo_user_ui/pages/history_page/widget/history_category.dart';
-import 'package:warmindo_user_ui/pages/history_page/widget/order_box.dart';
-import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 import '../../../utils/themes/textstyle_themes.dart';
-import '../../../widget/appBar.dart';
+
 import '../../../widget/myCustomPopUp/myPopup_controller.dart';
 import '../controller/history_controller.dart';
-import '../../../common/model/history.dart';
+
 
 class HistoryPage extends StatelessWidget {
   final MyCustomPopUpController popUpController = Get.put(MyCustomPopUpController());

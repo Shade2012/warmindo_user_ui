@@ -19,6 +19,7 @@ import '../../../widget/rounded_image.dart';
 import '../../../widget/snack_widget.dart';
 import '../../detail-menu_page/view/detail_menu_page.dart';
 import '../../home_page/shimmer/homeshimmer.dart';
+import '../../home_page/widget/home_status.dart';
 
 class GuestHomePage extends StatelessWidget {
   final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
@@ -58,12 +59,6 @@ class GuestHomePage extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text('Status Toko: ',style: bold17,),
-                        Text( controller.scheduleController.jadwalElement[0].is_open ? 'Buka' : 'Tutup',style: bold17,),
-                      ],
-                    ),
                      Text("Selamat Pagi", style: regularTextStyle),
                     Container(
                       margin: EdgeInsets.only(bottom: 40),
@@ -77,6 +72,8 @@ class GuestHomePage extends StatelessWidget {
                     SnackWidget(true),
                       ],
                     ),
+                    SizedBox(height: 20,),
+                    HomeStatus(),
                 SizedBox(height: 20,),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),

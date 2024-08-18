@@ -66,6 +66,7 @@ class MenuList {
   final String? second_category;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String? statusMenu;
   final int? variantId;
   final List<ToppingList>? toppings;
   int quantity;
@@ -73,6 +74,7 @@ class MenuList {
   MenuList(
       {
     required  this.menuId,
+        required  this.statusMenu,
     required  this.image,
     required this.nameMenu,
     required  this.price,
@@ -98,6 +100,7 @@ class MenuList {
     ratings: double.parse(json["ratings"]), // Parsing string to double
     description: json["description"],
     second_category: json["second_category"],
+    statusMenu: json['status_menu'],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -112,6 +115,7 @@ class MenuList {
     "ratings": ratings.toString(),
     "description": description,
     "second_category": second_category,
+    "status_menu": statusMenu,
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
   };

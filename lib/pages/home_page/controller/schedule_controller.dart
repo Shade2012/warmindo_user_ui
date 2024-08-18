@@ -11,32 +11,42 @@ import '../../../common/global_variables.dart';
 
 class ScheduleController extends GetxController {
   RxBool isLoading = true.obs;
-  RxBool isopen = false.obs;
-  late final tz.Location asiaJakarta;
-  late final tz.TZDateTime now;
-  late final String hariIni;
-  List<ScheduleList> jadwalElement = <ScheduleList>[];
+  RxBool isOpen = false.obs;
+  tz.Location? asiaJakarta; // Make asiaJakarta nullable
+  late String hariIni;
+  RxList<ScheduleList> jadwalElement = <ScheduleList>[].obs;
   RxList<ScheduleList> scheduleElement = <ScheduleList>[].obs;
 
-
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    initializeDateFormatting('id_ID', null).then((_) {
-      tz.initializeTimeZones();
-      asiaJakarta = tz.getLocation('Asia/Jakarta');
-      now = tz.TZDateTime.now(asiaJakarta);
-      hariIni = DateFormat('EEEE', 'id_ID').format(now);
+    await _initializeSchedule();
+  }
 
-      // Memanggil fetchSchedule di sini untuk memastikan dijalankan setelah inisialisasi selesai
-      fetchSchedule();
-    }).catchError((e) {
-      print('Error initializing date formatting: $e');
-    });
+  Future<void> _initializeSchedule() async {
+    try {
+      await initializeDateFormatting('id_ID', null);
+      tz.initializeTimeZones();
+      asiaJakarta = tz.getLocation('Asia/Jakarta'); // Initialize asiaJakarta
+      await fetchSchedule(); // Call fetchSchedule only after initialization
+    } catch (e) {
+      print('Error initializing schedule: $e');
+    }
   }
 
   Future<void> fetchSchedule() async {
     isLoading.value = true;
+
+    if (asiaJakarta == null) {
+      print('asiaJakarta is not initialized.');
+      isLoading.value = false;
+      return; // Stop execution if asiaJakarta is not initialized
+    }
+
+    final now = tz.TZDateTime.now(asiaJakarta!); // Use the non-null value
+    hariIni = DateFormat('EEEE', 'id_ID').format(now);
+    print('hariIni updated to: $hariIni');
+
     try {
       final response = await http.get(
         Uri.parse(GlobalVariables.apiSchedule),
@@ -44,10 +54,8 @@ class ScheduleController extends GetxController {
       if (response.statusCode == 200) {
         scheduleElement.value = scheduleListFromJson(response.body);
         final List<ScheduleList> jadwalHariIni = scheduleElement.where((item) => item.days == hariIni).toList();
-
         if (jadwalHariIni.isNotEmpty) {
-          // Filter the scheduleElement list to only include today's schedule
-          jadwalElement = jadwalHariIni;
+          jadwalElement.value = jadwalHariIni;
         } else {
           print('Tidak ada jadwal untuk hari ini');
         }
@@ -55,10 +63,11 @@ class ScheduleController extends GetxController {
         print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Di catch saat ini: $hariIni');
       print('Exception: $e');
     } finally {
       isLoading.value = false;
     }
   }
 }
+
+

@@ -21,7 +21,7 @@ import 'package:warmindo_user_ui/pages/guest_profile_page/binding/guest_profile_
 import 'package:warmindo_user_ui/pages/guest_profile_page/view/guest_profile_page.dart';
 
 import 'package:warmindo_user_ui/pages/history_page/binding/history_binding.dart';
-import 'package:warmindo_user_ui/common/model/history.dart';
+
 import 'package:warmindo_user_ui/pages/history_page/view/history_page.dart';
 import 'package:warmindo_user_ui/pages/home_page/binding/home_binding.dart';
 import 'package:warmindo_user_ui/pages/home_page/view/home_page.dart';
@@ -52,7 +52,7 @@ import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_p
 part 'AppRoutes.dart';
 
 class AppPages {
-  late Order order2;
+
   AppPages._();
 
   static const INITIAL = Routes.SPLASH_SCREEN;

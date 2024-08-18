@@ -14,7 +14,6 @@ class NavigatorController extends GetxController {
 
   void changeIndex(int index) async {
     historyController.fetchHistory();
-    cartController.fetchCart();
     currentIndex.value = index;
     menuController.fetchProduct();
     scheduleController.fetchSchedule();

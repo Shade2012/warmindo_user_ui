@@ -5,17 +5,21 @@ import 'package:get/get.dart';
 
 import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../common/model/cartmodel.dart';
+import '../../pages/menu_page/controller/menu_controller.dart';
 import '../../utils/themes/color_themes.dart';
 import '../../utils/themes/textstyle_themes.dart';
+import '../myCustomPopUp/myPopup_controller.dart';
 
 
 class CounterWidget2 extends StatelessWidget {
+  final MenuPageController menuController = Get.put(MenuPageController());
+  final popupController = Get.find<MyCustomPopUpController>();
   final cartController = Get.put(CartController());
   int index;
   CounterWidget2({required this.index });
   @override
   Widget build(BuildContext context) {
-    final cartItem = cartController.cartItems2[index];
+    final cartItem = cartController.cartItems2.firstWhere((element) => element.cartId == index);
     print(cartItem.productName);
     return  Container(
       child:  Row(
@@ -30,8 +34,21 @@ class CounterWidget2 extends StatelessWidget {
             ),
             child: GestureDetector(
               onTap: (){
-    cartController.decrementQuantity(cartItem);
-    cartController.isLoading.value = true;
+                if(cartItem.quantity.value == 0){
+                  cartController.decrementQuantity(cartItem);
+                  cartController.cartItems2.refresh();
+                  cartController.isLoading.value = true;
+                  popupController.isLoading.value = true;
+                  Future.delayed(Duration(seconds: 2), () {
+                    popupController.isLoading.value = false;
+                  });
+                }else{
+                  menuController.isLoading.value = true;
+                  cartController.isLoading.value = true;
+                  cartController.decrementQuantity(cartItem);
+                  menuController.isLoading.value = false;
+                  cartController.cartItems2.refresh();
+                }
     },
               child: Icon(
                 Icons.remove,
@@ -39,14 +56,14 @@ class CounterWidget2 extends StatelessWidget {
               ),
             )
           ),
-
-
           SizedBox(
             width: 15,
           ),
-          Text(
-            '${cartItem.quantity}',
-            style: boldTextStyle,
+          Obx(()
+            => Text(
+              '${cartItem.quantity.value}',
+              style: boldTextStyle,
+            ),
           ),
 
           SizedBox(
@@ -63,8 +80,9 @@ class CounterWidget2 extends StatelessWidget {
               ),
               child: GestureDetector(
                 onTap: (){
-                  cartController.incrementQuantity(cartItem);
                   cartController.isLoading.value = true;
+                  cartController.incrementQuantity(cartItem);
+                  cartController.cartItems2.refresh();
                 },
                 child: Icon(
                   Icons.add,
@@ -72,9 +90,6 @@ class CounterWidget2 extends StatelessWidget {
                 ),
               )
           ),
-
-
-
         ],
       ),
     );

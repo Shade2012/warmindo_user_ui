@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:warmindo_user_ui/common/model/history.dart';
+
 import 'package:warmindo_user_ui/pages/history_page/widget/order_box.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/appBar.dart';
@@ -74,14 +74,18 @@ class HistoryDetailFilterPage extends StatelessWidget {
             Expanded(
               child: Obx(() {
                 final filteredOrders = controller.orders2
-                    .where((order) => order.status.value == status.toLowerCase())
+                    .where((order) => order.status.value.toLowerCase() == status.toLowerCase())
                     .toList();
-                return ListView.builder(
-                  itemCount: filteredOrders.length,
-                  itemBuilder: (context, index) {
-                    return OrderBox(order: filteredOrders[index]);
-                  },
-                );
+                if(filteredOrders.length == 0){
+                  return Center(child: Text('Belum ada data'),);
+                }else{
+                  return ListView.builder(
+                    itemCount: filteredOrders.length,
+                    itemBuilder: (context, index) {
+                      return OrderBox(order: filteredOrders[index]);
+                    },
+                  );
+                }
               }),
             ),
           ],

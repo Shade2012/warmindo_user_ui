@@ -10,6 +10,8 @@ Color getLabelColor(String status) {
     case 'menunggu batal' :
     case 'pesanan siap' :
       return Colors.white60;
+    case 'menunggu pembayaran' :
+      return Colors.black;
     default:
       return Colors.red; // Default to red for other statuses
   }

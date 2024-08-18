@@ -239,27 +239,23 @@ class PembayaranPage extends GetView<PembayaranController> {
                       if(profileController.user_verified.value == '0'){
                         Get.snackbar('Pesan', 'User belum terverifikasi, anda bisa mendapatnya setelah memesan selama 15 kali atau meminta ke Warmindo');
                       }else{
-                        if( controller.isLoading.value == false){
+                        if(controller.isLoading.value == false){
                           controller.isLoading.value = true;
-                          print('tunai');
                           String fullText = controller.ctrCatatan.text;
                           String catatanValue = fullText.replaceFirst('Catatan : ', '').trim();
-                          print(catatanValue);
                           controller.makePayment2(catatan: catatanValue, isTunai: true);
-                          // controller.makePayment(catatan: catatanValue);
                         }else{
                           return null;
                         }
                       }
                     }else{
-                      print('cashless');
+
                       if( controller.isLoading.value == false){
                         controller.isLoading.value = true;
                         String fullText = controller.ctrCatatan.text;
                         String catatanValue = fullText.replaceFirst('Catatan : ', '').trim();
                         print(catatanValue);
-                        controller.makePayment(catatan: catatanValue);
-                        // controller.makePayment2(catatan: catatanValue, isTunai: false);
+                        controller.makePayment2(catatan: catatanValue, isTunai: false);
                       }else{
                         return null;
                       }

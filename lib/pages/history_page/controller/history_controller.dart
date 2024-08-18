@@ -6,9 +6,10 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get_rx/get_rx.dart';
 import 'package:intl/intl.dart';
+import 'package:warmindo_user_ui/common/model/cart_model2.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
-import 'package:warmindo_user_ui/common/model/history.dart';
+
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/widget/batal_popup.dart';
 import '../../../common/global_variables.dart';
@@ -97,16 +98,10 @@ class HistoryController extends GetxController {
   void changeTime(String newTimes) {
     selectedTimes.value = newTimes;
   }
-  void updateOrderStatus(Order order, String newStatus) {
-    order.status.value = newStatus;
-  }
   void saveOrderToHistory(Order2 order) {
     orders2.add(order);
   }
 
-  List<Order2> getOrdersByStatus(String status) {
-    return orders2.where((o) => o.status.value.toLowerCase() == status.toLowerCase()).toList();
-  }
   List<Order2> filteredHistory() {
     if (selectedCategory.value == null || selectedCategory.value == 'Semua') {
       return orders2;
@@ -119,11 +114,13 @@ class HistoryController extends GetxController {
 
 
   String getButtonText(Order2 order) {
-    if(order.status == 'Selesai' || order.status == "Batal")
+    if(order.status.value.toLowerCase() == 'selesai' || order.status.value.toLowerCase() == "batal")
     {
       return "Pesan Lagi";
-    } else if (order.status == 'Sedang Diproses'){
+    } else if (order.status.value.toLowerCase() == 'sedang diproses'){
       return 'Batalkan';
+    }else if (order.status.value.toLowerCase() == 'menunggu pembayaran'){
+      return 'Bayar';
     } else{
       return 'Menunggu';
     }
@@ -148,8 +145,8 @@ class HistoryController extends GetxController {
   }
 
   void goToCart(Order2 order) {
-    List<CartItem> itemsToAdd = order.orderDetails.map((menu) {
-      return CartItem(
+    List<CartItem2> itemsToAdd = order.orderDetails.map((menu) {
+      return CartItem2(
         productName: menu.nameMenu,
         productImage: menu.image,
         price: menu.price,
@@ -159,20 +156,22 @@ class HistoryController extends GetxController {
     }).toList();
 
     // Add the CartItem objects to the cartItems list
-    cartController.cartItems.addAll(itemsToAdd);
+    cartController.cartItems2.addAll(itemsToAdd);
 
     // Navigate to the cart screen
     Get.to(CartPage());
   }
 
   void onButtonPressed(Order2 order,BuildContext context) {
-    if(order.status == 'Selesai' || order.status == "Batal")
+    if(order.status.value.toLowerCase() == 'selesai' || order.status.value.toLowerCase() == "batal")
       {
         goToCart(order);
-      } else if (order.status == 'Sedang Diproses'){
+      } else if (order.status.value.toLowerCase() == 'sedang diproses'){
       showDialog(context: context,  builder: (BuildContext context) {
         return BatalPopup(order: order,);
       },);
+    } else if (order.status.value.toLowerCase() == 'menunggu pembayaran'){
+     Get.snackbar('pesan', 'menunggu bayar');
     } else{
       return null;
     }

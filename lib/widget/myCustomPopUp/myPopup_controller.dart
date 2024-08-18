@@ -9,14 +9,17 @@ import 'package:warmindo_user_ui/common/model/toppings.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:http/http.dart' as http;
 import '../../common/global_variables.dart';
+import '../../common/model/cart_model2.dart';
 import '../../common/model/varians.dart';
 import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../pages/cart_page/view/cart_page.dart';
 import '../counter/counter_controller.dart';
+import 'detailPopup.dart';
 import 'guest_reusable_card.dart';
 import 'myCustomPopup.dart';
 
 class MyCustomPopUpController extends GetxController {
+  late final CartController cartController;
   RxBool isLoading = true.obs;
   RxInt quantity = 0.obs;
   // List<ScheduleList> topping = <ScheduleList>[];
@@ -33,25 +36,25 @@ class MyCustomPopUpController extends GetxController {
     super.onInit();
     await fetchTopping();
     await fetchVarian();
-
+    cartController = Get.find<CartController>();
   }
-  final CartController cartController = Get.put(CartController());
 
-  Future<void> fetchSelectedToppings(int productId) async {
-    final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.productId == productId);
+
+  Future<void> fetchSelectedToppings(int cartid) async {
+    final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.cartId == cartid);
     if (cartItem != null) {
-      selectedToppings[productId] = cartItem.selectedToppings ?? [];
+      selectedToppings[cartid] = cartItem.selectedToppings ?? [];
     } else {
-      selectedToppings[productId] = [];
+      selectedToppings[cartid] = [];
     }
   }
-  Future<void> fetchSelectedVarian(int productId) async {
-    final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.productId == productId);
+  Future<void> fetchSelectedVarian(int cartid) async {
+    final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.cartId == cartid);
     if (cartItem != null) {
-      selectedVarian[productId] = cartItem.selectedVarian;
-      print('Fetched selected varian: ${selectedVarian[productId]}');
+      selectedVarian[cartid] = cartItem.selectedVarian;
+      print('Fetched selected varian: ${selectedVarian[cartid]}');
     } else {
-      selectedVarian[productId] = null;
+      selectedVarian[cartid] = null;
     }
   }
   Future<void> fetchTopping () async{
@@ -107,9 +110,9 @@ class MyCustomPopUpController extends GetxController {
     }
   }
   void showCustomModalForItem(MenuList product, BuildContext context, int quantity, {required int cartid}) async {
-  await fetchSelectedToppings(product.menuId);
-    await fetchSelectedVarian(product.menuId);
-
+    print('ini cart id $cartid');
+  await fetchSelectedToppings(cartid);
+    await fetchSelectedVarian(cartid);
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -132,7 +135,7 @@ class MyCustomPopUpController extends GetxController {
                   return MyCustomPopUp(
                     product: product,
                     quantity: quantity.obs,
-                    cartid: cartid,
+                    cartid: cartid.obs,
                     scrollController: scrollController,
                   );
                 },
@@ -159,33 +162,48 @@ class MyCustomPopUpController extends GetxController {
       );
 
   }
+  void showDetailPopupModal(BuildContext context,MenuList product) {
+    cartController.fetchCart();
+    showModalBottomSheet<dynamic>(
+      context: context,
+      isScrollControlled: true,
+      elevation: 0,
 
-  void addToCart({required int menuId, required int quantity}) async {
-    final newCartItem = await cartController.addCart(menuID: menuId, quantity: quantity);
-    if (newCartItem != null) {
-      print('Item added to cart: ${newCartItem.productName}');
-    } else {
-      print('Failed to add item to cart');
-    }
-  }
-  void addToCart2({required MenuList product, required int quantity}) async {
-    final newCartItem = await cartController.addToCart2(productId: product.menuId, productName: product.nameMenu, productImage: product.image, price: product.price, quantity: quantity);
-    if (newCartItem != null) {
-      print('Item added to cart: ${newCartItem.productName}');
-    } else {
-      print('Failed to add item to cart');
-    }
+      builder:(context) {
+
+        return PopupDetail(menuList: product,);
+      },
+    );
+
   }
 
+  Future<void> addToCart2({
+    required BuildContext context,
+    required MenuList product,
+    required int quantity,
+    required int cartID,
+  }) async {
+    await cartController.addToCart2(
+      context: context,
+      productId: product.menuId,
+      productName: product.nameMenu,
+      productImage: product.image,
+      price: product.price,
+      quantity: quantity,
+      cartID: cartID,
+    );
+  }
 
-  void toggleTopping(int menuId, ToppingList toppingItem) {
-    if (selectedToppings[menuId] == null) {
-      selectedToppings[menuId] = [];
+
+
+  void toggleTopping(int cartId, ToppingList toppingItem) {
+    if (selectedToppings[cartId] == null) {
+      selectedToppings[cartId] = [];
     }
-    if (selectedToppings[menuId]!.contains(toppingItem)) {
-      selectedToppings[menuId]!.remove(toppingItem);
+    if (selectedToppings[cartId]!.contains(toppingItem)) {
+      selectedToppings[cartId]!.remove(toppingItem);
     } else {
-      selectedToppings[menuId]!.add(toppingItem);
+      selectedToppings[cartId]!.add(toppingItem);
     }
     selectedToppings.refresh();
   }

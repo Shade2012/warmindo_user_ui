@@ -54,14 +54,15 @@ class ReusableCard extends StatelessWidget {
             );
           },
           child: Container(
-              foregroundDecoration: scheduleController.jadwalElement[0].is_open
+              foregroundDecoration: (product.stock! > 1 && scheduleController.jadwalElement[0].is_open)
                   ? null
                   : BoxDecoration(
                 color: Colors.grey,
                 backgroundBlendMode: BlendMode.saturation,
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
-            width: width,
+
+              width: width,
             height: height,
             decoration: BoxDecoration(
               boxShadow: [
@@ -81,12 +82,12 @@ class ReusableCard extends StatelessWidget {
                 Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(20), // Apply borderRadius here
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight:  Radius.circular(20)), // Apply borderRadius here too // Apply borderRadius here
                       child: Container(
                         width: double.infinity, // Use the screen width
                         height: 104,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20), // Apply borderRadius here too
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight:  Radius.circular(20)), // Apply borderRadius here too
                         ),
                         child: FadeInImage(
                           image: NetworkImage(product.image),

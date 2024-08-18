@@ -31,6 +31,8 @@ class Order2 {
     return Order2(
       id: json['id'],
       totalprice: json['price_order'],
+      paymentMethod: json['payment_method'] ?? '-',
+      orderMethod: json['order_method'] ?? '-',
       orderDetails: (json['orderDetails'] as List)
           .map((item) => MenuList.fromOrderDetailJson(item))
           .toList(),

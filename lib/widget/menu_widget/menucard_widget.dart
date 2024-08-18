@@ -81,8 +81,9 @@ class MenuCategory extends StatelessWidget {
           itemBuilder: (context, index) {
             final menu = filteredMenuList[index];
             return Obx(() {
+
               final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.productId == menu.menuId);
-              final menuQuantity = cartItem?.quantity.value ?? 0;
+              RxInt totalQuantity = cartController.getTotalQuantityForMenuID(menu.menuId);
               return GestureDetector(
                 onTap: () {
                   Get.toNamed(
@@ -94,7 +95,7 @@ class MenuCategory extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  foregroundDecoration: scheduleController.jadwalElement[0].is_open
+                  foregroundDecoration: (menu.stock! > 1 && scheduleController.jadwalElement[0].is_open)
                       ? null
                       : BoxDecoration(
                     color: Colors.grey,
@@ -169,7 +170,7 @@ class MenuCategory extends StatelessWidget {
                                           Spacer(),
 
                                           Visibility(
-                                            visible: menuQuantity > 0,
+                                            visible: totalQuantity.value > 0,
                                             child: InkWell(
                                               onTap: () {
                                                 if(scheduleController.jadwalElement[0].is_open == false){
@@ -178,9 +179,12 @@ class MenuCategory extends StatelessWidget {
                                                   if (isGuest) {
                                                     popUpcontroller.showCustomModalForGuest(context);
                                                   } else {
-                                                    popUpcontroller.showCustomModalForItem(
-                                                        menu, context, menuQuantity,
-                                                        cartid: cartItem!.cartId ?? 0);
+                                                    if(menu.stock! < 1){
+                                                      Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
+                                                    }
+                                                    else{
+                                                      popUpcontroller.showDetailPopupModal(context, menu);
+                                                    }
                                                   }
                                                 }
                                               },
@@ -194,14 +198,14 @@ class MenuCategory extends StatelessWidget {
                                                   BorderRadius.circular(5),
                                                 ),
                                                 child: Text(
-                                                  '${menuQuantity.toString()} Item',overflow: TextOverflow.ellipsis,
+                                                  '${totalQuantity.value.toString()} Item',overflow: TextOverflow.ellipsis,
                                                   style: bold12,
                                                 ),
                                               ),
                                             ),
                                           ),
                                           Visibility(
-                                            visible: menuQuantity == 0,
+                                            visible: totalQuantity.value == 0,
                                             child: InkWell(
                                               onTap: () async {
                                                 if(scheduleController.jadwalElement[0].is_open == false){
@@ -243,13 +247,27 @@ class MenuCategory extends StatelessWidget {
                                                                 cartController.goToVerification();
                                                               });
                                                         });
-                                                      }else{
-                                                        bool variantRequired = popUpcontroller.varianList.any((varian) => varian.category == menu.nameMenu);
-                                                        if(variantRequired){
-                                                          popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: 0);
-                                                        } else {
-                                                          final newCartItem = await cartController.addToCart2(productId: menu.menuId, productName: menu.nameMenu, productImage: menu.image, price: menu.price, quantity: 1,);
-                                                          popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: newCartItem?.cartId ?? 0);
+                                                      }
+                                                      else{
+                                                        if(menu.stock! < 1 ){
+                                                          Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
+                                                        }
+                                                        else{
+                                                          bool variantRequired = popUpcontroller.varianList.any((varian) => varian.category == menu.nameMenu);
+                                                          if(variantRequired){
+                                                            popUpcontroller.isLoading.value = true;
+                                                          Future.delayed(const Duration(seconds: 2), () {
+                                                            popUpcontroller.isLoading.value = false;
+                                                          });
+                                                            popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: 1);
+                                                          }
+                                                          else {
+                                                            print(cartItem?.cartId);
+                                                            print(cartController.cartItems2);
+                                                            popUpcontroller.addToCart2(product: menu, quantity: 1, cartID: cartItem?.cartId?.value ?? 0, context: context,);
+                                                            final cartItem2 = cartController.cartItems2.firstWhereOrNull((item) => item.productId == menu.menuId);
+                                                            popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: cartItem2?.cartId?.value ?? 0);
+                                                          }
                                                         }
                                                       }
                                                     }

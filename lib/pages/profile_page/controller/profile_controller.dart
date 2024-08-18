@@ -56,7 +56,7 @@ class ProfileController extends GetxController {
           if (data['success']) {
             txtName.value = data['user']['name'];
             txtUsername.value = data['user']['username'];
-            image.value = data['user']['profile_picture'];
+            image.value = data['user']['profile_picture'] ?? '';
             user_verified.value = data['user']['user_verified'];
             print("Fetched username: ${txtUsername.value}");
           } else {

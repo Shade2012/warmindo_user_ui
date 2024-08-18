@@ -31,8 +31,8 @@ class CartPage extends StatelessWidget {
       appBar: AppBar(title: Text('Keranjang',style: headerRegularStyle,),centerTitle: true,automaticallyImplyLeading: false,),
       body: RefreshIndicator(
         onRefresh: () async {
-          await popUpController.fetchVarian();
-          await popUpController.fetchTopping();
+          controller.isLoading.value = true;
+          await controller.menuController.fetchProduct();
           await controller.fetchCart();
           print('ini token:${controller.token.value}');
         },
