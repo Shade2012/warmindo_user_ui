@@ -53,7 +53,7 @@ class GuestHomeController extends GetxController {
         nameMenu: 'No items found',
         price: 0,
         category: categoryName,
-        description: 'No description available',
+        description: 'No description available', statusMenu: '1',
       );
     }
     filteredItems.sort((a, b) => b.ratings?.compareTo(a.ratings ?? 0) ?? 0);

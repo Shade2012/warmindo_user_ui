@@ -7,9 +7,10 @@ import 'dart:convert';
 
 List<ScheduleList> scheduleListFromJson(String str) {
   final jsonData = json.decode(str);
-  return List<ScheduleList>.from(jsonData["data"].map((item) => ScheduleList.fromJson(item)));
+  return List<ScheduleList>.from(
+      jsonData["data"].map((item) => ScheduleList.fromJson(item))
+  );
 }
-
 String scheduleToJson(Schedule data) => json.encode(data.toJson());
 
 class Schedule {
@@ -47,25 +48,23 @@ class Data {
 class ScheduleList {
   final int id;
   final bool is_open;
-  final String days;
-  final String start_time;
-  final String end_time;
+  final String? days;
+  final String? start_time;
+  final String? end_time;
   final int? temporary_closure_duration;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  ScheduleList(
-      {
-        required  this.id,
-        required  this.is_open,
-        required this.days,
-        required  this.start_time,
-        required this.end_time,
-        this.temporary_closure_duration,
-        this.createdAt,
-        this.updatedAt,
-
-      });
+  ScheduleList({
+    required this.id,
+    required this.is_open,
+    this.days,
+    this.start_time,
+    this.end_time,
+    this.temporary_closure_duration,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   factory ScheduleList.fromJson(Map<String, dynamic> json) => ScheduleList(
     id: json["id"],
@@ -74,8 +73,8 @@ class ScheduleList {
     start_time: json["start_time"],
     end_time: json["end_time"],
     temporary_closure_duration: json["temporary_closure_duration"] != null ? int.parse(json["temporary_closure_duration"]) : null,
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
+    createdAt: json["created_at"] != null ? DateTime.parse(json["created_at"]) : null,
+    updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : null,
   );
 
   Map<String, dynamic> toJson() => {
@@ -91,9 +90,10 @@ class ScheduleList {
 
   @override
   String toString() {
-    return 'ScheduleList(id: $id, is_open: $is_open, days: $days, start_time: $start_time, end_time: $end_time,temporary_closure_duration: $temporary_closure_duration)';
+    return 'ScheduleList(id: $id, is_open: $is_open, days: $days, start_time: $start_time, end_time: $end_time, temporary_closure_duration: $temporary_closure_duration)';
   }
 }
+
 
 
 

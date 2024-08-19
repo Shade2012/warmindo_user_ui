@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/widget/ReusableTextBox.dart';
 
-import '../common/model/history.dart';
+
 import '../common/model/history2_model.dart';
 import '../pages/history_page/controller/history_controller.dart';
 import '../utils/themes/buttonstyle_themes.dart';
@@ -55,7 +55,7 @@ class BatalPopup extends StatelessWidget {
                     if(ctrAlasan.text.isEmpty){
                     Get.snackbar("Pesan", "Beri alasan terlebih dahulu kenapa membatalkan pesanan",backgroundColor: Colors.white,);
                     } else {
-                      order.status.value = "Menunggu Batal";
+                      order.status.value = "menunggu batal";
                       order.alasan_batal!.value = '${ctrAlasan.text}';
                       historyController.orders2.refresh();
                       Get.back();

@@ -1,14 +1,16 @@
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:warmindo_user_ui/common/model/toppings.dart';
 import 'package:warmindo_user_ui/common/model/varians.dart';
 
 class CartItem2 {
-  final int? cartId;
+  RxInt? cartId;
   final int productId;
   final String productName;
   final String productImage;
+
   final int price;
-  RxInt quantity;
+  RxInt quantity = 1.obs;
   VarianList? selectedVarian;
   List<ToppingList>? selectedToppings;
 
@@ -25,7 +27,7 @@ class CartItem2 {
 
   factory CartItem2.fromJson(Map<String, dynamic> json) {
     return CartItem2(
-      cartId: json['id'],
+      cartId: (json['id'] != null) ? (json['id'] as int).obs : null,
       productId: json['menu_id'],
       productName: json['menu'] != null ? json['menu']['name_menu'] : '',
       productImage: json['menu'] != null ? json['menu']['image'] : '',
@@ -40,7 +42,7 @@ class CartItem2 {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': cartId,
+      'id': cartId?.value, // Convert RxInt to int
       'menu_id': productId,
       'quantity': quantity.value.toString(),
       'menu': {
@@ -56,7 +58,7 @@ class CartItem2 {
 
   @override
   String toString() {
-    return 'CartItem2(cartId: $cartId, productId: $productId, productName: $productName, productImage: $productImage, price: $price, quantity: ${quantity.value}, selectedVarian: $selectedVarian, selectedToppings: $selectedToppings)';
+    return 'CartItem2(cartId: ${cartId?.value}, productId: $productId, productName: $productName, productImage: $productImage, price: $price, quantity: ${quantity.value}, selectedVarian: $selectedVarian, selectedToppings: $selectedToppings)';
   }
 
   static int _parsePrice(dynamic price) {
@@ -79,4 +81,6 @@ class CartItem2 {
     }
   }
 }
+
+
 

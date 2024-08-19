@@ -8,11 +8,11 @@ figmaFontsize(double fontSize) {
 }
 
 //Colors
-Color primaryTextColor = Color(0xFF000000);
-Color secondaryTextColor = Color(0xFFffffff);
-Color greyTextColor = Color(0xFF696969);
-Color greenTextColor = Color(0xFF007F6D);
-Color bluelinkTextColor = Color(0xFF289BF6);
+Color primaryTextColor = const Color(0xFF000000);
+Color secondaryTextColor = const Color(0xFFffffff);
+Color greyTextColor = const Color(0xFF696969);
+Color greenTextColor = const Color(0xFF007F6D);
+Color bluelinkTextColor =const Color(0xFF289BF6);
 const Color redTextColor = Color(0xFFC62828);
 
 TextStyle BottomNavbarSelectedTextStyle = GoogleFonts.oxygen(
@@ -92,6 +92,11 @@ TextStyle boldTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.bold,
         fontSize: figmaFontsize(15)));
 
+TextStyle boldText13 = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(15)));
 
 TextStyle otpcode = GoogleFonts.oxygen(
     textStyle: TextStyle(
@@ -154,6 +159,12 @@ TextStyle boldphoneNumberTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
         color: primaryTextColor,
         fontWeight: FontWeight.bold,
+        fontSize: figmaFontsize(14)));
+
+TextStyle boldphoneNumberRegularTextStyle = GoogleFonts.oxygen(
+    textStyle: TextStyle(
+        color: primaryTextColor,
+        fontWeight: FontWeight.normal,
         fontSize: figmaFontsize(14)));
 
 TextStyle bold12 = GoogleFonts.oxygen(
@@ -307,11 +318,7 @@ TextStyle categoryMenuBarTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.w300,
         fontSize: figmaFontsize(17)));
 
-TextStyle bold17 = GoogleFonts.oxygen(
-    textStyle: TextStyle(
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
-        fontSize: figmaFontsize(17)));
+
 
 TextStyle categoryMenuTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(
@@ -326,11 +333,6 @@ TextStyle menuNameTextStyle = GoogleFonts.oxygen(
         fontWeight: FontWeight.w400,
         fontSize: figmaFontsize(16)));
 
-TextStyle menuDescTextStyle = GoogleFonts.oxygen(
-    textStyle: TextStyle(
-        color: primaryTextColor,
-        fontWeight: FontWeight.w400,
-        fontSize: figmaFontsize(12)));
 
 TextStyle menuPriceTextStyle = GoogleFonts.oxygen(
     textStyle: TextStyle(

@@ -1,14 +1,14 @@
-import 'package:flutter/cupertino.dart';
+
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/widget/myRatingPopUp/rating_controller.dart';
 
 import '../../common/model/history2_model.dart';
 import '../../pages/history_page/controller/history_controller.dart';
-import '../../common/model/history.dart';
-import '../../common/model/menu_model.dart';
+
+
 import '../../utils/themes/buttonstyle_themes.dart';
 import '../../utils/themes/textstyle_themes.dart';
 
@@ -18,7 +18,7 @@ class RatingCard extends StatelessWidget {
   final Order2 order;
   late List<double> ratingsList = []; // Declare ratingsList here
 
-  RatingCard({Key? key, required this.order}) : super(key: key) {
+  RatingCard({super.key, required this.order}) {
     ratingsList = List<double>.filled(order.orderDetails.length, 0.0); // Initialize ratingsList
   }
 
@@ -39,7 +39,7 @@ class RatingCard extends StatelessWidget {
 
     return Container(
       height: screenHeight * 0.6,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Center(
         child: Column(
           children: [
@@ -49,7 +49,7 @@ class RatingCard extends StatelessWidget {
                   onPressed: () {
                     Get.back();
                   },
-                  icon: Icon(Icons.arrow_back_ios, size: 20),
+                  icon: const Icon(Icons.arrow_back_ios, size: 20),
                 ),
                 Text(
                   "Beri Rating",
@@ -57,13 +57,13 @@ class RatingCard extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
+            SizedBox(
               height: 300,
               child: _buildRatingWidget(screenWidth, screenHeight),
             ),
 
-            SizedBox(height: 20),
-            Container(
+            const SizedBox(height: 20),
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
@@ -79,8 +79,8 @@ class RatingCard extends StatelessWidget {
                     Get.snackbar("Pesan", "Anda Harus Mengisi Nilai Semua Menu Terlebih Dahulu",backgroundColor: Colors.white);
                   }
                 },
-                child: Text("Done", style: whiteboldTextStyle15),
                 style: redeembutton(),
+                child: Text("Done", style: whiteboldTextStyle15),
               ),
             ),
 
@@ -94,24 +94,24 @@ class RatingCard extends StatelessWidget {
   Widget _buildRatingWidget(double screenWidth, double screenHeight) {
     return ListView.builder(
       shrinkWrap: true,
-      physics: AlwaysScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(),
       itemCount: order.orderDetails.length,
       itemBuilder: (BuildContext context, int index) {
         final menu = order.orderDetails[index];
         return Row(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               width: screenWidth / 4,
               height: screenHeight * 0.12,
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
                 child: Image.network(menu.image, fit: BoxFit.cover),
               ),
             ),
             Container(
               height: screenHeight * 0.12,
-              padding: EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -123,16 +123,15 @@ class RatingCard extends StatelessWidget {
                     direction: Axis.horizontal,
                     allowHalfRating: true,
                     itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                     ratingWidget: RatingWidget(
-                      full: Icon(Icons.star_rounded, color: Colors.orange),
-                      half: Icon(Icons.star_half_rounded, color: Colors.orange),
-                      empty: Icon(Icons.star_border_rounded, color: Colors.orange),
+                      full: const Icon(Icons.star_rounded, color: Colors.orange),
+                      half: const Icon(Icons.star_half_rounded, color: Colors.orange),
+                      empty:const Icon(Icons.star_border_rounded, color: Colors.orange),
                     ),
                     onRatingUpdate: (rating) {
                       ratingsList[index] = rating;
                       controller.isRating2.value = checkIfRatingIsGreaterThanZero(ratingsList);
-                      print('Updated ratings list: $ratingsList');
                     },
                   ),
                 ],

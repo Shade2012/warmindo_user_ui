@@ -18,7 +18,7 @@ import '../../../utils/themes/color_themes.dart';
 import '../../../widget/appBar.dart';
 
 import '../../history_page/controller/history_controller.dart';
-import '../../../common/model/history.dart';
+
 import '../../../common/model/menu_model.dart';
 
 class HistoryDetailPage extends StatelessWidget {
@@ -86,10 +86,11 @@ class HistoryDetailPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Obx(() {
+                            String orderStatus = order.status.value;
                               final labelColor = _getLabelColor(order.status.value);
                               return Center(
                                 child: Text(
-                                  order.status.value,
+                                  orderStatus.split(' ').map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' '),
                                   style: TextStyle(
                                     fontFamily: GoogleFonts.oxygen().fontFamily,
                                     fontSize: 17,
@@ -235,7 +236,7 @@ class HistoryDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Metode Pemesanan",style: boldTextStyle,),
-                              Text(order.orderMethod.toString(),style: boldTextStyle,),
+                              Text(order.orderMethod.toString() ?? '-',style: boldTextStyle,),
                             ],
                           ),
                           SizedBox(height: 10,),
@@ -243,7 +244,7 @@ class HistoryDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Metode Pembayaran",style: boldTextStyle,),
-                              Text(order.paymentMethod.toString() ?? '',style: boldTextStyle,),
+                              Text(order.paymentMethod.toString() ?? '-',style: boldTextStyle,),
                             ],
                           ),
                           SizedBox(height: 20,),

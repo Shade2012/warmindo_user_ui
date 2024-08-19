@@ -7,6 +7,7 @@ import 'package:warmindo_user_ui/widget/myCustomPopUp/myPopup_controller.dart';
 
 import '../../../common/model/cart_model2.dart';
 import '../../../common/model/cartmodel.dart';
+import '../../../common/model/menu_model.dart';
 import '../../../routes/AppPages.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/icon_themes.dart';
@@ -40,6 +41,19 @@ class CartData extends GetView<CartController> {
               itemCount: controller.cartItems2.length,
               itemBuilder: (BuildContext context, int index) {
                 final cartItem = controller.cartItems2[index];
+                final menu = controller.menuController.menuElement.firstWhere(
+                      (menuItem) => menuItem.menuId == cartItem.productId,
+                  orElse: () => MenuList(
+                    menuId: 0,
+                    nameMenu: '',
+                    image: '',
+                    price: 0,
+                    category: '',
+                    statusMenu: '',
+                    description: '',
+                  ), // Default object
+                );
+
                 int toppingTotalPrice = 0;
 
                 if (cartItem.selectedToppings != null) {
@@ -50,6 +64,7 @@ class CartData extends GetView<CartController> {
                 final totalItemPrice = (cartItem.price + toppingTotalPrice) * cartItem.quantity.value;
                 print(cartItem);
                 return Container(
+
                   padding: EdgeInsets.all(20),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,6 +72,13 @@ class CartData extends GetView<CartController> {
                       Container(
                         width: screenWidth / 3.4,
                         height: screenWidth / 3.4,
+                        foregroundDecoration: (menu.stock! >= 1 && scheduleController.jadwalElement[0].is_open)
+                            ? null
+                            : BoxDecoration(
+                          color: Colors.grey,
+                          backgroundBlendMode: BlendMode.saturation,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
                         child: ClipRRect(
                           borderRadius:BorderRadius.all(Radius.circular(10)),
                           child: Image.network(cartItem.productImage, fit: BoxFit.cover,),
@@ -85,7 +107,7 @@ class CartData extends GetView<CartController> {
                                       InkWell(
                                           onTap: () {
                                             final product = controller.menuController.menuElement.firstWhere((element) => element.menuId == cartItem.productId);
-                                            popUpController.showCustomModalForItem(product, context, cartItem.quantity.value, cartid: cartItem.cartId ?? 0);
+                                            popUpController.showCustomModalForItem(product, context, cartItem.quantity.value, cartid: cartItem.cartId?.value ?? 0);
                                             // controller.isLoading.value = true;
                                             },
                                           child: Icon(Icons.edit,size: 30,color: Colors.orange,)),
@@ -138,7 +160,7 @@ class CartData extends GetView<CartController> {
                                     currencyFormat.format(totalItemPrice),
                                     style: boldTextStyle,
                                   ),
-                                  CounterWidget2(index: index),
+                                  CounterWidget2(index: cartItem.cartId?.value ?? 0),
                                 ],
                               ),
                             ],
@@ -175,7 +197,6 @@ class CartData extends GetView<CartController> {
                                 ),
                                 Obx(() {
                                   double totalPrice = 0;
-
                                   for (CartItem2 cartItem in controller.cartItems2) {
                                     int toppingTotalPrice = 0;
                                     if (cartItem.selectedToppings != null) {
@@ -206,7 +227,18 @@ class CartData extends GetView<CartController> {
                     if(scheduleController.jadwalElement[0].is_open == false){
                       Get.snackbar('Pesan', 'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti',colorText: Colors.black);
                     }else{
-                      Get.toNamed(Routes.PEMBAYARAN_PAGE);
+                      bool hasLowStock = controller.cartItems2.any((cartItem) {
+                        final menu = controller.menuController.menuElement
+                            .firstWhere((menuItem) => menuItem.menuId == cartItem.productId, orElse: () => MenuList(menuId: 0, statusMenu: '', image: '', nameMenu: '', price: 0, category: '', description: ''));
+                        return menu != null && menu.stock != null && menu.stock! < 1;
+                      });
+
+                      if (!hasLowStock) {
+                        Get.toNamed(Routes.PEMBAYARAN_PAGE);
+                      } else {
+                        Get.snackbar('Pesan', 'Keranjang mu memiliki stok produk yang kosong');
+                      }
+
                     }
                   },
                   child: Container(

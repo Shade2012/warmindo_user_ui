@@ -8,28 +8,32 @@ import 'package:warmindo_user_ui/widget/myCustomPopUp/myPopup_controller.dart';
 
 import '../../common/model/cartmodel.dart';
 import '../../pages/cart_page/controller/cart_controller.dart';
+import '../../pages/home_page/controller/home_controller.dart';
 import '../../pages/home_page/controller/schedule_controller.dart';
 import '../../utils/themes/textstyle_themes.dart';
 import '../reusable_dialog.dart';
 
 class CounterWidget extends StatelessWidget {
-  final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+  final currencyFormat =
+      NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final MenuList menu;
   final RxInt quantity;
   final int cartId;
+  final HomeController controller = Get.find<HomeController>();
   final cartController = Get.put(CartController());
   final menuController = Get.put(MenuPageController());
   final scheduleController = Get.find<ScheduleController>();
   final popupController = Get.find<MyCustomPopUpController>();
 
-  CounterWidget({required this.quantity, required this.menu, required this.cartId});
+  CounterWidget(
+      {required this.quantity, required this.menu, required this.cartId});
 
   int calculateTotalPrice() {
     int basePrice = menu.price;
     int itemQuantity = quantity.value;
     int toppingTotalPrice = 0;
 
-    final selectedToppings = popupController.selectedToppings[menu.menuId];
+    final selectedToppings = popupController.selectedToppings[cartId];
     if (selectedToppings != null) {
       for (var topping in selectedToppings) {
         toppingTotalPrice += topping.priceTopping;
@@ -57,7 +61,6 @@ class CounterWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Obx(() {
-                  // Calculate the total price every time the quantity or selectedToppings change
                   int totalPrice = calculateTotalPrice();
                   return Container(
                     child: Text(
@@ -71,22 +74,25 @@ class CounterWidget extends StatelessWidget {
                     FloatingActionButton(
                       onPressed: () {
                         if (quantity.value == 1) {
-                          final currentCartId = cartController.getCartIdForMenu(menu.menuId);
+                          final currentCartId = cartController.getCartIdForFilter(cartId);
                           if (currentCartId != null) {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
                                 return ReusableDialog(
                                   title: 'Pesan',
-                                  content: 'Apakah anda yakin untuk menghapus item ini dari keranjang?',
+                                  content:
+                                      'Apakah anda yakin untuk menghapus item ini dari keranjang?',
                                   cancelText: "Tidak",
                                   confirmText: "Iya",
                                   onCancelPressed: () {
                                     Get.back();
                                   },
                                   onConfirmPressed: () async {
-                                    cartController.removeItemFromCartWithID(currentCartId);
-                                    quantity.value = 0; // Directly update the value
+                                    cartController.removeItemFromCartWithID(
+                                        currentCartId);
+                                    quantity.value =
+                                        0; // Directly update the value
                                     menuController.checkConnectivity();
                                     Get.back();
                                     Get.back();
@@ -144,48 +150,87 @@ class CounterWidget extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 bool variantRequired = popupController.varianList.any((varian) => varian.category == menu.nameMenu);
-                bool isCartItem = cartController.cartItems2.any((item) => item.productId == menu.menuId);
-                final currentCartId = cartController.getCartIdForMenu(menu.menuId);
+                bool isCartItem = cartController.cartItems2.any((item) => item.cartId == cartId);
                 if (scheduleController.jadwalElement[0].is_open) {
-                  if (variantRequired && popupController.selectedVarian[menu.menuId] == null) {
+                  if (variantRequired &&
+                      popupController.selectedVarian[cartId] == null) {
                     Get.snackbar('Pesan', 'Varian Harus dipilih');
                   } else {
                     if (variantRequired) {
                       if (isCartItem) {
-                        List<int> selectedToppingIds = popupController.selectedToppings[menu.menuId]?.map((topping) => topping.toppingID).toList() ?? [];
-                        final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.productId == menu.menuId);
-                        final selectedVarianId = popupController.selectedVarian[menu.menuId]?.varianID;
-
-                        cartController.editCart(idCart: cartId, quantity: quantity.value, menuID: menu.menuId, variantId: selectedVarianId,toppings: selectedToppingIds);
+                        List<int> selectedToppingIds = popupController.selectedToppings[cartId]?.map((topping) => topping.toppingID).toList() ?? [];
+                        final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.cartId == cartId);
+                        final selectedVarianId = popupController
+                            .selectedVarian[cartId]?.varianID;
                         cartItem?.quantity.value = quantity.value;
+                        cartController.cartItems2.refresh();
+                        cartController.editCart(
+                            idCart: cartId,
+                            quantity: quantity.value,
+                            menuID: menu.menuId,
+                            variantId: selectedVarianId,
+                            toppings: selectedToppingIds);
+                        print(cartItem?.quantity.value);
+                        popupController.isLoading.value = true;
                         menuController.checkConnectivity();
-                        Get.back();
-                      } else {
-                        print('di counter ${popupController.selectedToppings[menu.menuId]}');
-                        print('di counter ${popupController.selectedVarian[menu.menuId]}');
-                        cartController.addToCart2(
-                          productId: menu.menuId,
-                          productName: menu.nameMenu,
-                          productImage: menu.image,
-                          price: menu.price,
-                          quantity: quantity.value,
-                          selectedVarian: popupController.selectedVarian[menu.menuId],
-                          selectedToppings: popupController.selectedToppings[menu.menuId]
-                        );
-                        menuController.checkConnectivity();
+                        popupController.isLoading.value = true;
+                        Future.delayed(Duration(seconds: 2), () {
+                          popupController.isLoading.value = false;
+                        });
+                        Future.delayed(Duration(seconds: 2), () {
+                          controller.isLoading.value = false;
+                        });
                         Get.back();
                       }
+                      else {
+                        cartController.addToCart2(productId: menu.menuId, productName: menu.nameMenu, productImage: menu.image, price: menu.price, quantity: quantity.value, selectedVarian: popupController.selectedVarian[cartId], selectedToppings: popupController.selectedToppings[cartId], cartID: cartId);
+                        cartController.cartItems2.refresh();
+                        controller.isLoading.value = true;
+                        Future.delayed(Duration(seconds: 2), () {
+                          controller.isLoading.value = false;
+                        });
+
+
+                        menuController.checkConnectivity();
+                        Get.back(closeOverlays: true);
+                      }
                     } else {
-                      List<int> selectedToppingIds = popupController.selectedToppings[menu.menuId]?.map((topping) => topping.toppingID).toList() ?? [];
-                      final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.productId == menu.menuId);
-                      cartController.editCart(idCart: cartItem?.cartId ?? 0, quantity: quantity.value, menuID: menu.menuId, toppings: selectedToppingIds);
-                      cartItem?.quantity.value = quantity.value;
-                      menuController.checkConnectivity();
-                      Get.back();
+                      if (isCartItem) {
+                        print(cartId);
+                        print('ngedit cart');
+                        cartController.isLoading.value = true;
+                        List<int> selectedToppingIds = popupController.selectedToppings[cartId]?.map((topping) => topping.toppingID).toList() ?? [];
+                        final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.cartId == cartId);
+                        cartItem?.quantity.value = quantity.value;
+                        Get.back(closeOverlays: true);
+                       await cartController.editCart(idCart: cartId, quantity: quantity.value, menuID: menu.menuId, toppings: selectedToppingIds);
+
+
+                        cartController.fetchCart();
+                        cartController.cartItems2.refresh();
+                        menuController.checkConnectivity();
+                        Future.delayed(Duration(seconds: 2), () {
+                          controller.isLoading.value = false;
+                        });
+
+
+                      } else {
+                        cartController.addToCart2(productId: menu.menuId, productName: menu.nameMenu, productImage: menu.image, price: menu.price, quantity: quantity.value, selectedVarian: popupController.selectedVarian[cartId], selectedToppings: popupController.selectedToppings[cartId], cartID: cartId);
+                        cartController.cartItems2.refresh();
+                        controller.isLoading.value = true;
+                        Future.delayed(Duration(seconds: 2), () {
+                          controller.isLoading.value = false;
+                        });
+
+                        menuController.checkConnectivity();
+                        Get.back(closeOverlays: true);
+                      }
                     }
                   }
                 } else {
-                  Get.snackbar('Pesan', 'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti', colorText: Colors.black);
+                  Get.snackbar('Pesan',
+                      'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti',
+                      colorText: Colors.black);
                 }
               },
               child: Container(
@@ -197,7 +242,9 @@ class CounterWidget extends StatelessWidget {
                 height: MediaQuery.of(context).size.height / 14,
                 child: Center(
                   child: Text(
-                    cartController.getCartIdForMenu(menu.menuId) == null ? "Tambahkan ke Keranjang" : "Perbarui Keranjang",
+                    cartController.getCartIdForFilter(cartId) == null
+                        ? "Tambahkan ke Keranjang"
+                        : "Perbarui Keranjang",
                     style: whiteboldTextStyle,
                   ),
                 ),
@@ -209,5 +256,3 @@ class CounterWidget extends StatelessWidget {
     );
   }
 }
-
-

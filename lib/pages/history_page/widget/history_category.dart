@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:warmindo_user_ui/common/model/history.dart';
+
 import 'package:warmindo_user_ui/common/model/history2_model.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';

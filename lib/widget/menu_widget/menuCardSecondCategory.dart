@@ -64,33 +64,6 @@ class MenuSecondCategory extends StatelessWidget {
             Obx(() {
               if(menuController.isLoading.value || guestMenuController.isLoading.value){
                 return MenuShimmer();
-                // return GridView.count(
-                //   crossAxisCount: 2,
-                //   shrinkWrap: true,
-                //   childAspectRatio: MediaQuery.of(context).size.width /
-                //       (MediaQuery.of(context).size.height / 1.60),
-                //   physics: NeverScrollableScrollPhysics(),
-                //   children: [
-                //     Container(
-                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                //         child: Skeleton(width: 60, radius: 20)),
-                //     Container(
-                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                //         child: Skeleton(width: 60, radius: 20)),
-                //     Container(
-                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                //         child: Skeleton(width: 60, radius: 20)),
-                //     Container(
-                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                //         child: Skeleton(width: 60, radius: 20)),
-                //     Container(
-                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                //         child: Skeleton(width: 60, radius: 20)),
-                //     Container(
-                //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                //         child: Skeleton(width: 60, radius: 20)),
-                //   ],
-                // );
               }else{
                 if(categoryName == "Snack"){
                   return SnackMenu(menuList: menuList, isGuest: isGuest,);

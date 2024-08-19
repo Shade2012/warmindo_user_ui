@@ -18,7 +18,7 @@ import 'package:warmindo_user_ui/routes/AppPages.dart';
 
 import '../../../common/global_variables.dart';
 import '../../../common/model/cart_model2.dart';
-import '../../../common/model/history.dart';
+
 import '../../../common/model/menu_model.dart';
 
 
@@ -34,11 +34,6 @@ RxString orderID = ''.obs;
 RxBool selectedButton2 = false.obs;
 RxBool selectedButton3 = false.obs;
 
-  void button1 (){
-
-    selectedButton2.value = false;
-    selectedButton3.value = false;
-  }
 void button2 (){
   selectedButton2.value = true;
   selectedButton3.value = false;
@@ -60,59 +55,19 @@ int generateOrderId() {
       return 'Default Payment Method';
     }
   }
-void makePayment({required String catatan}) async  {
-  int totalPrice2 = 0;
-  isLoading.value = true;
-  for (CartItem2 cartItem in cartController.cartItems2) {
-    int toppingTotalPrice = 0;
-    if (cartItem.selectedToppings != null) {
-      for (var topping in cartItem.selectedToppings!) {
-        toppingTotalPrice += topping.priceTopping;
-      }
-    }
-    totalPrice2 += (cartItem.price + toppingTotalPrice) * cartItem.quantity.value;
-  }
-  String paymentMethod = getPaymentMethod();
-    List<MenuList> orderedMenus = cartController.cartItems2.map((item) => MenuList(
-      menuId: item.productId,
-      nameMenu: item.productName,
-      price: item.price,
-      image: item.productImage,
-      quantity: item.quantity.value, category: '', description: '',
-      variantId: item.selectedVarian?.varianID,
-      toppings: item.selectedToppings
-    )).toList();
 
-    Order2 order = Order2(
-      id: generateOrderId(),
-      orderDetails: orderedMenus,
-      status: 'Sedang Diproses'.obs,
-      orderMethod: 'Takeaway',
-      paymentMethod: paymentMethod,
-      catatan: catatan ?? '-', alasan_batal: ''.obs,
-      totalprice:  totalPrice2.toString(),
-
-    );
-
-    saveOrderToHistory(order);
-  for (CartItem2 item in cartController.cartItems2) {
-    await cartController.removeCart(idCart: item.cartId!);
-  }
-
-  cartController.cartItems2.clear();
-  isLoading.value = false;
-    Get.off(PembayaranComplate()); // Navigate to the completion view
-
-
-}
 Future<void> postOrder({required String catatan}) async{
+    String payment_method =  selectedButton3.value == true ? 'tunai' : '';
+    String takeaway =  selected.value == true ? 'take-away' : '';
   final url = GlobalVariables.postOrder;
   final headers = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'Authorization': 'Bearer ${cartController.token.value}',};
   final body = jsonEncode({
-    'status': 'sedang diproses',
+    'status': 'menunggu pembayaran',
+    'payment_method': '$payment_method',
+    'order_method': '$takeaway',
     'note': '$catatan',
   });
   try{
@@ -170,27 +125,21 @@ Future<void> postOrderDetail({required String catatan}) async{
     prefs.remove('orderID');
   }
   void makePayment2({
-    required String catatan,required bool isTunai}) async{
-    print('di makepayment 2 atas ${orderID.value}');
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.get('notif_token');
+    required String catatan,required bool isTunai}) async {
     isLoading.value = true;
     final url = GlobalVariables.postPayment;
     final headers = {
-      'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer ${cartController.token.value}'
     };
     await postOrder(catatan: catatan);
     await postOrderDetail(catatan: catatan);
-    final body = jsonEncode({
+    final body = {
       'order_id': orderID.value,
-    });
+    };
     try{
-      print(cartController.token.value);
-      print('ini notif token : ${token}');
       if(isTunai == true){
-      print('sukses');
+        Get.off(PembayaranComplate());
       }else{
         final response = await http.post(Uri.parse(url),headers: headers, body:body);
         final responseBody = jsonDecode(response.body);
@@ -198,15 +147,14 @@ Future<void> postOrderDetail({required String catatan}) async{
           if(responseBody['status'] == 'success'){
             final uriString = Uri.parse(responseBody['checkout_link']);
             launchUrl(uriString,mode: LaunchMode.inAppWebView);
+            Get.off(PembayaranComplate());
           }else{
             print('ada error ');
             print(responseBody);
           }
         }else{
           print(orderID.value);
-          print('Request Body: $body');
-          print('Headers: $headers');
-          print(' ada error di sini ${response.body}');
+          print(responseBody);
         }
       }
     }catch(e){
@@ -277,5 +225,6 @@ void saveOrderToHistory(Order2 order) {
   // historyController.orders.add(order);
 }
 }
+
 
 

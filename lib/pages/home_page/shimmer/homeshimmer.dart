@@ -28,6 +28,11 @@ class HomeSkeleton extends StatelessWidget {
          SizedBox(height: 20,),
          Skeleton(
            width: double.infinity,
+           height: 70,radius: 10,
+         ),
+         SizedBox(height: 20,),
+         Skeleton(
+           width: double.infinity,
            height: 160,
          ),
          SizedBox(height: 10,),
