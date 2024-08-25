@@ -1,22 +1,18 @@
 import 'dart:convert';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/common/global_variables.dart';
-import 'package:warmindo_user_ui/common/model/cart_model2.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/schedule_controller.dart';
-import '../../../common/model/cartmodel.dart';
-import '../../cart_page/controller/cart_controller.dart';
 import '../view/home_detaile_page.dart';
 
 class HomeController extends GetxController {
   late final SharedPreferences prefs;
 final ScheduleController scheduleController = Get.put(ScheduleController());
+
   RxString txtUsername = "".obs;
   RxString token = "".obs;
   RxList<MenuList> menuElement = <MenuList>[].obs;
@@ -66,7 +62,7 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
     if (prefs != null) {
 
       token.value = prefs.getString('token') ?? '';
-      prefs.setString('token2','${token.value = prefs.getString('token')?? ''}') ?? '';
+      prefs.setString('token2',token.value = prefs.getString('token')?? '') ?? '';
       id.value = prefs.getString('user_id') ?? '';
     }
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
@@ -95,8 +91,8 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
       );
 
       if (response.statusCode == 200) {
-        menuElement.value = menuListFromJson(response.body);
-        print("Fetched menu list: ${menuElement.length} items");
+        final menu = menuListFromJson(response.body);
+        menuElement.value = menu.where((element) => element.statusMenu == '1').toList();
       } else {
         print('Error: ${response.statusCode}');
       }
@@ -124,7 +120,7 @@ MenuList getHighestRatingMenu(List<MenuList> menuElements, int categoryId) {
   if (categoryName == null) {
     throw ArgumentError('Invalid category ID');
   }
-  final filteredItems = menuElements.where((item) => item.category == categoryName).toList();
+  final filteredItems = menuElements.where((item) => item.category == categoryName && item.statusMenu != '0').toList();
 
   if (filteredItems.isEmpty) {
     return MenuList(
@@ -136,8 +132,9 @@ MenuList getHighestRatingMenu(List<MenuList> menuElements, int categoryId) {
       description: 'No description available', statusMenu: '1',
     );
   }
-  filteredItems.sort((a, b) => b.ratings?.compareTo(a.ratings ?? 0) ?? 0);
-
+  filteredItems.sort((a, b) => b.rating?.compareTo(a.rating ?? 0) ?? 0);
+  print('ini menu element $menuElement');
+  print('yang di filter ${filteredItems.first}');
   return filteredItems.first;
 }
 

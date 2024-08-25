@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../common/model/cart_model2.dart';
 import '../../common/model/menu_list_API_model.dart';
-import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../pages/home_page/controller/schedule_controller.dart';
 import '../../utils/themes/color_themes.dart';
 import '../../utils/themes/textstyle_themes.dart';
@@ -11,7 +9,6 @@ import '../counter/counter.dart';
 import '../counter/counter_controller.dart';
 import 'myPopup_controller.dart';
 import 'shimmer.dart';
-import 'topping.dart';
 
 class MyCustomPopUp extends StatelessWidget {
   final MenuList product;
@@ -19,7 +16,7 @@ class MyCustomPopUp extends StatelessWidget {
   final RxInt cartid;
   final ScrollController scrollController;
 
-  MyCustomPopUp({
+  MyCustomPopUp({super.key,
     required this.product,
     required this.quantity,
     required this.cartid,
@@ -54,14 +51,14 @@ class MyCustomPopUp extends StatelessWidget {
     }
 
     return Container(
-      foregroundDecoration: (product.stock! > 1 && scheduleController.jadwalElement[0].is_open)
+      foregroundDecoration: (product.stock! > 1 && scheduleController.jadwalElement[0].is_open && product.statusMenu != '0')
           ? null
-          : BoxDecoration(
+          : const BoxDecoration(
         color: Colors.grey,
         backgroundBlendMode: BlendMode.saturation,
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
@@ -72,7 +69,7 @@ class MyCustomPopUp extends StatelessWidget {
         if (controller.isLoading.value || cartid.value == 0) {
           return SingleChildScrollView(
             controller: scrollController,
-            child: Column(
+            child: const Column(
               children: [
                 MyPopupShimmer(),
               ],
@@ -82,7 +79,7 @@ class MyCustomPopUp extends StatelessWidget {
           return SingleChildScrollView(
             controller: scrollController,
             child: Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -96,31 +93,31 @@ class MyCustomPopUp extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   ClipRRect(
                     child: FadeInImage(
                       width: double.infinity,
                       height: 250,
-                      placeholder: AssetImage('assets/images/logo.png'),
+                      placeholder: const AssetImage('assets/images/logo.png'),
                       image: NetworkImage(product.image),
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(product.nameMenu, style: onboardingHeaderTextStyle),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(product.category, style: onboardingskip),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.star_rounded, color: Colors.orange, size: 20),
-                      Text('4.6', style: ratingTextStyle),
+                      const Icon(Icons.star_rounded, color: Colors.orange, size: 20),
+                      Text(product.rating.toString(), style: ratingTextStyle),
                     ],
                   ),
-                  Divider(),
+                  const Divider(),
                   Text("Deskripsi", style: boldTextStyle),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     product.description,
                     style: onboardingskip,
@@ -132,11 +129,11 @@ class MyCustomPopUp extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Divider(),
-                        Text('Varian', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 10),
-                        Text('Harus Dipilih', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 10),
+                        const Divider(),
+                        const Text('Varian', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 10),
+                        const Text('Harus Dipilih', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 10),
                         Obx(() {
                           final varianList = controller.varianList.where((element) => element.category == product.nameMenu).toList();
                           final isSelectedVarian = controller.selectedVarian[cartid.value];
@@ -161,7 +158,7 @@ class MyCustomPopUp extends StatelessWidget {
                                       width: 1.0,
                                     ),
                                   ),
-                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                   child: Text(varian.nameVarian, style: TextStyle(color: isSelected ? Colors.white : Colors.black)),
                                 ),
                               );
@@ -176,13 +173,13 @@ class MyCustomPopUp extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Divider(),
+                        const Divider(),
                         Text('Topping', style: boldTextStyle),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Obx(() {
                           final isSelectedToppings = controller.selectedToppings[cartid.value] ?? [];
                           return ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemCount: controller.toppingList.length,
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
@@ -208,7 +205,7 @@ class MyCustomPopUp extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  Divider(),
+                                  const Divider(),
                                 ],
                               );
                             },
@@ -217,9 +214,9 @@ class MyCustomPopUp extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
@@ -227,15 +224,15 @@ class MyCustomPopUp extends StatelessWidget {
                           color: Colors.grey.withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 4,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderRadius: const BorderRadius.all( Radius.circular(10)),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Harga", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                        const Text("Harga", style:  TextStyle(fontSize: 16, color: Colors.grey)),
                         CounterWidget(
                           quantity: quantity,
                           menu: product,

@@ -2,27 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:warmindo_user_ui/common/model/history2_model.dart';
 import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
-
 import 'package:warmindo_user_ui/pages/history_page/shimmer/history_shimmer.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
-import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 
-import '../../../utils/themes/image_themes.dart';
 
 
 class OrderBox extends StatelessWidget {
   final HistoryController controller = Get.put(HistoryController());
 
    OrderBox({
-    Key? key,
+    super.key,
+     required this.isBatal,
     required this.order,
-  }) : super(key: key);
-
+  });
+  bool isBatal;
   final Order2 order;
 
   Color _getLabelColor(String status) {
@@ -52,11 +49,15 @@ class OrderBox extends StatelessWidget {
 
     return Obx(() {
       if(controller.isLoading.value){
-       return HistoryShimmer();
+       return const HistoryShimmer();
       }else{
        return GestureDetector(
           onTap: () {
-            Get.to(HistoryDetailPage(order: order)); // Pass currentOrder
+            if(isBatal == true){
+              return;
+            }else{
+              Get.to(HistoryDetailPage(initialOrder: order,)); // Pass currentOrder
+            }
           },
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 10),
@@ -68,7 +69,7 @@ class OrderBox extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.4),
-                  offset: Offset(1, 1),
+                  offset: const Offset(1, 1),
                   blurRadius: 7.0,
                 ),
               ],
@@ -107,7 +108,7 @@ class OrderBox extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Row(
                       children: [
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width / 4,
                           height: MediaQuery.of(context).size.height * 0.11,
                           child: ClipRRect(
@@ -119,7 +120,7 @@ class OrderBox extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Container(
+                        SizedBox(
                           height: MediaQuery.of(context).size.height * 0.11,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

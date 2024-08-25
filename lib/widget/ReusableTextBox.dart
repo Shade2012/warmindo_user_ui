@@ -7,13 +7,13 @@ class ReusableTextBox extends StatelessWidget {
 
   ReusableTextBox({required this.title, required this.controller}) {
     controller.addListener(() {
-      if (controller.text.length < '$title: '.length) {
-        controller.text = '$title: ';
+      if (controller.text.length < '$title'.length) {
+        controller.text = '$title';
         controller.selection = TextSelection.fromPosition(
           TextPosition(offset: controller.text.length),
         );
-      } else if (!controller.text.startsWith('$title: ')) {
-        String newText = '$title: ' + controller.text.replaceFirst('$title: ', '');
+      } else if (!controller.text.startsWith('$title')) {
+        String newText = '$title' + controller.text.replaceFirst('$title', '');
         controller.text = newText;
         controller.selection = TextSelection.fromPosition(
           TextPosition(offset: newText.length),

@@ -9,25 +9,7 @@ import 'package:warmindo_user_ui/common/model/toppings.dart';
 
 List<MenuList> menuListFromJson(String str) {
   final jsonData = json.decode(str);
-  return List<MenuList>.from(jsonData["data"]["menu"].map((item) => MenuList.fromJson(item)));
-}
-
-String menuToJson(Menu data) => json.encode(data.toJson());
-
-class Menu {
-  final Data data;
-
-  Menu({
-    required this.data,
-  });
-
-  factory Menu.fromJson(Map<String, dynamic> json) => Menu(
-    data: Data.fromJson(json["data"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "data": data.toJson(),
-  };
+  return List<MenuList>.from(jsonData.map((item) => MenuList.fromJson(item)));
 }
 
 class Data {
@@ -61,7 +43,7 @@ class MenuList {
   final int price;
   final String category;
   final int? stock;
-  final double? ratings;
+  late double? rating;
   final String description;
   final String? second_category;
   final DateTime? createdAt;
@@ -80,7 +62,7 @@ class MenuList {
     required  this.price,
     required this.category,
       this.stock,
-    this.ratings,
+    this.rating,
    required this.description,
     this.createdAt,
     this.updatedAt,
@@ -94,16 +76,17 @@ class MenuList {
     menuId: json["id"],
     image: json["image"],
     nameMenu: json["name_menu"],
-    price: int.parse(json["price"]), // Parsing string to double
+    price: int.tryParse(json["price"] ?? '0') ?? 0, // Safer parsing
     category: json["category"],
-    stock: int.parse(json["stock"]), // Parsing string to int
-    ratings: double.parse(json["ratings"]), // Parsing string to double
+    stock: int.tryParse(json["stock"] ?? '0') ?? 0, // Safer parsing
+    rating: double.tryParse(json["average_rating"] ?? '0') ?? 0.0, // Safer parsing
     description: json["description"],
     second_category: json["second_category"],
     statusMenu: json['status_menu'],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
+    createdAt: json["created_at"] != null ? DateTime.parse(json["created_at"]) : null,
+    updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : null,
   );
+
 
   Map<String, dynamic> toJson() => {
     "menuID": menuId,
@@ -112,7 +95,7 @@ class MenuList {
     "price": price.toString(),
     "category": category,
     "stock": stock.toString(),
-    "ratings": ratings.toString(),
+    "rating": rating.toString(),
     "description": description,
     "second_category": second_category,
     "status_menu": statusMenu,
@@ -122,7 +105,7 @@ class MenuList {
 
   @override
   String toString() {
-    return 'MenuList(menuId: $menuId, nameMenu: $nameMenu, price: $price, category: $category, stock: $stock,second_category: $second_category , ratings: $ratings)';
+    return 'MenuList(menuId: $menuId, nameMenu: $nameMenu, price: $price, category: $category, stock: $stock,second_category: $second_category , rating: $rating, status_menu: $statusMenu)';
   }
 }
 

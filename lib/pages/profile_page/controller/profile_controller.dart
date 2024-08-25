@@ -1,13 +1,10 @@
 import 'dart:convert';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../common/global_variables.dart';
 
 class ProfileController extends GetxController {
@@ -16,7 +13,6 @@ class ProfileController extends GetxController {
   RxString txtName = "".obs;
   RxString image = "".obs;
   RxString user_verified = '0'.obs;
-  // "user_verified": "1",
   RxString token = "".obs;
   RxString isLoginGoogle = "".obs;
   RxBool isConnected = true.obs;
@@ -29,9 +25,7 @@ class ProfileController extends GetxController {
   }
 
   Future<void> initializePrefs() async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
   }
 
   void checkSharedPreference() async {
@@ -104,6 +98,7 @@ class ProfileController extends GetxController {
       prefs!.remove('token2');
       prefs!.remove('token');
       prefs!.remove('user_id');
+      prefs!.remove('token4');
       Get.offAllNamed(Routes.SPLASH_SCREEN);
     }
   }

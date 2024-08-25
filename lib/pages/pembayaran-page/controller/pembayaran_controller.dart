@@ -1,32 +1,23 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:warmindo_user_ui/common/model/history2_model.dart';
-import 'package:warmindo_user_ui/common/model/toppings.dart';
-import 'package:warmindo_user_ui/common/model/varians.dart';
-
 import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
-import 'package:warmindo_user_ui/pages/login_page/controller/login_controller.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_view.dart';
-import 'package:warmindo_user_ui/routes/AppPages.dart';
-
 import '../../../common/global_variables.dart';
 import '../../../common/model/cart_model2.dart';
-
-import '../../../common/model/menu_model.dart';
+import '../../../common/model/history2_model.dart';
 
 
 
 class PembayaranController extends GetxController{
-  late final TextEditingController ctrCatatan = TextEditingController(text: 'Catatan: ');
+  late final TextEditingController ctrCatatan = TextEditingController(text: 'Catatan :');
   final HistoryController historyController = Get.put(HistoryController());
   final CartController cartController = Get.put(CartController());
+  bool keepPolling = true;
 RxBool isLoading = false.obs;
 RxBool selected = false.obs;
 RxString orderID = ''.obs;
@@ -42,33 +33,56 @@ void button2 (){
     selectedButton2.value = false;
     selectedButton3.value = true;
   }
+  void stopPolling() {
+    keepPolling = false;
+  }
 int generateOrderId() {
   return DateTime.now().millisecondsSinceEpoch; // Example: Using timestamp as order ID
 }
-  String getPaymentMethod() {
-    if (selectedButton2.value) {
-      return 'OVO';
-    } else if (selectedButton3.value) {
-        return 'Tunai';
-  } else {
-      // Default payment method if neither button is selected
-      return 'Default Payment Method';
+
+  Future<void> longPollingFetchHistory() async {
+    while (keepPolling) {
+      try {
+        final response = await http.get(
+          Uri.parse(GlobalVariables.apiHistory),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${cartController.token.value}',
+          },
+        ).timeout(const Duration(seconds: 10));
+
+        if (response.statusCode == 200) {
+          List<dynamic> data = jsonDecode(response.body)['orders'];
+          historyController.orders2.clear();
+          for (var item in data) {
+            historyController.orders2.add(Order2.fromJson(item));
+          }
+        } else {
+          // Handle other status codes if needed
+          print('Failed to fetch history: ${response.statusCode}');
+        }
+        historyController.orders2.refresh();
+        await Future.delayed(Duration(seconds: 3));
+      } catch (e) {
+        print('Error occurred: $e');
+        await Future.delayed(Duration(seconds: 5));
+      }
     }
   }
-
 Future<void> postOrder({required String catatan}) async{
     String payment_method =  selectedButton3.value == true ? 'tunai' : '';
     String takeaway =  selected.value == true ? 'take-away' : '';
-  final url = GlobalVariables.postOrder;
+    const url = GlobalVariables.postOrder;
   final headers = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'Authorization': 'Bearer ${cartController.token.value}',};
   final body = jsonEncode({
-    'status': 'menunggu pembayaran',
-    'payment_method': '$payment_method',
-    'order_method': '$takeaway',
-    'note': '$catatan',
+    'status': selectedButton3.value ? 'sedang diproses' : 'menunggu pembayaran',
+    'payment_method': payment_method,
+    'order_method': takeaway,
+    'note': catatan,
   });
   try{
     final response = await http.post(Uri.parse(url),headers: headers, body:body);
@@ -87,7 +101,7 @@ Future<void> postOrder({required String catatan}) async{
 
 Future<void> postOrderDetail({required String catatan}) async{
   print('Order ID di post order detail atas:${orderID.value}');
-    final url = GlobalVariables.postOrderDetail;
+  const url = GlobalVariables.postOrderDetail;
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'};
@@ -99,7 +113,7 @@ Future<void> postOrderDetail({required String catatan}) async{
             'menu_id': item.productId,
             'order_id': orderID.value, // Assuming a static order_id for now
             'variant_id': item.selectedVarian?.varianID,
-            'notes': '$catatan', // Assuming static notes for now
+            'notes': catatan, // Assuming static notes for now
             'toppings': item.selectedToppings?.map((topping) => {
               'topping_id': topping.toppingID,
               'quantity': item.quantity.value,
@@ -112,7 +126,7 @@ Future<void> postOrderDetail({required String catatan}) async{
       final response = await http.post(Uri.parse(url),headers: headers, body: jsonEncode(toRequestBody()),);
       final responseBody = jsonDecode(response.body);
       print('Order ID di post order detail bawah:${orderID.value}');
-      print(response.body);
+      print(responseBody);
 
     }catch(e){
       print(toRequestBody());
@@ -127,7 +141,7 @@ Future<void> postOrderDetail({required String catatan}) async{
   void makePayment2({
     required String catatan,required bool isTunai}) async {
     isLoading.value = true;
-    final url = GlobalVariables.postPayment;
+    const url = GlobalVariables.postPayment;
     final headers = {
       'Accept': 'application/json',
       'Authorization': 'Bearer ${cartController.token.value}'
@@ -138,16 +152,23 @@ Future<void> postOrderDetail({required String catatan}) async{
       'order_id': orderID.value,
     };
     try{
+      print(cartController.token.value);
       if(isTunai == true){
-        Get.off(PembayaranComplate());
+          Get.off(PembayaranComplate());
       }else{
         final response = await http.post(Uri.parse(url),headers: headers, body:body);
         final responseBody = jsonDecode(response.body);
         if(response.statusCode == 201){
+          print(responseBody);
           if(responseBody['status'] == 'success'){
             final uriString = Uri.parse(responseBody['checkout_link']);
             launchUrl(uriString,mode: LaunchMode.inAppWebView);
-            Get.off(PembayaranComplate());
+            // keepPolling = true;
+            // longPollingFetchHistory();
+            // Future.delayed(const Duration(seconds: 30), () => stopPolling());
+            Future.delayed(const Duration(seconds:1 ),(){
+              Get.off(PembayaranComplate());
+            });
           }else{
             print('ada error ');
             print(responseBody);
@@ -155,75 +176,22 @@ Future<void> postOrderDetail({required String catatan}) async{
         }else{
           print(orderID.value);
           print(responseBody);
+          print(response.statusCode);
         }
       }
     }catch(e){
-      print('ada error di catch $e');
+      print('ada error di catch2 $e');
     }
-    // for (CartItem2 cartItem in cartController.cartItems2) {
-    //   int toppingTotalPrice = 0;
-    //   if (cartItem.selectedToppings != null) {
-    //     for (var topping in cartItem.selectedToppings!) {
-    //       toppingTotalPrice += topping.priceTopping;
-    //     }
-    //   }
-    //   totalPrice2 += (cartItem.price + toppingTotalPrice) * cartItem.quantity.value;
-    // }
-    // String paymentMethod = getPaymentMethod();
-    // List<MenuList> orderedMenus = cartController.cartItems2.map((item) => MenuList(
-    //     menuId: item.productId,
-    //     nameMenu: item.productName,
-    //     price: item.price,
-    //     image: item.productImage,
-    //     quantity: item.quantity.value, category: '', description: '',
-    //     variantId: item.selectedVarian?.varianID,
-    //     toppings: item.selectedToppings
-    // )).toList();
     //
-    // List<VarianList> varianList = cartController.cartItems2
-    //     .where((item) => item.selectedVarian != null) // Filter out items with null selectedVarian
-    //     .map((item) => item.selectedVarian!) // Extract the VarianList from each CartItem2
-    //     .toList();
-    //
-    // List<ToppingList> toppingList = cartController.cartItems2
-    //     .expand((item) => item.selectedToppings ?? [])  // Use 'expand' to flatten the list
-    //     .map((topping) => ToppingList(
-    //   toppingID: topping.toppingID,
-    //   nameTopping: topping.nameTopping,
-    //   priceTopping: topping.priceTopping,
-    // ))
-    //     .toList();
-    // Order order = Order(
-    //   id: generateOrderId(),
-    //   menus: orderedMenus,
-    //   status: 'Sedang Diproses'.obs,
-    //   orderMethod: 'Takeaway',
-    //   paymentMethod: paymentMethod,
-    //   selectedToppings: toppingList,
-    //   selectedVarian: varianList,
-    //
-    //   paid: true,
-    //   catatan: catatan ?? '-', alasan_batal: ''.obs,
-    //   totalprice: totalPrice2,
-    //
-    // );
-    //
-    // saveOrderToHistory(order);
-    // for (CartItem2 item in cartController.cartItems2) {
-    //   await cartController.removeCart(idCart: item.cartId!);
-    // }
-    //
+    for (int i = 0; i < cartController.cartItems2.length; i++) {
+      CartItem2 item = cartController.cartItems2[i];
+      await cartController.removeCart(idCart: item.cartId!.value);
+    }
+
+    // //
     // cartController.cartItems2.clear();
-    // isLoading.value = false;
-    // Get.off(PembayaranComplate()); // Navigate to the completion view
-
-
+    isLoading.value = false;
   }
-void saveOrderToHistory(Order2 order) {
-  final existingItemIndex = historyController.orders2.indexWhere((orderlist) => orderlist.status == order.status);
-  historyController.saveOrderToHistory(order);
-  // historyController.orders.add(order);
-}
 }
 
 

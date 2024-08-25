@@ -29,10 +29,12 @@ class SearchList {
   final int stock;
   final double ratings;
   final String description;
+  final String? statusMenu;
   final DateTime createdAt;
   final DateTime updatedAt;
 
   SearchList({
+    this.statusMenu,
     required this.menuId,
     required this.image,
     required this.nameMenu,
@@ -47,14 +49,15 @@ class SearchList {
 
   factory SearchList.fromJson(Map<String, dynamic> json) {
     return SearchList(
-      menuId: json["menuID"],
+      menuId: json["id"],
       image: json["image"],
       nameMenu: json["name_menu"],
       price: double.parse(json["price"]),
       category: json["category"],
       stock: int.parse(json["stock"]),
-      ratings: double.parse(json["ratings"]),
+      ratings: double.parse(json["average_rating"]),
       description: json["description"],
+      statusMenu: json['status_menu'],
       createdAt: DateTime.parse(json["created_at"]),
       updatedAt: DateTime.parse(json["updated_at"]),
     );

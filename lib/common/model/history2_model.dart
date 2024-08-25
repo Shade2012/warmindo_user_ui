@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:warmindo_user_ui/common/model/toppings.dart';
 import 'package:warmindo_user_ui/common/model/varians.dart';
 
@@ -9,7 +10,9 @@ class Order2 {
   final String totalprice;
   final List<MenuList> orderDetails;
   String catatan;
-  RxString alasan_batal = ''.obs;
+  RxString? alasan_batal = ''.obs;
+  RxString? cancelMethod = ''.obs;
+  RxString? noRekening = ''.obs;
   RxString status = ''.obs;
   final String? paymentMethod;
   final String? orderMethod;
@@ -20,10 +23,12 @@ class Order2 {
     required this.totalprice,
     required this.orderDetails,
     required this.status,
-    this.orderMethod = 'Takeaway',
+    required this.orderMethod,
     required this.catatan,
-    required this.alasan_batal,
+    this.alasan_batal,
     this.paymentMethod,
+    this.cancelMethod,
+    this.noRekening,
     bool isRatingDone = false,
   }) : isRatingDone = isRatingDone.obs;
 
@@ -31,13 +36,16 @@ class Order2 {
     return Order2(
       id: json['id'],
       totalprice: json['price_order'],
+      cancelMethod: RxString(json['cancel_method']?? ''),
+      alasan_batal: RxString(json['reason_cancel']?? '') ,
+      noRekening: RxString(json['no_rekening']?? '') ,
       paymentMethod: json['payment_method'] ?? '-',
       orderMethod: json['order_method'] ?? '-',
       orderDetails: (json['orderDetails'] as List)
           .map((item) => MenuList.fromOrderDetailJson(item))
           .toList(),
       status: RxString(json['status']),
-      catatan: json['note'] ?? '', alasan_batal: ''.obs,
+      catatan: json['note'] ?? '',
     );
   }
 
@@ -71,12 +79,14 @@ class Order2 {
 }
 class MenuList {
   final int menuId;
+  final int orderDetailId;
+  final String? statusMenu;
   final String image;
   final String nameMenu;
   final int price;
   final String category;
   final String? stock;
-  final double? ratings;
+   RxDouble ratings;
   final String description;
   final String? secondCategory;
   final DateTime? createdAt;
@@ -87,13 +97,15 @@ class MenuList {
   int quantity;
 
   MenuList({
+    required this.orderDetailId,
     required this.menuId,
     required this.image,
     required this.nameMenu,
     required this.price,
     required this.category,
     this.stock,
-    this.ratings,
+    required this.ratings,
+    this.statusMenu,
     required this.description,
     this.createdAt,
     this.updatedAt,
@@ -106,13 +118,15 @@ class MenuList {
 
   factory MenuList.fromOrderDetailJson(Map<String, dynamic> json) {
     return MenuList(
+      orderDetailId: json['id'],
       menuId: json['menu']['id'],
       image: json['menu']['image'],
       nameMenu: json['menu']['name_menu'],
       price: int.parse(json['menu']['price']),
       category: json['menu']['category'],
       stock: json['menu']['stock'],
-      ratings: double.parse(json['menu']['ratings']),
+      statusMenu: json['menu']['status_menu'],
+      // ratings: json['menu']['average_rating'] != null ? double.parse(json['menu']['average_rating']) : null,
       description: json['menu']['description'],
       secondCategory: json['menu']['second_category'],
       createdAt: DateTime.parse(json['menu']['created_at']),
@@ -122,7 +136,8 @@ class MenuList {
       toppings: (json['toppings'] as List)
           .map((topping) => ToppingList.fromJson(topping))
           .toList(),
-      quantity: json['quantity'],
+      quantity: json['quantity'],ratings: json['user_rating'] != null ? double.parse(json['user_rating']).obs : 0.0.obs,
+
     );
   }
 
@@ -132,6 +147,7 @@ class MenuList {
     "name_menu": nameMenu,
     "price": price.toString(),
     "category": category,
+    "status_menu": statusMenu,
     "stock": stock.toString(),
     "ratings": ratings.toString(),
     "description": description,
@@ -140,3 +156,4 @@ class MenuList {
     "updated_at": updatedAt?.toIso8601String(),
   };
 }
+

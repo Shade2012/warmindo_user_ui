@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
-import 'package:warmindo_user_ui/common/model/cartmodel.dart';
 import 'package:warmindo_user_ui/pages/cart_page/shimmer/cart_shimmer.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_data.dart';
-
-import 'package:warmindo_user_ui/widget/counter/counterCart.dart';
-
-import '../../../routes/AppPages.dart';
 import '../../../utils/themes/color_themes.dart';
-import '../../../utils/themes/icon_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
-import '../../../widget/appBar.dart';
 import '../../../widget/myCustomPopUp/myPopup_controller.dart';
 
 class CartPage extends StatelessWidget {
@@ -37,7 +28,7 @@ class CartPage extends StatelessWidget {
           print('ini token:${controller.token.value}');
         },
         child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),// Wrap with SingleChildScrollView
+          physics: const AlwaysScrollableScrollPhysics(),// Wrap with SingleChildScrollView
           child: Container(
             decoration: BoxDecoration(
               boxShadow: [
@@ -45,13 +36,13 @@ class CartPage extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.2),
                   spreadRadius: 2,
                   blurRadius: 4,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
               color: ColorResources.backgroundCardColor,
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius:const BorderRadius.all(Radius.circular(20)),
             ),
-            margin: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             child: Obx(() {
               if (!controller.isConnected.value) {
                 return Center(
@@ -65,18 +56,18 @@ class CartPage extends StatelessWidget {
                 );
               }else if(controller.cartItems2.isEmpty) {
                 return Center(
-                  child: Container(
+                  child: SizedBox(
                     height: screenHeight * 0.75,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                             width: screenWidth / 4,
                             child: Image.asset(
                               Images.cart,
                               fit: BoxFit.cover,
                             )),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Text(
@@ -88,7 +79,7 @@ class CartPage extends StatelessWidget {
                   ),
                 );
               } else {
-                if(controller.isLoading == true){
+                if(controller.isLoading.value == true){
                   return CartShimmer();
                 }else{
                   return Column(

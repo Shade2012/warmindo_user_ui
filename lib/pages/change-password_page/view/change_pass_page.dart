@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
+import '../../../routes/AppPages.dart';
 import '../controller/change_pass_controller.dart';
 
 class ChangePasswordPage extends StatelessWidget {
@@ -11,6 +12,8 @@ class ChangePasswordPage extends StatelessWidget {
   final _currentPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
   final _confirmNewPasswordController = TextEditingController();
+
+  ChangePasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +25,15 @@ class ChangePasswordPage extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   Center(child: Text("Ubah Password",style: headerRegular,)),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   Form(
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Untuk mengubah password, silakan isi formulir di bawah ini:",
                           style: TextStyle(fontSize: 16),
                         ),
@@ -81,8 +84,8 @@ class ChangePasswordPage extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
                             foregroundColor: ColorResources.secondaryTextColor,
-                            minimumSize: Size(400, 46),
-                            padding: EdgeInsets.all(8.0),
+                            minimumSize: const Size(400, 46),
+                            padding: const EdgeInsets.all(8.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
@@ -96,8 +99,15 @@ class ChangePasswordPage extends StatelessWidget {
                               );
                             }
                           },
-                          child: Text("Ubah Password"),
+                          child: const Text("Ubah Password"),
                         ),
+                        const SizedBox(height: 20.0),
+                        Center(
+                            child: InkWell(
+                                onTap: (){
+                                  Get.toNamed(Routes.FORGOT_PASSWORD_PAGE);
+                                },
+                                child: Text('Lupa Password',style: boldTextStyle,))),
                       ],
                     ),
                   ),
@@ -111,7 +121,7 @@ class ChangePasswordPage extends StatelessWidget {
             return Positioned.fill(
               child: Container(
                 color: Colors.black.withOpacity(0.5),
-                child: Center(
+                child: const Center(
                   child: CircularProgressIndicator(
                     color: Colors.black,
                   ),
@@ -119,7 +129,7 @@ class ChangePasswordPage extends StatelessWidget {
               ),
             );
           } else {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
         }),
       ],
@@ -134,36 +144,34 @@ Widget typePass(
     String? Function(String?)? validator,
     RxBool obscureText,
     ) {
-  return Container(
-    child: Obx(() => TextFormField(
-      controller: controller,
-      keyboardType: keyboardType,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      obscureText: obscureText.value,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(
-            color: Colors.black,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
-        ),
-        suffixIcon: IconButton(
-          onPressed: () {
-            obscureText.value = !obscureText.value;
-          },
-          icon: Icon(obscureText.value ? Icons.visibility : Icons.visibility_off),
+  return Obx(() => TextFormField(
+    controller: controller,
+    keyboardType: keyboardType,
+    autovalidateMode: AutovalidateMode.onUserInteraction,
+    obscureText: obscureText.value,
+    decoration: InputDecoration(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: const BorderSide(
           color: Colors.black,
         ),
-        labelText: label,
-        labelStyle: TextStyle(
-          color: Colors.grey, // Label color is always grey
-        ),
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.normal),
       ),
-      validator: validator,
-    )),
-  );
+      focusedBorder: const OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.black),
+      ),
+      suffixIcon: IconButton(
+        onPressed: () {
+          obscureText.value = !obscureText.value;
+        },
+        icon: Icon(obscureText.value ? Icons.visibility : Icons.visibility_off),
+        color: Colors.black,
+      ),
+      labelText: label,
+      labelStyle: const TextStyle(
+        color: Colors.grey, // Label color is always grey
+      ),
+      hintStyle: const TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.normal),
+    ),
+    validator: validator,
+  ));
 }

@@ -7,14 +7,13 @@ import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/custom_search_bar.dart';
 import 'package:warmindo_user_ui/widget/menu_widget/menuCardSecondCategory.dart';
-import 'package:warmindo_user_ui/widget/menu_widget/menucard_widget.dart';
-import 'package:warmindo_user_ui/common/model/menu_model.dart';
+
 
 import '../../../widget/menu_widget/search.dart';
 import '../controller/guest_menu_controller.dart';
 
 class GuestMenuPage extends StatelessWidget {
-  GuestMenuPage({Key? key}) : super(key: key);
+  GuestMenuPage({super.key});
   final GuestNavigatorController navigatorController = Get.find<GuestNavigatorController>();
   final GuestMenuController controller = Get.put(GuestMenuController());
   final CartController cartController = Get.put(CartController());
@@ -22,8 +21,6 @@ class GuestMenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int initialTabIndex = Get.arguments ?? 0;
-
     return PopScope(
       canPop: false,
       onPopInvoked: (bool didPop) async {
@@ -39,7 +36,7 @@ class GuestMenuPage extends StatelessWidget {
         length: 4,
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(110),
+            preferredSize: const Size.fromHeight(110),
             child: AppBar(
               backgroundColor: ColorResources.primaryColor,
               title: CustomSearchBar(
@@ -51,8 +48,8 @@ class GuestMenuPage extends StatelessWidget {
               ),
               automaticallyImplyLeading: false,
               bottom: TabBar(
-                labelPadding: EdgeInsets.only(bottom: 10),
-                indicatorPadding: EdgeInsets.only(bottom: 10),
+                labelPadding: const EdgeInsets.only(bottom: 10),
+                indicatorPadding: const EdgeInsets.only(bottom: 10),
                 indicatorColor: ColorResources.backgroundCardColor,
                 tabs: [
                   Tab(
@@ -88,18 +85,16 @@ class GuestMenuPage extends StatelessWidget {
           body: Obx(() {
           if (!controller.isConnected.value) {
             return Center(
-              child: Container(
-                child: Text(
-                  'Tidak ada koneksi internet mohon check koneksi internet anda',
-                  style: boldTextStyle,textAlign: TextAlign.center,
-                ),
+              child: Text(
+                'Tidak ada koneksi internet mohon check koneksi internet anda',
+                style: boldTextStyle,textAlign: TextAlign.center,
               ),
             );
           }
          else if(controller.searchObx.value != ''){
             if (controller.searchResults.length == 0) {
               return
-                Center(child: Text('Produk tidak ditemukan'),);
+                const Center(child: Text('Produk tidak ditemukan'),);
             }else  {
               return Search(
                 categoryName: 'Search Results',

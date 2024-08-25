@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/view/history_page.dart';
 import 'package:warmindo_user_ui/pages/home_page/view/home_page.dart';
@@ -13,7 +14,6 @@ import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 
 class BottomNavbar extends StatelessWidget {
   final NavigatorController controller = Get.put(NavigatorController());
-
   final List<Widget> pages = [
     HomePage(),
     MenuPage(),
@@ -21,6 +21,8 @@ class BottomNavbar extends StatelessWidget {
     HistoryPage(),
     ProfilePage()
   ];
+
+  BottomNavbar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +34,9 @@ class BottomNavbar extends StatelessWidget {
         onPressed: () {
           controller.changeIndex(2);
         },
-        child: Obx(() => SvgPicture.asset(controller.currentIndex.value == 2 ? IconThemes.iconcartSelected: IconThemes.iconcart)),
         backgroundColor: ColorResources.bgfloatingActionButtonColor,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
+        child: Obx(() => SvgPicture.asset(controller.currentIndex.value == 2 ? IconThemes.iconcartSelected: IconThemes.iconcart)),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Obx(() => BottomNavigationBar(
@@ -54,15 +56,15 @@ class BottomNavbar extends StatelessWidget {
             icon: Obx(() => SvgPicture.asset(controller.currentIndex.value == 1 ? IconThemes.iconmenuSelected : IconThemes.iconmenu)),
             label: 'Menu',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: SizedBox.shrink(),
             label: '',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.history),
             label: 'Pesanan',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profil',
           ),

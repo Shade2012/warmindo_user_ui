@@ -1,15 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
-import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
-
-import '../../common/model/cartmodel.dart';
 import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../pages/guest_menu_page/controller/guest_menu_controller.dart';
 import '../../pages/home_page/controller/schedule_controller.dart';
@@ -33,11 +28,11 @@ class Search extends StatelessWidget {
   final List<MenuList> menuList;
   final BuildContext context;
   Search({
-    Key? key,
+    super.key,
     required this.categoryName,
     required this.menuList,
     required this.context, required this.isGuest
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +47,7 @@ class Search extends StatelessWidget {
         await guestMenuController.fetchProduct();
       },
       child: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -60,10 +55,10 @@ class Search extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text(
                 categoryName,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
 
@@ -75,29 +70,29 @@ class Search extends StatelessWidget {
                 shrinkWrap: true,
                 childAspectRatio: MediaQuery.of(context).size.width /
                     (MediaQuery.of(context).size.height / 1.60),
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   Container(
-                      margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
-                      child: Skeleton(width: 60, radius: 20,)),
+                      margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
+                      child: const Skeleton(width: 60, radius: 20,)),
                   Container(
-                      margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
-                      child: Skeleton(width: 60,radius: 20,)),
-                  Container(margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),child: Skeleton(width: 60,radius: 20,)),
-                  Container(margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),child: Skeleton(width: 60,radius: 20,)),
-                  Container(margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),child: Skeleton(width: 60,radius: 20,)),
-                  Container(margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),child: Skeleton(width: 60,radius: 20,))
+                      margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
+                      child: const Skeleton(width: 60,radius: 20,)),
+                  Container(margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),child: const Skeleton(width: 60,radius: 20,)),
+                  Container(margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),child: const Skeleton(width: 60,radius: 20,)),
+                  Container(margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),child: const Skeleton(width: 60,radius: 20,)),
+                  Container(margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),child: const Skeleton(width: 60,radius: 20,))
                 ],
 
               ) :        GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                   mainAxisExtent: 260,
                 ),
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: menuList.length,
                 itemBuilder: (context, index) {
                   final menu = menuList[index];
@@ -109,7 +104,7 @@ class Search extends StatelessWidget {
                       Get.to(DetailMenuPage(menu: menu, isGuest: isGuest,));
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                       width: screenWidth * 0.43,
                       decoration: BoxDecoration(
                         boxShadow: [
@@ -117,20 +112,20 @@ class Search extends StatelessWidget {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0,
                             blurRadius: 4,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                         color: ColorResources.backgroundCardColor,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderRadius: const BorderRadius.all(Radius.circular(20)),
                       ),
                       child: Column(
                         children: [
                           Stack(
                             children: [
                               Container(
-                                foregroundDecoration: (menu.stock! > 1 && scheduleController.jadwalElement[0].is_open)
+                                foregroundDecoration: (menu.stock! > 1 && scheduleController.jadwalElement[0].is_open && menu.statusMenu != '0')
                                     ? null
-                                    : BoxDecoration(
+                                    : const BoxDecoration(
                                   color: Colors.grey,
                                   backgroundBlendMode: BlendMode.saturation,
                                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -138,14 +133,14 @@ class Search extends StatelessWidget {
                                 width: double.infinity,
                                 height: 104,
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(20),
                                     topRight: Radius.circular(20),
                                   ),
                                   child: FadeInImage(
                                     image: NetworkImage(menu.image),
                                     fit: BoxFit.cover,
-                                    placeholder: AssetImage(Images.placeholder),
+                                    placeholder: const AssetImage(Images.placeholder),
                                   ),
                                 ),
                               ),
@@ -156,7 +151,7 @@ class Search extends StatelessWidget {
                             subtitle: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                SizedBox(height: 3),
+                                const SizedBox(height: 3),
                                 Text(
                                   menu.description,
                                   maxLines: 2,
@@ -165,7 +160,7 @@ class Search extends StatelessWidget {
                                 ),
                                 SizedBox(height: screenHeight * 0.03),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 10),
+                                  padding: const EdgeInsets.only(top: 10),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -173,7 +168,7 @@ class Search extends StatelessWidget {
                                         currencyFormat.format(menu.price),
                                         style: menuPriceTextStyle,
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       Visibility(
                                         visible: totalQuantity.value > 0,
                                         child: InkWell(
@@ -184,17 +179,22 @@ class Search extends StatelessWidget {
                                               if (isGuest) {
                                                 popUpcontroller.showCustomModalForGuest(context);
                                               } else {
-                                                if(menu.stock! < 1){
-                                                  Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
+                                                if(menu.statusMenu == '1'){
+                                                  if(menu.stock! < 1){
+                                                    Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
+                                                  }
+                                                  else{
+                                                    popUpcontroller.showDetailPopupModal(context, menu);
+                                                  }
+                                                }else{
+                                                  Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan.');
                                                 }
-                                                else{
-                                                  popUpcontroller.showDetailPopupModal(context, menu);
-                                                }
+
                                               }
                                             }
                                           },
                                           child: Container(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 5, vertical: 2),
                                             decoration: BoxDecoration(
                                               color: Colors.white,
@@ -256,22 +256,26 @@ class Search extends StatelessWidget {
                                                     });
                                                   }
                                                   else{
-                                                    if(menu.stock! < 1){
-                                                      Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
-                                                    }
-                                                    else{
-                                                      bool variantRequired = popUpcontroller.varianList.any((varian) => varian.category == menu.nameMenu);
-                                                      if(variantRequired){
-                                                        popUpcontroller.isLoading.value = true;
-                                                        Future.delayed(const Duration(seconds: 2), () {
-                                                          popUpcontroller.isLoading.value = false;
-                                                        });
-                                                        popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: 1);
-                                                      } else {
-                                                        popUpcontroller.addToCart2(product: menu, quantity: 1, cartID: cartItem?.cartId?.value ?? 0, context: context,);
-                                                        final cartItem2 = cartController.cartItems2.firstWhereOrNull((item) => item.productId == menu.menuId);
-                                                        popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: cartItem2?.cartId?.value ?? 0);
+                                                    if(menu.statusMenu == '1'){
+                                                      if(menu.stock! < 1){
+                                                        Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
                                                       }
+                                                      else{
+                                                        bool variantRequired = popUpcontroller.varianList.any((varian) => varian.category == menu.nameMenu);
+                                                        if(variantRequired){
+                                                          popUpcontroller.isLoading.value = true;
+                                                          Future.delayed(const Duration(seconds: 2), () {
+                                                            popUpcontroller.isLoading.value = false;
+                                                          });
+                                                          popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: 1);
+                                                        } else {
+                                                          popUpcontroller.addToCart2(product: menu, quantity: 1, cartID: cartItem?.cartId?.value ?? 0, context: context,);
+                                                          final cartItem2 = cartController.cartItems2.firstWhereOrNull((item) => item.productId == menu.menuId);
+                                                          popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: cartItem2?.cartId?.value ?? 0);
+                                                        }
+                                                      }
+                                                    }else{
+                                                      Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan.');
                                                     }
                                                   }
                                                 }
@@ -279,13 +283,13 @@ class Search extends StatelessWidget {
                                             }
                                           },
                                           child: Container(
-                                            padding: EdgeInsets.all(2),
+                                            padding: const EdgeInsets.all(2),
                                             decoration: BoxDecoration(
                                               color: Colors.black,
                                               borderRadius:
                                               BorderRadius.circular(5),
                                             ),
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons.add,
                                               color: Colors.white,
                                             ),

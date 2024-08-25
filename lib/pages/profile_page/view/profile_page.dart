@@ -1,12 +1,6 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/controller/edit_profile_controller.dart';
 import 'package:warmindo_user_ui/pages/profile_page/controller/profile_controller.dart';
 import 'package:warmindo_user_ui/pages/profile_page/shimmer/profile_shimmer.dart';
@@ -20,7 +14,7 @@ import 'package:warmindo_user_ui/widget/reusable_dialog.dart';
 class ProfilePage extends StatelessWidget {
   final EditProfileController editProfileController = Get.put(EditProfileController());
   final ProfileController profileController = Get.put(ProfileController());
-  ProfilePage({Key? key});
+  ProfilePage({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +54,7 @@ class ProfilePage extends StatelessWidget {
                        return ProfileShimmer();
                      }else{
                        return Container(
-                         margin: EdgeInsets.only(bottom: 20),
+                         margin: const EdgeInsets.only(bottom: 20),
                          width: screenWidth,
                          color: ColorResources.transparent,
                          child: Column(
@@ -86,7 +80,7 @@ class ProfilePage extends StatelessWidget {
                                      alignment: Alignment.center,
                                    )
                                        : Image.network(
-                                     '${profileController.image.value}',
+                                     profileController.image.value,
                                      width: 125,
                                      height: 125,
                                      fit: BoxFit.cover,
@@ -95,7 +89,7 @@ class ProfilePage extends StatelessWidget {
                                  );
                                }),
                              ),
-                             SizedBox(height: 15),
+                             const SizedBox(height: 15),
                              Text(
                                profileController.txtName.value,
                                style: nameProfileTextStyle,
@@ -112,8 +106,8 @@ class ProfilePage extends StatelessWidget {
                                  Get.toNamed(Routes.EDITPROFILE_PAGE);
                                },
                                style: ElevatedButton.styleFrom(
-                                 minimumSize: Size(133, 30),
-                                 padding: EdgeInsets.all(8),
+                                 minimumSize: const Size(133, 30),
+                                 padding: const EdgeInsets.all(8),
                                  shape: RoundedRectangleBorder(
                                    borderRadius: BorderRadius.circular(8.0),
                                  ),
@@ -133,8 +127,8 @@ class ProfilePage extends StatelessWidget {
                    Flexible(
                      child: Container(
                          width: screenWidth,
-                         padding: EdgeInsets.symmetric(horizontal: 20,vertical: 40),
-                         decoration: BoxDecoration(
+                         padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 40),
+                         decoration: const BoxDecoration(
                            color: ColorResources.wProfileBg,
                            borderRadius: BorderRadius.only(
                              topLeft: Radius.circular(22),
@@ -144,8 +138,8 @@ class ProfilePage extends StatelessWidget {
                          child:  Column(
                            children: [
                              ListTile(
-                               leading: Icon(Icons.person),
-                               title: Text('Verifikasi'),
+                               leading: const Icon(Icons.person),
+                               title: const Text('Verifikasi'),
                                trailing: SizedBox(
                                  width: 100, // Adjust the width as needed
                                  child: Row(
@@ -153,9 +147,9 @@ class ProfilePage extends StatelessWidget {
                                    children: [
                                      Visibility(
                                        visible: profileController.user_verified.value == '1',
-                                       child: Icon(Icons.verified_rounded,color: Colors.black,),
+                                       child: const Icon(Icons.verified_rounded,color: Colors.black,),
                                      ),
-                                     SizedBox(width: 8), // Add some spacing between icons
+                                     const SizedBox(width: 8), // Add some spacing between icons
                                      InkWell(
                                        onTap: () {
                                          showDialog(
@@ -165,7 +159,7 @@ class ProfilePage extends StatelessWidget {
                                            },
                                          );
                                        },
-                                       child: Icon(Icons.info_outlined),
+                                       child: const Icon(Icons.info_outlined),
                                      ),
                                    ],
                                  ),
@@ -177,11 +171,11 @@ class ProfilePage extends StatelessWidget {
                                visible:profileController.isLoginGoogle.value != 'true',
                                child: Column(
                                  children: [
-                                   SizedBox(height: 30),
+                                   const SizedBox(height: 30),
                                    ListTile(
-                                     leading: Icon(Icons.security),
-                                     title: Text('Ganti Password'),
-                                     trailing: Icon(Icons.chevron_right),
+                                     leading: const Icon(Icons.security),
+                                     title: const Text('Ganti Password'),
+                                     trailing: const Icon(Icons.chevron_right),
                                      onTap: () {
                                        Get.toNamed(Routes.CHANGEPASS_PAGE);
                                      },
@@ -189,20 +183,20 @@ class ProfilePage extends StatelessWidget {
                                  ],
                                ),
                              ),
-                             SizedBox(height: 30),
+                             const SizedBox(height: 30),
                              ListTile(
-                               leading: Icon(Icons.policy),
-                               title: Text('Kebijakan'),
-                               trailing: Icon(Icons.chevron_right),
+                               leading: const Icon(Icons.policy),
+                               title: const Text('Kebijakan'),
+                               trailing: const Icon(Icons.chevron_right),
                                onTap: () {
                                  Get.toNamed(Routes.POLICY_PAGE);
                                },
                              ),
-                             SizedBox(height: 30),
+                             const SizedBox(height: 30),
                              ListTile(
-                               leading: Icon(Icons.logout),
-                               title: Text('Keluar'),
-                               trailing: Icon(Icons.chevron_right),
+                               leading: const Icon(Icons.logout),
+                               title: const Text('Keluar'),
+                               trailing: const Icon(Icons.chevron_right),
                                onTap: () {
                                  showDialog(
                                    context: context,

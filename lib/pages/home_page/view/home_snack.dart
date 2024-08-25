@@ -17,14 +17,12 @@ class HomeSnack extends StatelessWidget {
       NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final HomeController controller = Get.put(HomeController());
   final scheduleController = Get.find<ScheduleController>();
-  HomeSnack({Key? key, required this.menuItem}) : super(key: key);
+  HomeSnack({super.key, required this.menuItem});
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
     if (menuItem == null) {
-      return Center(child: Text('Menu item not found'));
+      return const Center(child: Text('Menu item not found'));
     }
 
     return   GestureDetector(
@@ -35,10 +33,10 @@ class HomeSnack extends StatelessWidget {
         ));
       },
       child: Container(
-        padding: EdgeInsets.only(left: 10),
-        foregroundDecoration: (menuItem.stock! > 1 && scheduleController.jadwalElement[0].is_open)
+        padding: const EdgeInsets.only(left: 10),
+        foregroundDecoration: (menuItem.stock! > 1 && scheduleController.jadwalElement[0].is_open && menuItem.statusMenu != '0')
             ? null
-            : BoxDecoration(
+            : const BoxDecoration(
           color: Colors.grey,
           backgroundBlendMode: BlendMode.saturation,
           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -49,11 +47,11 @@ class HomeSnack extends StatelessWidget {
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 0,
               blurRadius: 4,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
           color: ColorResources.backgroundCardColor,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,11 +60,11 @@ class HomeSnack extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(menuItem.nameMenu, style: regularInputTextStyle),
-                  SizedBox(
+                  const SizedBox(
                     height: 3,
                   ),
                   Text(
@@ -74,7 +72,7 @@ class HomeSnack extends StatelessWidget {
                     maxLines: 2,
                     style: descriptionTextStyle,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -91,51 +89,49 @@ class HomeSnack extends StatelessWidget {
                                 : Colors.grey,
                             size: 20,
                           ),
-                          Text(menuItem.ratings.toString(),
+                          Text(menuItem.rating.toString(),
                               style: ratingTextStyle),
                         ],
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(currencyFormat.format(menuItem.price),
                           style: priceTextStyle),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Stack(
               children: [
-                Container(
+                SizedBox(
                   width: 122, // Use the screen width
                   height: 104,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topRight: (Radius.circular(20)),
                       bottomRight: (Radius.circular(20)),
                     ),
                     child: FadeInImage(
                       image: NetworkImage(menuItem.image),
                       fit: BoxFit.cover,
-                      placeholder: AssetImage(Images.onboard2),
+                      placeholder: const AssetImage(Images.onboard2),
                     ),
                   ),
                 ),
                 Positioned(
                   top: 5,
                   right: 8,
-                  child: Container(
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Cart(
-                        context: context,
-                        product: menuItem,
-                      ),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Cart(
+                      context: context,
+                      product: menuItem,
                     ),
                   ),
                 ),

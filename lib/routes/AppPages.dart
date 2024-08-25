@@ -1,5 +1,3 @@
-import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:warmindo_user_ui/pages/cart_page/binding/cart_binding.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
 import 'package:warmindo_user_ui/pages/change-password_page/binding/change_pass_binding.dart';
@@ -19,6 +17,7 @@ import 'package:warmindo_user_ui/pages/guest_navigator_page/binding/guest_naviga
 import 'package:warmindo_user_ui/pages/guest_navigator_page/view/guest_navigator_page.dart';
 import 'package:warmindo_user_ui/pages/guest_profile_page/binding/guest_profile_binding.dart';
 import 'package:warmindo_user_ui/pages/guest_profile_page/view/guest_profile_page.dart';
+import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
 
 import 'package:warmindo_user_ui/pages/history_page/binding/history_binding.dart';
 
@@ -47,6 +46,8 @@ import 'package:warmindo_user_ui/pages/verification_profile_page/view/verificati
 import 'package:warmindo_user_ui/pages/veritification_page/binding/veritification_binding.dart';
 import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_page.dart';
 
+import '../common/model/history2_model.dart';
+
 
 
 part 'AppRoutes.dart';
@@ -73,7 +74,7 @@ class AppPages {
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
         name: _Paths.SPLASH_SCREEN,
-        page: () => SplashPage(),
+        page: () => const SplashPage(),
         binding: SplashBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
@@ -123,7 +124,12 @@ class AppPages {
         name: _Paths.DETAIL_MENU_PAGE,
         page: () => DetailMenuPage(menu: Get.arguments['menu'], isGuest: Get.arguments['isGuest'],),
         binding: DETAILMENUBinding(),
-        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: _Paths.HISTORYDETAIL_PAGE,
+        page: () => HistoryDetailPage(initialOrder: Get.arguments as Order2,),
+        // page: () => HistoryDetailPage(menu: Get.arguments['menu'], isGuest: Get.arguments['isGuest'],),
+        binding: HistoryBinding(),
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
         name: _Paths.MENU_PAGE,
@@ -148,7 +154,7 @@ class AppPages {
 
     GetPage(
         name: _Paths.POLICY_PAGE,
-        page: () => PolicyPage(),
+        page: () => const PolicyPage(),
         binding: PolicyBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
@@ -197,7 +203,7 @@ class AppPages {
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
         name: _Paths.GUEST_PROFILE_PAGE,
-        page: () => GuestProfilePage(),
+        page: () => const GuestProfilePage(),
         binding: GuestProfileBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),

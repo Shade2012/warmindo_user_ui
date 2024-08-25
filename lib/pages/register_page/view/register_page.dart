@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:warmindo_user_ui/pages/register_page/controller/register_controller.dart';
 import 'package:warmindo_user_ui/utils/themes/buttonstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/inputfield.dart';
@@ -8,8 +6,6 @@ import 'package:get/get.dart';
 import 'package:warmindo_user_ui/widget/reusable_dialog.dart';
 import '../../../routes/AppPages.dart';
 import '../../../utils/themes/textstyle_themes.dart';
-import '../../../utils/themes/color_themes.dart';
-import '../../../utils/themes/image_themes.dart';
 import '../../../widget/google_sign_in/google_sign_in.dart';
 import '../../login_page/controller/login_controller.dart';
 
@@ -64,7 +60,7 @@ class RegisterPage extends GetView<RegisterController>{
       String? Function(String)? validator,
       ) {
     return Container(
-      margin: EdgeInsets.only(top: 20,bottom: 20),
+      margin: const EdgeInsets.only(top: 20,bottom: 20),
       child: Obx(()=> TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: controller2,
@@ -101,12 +97,12 @@ class RegisterPage extends GetView<RegisterController>{
         Scaffold(
             body: SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.only(left: 20,right: 20),
+                margin: const EdgeInsets.only(left: 20,right: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 20,top: 40),
+                      margin: const EdgeInsets.only(bottom: 20,top: 40),
                       child: Center(
                           child: Text("Daftar",style: onboardingHeaderTextStyle ,)
                       ),
@@ -119,7 +115,7 @@ class RegisterPage extends GetView<RegisterController>{
                     myText(Icons.mail_outline, TextInputType.emailAddress, "Email", "Ex: ex@gmail.com", ctrEmail, isEmailValid),
                     myText(Icons.phone, TextInputType.phone,"Nomor Telepon", "Ex: 082124805253", ctrNumberPhone,isPhone),
                     Password(Icons.lock_outline, "Password", "Ex: ********", ctrPassword,isPassword),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
@@ -167,11 +163,11 @@ class RegisterPage extends GetView<RegisterController>{
 
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 20,bottom: 20),
+                      margin: const EdgeInsets.only(top: 20,bottom: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Sudah punya akun? "),
+                          const Text("Sudah punya akun? "),
                           GestureDetector(
                               onTap: (){
                                 Get.toNamed(Routes.LOGIN_PAGE);
@@ -189,12 +185,12 @@ class RegisterPage extends GetView<RegisterController>{
                             width: 50,
                             color: Colors.black,
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Text(
                             'Atau Daftar',
                             style: boldTextStyle,
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Container(
                             height: 2,
                             width: 50,
@@ -214,13 +210,13 @@ class RegisterPage extends GetView<RegisterController>{
             return Positioned.fill(
               child: Container(
                 color: Colors.black.withOpacity(0.5),
-                child: Center(
+                child: const Center(
                   child: CircularProgressIndicator( color: Colors.black,),
                 ),
               ),
             );
           } else {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
         }),
       ],

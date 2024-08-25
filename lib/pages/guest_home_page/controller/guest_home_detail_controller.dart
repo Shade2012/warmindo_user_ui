@@ -1,10 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 import '../../../common/global_variables.dart';
 import '../../../common/model/menu_list_API_model.dart';
-import '../view/guest_home_detail_page.dart';
 
 class GuestHomeDetailController extends GetxController {
   RxList<MenuList> menuElement = <MenuList>[].obs;

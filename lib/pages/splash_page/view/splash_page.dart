@@ -5,7 +5,7 @@ import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 
 class SplashPage extends GetView<SplashController> {
-  const SplashPage({Key? key}) : super(key: key);
+  const SplashPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class SplashPage extends GetView<SplashController> {
                 color: animationValue == 1 ? ColorResources.splashGradientEnd : Colors.transparent,
                 child: Center(
                   child: AnimatedContainer(
-                    duration: Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
                     height: MediaQuery.of(context).size.height * circleSize,
                     width: MediaQuery.of(context).size.width * circleSize,
                     decoration: BoxDecoration(

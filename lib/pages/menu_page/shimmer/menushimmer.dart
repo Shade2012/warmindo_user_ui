@@ -1,25 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 
 class MenuShimmer extends StatelessWidget {
+  const MenuShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       width: screenWidth,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             height: 1000,
             child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: 3, // Change this to 5 for 5 items
               itemBuilder: (context, index) {
-                return Column(
+                return const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Skeleton(height: 24, width: 50, radius: 5,),

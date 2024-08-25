@@ -1,18 +1,15 @@
 import 'dart:convert';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
 import 'package:warmindo_user_ui/pages/edit-profile/controller/edit_profile_controller.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
-
 import '../../../common/global_variables.dart';
-import '../../menu_page/controller/menu_controller.dart';
 import '../widget/pop_up_verification.dart';
+
 class VerificationProfileController extends GetxController{
   final formKey = GlobalKey<FormState>();
   final CartController cartController = Get.find<CartController>();

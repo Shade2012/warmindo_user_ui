@@ -23,7 +23,7 @@ class HomeStatus extends StatelessWidget {
             color: Colors.grey.withOpacity(0.2),
             spreadRadius: 0,
             blurRadius: 4,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
@@ -44,7 +44,7 @@ class HomeStatus extends StatelessWidget {
           Visibility(
               visible: controller.scheduleController.jadwalElement[0].temporary_closure_duration != 0,
               child: Text('Toko Tutup Sementara',style: boldphoneNumberTextStyle,)),
-          SizedBox(height: 15,),
+          const SizedBox(height: 15,),
           Row(
             children: [
               RichText(
@@ -61,7 +61,7 @@ class HomeStatus extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               RichText(
                 text: TextSpan(
                   children: [

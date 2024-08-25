@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:warmindo_user_ui/pages/register_page/controller/register_controller.dart';
-import 'package:warmindo_user_ui/pages/veritification_page/controller/veritification_controller.dart';
 import 'package:warmindo_user_ui/widget/reusable_dialog.dart';
 import '../../../common/global_variables.dart';
 import '../../../routes/AppPages.dart';
@@ -68,9 +66,7 @@ class LoginController extends GetxController {
                   onConfirmPressed: (){
                     prefs.setString('token', '${responseData['token']}');
                     phone_number.value = responseData['user']['phone_number'];
-                    Get.toNamed(Routes.VERITIFICATION_PAGE, arguments: {
-                                                    'isLogged': false.obs,
-                    });
+                    Get.toNamed(Routes.VERITIFICATION_PAGE, arguments: {'isLogged': false.obs,});
                   }
               )
             );

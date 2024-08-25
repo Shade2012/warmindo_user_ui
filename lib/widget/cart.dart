@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
-import 'package:warmindo_user_ui/pages/testing.dart';
 import 'package:warmindo_user_ui/widget/reusable_dialog.dart';
 import '../pages/cart_page/controller/cart_controller.dart';
-import '../common/model/cartmodel.dart';
 import '../pages/home_page/controller/schedule_controller.dart';
 import '../routes/AppPages.dart';
-import 'myCustomPopUp/detailPopup.dart';
-import 'myCustomPopUp/myCustomPopup.dart';
 import 'myCustomPopUp/myPopup_controller.dart';
 
 class Cart extends StatelessWidget {
@@ -19,7 +15,7 @@ class Cart extends StatelessWidget {
   final BuildContext context;
   final MenuList product;
 
-  Cart({required this.context, required this.product});
+  Cart({super.key, required this.context, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -79,17 +75,20 @@ class Cart extends StatelessWidget {
                     }
                   }
                 }else{
-                  Get.snackbar('Pesan', 'Menu Sedang Disable');
+                  Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan.');
                 }
-
               }
             } else {
-              if(product.stock! < 1 ){
-                Get.snackbar('Pesan', 'Stok Menu Habis ');
+              if(product.statusMenu == '1'){
+                if(product.stock! < 1 ){
+                  Get.snackbar('Pesan', 'Stok Menu Habis ');
+                }else{
+                  popUpcontroller.showDetailPopupModal(context, product);
+                }
               }else{
-                popUpcontroller.showDetailPopupModal(context, product);
-
+                Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan.');
               }
+
             }
           }
         } catch (e) {
@@ -102,10 +101,10 @@ class Cart extends StatelessWidget {
         width: 35,
         height: 35,
         decoration: BoxDecoration(
-          color: Color.fromARGB(160, 0, 0, 0),
+          color: const Color.fromARGB(160, 0, 0, 0),
           borderRadius: BorderRadius.circular(50),
         ),
-        child: Icon(
+        child: const Icon(
           Icons.shopping_cart,
           color: Colors.white,
           size: 24,

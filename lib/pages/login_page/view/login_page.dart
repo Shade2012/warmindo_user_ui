@@ -1,14 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:warmindo_user_ui/pages/login_page/controller/login_controller.dart';
 import 'package:warmindo_user_ui/widget/inputfield.dart';
 import 'package:get/get.dart';
 import '../../../routes/AppPages.dart';
 import '../../../utils/themes/buttonstyle_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
-import '../../../utils/themes/color_themes.dart';
-import '../../../utils/themes/image_themes.dart';
 import '../../../widget/google_sign_in/google_sign_in.dart';
 import '../../register_page/controller/register_controller.dart';
 
@@ -34,7 +30,7 @@ class LoginPage extends GetView<LoginController> {
     String? Function(String)? validator,
   ) {
     return Container(
-      margin: EdgeInsets.only(top: 20, bottom: 20),
+      margin: const EdgeInsets.only(top: 20, bottom: 20),
       child: Obx(
         () => TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -77,7 +73,7 @@ class LoginPage extends GetView<LoginController> {
         Scaffold(
             body: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.only(left: 20, right: 20),
+            margin: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -85,7 +81,7 @@ class LoginPage extends GetView<LoginController> {
                   height: screenHeight / 10,
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 20, top: 40),
+                  margin: const EdgeInsets.only(bottom: 20, top: 40),
                   child: Center(
                       child: Text(
                     "Hello",
@@ -110,8 +106,8 @@ class LoginPage extends GetView<LoginController> {
                         Get.toNamed(Routes.FORGOT_PASSWORD_PAGE);
                       },
                         child: Text('Lupa Password',style: boldTextStyle,))),
-                SizedBox(height: 20,),
-                Container(
+                const SizedBox(height: 20,),
+                SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                       onPressed: () {
@@ -132,11 +128,11 @@ class LoginPage extends GetView<LoginController> {
                       )),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 20, bottom: 20),
+                  margin: const EdgeInsets.only(top: 20, bottom: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Tidak punya akun? "),
+                      const Text("Tidak punya akun? "),
                       GestureDetector(
                           onTap: () {
                             Get.toNamed(Routes.REGISTER_PAGE);
@@ -157,12 +153,12 @@ class LoginPage extends GetView<LoginController> {
                         width: 50,
                         color: Colors.black,
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         'Atau Daftar Lewat',
                         style: boldTextStyle,
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Container(
                         height: 2,
                         width: 50,
@@ -181,7 +177,7 @@ class LoginPage extends GetView<LoginController> {
             return Positioned.fill(
               child: Container(
                 color: Colors.black.withOpacity(0.5),
-                child: Center(
+                child: const Center(
                   child: CircularProgressIndicator(
                     color: Colors.black,
                   ),
@@ -189,7 +185,7 @@ class LoginPage extends GetView<LoginController> {
               ),
             );
           } else {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
         }),
       ],

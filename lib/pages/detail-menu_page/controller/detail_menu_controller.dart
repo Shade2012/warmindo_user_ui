@@ -6,7 +6,7 @@ import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:warmindo_user_ui/common/model/varians.dart';
 import '../../../common/global_variables.dart';
-import '../../../common/model/menu_model.dart';
+
 import '../../../common/model/toppings.dart';
 
 class DetailMenuController extends GetxController {
@@ -57,7 +57,7 @@ class DetailMenuController extends GetxController {
         toppingList.value = toppingListFromJson(response.body);
         final data = jsonDecode(response.body);
         print('ini response topping: \n $data');
-        print('ini list topping : \n${toppingList.value}');
+        print('ini list topping : \n$toppingList');
       } else {
         print('Error: ${response.statusCode}');
       }
@@ -83,7 +83,7 @@ class DetailMenuController extends GetxController {
         final data = jsonDecode(response.body);
 
         print('ini response varian: \n $data');
-        print('ini list varian : \n${varianList.value}');
+        print('ini list varian : \n$varianList');
       } else {
         print('Error: ${response.statusCode}');
       }

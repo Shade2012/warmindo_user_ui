@@ -7,12 +7,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
-import 'package:http/http.dart';
-import 'package:path/path.dart';
 import '../../../common/global_variables.dart';
 import 'package:http/http.dart' as http;
-
 import '../../profile_page/controller/profile_controller.dart';
+
 class EditProfileController extends GetxController {
   final ProfileController profileController = Get.put(ProfileController());
   final fullNameController = TextEditingController();
@@ -37,9 +35,7 @@ class EditProfileController extends GetxController {
     checkConnectivity();
   }
   Future<void> initializePrefs() async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
   }
   void fetchUser() async{
     token.value = prefs!.getString('token') ?? '';
@@ -74,7 +70,7 @@ class EditProfileController extends GetxController {
     } catch (e) {
       print('Exception: $e');
     } finally {
-      isLoading.value = false; // Set loading to false after data is fetched
+      isLoading.value = false;
     }
   }
   void checkSharedPreference() async {
@@ -115,8 +111,6 @@ class EditProfileController extends GetxController {
 
     try {
       isLoading.value = true;
-
-      // Create a multipart request
       var request = http.MultipartRequest('POST', url)
         ..headers.addAll({
           'Authorization': 'Bearer $token',
@@ -135,23 +129,7 @@ class EditProfileController extends GetxController {
           filename: fileName,
         ));
       }
-
-      print('Request URL: $url');
-      print('Request Headers: ${request.headers}');
-      print('Request Fields: ${request.fields}');
-      print('Request Files: ${request.files}');
-
-      // Send the request
       var response = await http.Response.fromStream(await request.send());
-
-      // Reset selectedImage to null after sending the request
-
-
-      // Log response details
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
-
-      // Handle the response
       if (response.statusCode == 200) {
         isLoading.value = false;
         profileController.checkSharedPreference();

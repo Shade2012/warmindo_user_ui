@@ -38,10 +38,15 @@ class RatingCard extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
+      decoration: const BoxDecoration(
+          color: Colors.white,
+        borderRadius:  BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
+      ),
       height: screenHeight * 0.6,
       padding: const EdgeInsets.all(10),
       child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
@@ -66,25 +71,32 @@ class RatingCard extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   bool isRatingGreaterThanZero = checkIfRatingIsGreaterThanZero(ratingsList);
                   if (isRatingGreaterThanZero) {
                     for (int i = 0; i < ratingsList.length; i++) {
                       double rating = ratingsList[i];
-                      ratingController.addRating(i, rating);
+
+                      // Extract menuId and orderDetailID from the orderDetails
+                      int menuId = order.orderDetails[i].menuId;
+                      int orderDetailID = order.orderDetails[i].orderDetailId;
+                      print(menuId);
+                      print(rating);
+                      print(orderDetailID);
+                      // Call the addRating method with the appropriate parameters
+                      await ratingController.addRating(menuId, rating, orderDetailID,order);
+                      controller.orders2.refresh();
                     }
-                   Get.back();
-                   order.isRatingDone.value = true;
+                    Get.back();
+                    order.isRatingDone.value = true;
                   } else {
-                    Get.snackbar("Pesan", "Anda Harus Mengisi Nilai Semua Menu Terlebih Dahulu",backgroundColor: Colors.white);
+                    Get.snackbar("Pesan", "Anda Harus Mengisi Nilai Semua Menu Terlebih Dahulu", backgroundColor: Colors.white);
                   }
                 },
                 style: redeembutton(),
-                child: Text("Done", style: whiteboldTextStyle15),
+                child: Text("Selesai", style: whiteboldTextStyle15),
               ),
             ),
-
-
           ],
         ),
       ),
@@ -117,6 +129,34 @@ class RatingCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(menu.nameMenu, style: vouchertextStyle),
+                  Visibility(
+                    visible: menu.selectedVarian?.nameVarian != null,
+                    child: Text(menu.selectedVarian?.nameVarian ?? "-"),
+                  ),
+                  Visibility(
+                    visible: menu.toppings!.isNotEmpty,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Text.rich(
+                          TextSpan(
+                            children: List.generate( menu.toppings!.length, (index) {
+                              final topping =  menu.toppings![index];
+                              final isLast = index ==  menu.toppings!.length - 1;
+                              return TextSpan(
+                                text: isLast ? topping.nameTopping : '${topping.nameTopping} + ',
+                                style: const TextStyle(overflow: TextOverflow.ellipsis),
+                              );
+                            }),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ),
+                  ),
                   RatingBar(
                     initialRating: 0,
                     minRating: 0,

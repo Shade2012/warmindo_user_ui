@@ -7,7 +7,6 @@ import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../detail-menu_page/view/detail_menu_page.dart';
-import '../../home_page/controller/home_controller.dart';
 import '../../home_page/controller/schedule_controller.dart';
 import '../controller/guest_home_controller.dart';
 class GuestSnack extends StatelessWidget {
@@ -15,22 +14,22 @@ class GuestSnack extends StatelessWidget {
   final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final GuestHomeController controller = Get.put(GuestHomeController());
   final scheduleController = Get.find<ScheduleController>();
-   GuestSnack({Key? key, required this.menuItem}) : super(key: key);
+   GuestSnack({super.key, required this.menuItem});
 
   @override
   Widget build(BuildContext context) {
     if (menuItem == null) {
-      return Center(child: Text('Menu item not found'));
+      return const Center(child: Text('Menu item not found'));
     }
     return  GestureDetector(
       onTap: (){
         Get.to(DetailMenuPage(menu: menuItem, isGuest: true, ));
       },
       child: Container(
-        padding: EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 10),
         foregroundDecoration: scheduleController.jadwalElement[0].is_open
             ? null
-            : BoxDecoration(
+            : const BoxDecoration(
           color: Colors.grey,
           backgroundBlendMode: BlendMode.saturation,
           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -41,11 +40,11 @@ class GuestSnack extends StatelessWidget {
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 0,
               blurRadius: 4,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
           color: ColorResources.backgroundCardColor,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,47 +53,47 @@ class GuestSnack extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   Text(menuItem.nameMenu, style: regularInputTextStyle),
-                  SizedBox(height: 3,),
+                  const SizedBox(height: 3,),
                   Text(
                     menuItem.description,maxLines: 2,overflow: TextOverflow.ellipsis,
                     style: descriptionTextStyle,
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
-                          Text(menuItem.ratings.toString(), style: ratingTextStyle),
+                          const Icon(Icons.star_rounded, color: Colors.orange, size: 20,),
+                          Text(menuItem.rating.toString(), style: ratingTextStyle),
                         ],
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(currencyFormat.format(menuItem.price), style: priceTextStyle),
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                 ],
               ),
             ),
-            SizedBox(width: 10,),
+            const SizedBox(width: 10,),
             Stack(
               children: [
-                Container(
+                SizedBox(
                   width: 122, // Use the screen width
                   height: 104,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topRight: (Radius.circular(20)),
                       bottomRight: (Radius.circular(20)),
                     ),
                     child: FadeInImage(
                       image: NetworkImage(menuItem.image),
                       fit: BoxFit.cover,
-                      placeholder: AssetImage(Images.onboard2),
+                      placeholder: const AssetImage(Images.onboard2),
                     ),
                   ),
                 ),
