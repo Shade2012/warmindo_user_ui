@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:warmindo_user_ui/pages/guest_home_page/view/guest_home_detail_page.dart';
 import '../../../common/model/menu_list_API_model.dart';
-import '../../../common/model/menu_model.dart';
 import '../../home_page/controller/schedule_controller.dart';
 
 class GuestHomeController extends GetxController {
@@ -44,7 +43,7 @@ class GuestHomeController extends GetxController {
     if (categoryName == null) {
       throw ArgumentError('Invalid category ID');
     }
-    final filteredItems = menuElements.where((item) => item.category == categoryName).toList();
+    final filteredItems = menuElements.where((item) => item.category == categoryName && item.statusMenu != '0').toList();
 
     if (filteredItems.isEmpty) {
       return MenuList(
@@ -56,7 +55,7 @@ class GuestHomeController extends GetxController {
         description: 'No description available', statusMenu: '1',
       );
     }
-    filteredItems.sort((a, b) => b.ratings?.compareTo(a.ratings ?? 0) ?? 0);
+    filteredItems.sort((a, b) => b.rating?.compareTo(a.rating ?? 0) ?? 0);
 
     return filteredItems.first;
   }
@@ -64,7 +63,7 @@ class GuestHomeController extends GetxController {
     try {
       final response = await http.get(
         Uri.parse('https://warmindo.pradiptaahmad.tech/api/menus'),
-      ).timeout(Duration(seconds: 5));
+      ).timeout(const Duration(seconds: 5));
 
       if (response.statusCode == 200) {
         menuElement.value = menuListFromJson(response.body);

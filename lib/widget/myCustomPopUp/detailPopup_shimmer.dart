@@ -5,7 +5,7 @@ import 'myPopup_controller.dart';
 import 'package:get/get.dart';
 class DetailPopupShimmer extends StatelessWidget {
   final popUpController = Get.put(MyCustomPopUpController());
-   DetailPopupShimmer({Key? key}) : super(key: key);
+   DetailPopupShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {

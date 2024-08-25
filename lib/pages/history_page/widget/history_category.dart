@@ -11,7 +11,7 @@ import '../../history-detail_page/widget/HistoryDetailFilterPage.dart';
 
 class HistoryCategory extends StatelessWidget {
   final List<Order2> orders;
-  HistoryCategory({
+  const HistoryCategory({
     Key? key,
     required this.status,
     required this.orders,
@@ -67,25 +67,25 @@ class HistoryCategory extends StatelessWidget {
                 color: Colors.black.withOpacity(0.2),
                 spreadRadius: 0,
                 blurRadius: 4,
-                offset: Offset(0, 1),
+                offset: const Offset(0, 1),
               ),
             ],
             color: ColorResources.backgroundCardColor,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: screenWidth / 4.3,
                 height: screenHeight * 0.11,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
                   child: Image.asset(controller.imageChange(status)),
                 ),
               ),
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,

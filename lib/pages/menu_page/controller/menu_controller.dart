@@ -1,10 +1,11 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:http/http.dart' as http;
-import 'package:warmindo_user_ui/common/model/menu_model.dart';
-import 'dart:convert';
-
 import '../../../common/global_variables.dart';
 import '../../../common/model/menu_list_API_model.dart';
 import '../../../common/model/search_model.dart';
@@ -13,11 +14,14 @@ import '../../../common/model/search_model.dart';
 class MenuPageController extends GetxController {
   final TextEditingController search = TextEditingController();
   RxList<MenuList> menuElement = <MenuList>[].obs;
+  RxList<MenuList> menuWithDisable = <MenuList>[].obs;
   RxList<MenuList> searchResults = <MenuList>[].obs;
   RxBool isLoading = true.obs;
   String lastQuery = '';
   RxBool isConnected = true.obs;
   RxString searchObx = ''.obs;
+  late Timer _debounce = Timer(Duration.zero, () { });
+
 
   @override
   void onInit() async {
@@ -27,7 +31,6 @@ class MenuPageController extends GetxController {
     checkConnectivity();
     search.addListener(() {
       searchObx.value = search.text;
-      searchFilter(search.text);
     });
   }
 
@@ -52,10 +55,13 @@ class MenuPageController extends GetxController {
 
       final response = await http.get(
         Uri.parse(GlobalVariables.apiMenuUrl),
-      ).timeout(Duration(seconds: 10));
+      ).timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 200) {
-        menuElement.value = menuListFromJson(response.body);
+        final menu = menuListFromJson(response.body);
+        menuWithDisable.value = menu;
+        menuElement.value = menu.where((element) => element.statusMenu == '1').toList();
+
       } else {
         print('Error: ${response.statusCode}');
       }
@@ -67,52 +73,72 @@ class MenuPageController extends GetxController {
     }
   }
 
-  // Future<void> searchFilter(String query) async {
-  //   lastQuery = query;  // Update last query
-  //   try {
-  //     final response = await http.get(
-  //       Uri.parse('https://warmindo.pradiptaahmad.tech/api/menus/search?q=$query'),
-  //     ).timeout(Duration(seconds: 5));
-  //
-  //     if (response.statusCode == 200) {
-  //       if (query == '') {
-  //         searchResults.clear();
-  //       } else {
-  //         SearchResult searchResult = SearchResult.fromJson(json.decode(response.body));
-  //         searchResults.value = searchResult.data.map((searchList) => MenuList(
-  //           menuId: searchList.menuId,
-  //           image: searchList.image,
-  //           nameMenu: searchList.nameMenu,
-  //           price: searchList.price,
-  //           category: searchList.category,
-  //           stock: searchList.stock,
-  //           ratings: searchList.ratings,
-  //           description: searchList.description,
-  //           createdAt: searchList.createdAt,
-  //           updatedAt: searchList.updatedAt,
-  //         )).toList();
-  //       }
-  //     } else {
-  //       print('Error: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     print(e);
+  Future<void> searchFilter(String query)  async {
+    if (_debounce.isActive) _debounce.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () async {
+      try {
+        final response = await http.get(
+          Uri.parse(
+              'https://warmindo.pradiptaahmad.tech/api/menus/search?q=$query'),
+        ).timeout(Duration(seconds: 5));
+
+        if (response.statusCode == 200) {
+          if (query == '') {
+            Future.delayed(const Duration(seconds: 3),(){
+            searchResults.clear();
+            });
+          } else {
+            print('ini data search ${response.body}');
+            SearchResult searchResult = SearchResult.fromJson(
+                json.decode(response.body));
+            searchResults.value = searchResult.data.map((searchList) =>
+                MenuList(
+                  menuId: searchList.menuId,
+                  image: searchList.image,
+                  nameMenu: searchList.nameMenu,
+                  price: searchList.price.toInt(),
+                  category: searchList.category,
+                  stock: searchList.stock,
+                  rating: searchList.ratings,
+                  description: searchList.description,
+                  createdAt: searchList.createdAt,
+                  updatedAt: searchList.updatedAt,
+                  statusMenu: searchList.statusMenu,
+                )).toList();
+          }
+        } else {
+          if(response.statusCode == 404){
+              searchResults.clear();
+          }
+          print('Error: ${response.statusCode}');
+        }
+      } catch (e) {
+        print(e);
+      }
+    });
+    }
+
+  // Future<void> searchFilter(String enteredKeyword) async {
+  //   if (enteredKeyword == '') {
+  //     searchResults.clear();
+  //   } else {
+  //     enteredKeyword = enteredKeyword.toLowerCase();
+  //     searchResults.assignAll(menuElement.where((product) {
+  //       return product.nameMenu.toLowerCase().contains(enteredKeyword);
+  //     }).toList());
   //   }
   // }
-  Future<void> searchFilter(String enteredKeyword) async {
-    if (enteredKeyword == '') {
-      searchResults.clear();
-    } else {
-      enteredKeyword = enteredKeyword.toLowerCase();
-      searchResults.assignAll(menuElement.where((product) {
-        return product.nameMenu.toLowerCase().contains(enteredKeyword);
-      }).toList());
-    }
-  }
-  Future<void> refreshSearchResults() async {
-    if (lastQuery.isNotEmpty) {
-      await searchFilter(lastQuery);
-    }
+  // Future<void> refreshSearchResults() async {
+  //   if (lastQuery.isNotEmpty) {
+  //     await searchFilter(lastQuery);
+  //   }
+  // }
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    _debounce.cancel();  // Cancel the debouncer
+    search.dispose();     // Dispose of the search controller
+    super.onClose();
   }
 }
 

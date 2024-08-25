@@ -1,14 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
-import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/schedule_controller.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
-
 import '../pages/home_page/controller/home_controller.dart';
 import '../routes/AppPages.dart';
 import '../utils/themes/color_themes.dart';
@@ -27,13 +22,13 @@ class ReusableCard extends StatelessWidget {
   final bool isGuest;
 
   ReusableCard({
-    Key? key,
+    super.key,
     required this.context,
     required this.product,
     required this.width,
     required this.isGuest,
     this.height,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +49,9 @@ class ReusableCard extends StatelessWidget {
             );
           },
           child: Container(
-              foregroundDecoration: (product.stock! > 1 && scheduleController.jadwalElement[0].is_open)
+              foregroundDecoration: (product.stock! > 1 && scheduleController.jadwalElement[0].is_open && product.statusMenu != '0')
                   ? null
-                  : BoxDecoration(
+                  : const BoxDecoration(
                 color: Colors.grey,
                 backgroundBlendMode: BlendMode.saturation,
                 borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -70,11 +65,11 @@ class ReusableCard extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.2),
                   spreadRadius: 0,
                   blurRadius: 4,
-                  offset: Offset(0, 3), // changes position of shadow
+                  offset: const Offset(0, 3), // changes position of shadow
                 ),
               ],
               color: ColorResources.backgroundCardColor,
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
             ),
             child:
             Column(
@@ -82,17 +77,17 @@ class ReusableCard extends StatelessWidget {
                 Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight:  Radius.circular(20)), // Apply borderRadius here too // Apply borderRadius here
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),topRight:  Radius.circular(20)), // Apply borderRadius here too // Apply borderRadius here
                       child: Container(
                         width: double.infinity, // Use the screen width
                         height: 104,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight:  Radius.circular(20)), // Apply borderRadius here too
                         ),
                         child: FadeInImage(
                           image: NetworkImage(product.image),
                           fit: BoxFit.cover,
-                          placeholder: AssetImage(Images.placeholder),
+                          placeholder: const AssetImage(Images.placeholder),
                           alignment: Alignment.center,
                         ),
                       ),
@@ -141,7 +136,7 @@ class ReusableCard extends StatelessWidget {
                                   size: 20,
                                 ),
                                 Text(
-                                  product.ratings.toString(),
+                                  product.rating.toString(),
                                   style: ratingTextStyle,
                                 ),
                               ],
@@ -152,7 +147,7 @@ class ReusableCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   ),

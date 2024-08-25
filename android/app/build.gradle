@@ -1,12 +1,9 @@
 
 plugins {
     id "com.android.application"
-    // START: FlutterFire Configuration
     id 'com.google.gms.google-services'
-    // END: FlutterFire Configuration
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
-
 }
 
 def localProperties = new Properties()
@@ -26,6 +23,8 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     namespace "com.example.warmindo_user_ui"
@@ -68,4 +67,9 @@ android {
 
 flutter {
     source '../..'
+}
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
 }

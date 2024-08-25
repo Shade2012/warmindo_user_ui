@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../shimmer/shimmer.dart';
 class MyPopupShimmer extends StatelessWidget {
-  const MyPopupShimmer({Key? key}) : super(key: key);
+  const MyPopupShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
-      child: Column(
+      padding: const EdgeInsets.all(20),
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Skeleton(width: double.infinity,height: 300,radius: 5,),

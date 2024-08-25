@@ -4,7 +4,7 @@ import 'package:warmindo_user_ui/common/model/toppings.dart';
 
 import '../../utils/themes/textstyle_themes.dart';
 class ToppingDetail extends StatelessWidget {
-   ToppingDetail({Key? key, required this.toppingList}) : super(key: key);
+   const ToppingDetail({super.key, required this.toppingList});
   final List<ToppingList> toppingList;
 
   @override
@@ -12,9 +12,9 @@ class ToppingDetail extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final sceenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(title: Text('Topping'),leading:InkWell(
+      appBar: AppBar(title: const Text('Topping'),leading:InkWell(
         child: Ink(
-            child: Icon(Icons.arrow_back_ios_new)),
+            child: const Icon(Icons.arrow_back_ios_new)),
         onTap: (){
           Get.back();
         },
@@ -40,7 +40,7 @@ class ToppingDetail extends StatelessWidget {
                           onChanged: (bool? value) {
                             toppingItem.isSelected.value = value!;
                             int quantity = toppingItem.isSelected.value ? 1 : 0;
-                            print('Topping name: ${toppingItem.nameTopping}\nTopping is selected value: ${toppingItem.isSelected.value}\n Topping quantity : ${quantity}');
+                            print('Topping name: ${toppingItem.nameTopping}\nTopping is selected value: ${toppingItem.isSelected.value}\n Topping quantity : $quantity');
                           },
                         ),
                         ),
@@ -48,7 +48,7 @@ class ToppingDetail extends StatelessWidget {
                     )
                   ],
                 ),
-                Divider()
+                const Divider()
               ],
             );
         },),

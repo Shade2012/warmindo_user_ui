@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
 import 'package:warmindo_user_ui/pages/login_page/controller/login_controller.dart';
 import 'package:warmindo_user_ui/pages/register_page/controller/register_controller.dart';
@@ -14,14 +10,14 @@ import 'package:warmindo_user_ui/widget/editPopup.dart';
 import 'package:warmindo_user_ui/widget/otp_textfield.dart';
 import 'package:flutter/gestures.dart';
 import '../../../utils/themes/buttonstyle_themes.dart';
-import '../../../utils/themes/color_themes.dart';
+
 
 class VerificationPage extends GetView<VeritificationController> {
   final RegisterController registerController = Get.put(RegisterController());
   final LoginController loginController = Get.put(LoginController());
   final CartController cartController = Get.put(CartController());
   final RxBool isLogged;
-  VerificationPage({required this.isLogged});
+  VerificationPage({super.key, required this.isLogged});
   @override
   Widget build(BuildContext context) {
   final double screenHeight =  MediaQuery.of(context).size.height;
@@ -29,17 +25,17 @@ class VerificationPage extends GetView<VeritificationController> {
       children: [
         Scaffold(
           body: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height,
               child: Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     InkWell(
                       child: Ink(
-                          child: Icon(Icons.arrow_back_ios_new)),
+                          child: const Icon(Icons.arrow_back_ios_new)),
                       onTap: (){
                         Get.back();
                       },
@@ -52,7 +48,7 @@ class VerificationPage extends GetView<VeritificationController> {
                           style: headerboldverifyTextStyle,
                           textAlign: TextAlign.start,
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                      Visibility(
                             visible: loginController.phone_number.value != "",
                             child: Column(
@@ -78,7 +74,7 @@ class VerificationPage extends GetView<VeritificationController> {
                                                 showDialog(
                                                   context: context,
                                                   builder: (BuildContext context) {
-                                                    return EditPopup(phone_number: '${loginController.phone_number.value}');
+                                                    return EditPopup(phone_number: loginController.phone_number.value);
                                                   },
                                                 );
                                               }),
@@ -94,7 +90,7 @@ class VerificationPage extends GetView<VeritificationController> {
                             ),
                           ),
 
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         Obx(() => Visibility(
                             visible: registerController.phone_number.value != "",
                             child: Column(
@@ -120,7 +116,7 @@ class VerificationPage extends GetView<VeritificationController> {
                                               showDialog(
                                                 context: context,
                                                 builder: (BuildContext context) {
-                                                  return EditPopup(phone_number: '${registerController.phone_number.value}');
+                                                  return EditPopup(phone_number: registerController.phone_number.value);
                                                 },
                                               );
                                             }),
@@ -133,31 +129,31 @@ class VerificationPage extends GetView<VeritificationController> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           VerificationCodeInput(
-                              key: ValueKey("code1"), controller: controller.code1Controller, index: 1),
+                              key: const ValueKey("code1"), controller: controller.code1Controller, index: 1),
                           VerificationCodeInput(
-                              key: ValueKey("code2"), controller: controller.code2Controller, index: 2),
+                              key: const ValueKey("code2"), controller: controller.code2Controller, index: 2),
                           VerificationCodeInput(
-                              key: ValueKey("code3"), controller: controller.code3Controller, index: 3),
+                              key: const ValueKey("code3"), controller: controller.code3Controller, index: 3),
                           VerificationCodeInput(
-                              key: ValueKey("code4"), controller: controller.code4Controller, index: 4),
+                              key: const ValueKey("code4"), controller: controller.code4Controller, index: 4),
                           VerificationCodeInput(
-                              key: ValueKey("code5"), controller: controller.code5Controller, index: 5),
+                              key: const ValueKey("code5"), controller: controller.code5Controller, index: 5),
                           VerificationCodeInput(
-                              key: ValueKey("code6"), controller: controller.code6Controller, index: 6),
+                              key: const ValueKey("code6"), controller: controller.code6Controller, index: 6),
                         ],
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     Column(
                       children: [
                         Obx(() {
-                          return Container(
+                          return SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(onPressed:  ()async{
                               if(controller.isFilled.value == true){
@@ -178,13 +174,13 @@ class VerificationPage extends GetView<VeritificationController> {
                             }, style: verifyOTPStyle(controller.isFilled.value), child: Text("SUBMIT", style: whiteboldTextStyle)),
                           );
                         }),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         TextButton(
                           onPressed: () {
                             controller.sendOtp();
                             print('Resend code');
                           },
-                          child: Text('Resend code', style: bluelinkTextStyle,),
+                          child: Text('Kirim Ulang', style: bluelinkTextStyle,),
                         ),
                       ],
                     )
@@ -199,13 +195,13 @@ class VerificationPage extends GetView<VeritificationController> {
             return Positioned.fill(
               child: Container(
                 color: Colors.black.withOpacity(0.5),
-                child: Center(
+                child: const Center(
                   child: CircularProgressIndicator(color: Colors.blue),
                 ),
               ),
             );
           } else {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
         }),
       ],

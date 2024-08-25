@@ -2,12 +2,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:warmindo_user_ui/common/model/menu_model.dart';
-import 'dart:convert';
-
 import '../../../common/global_variables.dart';
 import '../../../common/model/menu_list_API_model.dart';
-import '../../../common/model/search_model.dart';
 
 
 class GuestMenuController extends GetxController {

@@ -1,13 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:warmindo_user_ui/pages/testing.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
-
 import 'firebase/firebase_api.dart';
 import 'firebase/firebase_options.dart';
-
-void main() async {
+final navigatorKey = GlobalKey<NavigatorState>();
+  void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       name: 'default-firebase',
@@ -28,6 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      navigatorKey: navigatorKey,
     );
   }
 }

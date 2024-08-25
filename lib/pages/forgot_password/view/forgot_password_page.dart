@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:warmindo_user_ui/pages/forgot_password/controller/forgot_password_controller.dart';
-import 'package:warmindo_user_ui/pages/forgot_password/view/forgot_password_page_second.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:get/get.dart';
 import '../../../utils/themes/buttonstyle_themes.dart';
@@ -9,7 +8,7 @@ import '../../../widget/appBar.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   final ForgotPasswordController controller = Get.put(ForgotPasswordController());
-  ForgotPasswordPage({Key? key}) : super(key: key);
+  ForgotPasswordPage({super.key});
 
   // Create a GlobalKey for the form
   final _formKey = GlobalKey<FormState>();
@@ -20,11 +19,11 @@ class ForgotPasswordPage extends StatelessWidget {
       appBar: AppbarCustom(title: 'Lupa Password', style: headerRegularStyle),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: 400,
                 height: 300,
                 child: Image.asset(Images.forgot_password_1, fit: BoxFit.cover),
@@ -40,7 +39,7 @@ class ForgotPasswordPage extends StatelessWidget {
                   style: regularInputTextStyle,
                   keyboardType: TextInputType.phone,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
@@ -58,7 +57,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20.0),
-              Obx(()=> Container(
+              Obx(()=> SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
@@ -67,7 +66,7 @@ class ForgotPasswordPage extends StatelessWidget {
                       }
                     },
                     style: editPhoneNumber(),
-                    child:controller.isLoading.value ? SizedBox(
+                    child:controller.isLoading.value ? const SizedBox(
                       width: 24,
                       height: 24,
                       child: CircularProgressIndicator(

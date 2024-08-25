@@ -8,6 +8,8 @@ import '../controller/map_controller.dart';
 class MapScreen extends StatelessWidget {
   final MapController mapController = Get.put(MapController());
 
+   MapScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -16,20 +18,20 @@ class MapScreen extends StatelessWidget {
       },
       child: Ink(
         child: Container(
-          padding: EdgeInsets.all(25),
+          padding: const EdgeInsets.all(25),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.4),
                 spreadRadius: 0,
                 blurRadius: 2,
-                offset: Offset(0, 1), // changes position of shadow
+                offset: const Offset(0, 1), // changes position of shadow
               ),
             ],
           ),
-          child: Center(
+          child: const Center(
                   child:Icon(Icons.location_pin,color: Colors.black,size: 20,),
             ),
         ),

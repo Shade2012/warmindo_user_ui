@@ -1,12 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/controller/pembayaran_controller.dart';
-import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_view.dart';
 import 'package:warmindo_user_ui/pages/profile_page/controller/profile_controller.dart';
-
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/ReusableTextBox.dart';
 import 'package:warmindo_user_ui/widget/map/view/map_view.dart';
@@ -14,12 +10,13 @@ import '../../../common/model/cart_model2.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../widget/appBar.dart';
 import '../../cart_page/controller/cart_controller.dart';
-import '../../../common/model/cartmodel.dart';
 
 class PembayaranPage extends GetView<PembayaranController> {
 
   final CartController cartController = Get.put(CartController());
   final ProfileController profileController = Get.put(ProfileController());
+
+  PembayaranPage({super.key});
 
 
   @override
@@ -33,13 +30,13 @@ class PembayaranPage extends GetView<PembayaranController> {
       appBar: AppbarCustom(title: 'Pembayaran',style: headerRegularStyle,),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Metode Pemesanan",style: boldTextStyle,),
-              SizedBox(height: 20,),
-               Container(
+              const SizedBox(height: 20,),
+               SizedBox(
                  width: double.infinity,
                  child: Obx(() => InkWell(
                    onTap: (){
@@ -48,7 +45,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                    child: Ink(
                      decoration: BoxDecoration(
                        color: Colors.white,
-                       borderRadius: BorderRadius.all(Radius.circular(10)),
+                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                        border: controller.selected.value ? Border.all(
                          color: Colors.black,
                          width: 2
@@ -59,20 +56,20 @@ class PembayaranPage extends GetView<PembayaranController> {
                            color: Colors.grey.withOpacity(0.4),
                            spreadRadius: 0,
                            blurRadius: 2,
-                           offset: Offset(0, 1), // changes position of shadow
+                           offset: const Offset(0, 1), // changes position of shadow
                          ),
                        ],
                      ),
-                     padding: EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
+                     padding: const EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
                      child: Text("Takeaway",style: boldTextStyle,textAlign: TextAlign.center,),
                    ),
                  )),
                ),
-              SizedBox( height: 20,),
+              const SizedBox( height: 20,),
               Row(
                 children: [
                   MapScreen(),
-                  SizedBox( width: 20,),
+                  const SizedBox( width: 20,),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,17 +88,17 @@ class PembayaranPage extends GetView<PembayaranController> {
                   ),
                 ],
               ),
-              SizedBox( height: 20,),
+              const SizedBox( height: 20,),
               Text("Metode Pembayaran",style: boldTextStyle,),
-              SizedBox( height: 10,),
+              const SizedBox( height: 10,),
               Obx((){
                return Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
                           border: controller.selectedButton2.value ? Border.all(
                               color: Colors.black,
                               width: 2
@@ -111,7 +108,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                               color: Colors.grey.withOpacity(0.4),
                               spreadRadius: 0,
                               blurRadius: 2,
-                              offset: Offset(0, 1), // changes position of shadow
+                              offset: const Offset(0, 1), // changes position of shadow
                             ),
                           ]
                       ),
@@ -136,10 +133,10 @@ class PembayaranPage extends GetView<PembayaranController> {
                       ),
                     ),
                     Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderRadius: const BorderRadius.all(Radius.circular(10)),
                               border: controller.selectedButton3.value ? Border.all(
                                   color: Colors.black,
                                   width: 2
@@ -149,11 +146,11 @@ class PembayaranPage extends GetView<PembayaranController> {
                                   color: Colors.grey.withOpacity(0.4),
                                   spreadRadius: 0,
                                   blurRadius: 2,
-                                  offset: Offset(0, 1), // changes position of shadow
+                                  offset: const Offset(0, 1), // changes position of shadow
                                 ),
                               ]
                           ),
-                          margin: EdgeInsets.only(left: 10),
+                          margin: const EdgeInsets.only(left: 10),
                           child: InkWell(
                             onTap: (){
                               controller.button3();
@@ -177,10 +174,9 @@ class PembayaranPage extends GetView<PembayaranController> {
                   ],
                 );
               }),
-
-              SizedBox( height: 20,),
-              ReusableTextBox(title: 'Catatan ', controller: controller.ctrCatatan),
-              SizedBox( height: 20,),
+              const SizedBox( height: 20,),
+              ReusableTextBox(title: 'Catatan : ', controller: controller.ctrCatatan),
+              const SizedBox( height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -190,7 +186,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                       children: [
                         Text(
                             '(${cartController.cartItems2.length} Items)'),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Obx(() {
@@ -214,9 +210,9 @@ class PembayaranPage extends GetView<PembayaranController> {
                       ]),
                 ],
               ),
-              SizedBox(height: 20),
-              Divider(),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
+              const Divider(),
+              const SizedBox(height: 20),
                InkWell(
                   onTap: () {
                     if (!controller.selected.value) {
@@ -242,10 +238,11 @@ class PembayaranPage extends GetView<PembayaranController> {
                         if(controller.isLoading.value == false){
                           controller.isLoading.value = true;
                           String fullText = controller.ctrCatatan.text;
-                          String catatanValue = fullText.replaceFirst('Catatan : ', '').trim();
+                          String catatanValue = fullText.replaceFirst('Catatan :', '').trim();
+                          print(catatanValue);
                           controller.makePayment2(catatan: catatanValue, isTunai: true);
                         }else{
-                          return null;
+                          return;
                         }
                       }
                     }else{
@@ -253,11 +250,11 @@ class PembayaranPage extends GetView<PembayaranController> {
                       if( controller.isLoading.value == false){
                         controller.isLoading.value = true;
                         String fullText = controller.ctrCatatan.text;
-                        String catatanValue = fullText.replaceFirst('Catatan : ', '').trim();
-                        print(catatanValue);
+                        String catatanValue = fullText.replaceFirst('Catatan :', '').trim();
+                        print('ini catatan value $catatanValue');
                         controller.makePayment2(catatan: catatanValue, isTunai: false);
                       }else{
-                        return null;
+                        return;
                       }
                     }
 
@@ -266,13 +263,13 @@ class PembayaranPage extends GetView<PembayaranController> {
                       Container(
                         height: 40,
                         width: double.infinity,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadius.all(Radius.circular(10))
                       ),
                         child: controller.isLoading.value
-                            ? Center(
-                          child: Container(
+                            ? const Center(
+                          child: SizedBox(
                             width: 20, // Adjust the width to your preference
                             height: 20, // Adjust the height to your preference
                             child: CircularProgressIndicator(

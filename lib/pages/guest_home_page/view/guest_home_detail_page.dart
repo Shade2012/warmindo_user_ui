@@ -8,8 +8,6 @@ import 'package:warmindo_user_ui/pages/home_page/shimmer/home_detail_shimmer.dar
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/appBar.dart';
 import 'package:warmindo_user_ui/widget/reusable_card.dart';
-import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
-
 import '../controller/guest_home_detail_controller.dart';
 
 
@@ -20,11 +18,10 @@ class GuestFilteredMenuPage extends StatelessWidget {
   final List<MenuList> filteredMenu;
   int price;
 
-  GuestFilteredMenuPage({Key? key, required this.filteredMenu,required this.price}) : super(key: key);
+  GuestFilteredMenuPage({super.key, required this.filteredMenu,required this.price});
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
     final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     return Scaffold(
       appBar: AppbarCustom(title:'Menu Seharga ${currencyFormat.format(price)}', style: headerRegularStyle,),
@@ -32,11 +29,9 @@ class GuestFilteredMenuPage extends StatelessWidget {
         child: Obx((){
           if (!controller.isConnected.value) {
             return Center(
-              child: Container(
-                child: Text(
-                  'Tidak ada koneksi internet mohon check koneksi internet anda',
-                  style: boldTextStyle,textAlign: TextAlign.center,
-                ),
+              child: Text(
+                'Tidak ada koneksi internet mohon check koneksi internet anda',
+                style: boldTextStyle,textAlign: TextAlign.center,
               ),
             );
           }
@@ -48,9 +43,9 @@ class GuestFilteredMenuPage extends StatelessWidget {
                 controller.fetchProduct();
               },
             child: Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 20),
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,

@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/home_controller.dart';
@@ -7,22 +6,22 @@ import 'package:warmindo_user_ui/pages/home_page/shimmer/homeshimmer.dart';
 import 'package:warmindo_user_ui/pages/home_page/view/home_snack.dart';
 import 'package:warmindo_user_ui/pages/home_page/widget/home_status.dart';
 import 'package:warmindo_user_ui/widget/myCustomPopUp/myPopup_controller.dart';
-import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
-import 'package:warmindo_user_ui/widget/cart.dart';
 import 'package:warmindo_user_ui/widget/makanan_widget.dart';
 import 'package:warmindo_user_ui/widget/reusable_card.dart';
-import '../../../common/model/menu_list_API_model.dart';
-import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/minuman_widget.dart';
 import '../../../widget/rounded_image.dart';
 import '../../../widget/snack_widget.dart';
-import '../../detail-menu_page/view/detail_menu_page.dart';
+import '../../cart_page/controller/cart_controller.dart';
+
 
 class HomePage extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
+  final CartController cartController = Get.put(CartController());
   final MyCustomPopUpController popUpController = Get.put(MyCustomPopUpController());
+
+   HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +33,18 @@ class HomePage extends StatelessWidget {
           onRefresh: () async {
             controller.isLoading.value = true;
             await controller.scheduleController.fetchSchedule();
+            cartController.fetchCart();
             await popUpController.fetchVarian();
             await popUpController.fetchTopping();
             await controller.fetchname();
             await controller.fetchProduct();
+
             // controller.scheduleController.jadwalElement.clear();
           },
           child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),// Wrap with SingleChildScrollView
+            physics: const AlwaysScrollableScrollPhysics(),// Wrap with SingleChildScrollView
             child: Container(
-              margin: EdgeInsets.only(left: 20, right: 20, top: 30),
+              margin: const EdgeInsets.only(left: 20, right: 20, top: 30),
               child: Obx(() {
 
                 if (!controller.isConnected.value) {
@@ -59,10 +60,10 @@ class HomePage extends StatelessWidget {
                 }
 
                 if (controller.isLoading.value) {
-                  return HomeSkeleton();
+                  return const HomeSkeleton();
                 }
                 if(controller.scheduleController.jadwalElement.isEmpty){
-                  return Container(
+                  return SizedBox(
                       height: screenHeight * 0.7 ,child: Center(child: Text('Server sedang sibuk, silahkan reload',style: boldTextStyle,),));
                 }
                 return Column(
@@ -71,7 +72,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     Text("Selamat Pagi", style: regularTextStyle),
                     Container(
-                      margin: EdgeInsets.only(bottom: 40),
+                      margin: const EdgeInsets.only(bottom: 40),
                       child: Text(
                         controller.txtUsername.value.toLowerCase().substring(0, 1).toUpperCase() +
                             controller.txtUsername.value.toLowerCase().substring(1),
@@ -87,9 +88,9 @@ class HomePage extends StatelessWidget {
                       SnackWidget(false),
                     ],
                   ),
-                  SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     HomeStatus(),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: CarouselSlider(
@@ -121,8 +122,8 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     Text("Favorite Makanan dan Minuman", style: LoginboldTextStyle),
-                    SizedBox(height: 20),
-                    if (controller.menuElement.length > 1)
+                    const SizedBox(height: 20),
+                    if (controller.menuElement.where((element) => element.category == 'Minuman').length > 0 && controller.menuElement.where((element) => element.category == 'Makanan').length > 0 )
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -142,14 +143,14 @@ class HomePage extends StatelessWidget {
                           ),
                         ],
                       ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text("Favorite Snack", style: LoginboldTextStyle),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Visibility(
-                      visible: controller.menuElement.length > 1,
+                      visible: controller.menuElement.where((element) => element.category == 'Snack').length > 0,
                       child: HomeSnack(menuItem: controller.getHighestRatingMenu(controller.menuElement,3),),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                   ],
                 );
               }),

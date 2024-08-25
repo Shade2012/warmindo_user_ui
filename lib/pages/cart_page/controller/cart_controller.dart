@@ -5,28 +5,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
-import 'package:warmindo_user_ui/widget/myCustomPopUp/myPopup_controller.dart';
+import 'package:warmindo_user_ui/pages/home_page/controller/schedule_controller.dart';
 import '../../../common/global_variables.dart';
 import '../../../common/model/cart_model2.dart';
-import '../../../common/model/cartmodel.dart';
 import '../../../common/model/toppings.dart';
 import '../../../common/model/varians.dart';
 import '../../../routes/AppPages.dart';
 import '../../menu_page/controller/menu_controller.dart';
 
 class CartController extends GetxController {
+  final RxBool isLoading = true.obs;
+  final RxBool isLoadingButton = false.obs;
   late final SharedPreferences prefs;
   RxBool isConnected = true.obs;
+  final ScheduleController scheduleController = Get.put(ScheduleController());
   final MenuPageController menuController = Get.put(MenuPageController());
   int id = 0;
   RxString userPhone = ''.obs;
   RxString userPhoneVerified = ''.obs;
   RxString token = "".obs;
   RxString responseData = "".obs;
-
   final RxList<CartItem2> cartItems2 = <CartItem2>[].obs;
-  final RxBool isLoading = true.obs;
 
   @override
   void onInit() {
@@ -39,7 +38,6 @@ class CartController extends GetxController {
   Future<void> fetchCart() async {
     isLoading.value = true;
     try {
-print('fetch cart');
       final response = await http.get(Uri.parse(GlobalVariables.apiCartDetail), headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -47,13 +45,14 @@ print('fetch cart');
       }).timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 200) {
-        print('berhasil fecth cart');
         List<dynamic> data = jsonDecode(response.body)['data'];
         responseData.value = data.toString();
         cartItems2.clear();
+
         for (var item in data) {
           cartItems2.add(CartItem2.fromJson(item));
         }
+        cartItems2.sort((a, b)=> b.price.compareTo(a.price));
       } else {
         cartItems2.clear();
       }
@@ -64,8 +63,23 @@ print('fetch cart');
     }
   }
 
+  Future<bool> fetchSchedule() async {
+
+    try {
+      print('melakukan fetch schedule');
+      // Perform the fetch operation
+      isLoadingButton.value = true;
+      await scheduleController.fetchSchedule(); // Example: Assuming getSchedule is your fetching method
+      isLoadingButton.value = false;
+      return true;
+    } catch (e) {
+      print("Error fetching schedule: $e");
+      return false;
+    }
+  }
+
   Future<void> fetchUser() async {
-    token.value = prefs!.getString('token') ?? '';
+    token.value = prefs.getString('token') ?? '';
     print('print token di fetchUser Cart $token');
     try {
       final response = await http.get(
@@ -81,9 +95,6 @@ print('fetch cart');
         userPhone.value = data['user']['phone_number'] ?? '';
         userPhoneVerified.value = data['user']['phone_verified_at'] ?? '';
         id = data['user']['id'] ?? '';
-
-        print(data['user']);
-        print('phone verified di controller ${userPhoneVerified.value}');
       }else {
         print('Error: ${response.statusCode}');
       }
@@ -103,7 +114,7 @@ print('fetch cart');
     required int price,
     required RxInt cartid,
   }) async {
-    final url = GlobalVariables.apiCartStore;
+    const url = GlobalVariables.apiCartStore;
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -137,8 +148,6 @@ print('fetch cart');
           }
           fetchCart();
           cartItems2.refresh();
-          print('Cart item updated with new cartId: ${cartItem?.cartId}');
-          print(cartItems2);
         } else {
         print('Failed to post cart items: ${response.statusCode}');
       }
@@ -172,8 +181,7 @@ print('fetch cart');
     CartItem2 newItem;
 
     if (existingItem == null) {
-      // Add new item to cart
-      print('Creating new item');
+
       newItem = CartItem2(
         productId: productId,
         productName: productName,
@@ -184,7 +192,7 @@ print('fetch cart');
         selectedToppings: selectedToppings ?? [],
         cartId: 0.obs,
       );
-      print('cart baru di addToCart$newItem');
+
       cartItems2.add(newItem);
       await postCartItems2(
         productId: productId,
@@ -199,7 +207,6 @@ print('fetch cart');
     }
 
     else {
-      print('Item already exists');
       existingItem.quantity.value += quantity;
       newItem = existingItem;
       await editCart(
@@ -224,7 +231,7 @@ print('fetch cart');
     final url = Uri.parse('${GlobalVariables.apiCartEdit}$idCart');
 
     final client = http.Client();
-    final cartItems = cartItems2.firstWhereOrNull((element) => element.cartId == idCart);
+    final cartItems = cartItems2.firstWhereOrNull((element) => element.cartId?.value == idCart);
     final existingItem = cartItems2.firstWhereOrNull((item) {
       bool sameMenuId = item.productId == menuID;
       bool sameVarian = (item.selectedVarian?.varianID == variantId);
@@ -245,7 +252,7 @@ print('fetch cart');
         print('quantity gabungan $totalquantity');
         // Proceed with the manual update
         final data = <String, dynamic>{
-          "quantity": (existingItem.cartId == cartItems!.cartId)
+          "quantity": (existingItem.cartId == cartItems.cartId)
               ? cartItems.quantity.value
               : cartItems.quantity.value + existingItem.quantity.value,
           "menu_id": existingItem.productId,
@@ -257,7 +264,7 @@ print('fetch cart');
 
         data["toppings"] = toppings?.map((toppingId) => {
           "topping_id": toppingId,
-          "quantity": (existingItem.cartId == cartItems!.cartId)
+          "quantity": (existingItem.cartId == cartItems.cartId)
               ? cartItems.quantity.value
               : totalquantity, // Use totalquantity here if cartId does not match
         }).toList();
@@ -362,7 +369,7 @@ print('fetch cart');
     isLoading.value = true;
     print(idCart);
     print('hapus keranjgn');
-    final url = Uri.parse('${GlobalVariables.apiCartDelete}${idCart}');
+    final url = Uri.parse('${GlobalVariables.apiCartDelete}$idCart');
 
     final client = http.Client();
     try {
@@ -377,6 +384,7 @@ print('fetch cart');
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         print(responseData);
+        fetchCart();
         cartItems2.refresh();
         print(response.statusCode);
       }else{
@@ -425,11 +433,9 @@ print('fetch cart');
   }
 
   Future<void> removeItemFromCartWithID(int cartId) async {
-    final item = cartItems2.firstWhereOrNull((item) => item.cartId == cartId);
+    final item = cartItems2.firstWhereOrNull((item) => item.cartId?.value == cartId);
     cartItems2.remove(item);
       await removeCart(idCart: cartId);
-
-    print(menuController.isLoading.value);
       print('cart id yang dihapus $cartId');
     cartItems2.refresh();
 
@@ -437,20 +443,20 @@ print('fetch cart');
 
   void removeItemFromCart(CartItem2 item) {
     cartItems2.remove(item);
-    removeCart(idCart: item!.cartId?.value ?? 0);
+    removeCart(idCart: item.cartId?.value ?? 0);
     cartItems2.refresh();
 
   }
 
   void incrementQuantity(CartItem2 item) async {
     item.quantity++;
-    editCart(idCart: item!.cartId?.value ?? 0 , quantity: item.quantity.value, menuID: item.productId);
+    editCart(idCart: item.cartId?.value ?? 0 , quantity: item.quantity.value, menuID: item.productId);
     // cartItems2.refresh();
   }
 
   void decrementQuantity(CartItem2 item) async {
       item.quantity--;
-      editCart(idCart: item!.cartId?.value ?? 0 , quantity: item.quantity.value, menuID: item.productId);
+      editCart(idCart: item.cartId?.value ?? 0 , quantity: item.quantity.value, menuID: item.productId);
       if (item.quantity.value == 0) {
         // If the quantity becomes zero, remove the item from the cart
         removeItemFromCart(item);
@@ -458,7 +464,7 @@ print('fetch cart');
       // cartItems2.refresh();
   }
   int? getCartIdForFilter(int cartID) {
-    final cartItem = cartItems2.firstWhereOrNull((item) => item.cartId == cartID);
+    final cartItem = cartItems2.firstWhereOrNull((item) => item.cartId?.value == cartID);
     return cartItem?.cartId?.value;
   }
   RxInt getTotalQuantityForMenuID(int menuID) {

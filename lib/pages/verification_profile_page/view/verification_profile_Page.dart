@@ -1,27 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:warmindo_user_ui/pages/login_page/controller/login_controller.dart';
-import 'package:warmindo_user_ui/pages/register_page/controller/register_controller.dart';
 import 'package:warmindo_user_ui/pages/verification_profile_page/controller/verification_profile_controller.dart';
-
-import 'package:warmindo_user_ui/routes/AppPages.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
-import 'package:warmindo_user_ui/widget/editPopup.dart';
-import 'package:warmindo_user_ui/widget/otp_textfield.dart';
-import 'package:flutter/gestures.dart';
 import '../../../utils/themes/buttonstyle_themes.dart';
-import '../../../utils/themes/color_themes.dart';
 import '../../edit-profile/controller/edit_profile_controller.dart';
-import '../widget/pop_up_verification.dart';
+
 
 class VerificationProfilePage extends GetView<VerificationProfileController> {
   final EditProfileController profileController = Get.put(EditProfileController());
   final RxBool isEdit;
-  VerificationProfilePage({required this.isEdit});
+  VerificationProfilePage({super.key, required this.isEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +19,11 @@ class VerificationProfilePage extends GetView<VerificationProfileController> {
       children: [
         Scaffold(
           body: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               width: screenWidth,
               height:screenHeight,  // Ensure the container takes full screen height
               child: Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Obx((){
                   if(!controller.isConnected.value){
                     return Center(
@@ -53,10 +41,10 @@ class VerificationProfilePage extends GetView<VerificationProfileController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 20,),
+                        const SizedBox(height: 20,),
                         InkWell(
                           child: Ink(
-                              child: Icon(Icons.arrow_back_ios_new)),
+                              child: const Icon(Icons.arrow_back_ios_new)),
                           onTap: (){
                             Get.back();
                           },
@@ -64,7 +52,7 @@ class VerificationProfilePage extends GetView<VerificationProfileController> {
                         SizedBox(height: screenHeight * 0.26,),
                         Column(
                           children: [
-                            SizedBox(),
+                            const SizedBox(),
                             Obx((){
                               if(isEdit.value == true){
                                 return Text(
@@ -80,18 +68,18 @@ class VerificationProfilePage extends GetView<VerificationProfileController> {
                                 );
                               }
                             }),
-                            Divider(),
-                            SizedBox(height: 10,),
+                            const Divider(),
+                            const SizedBox(height: 10,),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                               Text('Nomer Hp'),
+                                const Text('Nomer Hp'),
                                 const SizedBox(height: 10.0),
                                 TextFormField(
                                   controller: controller.phoneNumberController,
                                   style: regularInputTextStyle,
                                   keyboardType: TextInputType.phone,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0), // Adjust padding here
                                     border: OutlineInputBorder(
                                       borderSide: BorderSide(color: Colors.grey),
@@ -111,16 +99,16 @@ class VerificationProfilePage extends GetView<VerificationProfileController> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20,),
+                        const SizedBox(height: 20,),
                         Center(
-                          child: Container(
+                          child: SizedBox(
                             width:screenWidth,
                               child: ElevatedButton(
                                   onPressed: (){
                                     if(controller.formKey.currentState!.validate()){
                                       controller.editPhoneNumber(phone_number: controller.phoneNumberController.text,context: context);
                                     }else{
-                                      return null;
+                                      return;
                                     }
                               },style: verificationButton(), child: Text('Konfirmasi',style: whiteboldTextStyle15,))) ,
                         )
@@ -138,13 +126,13 @@ class VerificationProfilePage extends GetView<VerificationProfileController> {
             return Positioned.fill(
               child: Container(
                 color: Colors.black.withOpacity(0.5),
-                child: Center(
+                child: const Center(
                   child: CircularProgressIndicator(color: Colors.blue),
                 ),
               ),
             );
           } else {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
         }),
       ],

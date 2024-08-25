@@ -1,14 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 import '../../../common/global_variables.dart';
 import 'package:http/http.dart' as http;
-import '../../profile_page/controller/profile_controller.dart';
 import '../view/forgot_password_last_page.dart';
 import '../view/forgot_password_page_second.dart';
 
@@ -267,6 +263,7 @@ class ForgotPasswordController extends GetxController {
     final url = Uri.parse(GlobalVariables.apiForgotPassword);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token3');
+    final token2 = prefs.getString('token');
     final client = http.Client();
 
     try {
@@ -298,6 +295,7 @@ class ForgotPasswordController extends GetxController {
         isLoading.value = false;
         print(responseData);
         print(response.statusCode);
+        if(token2 == ''){
         Get.offNamed(Routes.LOGIN_PAGE);
         Get.snackbar(
           'Success',
@@ -306,6 +304,17 @@ class ForgotPasswordController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
+        }else{
+          Get.offNamed(Routes.CHANGEPASS_PAGE);
+          Get.snackbar(
+            'Success',
+            'Password Berhasil Dirubah',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }
+
       }
     } catch (e) {
       isLoading.value = false;

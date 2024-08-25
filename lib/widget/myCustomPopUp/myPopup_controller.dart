@@ -2,18 +2,12 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:warmindo_user_ui/common/model/cartmodel.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
-import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/common/model/toppings.dart';
-import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:http/http.dart' as http;
 import '../../common/global_variables.dart';
-import '../../common/model/cart_model2.dart';
 import '../../common/model/varians.dart';
 import '../../pages/cart_page/controller/cart_controller.dart';
-import '../../pages/cart_page/view/cart_page.dart';
-import '../counter/counter_controller.dart';
 import 'detailPopup.dart';
 import 'guest_reusable_card.dart';
 import 'myCustomPopup.dart';
@@ -158,7 +152,7 @@ class MyCustomPopUpController extends GetxController {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        builder: (BuildContext context) => GuestReusableCard() ,elevation: 0,
+        builder: (BuildContext context) => const GuestReusableCard() ,elevation: 0,
       );
 
   }

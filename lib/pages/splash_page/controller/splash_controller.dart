@@ -19,20 +19,21 @@ class SplashController extends GetxController {
   void animate() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    await Future.delayed(Duration(seconds: 1));
+    final token4 = prefs.getString('token4');
+    await Future.delayed(const Duration(seconds: 1));
     _animationController.sink.add(0.3); // Green Circle
     _circleSizeController.sink.add(0.3); // Small size
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     _animationController.sink.add(0.7); // Logo Circle
     _circleSizeController.sink.add(0.7); // Medium size
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     _animationController.sink.add(0.6); // Orange Circle
     _circleSizeController.sink.add(0.6); // Medium size
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     _animationController.sink.add(1);   // Red Circle
     _circleSizeController.sink.add(1);   // Large size
-    await Future.delayed(Duration(milliseconds: 400));
-    if(token == null){
+    await Future.delayed(const Duration(milliseconds: 400));
+    if(token == null || token4 != null){
       Get.offNamed(Routes.ONBOARD_PAGE);
     } else{
       Get.offNamed(Routes.BOTTOM_NAVBAR);

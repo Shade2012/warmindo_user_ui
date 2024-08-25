@@ -7,9 +7,6 @@ import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/custom_search_bar.dart';
 import 'package:warmindo_user_ui/widget/menu_widget/menuCardSecondCategory.dart';
-import 'package:warmindo_user_ui/widget/menu_widget/menucard_widget.dart';
-import 'package:warmindo_user_ui/common/model/menu_model.dart';
-
 import '../../../widget/menu_widget/search.dart';
 import '../../guest_menu_page/controller/guest_menu_controller.dart';
 import '../../navigator_page/controller/navigator_controller.dart';
@@ -18,6 +15,8 @@ class MenuPage extends StatelessWidget {
   final NavigatorController navigatorController = Get.find<NavigatorController>();
   final GuestMenuController guestMenuController = Get.put(GuestMenuController());
   final MenuPageController controller = Get.put(MenuPageController());
+
+   MenuPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,7 @@ class MenuPage extends StatelessWidget {
         length: 4,
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(110),
+            preferredSize: const Size.fromHeight(110),
             child: AppBar(
               backgroundColor: ColorResources.primaryColor,
               title: CustomSearchBar(
@@ -49,8 +48,8 @@ class MenuPage extends StatelessWidget {
               ),
               automaticallyImplyLeading: false,
               bottom: TabBar(
-                labelPadding: EdgeInsets.only(bottom: 10),
-                indicatorPadding: EdgeInsets.only(bottom: 10),
+                labelPadding: const EdgeInsets.only(bottom: 10),
+                indicatorPadding: const EdgeInsets.only(bottom: 10),
                 indicatorColor: ColorResources.backgroundCardColor,
                 tabs: [
                   Tab(
@@ -85,7 +84,7 @@ class MenuPage extends StatelessWidget {
           ),
           body: Obx(() {
             if(controller.searchObx.value != ''){
-              if (controller.searchResults.length == 0) {
+              if (controller.searchResults.isEmpty) {
                 return
                     Center(child: Text('Produk tidak ditemukan'),);
               }else  {
@@ -99,11 +98,9 @@ class MenuPage extends StatelessWidget {
             }
             else if (!controller.isConnected.value) {
             return Center(
-              child: Container(
-                child: Text(
-                  'Tidak ada koneksi internet mohon check koneksi internet anda',
-                  style: boldTextStyle,textAlign: TextAlign.center,
-                ),
+              child: Text(
+                'Tidak ada koneksi internet mohon check koneksi internet anda',
+                style: boldTextStyle,textAlign: TextAlign.center,
               ),
             );
           }

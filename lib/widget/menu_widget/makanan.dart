@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../common/model/menu_list_API_model.dart';
-import '../../pages/menu_page/controller/menu_controller.dart';
 import '../../utils/themes/textstyle_themes.dart';
-import '../dashed_divider.dart';
 import 'menucard_widget.dart';
 class MakananMenu extends StatelessWidget {
   final List<MenuList> menuList;
@@ -15,11 +12,11 @@ class MakananMenu extends StatelessWidget {
 
     return ListView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: 1,
       itemBuilder: (context, index) {
         return  Padding(
-          padding: EdgeInsets.symmetric(horizontal: 13),
+          padding: const EdgeInsets.symmetric(horizontal: 13),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

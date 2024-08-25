@@ -1,21 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:warmindo_user_ui/pages/detail-menu_page/view/detail_menu_page.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
-import 'package:warmindo_user_ui/common/model/menu_model.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
-import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
-
-import '../../common/model/cartmodel.dart';
 import '../../pages/cart_page/controller/cart_controller.dart';
 import '../../pages/home_page/controller/schedule_controller.dart';
 import '../../pages/menu_page/controller/menu_controller.dart';
-import '../../pages/verification_profile_page/controller/verification_profile_controller.dart';
-import '../../pages/verification_profile_page/view/verification_profile_Page.dart';
 import '../../routes/AppPages.dart';
 import '../../utils/themes/color_themes.dart';
 import '../../utils/themes/image_themes.dart';
@@ -36,12 +26,12 @@ class MenuCategory extends StatelessWidget {
   final BuildContext context;
 
   MenuCategory({
-    Key? key,
+    super.key,
     required this.menuList,
     required this.context,
     required this.isGuest,
     this.secondCategory,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +46,7 @@ class MenuCategory extends StatelessWidget {
 
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         DashedDivider(
@@ -65,18 +55,18 @@ class MenuCategory extends StatelessWidget {
           dashWidth: 2,
           color: Colors.grey,
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             mainAxisExtent: 260,
           ),
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: filteredMenuList.length,
           itemBuilder: (context, index) {
             final menu = filteredMenuList[index];
@@ -95,14 +85,14 @@ class MenuCategory extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  foregroundDecoration: (menu.stock! > 1 && scheduleController.jadwalElement[0].is_open)
+                  foregroundDecoration: (menu.stock! > 1 && scheduleController.jadwalElement[0].is_open && menu.statusMenu != '0')
                       ? null
-                      : BoxDecoration(
+                      : const BoxDecoration(
                     color: Colors.grey,
                     backgroundBlendMode: BlendMode.saturation,
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
-                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                   width: screenWidth * 0.43,
                   decoration: BoxDecoration(
                     boxShadow: [
@@ -110,28 +100,28 @@ class MenuCategory extends StatelessWidget {
                         color: Colors.grey.withOpacity(0.2),
                         spreadRadius: 0,
                         blurRadius: 4,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                     color: ColorResources.backgroundCardColor,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
                   ),
                   child: Column(
                     children: [
                       Stack(
                         children: [
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             height: 104,
                             child: ClipRRect(
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
                               ),
                               child: FadeInImage(
                                 image: NetworkImage(menu.image),
                                 fit: BoxFit.cover,
-                                placeholder: AssetImage(Images.placeholder),
+                                placeholder: const AssetImage(Images.placeholder),
                               ),
                             ),
                           ),
@@ -159,7 +149,7 @@ class MenuCategory extends StatelessWidget {
                                       style: descriptionTextStyle,
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(top: 10),
+                                      padding: const EdgeInsets.only(top: 10),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
@@ -167,7 +157,7 @@ class MenuCategory extends StatelessWidget {
                                             currencyFormat.format(menu.price),
                                             style: menuPriceTextStyle,
                                           ),
-                                          Spacer(),
+                                          const Spacer(),
 
                                           Visibility(
                                             visible: totalQuantity.value > 0,
@@ -179,17 +169,21 @@ class MenuCategory extends StatelessWidget {
                                                   if (isGuest) {
                                                     popUpcontroller.showCustomModalForGuest(context);
                                                   } else {
+    if(menu.statusMenu == '1'){
                                                     if(menu.stock! < 1){
                                                       Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
                                                     }
                                                     else{
                                                       popUpcontroller.showDetailPopupModal(context, menu);
                                                     }
+    }else{
+      Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan.');
+    }
                                                   }
                                                 }
                                               },
                                               child: Container(
-                                                padding: EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                     horizontal: 5, vertical: 2),
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
@@ -249,25 +243,29 @@ class MenuCategory extends StatelessWidget {
                                                         });
                                                       }
                                                       else{
-                                                        if(menu.stock! < 1 ){
-                                                          Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
-                                                        }
-                                                        else{
-                                                          bool variantRequired = popUpcontroller.varianList.any((varian) => varian.category == menu.nameMenu);
-                                                          if(variantRequired){
-                                                            popUpcontroller.isLoading.value = true;
-                                                          Future.delayed(const Duration(seconds: 2), () {
-                                                            popUpcontroller.isLoading.value = false;
-                                                          });
-                                                            popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: 1);
+                                                        if(menu.statusMenu == '1'){
+                                                          if(menu.stock! < 1 ){
+                                                            Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
                                                           }
-                                                          else {
-                                                            print(cartItem?.cartId);
-                                                            print(cartController.cartItems2);
-                                                            popUpcontroller.addToCart2(product: menu, quantity: 1, cartID: cartItem?.cartId?.value ?? 0, context: context,);
-                                                            final cartItem2 = cartController.cartItems2.firstWhereOrNull((item) => item.productId == menu.menuId);
-                                                            popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: cartItem2?.cartId?.value ?? 0);
+                                                          else{
+                                                            bool variantRequired = popUpcontroller.varianList.any((varian) => varian.category == menu.nameMenu);
+                                                            if(variantRequired){
+                                                              popUpcontroller.isLoading.value = true;
+                                                              Future.delayed(const Duration(seconds: 2), () {
+                                                                popUpcontroller.isLoading.value = false;
+                                                              });
+                                                              popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: 1);
+                                                            }
+                                                            else {
+                                                              print(cartItem?.cartId);
+                                                              print(cartController.cartItems2);
+                                                              popUpcontroller.addToCart2(product: menu, quantity: 1, cartID: cartItem?.cartId?.value ?? 0, context: context,);
+                                                              final cartItem2 = cartController.cartItems2.firstWhereOrNull((item) => item.productId == menu.menuId);
+                                                              popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: cartItem2?.cartId?.value ?? 0);
+                                                            }
                                                           }
+                                                        }else{
+                                                          Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan.');
                                                         }
                                                       }
                                                     }
@@ -275,12 +273,12 @@ class MenuCategory extends StatelessWidget {
                                                 }
                                               },
                                               child: Container(
-                                                padding: EdgeInsets.all(2),
+                                                padding: const EdgeInsets.all(2),
                                                 decoration: BoxDecoration(
                                                   color: Colors.black,
                                                   borderRadius: BorderRadius.circular(5),
                                                 ),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Icons.add,
                                                   color: Colors.white,
                                                 ),
@@ -305,7 +303,7 @@ class MenuCategory extends StatelessWidget {
             });
           },
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         DashedDivider(
@@ -314,7 +312,7 @@ class MenuCategory extends StatelessWidget {
           dashWidth: 2,
           color: Colors.grey,
         ),
-        SizedBox(
+        const SizedBox(
           height: 50,
         ),
       ],

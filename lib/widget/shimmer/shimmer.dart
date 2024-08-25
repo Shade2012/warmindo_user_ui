@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 class Skeleton extends StatelessWidget {
   final double? height, width, radius;
-  const Skeleton({Key? key, this.height, this.width, this.radius = 1}) : super(key: key);
+  const Skeleton({super.key, this.height, this.width, this.radius = 1});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class Skeleton extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.black.withOpacity(0.8),
           borderRadius: BorderRadius.all(Radius.circular(radius!)),

@@ -1,14 +1,9 @@
 import 'dart:convert';
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/common/global_variables.dart';
-import 'package:warmindo_user_ui/routes/AppPages.dart';
-
 import '../../cart_page/controller/cart_controller.dart';
 import '../../login_page/controller/login_controller.dart';
 import '../../register_page/controller/register_controller.dart';
@@ -34,7 +29,7 @@ class VeritificationController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       sendOtp();
     });
     code1Controller.addListener(updateFilledStatus);
@@ -71,6 +66,7 @@ class VeritificationController extends GetxController {
   try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
+
       print('token di register shared prefrence prefs : ${prefs.getString('token')}');
       final uri = Uri.parse(GlobalVariables.apiSendOtp);
       var request = http.MultipartRequest('POST', uri)
@@ -80,7 +76,7 @@ class VeritificationController extends GetxController {
 
 
       var response = await http.Response.fromStream(await request.send());
-      print('token: ${token}');
+      print('token: $token');
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
         if(responseBody['status'] == 'failed'){
@@ -132,6 +128,7 @@ class VeritificationController extends GetxController {
     final url = Uri.parse(GlobalVariables.apiVerifyOtp);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
+    final token2 = prefs.getString('token2');
     final client = http.Client();
     try {
       isLoading.value = true;
@@ -172,6 +169,7 @@ class VeritificationController extends GetxController {
        );
        print('Response: ${response.body}');
        // Get.offNamed(Routes.LOGIN_PAGE);
+       prefs.remove('token4');
        registerController.phone_number.value = '';
        loginController.phone_number.value = '';
      }

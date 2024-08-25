@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../common/model/menu_list_API_model.dart';
-import '../../pages/menu_page/controller/menu_controller.dart';
-import '../../pages/menu_page/shimmer/menushimmer.dart';
 import '../../utils/themes/textstyle_themes.dart';
-import '../dashed_divider.dart';
 import 'menucard_widget.dart';
 class AllMenu extends StatelessWidget {
   final List<MenuList> menuList;
   final bool isGuest;
-   AllMenu({Key? key, required this.menuList, required this.isGuest}) : super(key: key);
+   const AllMenu({super.key, required this.menuList, required this.isGuest});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: 1,
       itemBuilder: (context, index) {
         return  Padding(
-          padding: EdgeInsets.symmetric(horizontal: 13),
+          padding: const EdgeInsets.symmetric(horizontal: 13),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
               children: [

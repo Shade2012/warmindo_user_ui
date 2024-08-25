@@ -1,7 +1,4 @@
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/history_page/shimmer/history_shimmer.dart';
 import 'package:warmindo_user_ui/pages/history_page/widget/history_category.dart';
@@ -41,12 +38,12 @@ class HistoryPage extends StatelessWidget {
           // controller.isLoading.value = true;
         },
         child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Obx(() {
               if (controller.isLoading.value == true) {
-                return HistoryShimmer();
+                return const HistoryShimmer();
               } else {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

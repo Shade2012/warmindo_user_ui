@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:warmindo_user_ui/pages/onboard_page/controller/onboard_controller.dart';
@@ -33,6 +32,8 @@ class OnboardPage extends StatelessWidget {
     },
   ];
 
+   OnboardPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,20 +55,20 @@ class OnboardPage extends StatelessWidget {
                           width: 500,
                           height: 500,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Text(
                           pageContent[index]['header'],
                           style: onboardingHeaderTextStyle,
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           pageContent[index]['subheader'],
                           maxLines: 3,
                           style: onboardingSubHeaderTextStyle,
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         // Tampilkan indikator halaman
                       ],
                     );
@@ -84,7 +85,7 @@ class OnboardPage extends StatelessWidget {
                 child: SmoothPageIndicator(
                     controller: controller.pageController, // PageController
                     count: 3,
-                    effect: WormEffect(
+                    effect: const WormEffect(
                       dotColor: ColorResources.lightTomatoRed,
                       activeDotColor: ColorResources.tomatoRed,
                       spacing: 15,
@@ -101,7 +102,7 @@ class OnboardPage extends StatelessWidget {
               Visibility(
                 visible: !controller.isLastPage.value,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.only(bottom: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -113,13 +114,13 @@ class OnboardPage extends StatelessWidget {
                         child: Text('Skip', style: onboardingskip),
                       ),
                           Container(
-                             margin: EdgeInsets.only(right: 10),
+                             margin: const EdgeInsets.only(right: 10),
                             width: 55,
                             height: 49,
                             decoration: BoxDecoration(
 
                               boxShadow: [
-                                BoxShadow(
+                                const BoxShadow(
                                   color: ColorResources.tomatoRed, // Warna hitam dengan opasitas 50%
                                   spreadRadius: 0, // Persebaran bayangan
                                   blurRadius: 6, // Kekaburan bayangan
@@ -134,10 +135,10 @@ class OnboardPage extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 controller.pageController.nextPage(
-                                    duration: Duration(milliseconds: 300),
+                                    duration: const Duration(milliseconds: 300),
                                     curve: Curves.ease);
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.arrow_forward_ios,
                                 color: ColorResources.tomatoRed,
                               ),
@@ -151,10 +152,10 @@ class OnboardPage extends StatelessWidget {
               Visibility(
                 visible: controller.isLastPage.value,
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     children: [
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -167,14 +168,14 @@ class OnboardPage extends StatelessWidget {
                               foregroundColor:  Colors.black,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4)),
-                              side: BorderSide(width: 1.5, color:  Colors.black),
+                              side: const BorderSide(width: 1.5, color:  Colors.black),
                             ),
-                            child: Padding(
+                            child: const Padding(
                              padding: EdgeInsets.symmetric(vertical: 15),
                               child: Text('Register'),
                             ),
                           ),),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () => Get.toNamed(Routes.LOGIN_PAGE),
@@ -184,9 +185,9 @@ class OnboardPage extends StatelessWidget {
                                 foregroundColor: Colors.black,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(4)),
-                                side: BorderSide(width: 1.5, color:  Colors.black),
+                                side: const BorderSide(width: 1.5, color:  Colors.black),
                               ),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 15),
                                 child: Text('Login'),
                               ),
@@ -194,7 +195,7 @@ class OnboardPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 11),
+                      const SizedBox(height: 11),
                       ElevatedButton(
                         onPressed: () {
                          showDialog(context: context,
@@ -211,11 +212,11 @@ class OnboardPage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: ColorResources.btnonboard,
                           foregroundColor: ColorResources.primaryColorLight,
-                          minimumSize: Size(395, 45),
+                          minimumSize: const Size(395, 45),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4)),
                         ),
-                        child: Text('Guest Mode'),
+                        child: const Text('Guest Mode'),
                       ),
                     ],
                   ),
