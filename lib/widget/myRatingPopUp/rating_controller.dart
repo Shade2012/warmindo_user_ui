@@ -43,6 +43,7 @@ class RatingController extends GetxController{
         MenuList? menu = order.orderDetails.firstWhereOrNull((element) => element.menuId == menuId && element.orderDetailId == orderDetailId);
         if (menu != null) {
           menu.ratings?.value = rating;
+          menuPageController.fetchProduct();
           print('Menu rating updated');
         }
         print(response.body);
