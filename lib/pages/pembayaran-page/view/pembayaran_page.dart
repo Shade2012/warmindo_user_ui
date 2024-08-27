@@ -246,7 +246,6 @@ class PembayaranPage extends GetView<PembayaranController> {
                         }
                       }
                     }else{
-
                       if( controller.isLoading.value == false){
                         controller.isLoading.value = true;
                         String fullText = controller.ctrCatatan.text;
