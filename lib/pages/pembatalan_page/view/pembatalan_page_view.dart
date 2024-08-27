@@ -91,7 +91,7 @@ class PembatalanPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Pengembalian uang jika memakai tunai 100% tanpa biaya admin, Rp 6.500',
+                            'Pengembalian uang jika memakai tunai 100% tanpa biaya admin',
                             style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           Text(

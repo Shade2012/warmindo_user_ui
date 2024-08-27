@@ -99,6 +99,7 @@ class ProfileController extends GetxController {
       prefs!.remove('token');
       prefs!.remove('user_id');
       prefs!.remove('token4');
+      prefs!.remove('notif_token');
       Get.offAllNamed(Routes.SPLASH_SCREEN);
     }
   }

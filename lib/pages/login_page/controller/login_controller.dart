@@ -18,7 +18,13 @@ class LoginController extends GetxController {
   final ctrPassword2 = RxString("");
   final notifToken = RxString("");
   RxString phone_number = "".obs;
-
+void firebaseToken ()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? notificationToken;
+  await firebaseMessaging.getToken().then((value){
+    notificationToken = value;
+  });
+}
   Future<void> loginUser(String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? notificationToken;

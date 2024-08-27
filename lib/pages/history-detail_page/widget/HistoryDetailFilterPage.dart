@@ -9,10 +9,7 @@ import '../../history_page/controller/history_controller.dart';
 
 class HistoryDetailFilterPage extends StatelessWidget {
   final HistoryController controller = Get.find(); // Use Get.find() to access the existing instance
-  final List<String> titles = <String>[
-    'Terbaru',
-    'Terlama',
-  ];
+
   final String status;
 
   HistoryDetailFilterPage({
