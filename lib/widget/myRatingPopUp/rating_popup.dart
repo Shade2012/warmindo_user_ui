@@ -136,6 +136,7 @@ class RatingCard extends StatelessWidget {
                   Visibility(
                     visible: menu.toppings!.isNotEmpty,
                     child: Container(
+                    width: screenWidth * 0.6,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                       ),
@@ -152,7 +153,6 @@ class RatingCard extends StatelessWidget {
                             }),
                           ),
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
                         ),
                       ),
                     ),

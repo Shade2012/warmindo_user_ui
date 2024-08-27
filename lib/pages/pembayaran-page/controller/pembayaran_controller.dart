@@ -154,6 +154,7 @@ Future<void> postOrderDetail({required String catatan}) async{
     try{
       print(cartController.token.value);
       if(isTunai == true){
+        await historyController.fetchHistory();
           Get.off(PembayaranComplate());
       }else{
         final response = await http.post(Uri.parse(url),headers: headers, body:body);

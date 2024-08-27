@@ -213,10 +213,8 @@ class HistoryDetailPage extends StatelessWidget {
                                           width: screenWidth * 0.51,
                                           height: screenHeight * 0.11,
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment
-                                                .start,
-                                            mainAxisAlignment: MainAxisAlignment
-                                                .spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Column(
                                                 crossAxisAlignment: CrossAxisAlignment
