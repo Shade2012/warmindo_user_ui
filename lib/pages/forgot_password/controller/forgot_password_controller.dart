@@ -60,6 +60,7 @@ class ForgotPasswordController extends GetxController {
     final url = Uri.parse(GlobalVariables.apiVerifyOtp);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token3');
+    final token2 = prefs.getString('token');
     final client = http.Client();
     try {
       isLoading.value = true;
@@ -99,6 +100,7 @@ class ForgotPasswordController extends GetxController {
             colorText: Colors.white,
           );
           print('Response: ${response.body}');
+          prefs.remove('token');
           Get.to(ForgotPasswordLastPage());
         }
       } else {
@@ -295,7 +297,7 @@ class ForgotPasswordController extends GetxController {
         isLoading.value = false;
         print(responseData);
         print(response.statusCode);
-        if(token2 == ''){
+        if(token2 == null){
         Get.offNamed(Routes.LOGIN_PAGE);
         Get.snackbar(
           'Success',
