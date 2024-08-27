@@ -65,11 +65,15 @@ class HistoryPage extends StatelessWidget {
                           orders: controller.filteredHistory(),
                         ),
                         HistoryCategory(
-                          status: 'Menunggu Batal',
+                          status: 'Menunggu Pembayaran',
                           orders: controller.filteredHistory(),
                         ),
                         HistoryCategory(
-                          status: 'Menunggu Pembayaran',
+                          status: 'Menunggu Pengembalian Dana',
+                          orders: controller.filteredHistory(),
+                        ),
+                        HistoryCategory(
+                          status: 'Menunggu Batal',
                           orders: controller.filteredHistory(),
                         ),
                         HistoryCategory(

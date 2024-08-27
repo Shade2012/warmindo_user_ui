@@ -38,6 +38,7 @@ class Images {
   static const String tunai = 'assets/images/tunai.png';
   static const String cashless = 'assets/images/cashless.png';
   static const String menunggu_pembayaran = 'assets/images/menunggu_pembayaran2.png';
+  static const String refund = 'assets/images/refund.png';
 
 }
 

@@ -24,8 +24,10 @@ class HistoryDetailPage extends StatelessWidget {
         return ColorResources.labelcomplete;
       case 'sedang diproses':
         return ColorResources.labelinprogg;
+      case 'menunggu pembayaran':
+      case 'menunggu pengembalian dana':
+        return Colors.grey;
       case 'menunggu batal':
-        return ColorResources.labelcancel;
       case 'batal':
         return ColorResources.labelcancel;
       case 'pesanan siap':

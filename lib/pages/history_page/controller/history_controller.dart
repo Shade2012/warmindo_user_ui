@@ -217,6 +217,8 @@ class HistoryController extends GetxController {
       return Images.pesanan_menunggu_batal;
     } else if (status == 'Menunggu Pembayaran') {
       return Images.menunggu_pembayaran;
+    } else if (status == 'Menunggu Pengembalian Dana'){
+      return Images.refund;
     } else {
       return Images.pesanan_siap_diambil;
     }
@@ -349,7 +351,7 @@ class HistoryController extends GetxController {
       // },);
     } else if (order.status.value.toLowerCase() == 'menunggu pembayaran') {
       showCustomModalForPayment(order.id, context);
-    } else if(order.status.value.toLowerCase() == 'menunggu batal'){
+    } else if(order.status.value.toLowerCase() == 'menunggu batal' && order.cancelMethod?.value == ''){
       Get.to(() => PembatalanPage(order: order,));
     }else {
       return;

@@ -27,6 +27,7 @@ class HistoryCategory extends StatelessWidget {
       case 'sedang diproses':
         return ColorResources.labelinprogg;
       case 'menunggu pembayaran':
+      case 'menunggu pengembalian dana':
         return Colors.grey;
       case 'menunggu batal':
       case 'batal':

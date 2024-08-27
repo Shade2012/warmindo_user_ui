@@ -23,14 +23,15 @@ class OrderBox extends StatelessWidget {
   final Order2 order;
 
   Color _getLabelColor(String status) {
-
     switch (status.toLowerCase()) {
       case 'selesai':
         return ColorResources.labelcomplete;
       case 'sedang diproses':
         return ColorResources.labelinprogg;
+      case 'menunggu pembayaran':
+      case 'menunggu pengembalian dana':
+        return Colors.grey;
       case 'menunggu batal':
-        return ColorResources.labelcancel;
       case 'batal':
         return ColorResources.labelcancel;
       case 'pesanan siap':
