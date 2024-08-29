@@ -29,7 +29,7 @@ class GuestHomePage extends StatelessWidget {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            await controller.scheduleController.fetchSchedule();
+            await controller.scheduleController.fetchSchedule(true);
             await popUpController.fetchVarian();
             await popUpController.fetchTopping();
             await controller.fetchProduct();

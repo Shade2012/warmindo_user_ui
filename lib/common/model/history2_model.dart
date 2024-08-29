@@ -43,7 +43,7 @@ class Order2 {
       orderMethod: json['order_method'] ?? '-',
       orderDetails: (json['orderDetails'] as List)
           .map((item) => MenuList.fromOrderDetailJson(item))
-          .toList(),
+          .toList() ?? [],
       status: RxString(json['status']),
       catatan: json['note'] ?? '',
     );

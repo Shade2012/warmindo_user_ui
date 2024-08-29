@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
         child: RefreshIndicator(
           onRefresh: () async {
             controller.isLoading.value = true;
-            await controller.scheduleController.fetchSchedule();
+            await controller.scheduleController.fetchSchedule(true);
             cartController.fetchCart();
             await popUpController.fetchVarian();
             await popUpController.fetchTopping();

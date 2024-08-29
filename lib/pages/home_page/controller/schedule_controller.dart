@@ -12,6 +12,7 @@ import '../../../common/global_variables.dart';
 class ScheduleController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isOpen = false.obs;
+  RxBool isPooling = false.obs;
   tz.Location? asiaJakarta; // Make asiaJakarta nullable
   late String hariIni;
   RxList<ScheduleList> jadwalElement = <ScheduleList>[].obs;
@@ -28,13 +29,15 @@ class ScheduleController extends GetxController {
       await initializeDateFormatting('id_ID', null);
       tz.initializeTimeZones();
       asiaJakarta = tz.getLocation('Asia/Jakarta'); // Initialize asiaJakarta
-      await fetchSchedule(); // Call fetchSchedule only after initialization
+      await fetchSchedule(true); // Call fetchSchedule only after initialization
     } catch (e) {
       print('Error initializing schedule: $e');
     }
   }
+void startPolling()async{
 
-  Future<void> fetchSchedule() async {
+}
+  Future<void> fetchSchedule(bool isLoading2) async {
     isLoading.value = true;
 
     if (asiaJakarta == null) {

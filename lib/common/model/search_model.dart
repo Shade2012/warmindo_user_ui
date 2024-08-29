@@ -55,7 +55,7 @@ class SearchList {
       price: double.parse(json["price"]),
       category: json["category"],
       stock: int.parse(json["stock"]),
-      ratings: double.parse(json["average_rating"]),
+      ratings: double.parse(json["rating"]),
       description: json["description"],
       statusMenu: json['status_menu'],
       createdAt: DateTime.parse(json["created_at"]),

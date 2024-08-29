@@ -62,8 +62,8 @@ class MyCustomPopUpController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        toppingList.value = toppingListFromJson(response.body);
-        final data = jsonDecode(response.body);
+        final data = toppingListFromJson(response.body);
+        toppingList.value = data.where((element) => element.statusTopping == '1',).toList();
         print('ini response : \n $data');
         print('ini list topping : \n${toppingList.value}');
       } else {
@@ -88,8 +88,9 @@ class MyCustomPopUpController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        varianList.value = varianListFromJson(response.body);
-        final data = jsonDecode(response.body);
+    final data = varianListFromJson(response.body);
+    varianList.value = data.where((element) => element.statusVarian == "1",).toList();
+        // final data = jsonDecode(response.body);
 
         print('ini response varian: \n $data');
         print('ini list varian : \n${varianList.value}');

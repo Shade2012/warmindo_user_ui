@@ -36,11 +36,14 @@ class SplashPage extends GetView<SplashController> {
                               : Colors.transparent, // Transparan untuk logo
                     ),
                     child: animationValue == 0.7 // Tampilkan logo ketika mencapai 0.7
-                        ? Image.asset(
-                            Images.logo,
-                            height: MediaQuery.of(context).size.height * circleSize,
-                            width: MediaQuery.of(context).size.width * circleSize,
-                          )
+                        ? ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                          child: Image.asset(
+                              Images.warmindoIcon,
+                              height: MediaQuery.of(context).size.height * circleSize,
+                              width: MediaQuery.of(context).size.width * circleSize,
+                            ),
+                        )
                         : null,
                   ),
                 ),

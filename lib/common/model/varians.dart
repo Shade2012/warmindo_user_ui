@@ -28,6 +28,7 @@ class VarianList {
   final String nameVarian;
   final String category;
   final String stockVarian;
+  final String? statusVarian;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   var isSelected = false.obs;
@@ -38,6 +39,7 @@ class VarianList {
     required this.category,
     required this.stockVarian,
     bool? isSelected,
+    this.statusVarian,
     this.createdAt,
     this.updatedAt,
   });
@@ -55,6 +57,7 @@ class VarianList {
     nameVarian: json["name_varian"],
     category: json["category"],
     stockVarian: json["stock_varian"], // Convert string to int
+    statusVarian: json["status_variant"],
     createdAt: json["created_at"] != null ? DateTime.parse(json["created_at"]) : null,
     updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : null,
   );
@@ -64,12 +67,13 @@ class VarianList {
     "name_varian": nameVarian,
     "category": category,
     "stock_varian": stockVarian.toString(), // Convert int to string
+    "status_variant":statusVarian,
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
   };
 
   @override
   String toString() {
-    return 'VarianList(id: $varianID, name_varian: $nameVarian, category: $category, stock_varian: $stockVarian)';
+    return 'VarianList(id: $varianID, name_varian: $nameVarian, category: $category, status_variant: $statusVarian, stock_varian: $stockVarian)';
   }
 }

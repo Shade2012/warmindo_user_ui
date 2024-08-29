@@ -22,7 +22,7 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
   @override
   void onInit() async {
     super.onInit();
-    await scheduleController.fetchSchedule();
+    await scheduleController.fetchSchedule(true);
     await checkConnectivity();
   }
   Future<void> fetchname() async {
@@ -120,7 +120,7 @@ MenuList getHighestRatingMenu(List<MenuList> menuElements, int categoryId) {
   if (categoryName == null) {
     throw ArgumentError('Invalid category ID');
   }
-  final filteredItems = menuElements.where((item) => item.category == categoryName && item.statusMenu != '0').toList();
+  final filteredItems = menuElements.where((item) => item.category == categoryName && item.statusMenu != '0' && item.stock! >= 1).toList();
 
   if (filteredItems.isEmpty) {
     return MenuList(

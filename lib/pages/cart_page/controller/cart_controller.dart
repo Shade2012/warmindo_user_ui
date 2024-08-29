@@ -69,7 +69,7 @@ class CartController extends GetxController {
       print('melakukan fetch schedule');
       // Perform the fetch operation
       isLoadingButton.value = true;
-      await scheduleController.fetchSchedule(); // Example: Assuming getSchedule is your fetching method
+      await scheduleController.fetchSchedule(false); // Example: Assuming getSchedule is your fetching method
       isLoadingButton.value = false;
       return true;
     } catch (e) {

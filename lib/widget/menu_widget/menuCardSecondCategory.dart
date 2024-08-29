@@ -34,14 +34,14 @@ class MenuSecondCategory extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () async {
         if(isGuest == true){
-          await scheduleController.fetchSchedule();
+          await scheduleController.fetchSchedule(true);
           await cartController.fetchUser();
           await cartController.fetchCart();
           await guestMenuController.fetchProduct();
           await popUpController.fetchVarian();
           await popUpController.fetchVarian();
         }else{
-          await scheduleController.fetchSchedule();
+          await scheduleController.fetchSchedule(true);
           await cartController.fetchUser();
           await cartController.fetchCart();
           await menuController.fetchProduct();
