@@ -16,7 +16,7 @@ class GuestHomeController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    await scheduleController.fetchSchedule();
+    await scheduleController.fetchSchedule(true);
     await checkConnectivity();
   }
   Future<void>  checkConnectivity() async {

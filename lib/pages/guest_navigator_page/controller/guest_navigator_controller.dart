@@ -9,7 +9,7 @@ class GuestNavigatorController extends GetxController {
 
   void changeIndex(int index) async {
     currentIndex.value = index;
-    scheduleController.fetchSchedule();
+    scheduleController.fetchSchedule(true);
   }
 
   void goToGuestHomePage() {

@@ -24,7 +24,7 @@ class NavigatorController extends GetxController {
     // historyController.fetchHistory();
     currentIndex.value = index;
     menuController.fetchProduct();
-    scheduleController.fetchSchedule();
+    scheduleController.fetchSchedule(true);
   }
   void goToHomePage() {
     // historyController.isLoading.value = true;

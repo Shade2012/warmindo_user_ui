@@ -79,7 +79,7 @@ class MenuList {
     price: int.tryParse(json["price"] ?? '0') ?? 0, // Safer parsing
     category: json["category"],
     stock: int.tryParse(json["stock"] ?? '0') ?? 0, // Safer parsing
-    rating: double.tryParse(json["average_rating"] ?? '0') ?? 0.0, // Safer parsing
+    rating: double.tryParse(json["rating"] ?? '0') ?? 0.0, // Safer parsing
     description: json["description"],
     second_category: json["second_category"],
     statusMenu: json['status_menu'],

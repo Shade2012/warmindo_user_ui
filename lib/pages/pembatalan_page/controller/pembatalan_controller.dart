@@ -74,7 +74,7 @@ class PembatalanController extends GetxController {
         updatedOrder.alasan_batal?.value = alasanBatal; // Set the new cancel reason
         updatedOrder.noRekening?.value = noRek.toString();
         updatedOrder.cancelMethod?.value = cancelMethod;
-
+        print('ini cancel method di pembatalan controller $cancelMethod');
         await historyController.fetchHistory();
 
         historyController.orders2.refresh(); // Refresh the order list to reflect the changes

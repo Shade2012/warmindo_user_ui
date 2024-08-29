@@ -30,6 +30,7 @@ class ToppingList {
   final String nameTopping;
   final int priceTopping;
   final String? stockTopping;
+  final String? statusTopping;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   var isSelected = false.obs;
@@ -39,6 +40,7 @@ class ToppingList {
     required this.nameTopping,
     required this.priceTopping,
     this.stockTopping,
+    this.statusTopping,
     bool? isSelected,
     this.createdAt,
     this.updatedAt,
@@ -57,6 +59,7 @@ class ToppingList {
     nameTopping: json["name_topping"] ?? '',
     priceTopping: json["price"] ?? '',
     stockTopping: json["stock_topping"] ?? '',
+    statusTopping: json['status_topping'] ?? '1',
     createdAt: json["created_at"] != null ? DateTime.parse(json["created_at"]) : null,
     updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : null,
   );
@@ -65,6 +68,7 @@ class ToppingList {
     "id": toppingID,
     "name_topping": nameTopping,
     "price": priceTopping,
+    "status_topping":statusTopping,
     "stock_topping": stockTopping.toString(),
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
@@ -72,6 +76,6 @@ class ToppingList {
 
   @override
   String toString() {
-    return 'ToppingList(id: $toppingID, name_topping: $nameTopping, price: $priceTopping, stock_topping: $stockTopping)';
+    return 'ToppingList(id: $toppingID, name_topping: $nameTopping, status_topping: $statusTopping, price: $priceTopping, stock_topping: $stockTopping)';
   }
 }

@@ -1,5 +1,4 @@
 class Images {
-  static const String logo = 'assets/images/Warmindo 1.png';
   static const String google = 'assets/images/google.png';
   static const String onboard1 = 'assets/images/Onboard1.png';
   static const String onboard2 = 'assets/images/Onboard2.png';
@@ -39,7 +38,8 @@ class Images {
   static const String cashless = 'assets/images/cashless.png';
   static const String menunggu_pembayaran = 'assets/images/menunggu_pembayaran2.png';
   static const String refund = 'assets/images/refund.png';
-
+  static const String warmindoIcon = 'assets/images/warmindo_icon.png';
+  static const String warmindoIconApps = 'assets/images/Warmindo.png';
 }
 
 

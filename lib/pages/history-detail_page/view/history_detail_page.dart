@@ -397,37 +397,16 @@ class HistoryDetailPage extends StatelessWidget {
                                     Visibility(
                                       visible: order.value.status ==
                                           'menunggu batal' ||
-                                          order.value.status == 'batal',
+                                          order.value.status == 'batal' ,
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment
                                             .spaceBetween,
                                         children: [
                                           Text('Metode Pembatalan : ',
                                             style: boldTextStyle,),
-                                          Text(order.value.cancelMethod != '' ?
-                                            order.value.cancelMethod == 'tunai'
+                                          Text(order.value.cancelMethod == 'tunai'
                                                 ? 'Tunai'
-                                                : '${order.value.cancelMethod} ' : '-',
-                                            maxLines: 5,
-                                            overflow: TextOverflow.ellipsis,)
-                                        ],
-                                      ),
-                                    )),
-                                const SizedBox(height: 10,),
-                                Obx(() =>
-                                    Visibility(
-                                      visible: order.value.status ==
-                                          'menunggu batal' ||
-                                          order.value.status == 'batal',
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .spaceBetween,
-                                        children: [
-                                          Text('Nomer Rekening : ',
-                                            style: boldTextStyle,),
-                                          Text(order.value.noRekening == '0' || order.value.noRekening == ''
-                                              ? '-'
-                                              : '${order.value.noRekening}',
+                                                : '${order.value.cancelMethod} ' ,
                                             maxLines: 5,
                                             overflow: TextOverflow.ellipsis,)
                                         ],
