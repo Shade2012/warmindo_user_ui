@@ -9,23 +9,23 @@ class MenuDetailSkeleton extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Skeleton(height: screenHeight * 0.3,width: double.infinity,radius: 10,),
-          SizedBox(height: 10),
-          Skeleton(height: 20,width: 170,radius: 5,),
-          SizedBox(height: 10),
-          Skeleton(height: 20,width: 60,radius: 5,),
-          SizedBox(height: 10),
-          Skeleton(height: 35,width: 50,radius: 5,),
-          SizedBox(height: 10),
-          Divider(),
-          SizedBox(height: 10),
-          Skeleton(height: 20,width: 70,radius: 5,),
-          SizedBox(height: 10),
-          Skeleton(height: 180,width: double.infinity,radius: 5,),
+          const SizedBox(height: 10),
+          const Skeleton(height: 20,width: 170,radius: 5,),
+          const SizedBox(height: 10),
+          const Skeleton(height: 20,width: 60,radius: 5,),
+          const SizedBox(height: 10),
+          const Skeleton(height: 35,width: 50,radius: 5,),
+          const SizedBox(height: 10),
+          const Divider(),
+          const SizedBox(height: 10),
+          const Skeleton(height: 20,width: 70,radius: 5,),
+          const SizedBox(height: 10),
+          const Skeleton(height: 180,width: double.infinity,radius: 5,),
         ],
       )
     );

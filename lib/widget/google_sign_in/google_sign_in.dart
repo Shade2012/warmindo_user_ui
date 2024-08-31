@@ -72,14 +72,13 @@ class GoogleSignInButton extends StatelessWidget {
       prefs.setString('isLoginGoogle','true');
       prefs.setString('user_id','${responseData['user']['id']}');
       prefs.setString('token','${responseData['token']}');
-      print('tokennya : ${responseData['token']}');
       Get.offAllNamed(Routes.BOTTOM_NAVBAR);
     }
       if (user == null) {
         Get.snackbar('Error', 'Sign In Failed');
       } else {
         Get.snackbar('Pesan', 'Success');
-        print(user);
+
       }
     } on PlatformException catch (e) {
       print('Error signing in with Google: $e');

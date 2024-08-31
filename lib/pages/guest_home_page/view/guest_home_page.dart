@@ -50,7 +50,7 @@ class GuestHomePage extends StatelessWidget {
                   );
                 }
                 if(controller.isLoading.value){
-                  return HomeSkeleton();
+                  return const HomeSkeleton();
                 }
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

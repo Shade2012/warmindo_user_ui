@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:warmindo_user_ui/widget/shimmer/shimmer.dart';
 
 class BottomMenuDetailSkeleton extends StatelessWidget {
-
+  const BottomMenuDetailSkeleton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,25 +19,23 @@ class BottomMenuDetailSkeleton extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 7,
-              offset: Offset(0, 0),
+              offset: const Offset(0, 0),
             ),
           ],
         ),
-        child: Column(
+        child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Skeleton(height: 20,width: 50,radius: 5,),
-                      SizedBox(height: 10),
-                      Skeleton(height: 25,width: 90,radius: 5,),
-                    ],
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Skeleton(height: 20,width: 50,radius: 5,),
+                    SizedBox(height: 10),
+                    Skeleton(height: 25,width: 90,radius: 5,),
+                  ],
                 ),
                 Skeleton(height: 45,width: 130,radius: 5,),
               ],

@@ -36,13 +36,11 @@ class RegisterController extends GetxController {
       final responseData = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseData = jsonDecode(response.body);
-        print(responseData);
-        print(response.statusCode);
+
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', responseData['token']);
         await prefs.setString('token4', responseData['token']);
         phone_number.value = responseData['data']['phone_number'];
-        print('token di register shared prefrence prefs : ${prefs.getString('token')}');
         Get.toNamed(Routes.VERITIFICATION_PAGE, arguments: {'isLogged': false.obs,});
       }
       else if(responseData['success'] == false) {

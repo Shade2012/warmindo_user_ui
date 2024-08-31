@@ -20,7 +20,7 @@ class PopUpChoosePayment extends StatelessWidget {
     return Container(
       height: 150,
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color:  Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
@@ -29,7 +29,7 @@ class PopUpChoosePayment extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,7 +88,7 @@ class PopUpChoosePayment extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
         ],
       ),
     );

@@ -40,7 +40,6 @@ void firebaseToken ()async{
 
     final client = http.Client();
     try {
-      print('token fcm di login : $notificationToken');
       final response = await client.post(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -54,8 +53,6 @@ void firebaseToken ()async{
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        print(responseData);
-        print(response.statusCode);
         if(responseData['user'] != null){
           final user  = responseData['user'];
           final phoneVerifiedAt = user['phone_verified_at'];

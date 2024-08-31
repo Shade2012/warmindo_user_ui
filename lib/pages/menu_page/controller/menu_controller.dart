@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:http/http.dart' as http;
 import '../../../common/global_variables.dart';
 import '../../../common/model/menu_list_API_model.dart';
@@ -67,7 +66,6 @@ class MenuPageController extends GetxController {
       }
     } catch (e) {
       print(e);
-      print('error');
     } finally {
       isLoading.value = false;
     }
@@ -80,7 +78,7 @@ class MenuPageController extends GetxController {
         final response = await http.get(
           Uri.parse(
               'https://warmindo.pradiptaahmad.tech/api/menus/search?q=$query'),
-        ).timeout(Duration(seconds: 5));
+        ).timeout(const Duration(seconds: 5));
 
         if (response.statusCode == 200) {
           if (query == '') {
@@ -88,7 +86,7 @@ class MenuPageController extends GetxController {
             searchResults.clear();
             });
           } else {
-            print('ini data search ${response.body}');
+
             SearchResult searchResult = SearchResult.fromJson(
                 json.decode(response.body));
             searchResults.value = searchResult.data.map((searchList) =>

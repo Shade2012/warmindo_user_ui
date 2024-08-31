@@ -46,7 +46,6 @@ class CartController extends GetxController {
 
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(response.body)['data'];
-        print(data);
         responseData.value = data.toString();
         cartItems2.clear();
 
@@ -58,7 +57,7 @@ class CartController extends GetxController {
         cartItems2.clear();
       }
     } catch (e) {
-      print('ada erro $e');
+      print(e);
     } finally {
       isLoading.value = false;
     }
@@ -67,7 +66,7 @@ class CartController extends GetxController {
   Future<bool> fetchSchedule() async {
 
     try {
-      print('melakukan fetch schedule');
+
       // Perform the fetch operation
       isLoadingButton.value = true;
       await scheduleController.fetchSchedule(false); // Example: Assuming getSchedule is your fetching method
@@ -81,7 +80,6 @@ class CartController extends GetxController {
 
   Future<void> fetchUser() async {
     token.value = prefs.getString('token') ?? '';
-    print('print token di fetchUser Cart $token');
     try {
       final response = await http.get(
         Uri.parse(GlobalVariables.apiDetailUser),headers: {
@@ -101,7 +99,6 @@ class CartController extends GetxController {
       }
     } catch (e) {
       print(e);
-      print('ada error di fetch user');
 
     }
   }
@@ -246,11 +243,7 @@ class CartController extends GetxController {
 
       if (existingItem != null) {
         final url2 = Uri.parse('${GlobalVariables.apiCartEdit}${existingItem?.cartId}');
-        print('sudah ada $existingItem');
-        print('cart baru $cartItems');
-        print('idcart  $idCart');
         int? totalquantity = cartItems!.quantity.value + existingItem.quantity.value;
-        print('quantity gabungan $totalquantity');
         // Proceed with the manual update
         final data = <String, dynamic>{
           "quantity": (existingItem.cartId == cartItems.cartId)
@@ -286,20 +279,18 @@ class CartController extends GetxController {
 
         if (response.statusCode == 200) {
           isLoading.value = true;
-          print('berhasil edit cart ${response.statusCode}');
-          print(cartItems.cartId?.value ?? 0);
+
           if(existingItem.cartId != cartItems.cartId){
 
           await removeItemFromCartWithID(cartItems.cartId?.value ?? 0);
           await fetchCart();
           cartItems2.refresh();
-          print('berhasil ganti dan hapus');
           }else{
             await fetchCart();
             cartItems2.refresh();
           }
           final responseData = jsonDecode(response.body);
-          print(responseData);
+
         } else {
           final responseData = jsonDecode(response.body);
           Get.snackbar('Pesan', '${response.statusCode} Terlalu banyak aksi, server sedang sibuk');
@@ -340,13 +331,13 @@ class CartController extends GetxController {
           isLoading.value = true;
           final responseData = jsonDecode(response.body);
           print(responseData);
-          print('berhasil edit cart');
+
           await fetchCart();
         } else {
           final responseData = jsonDecode(response.body);
           // Get.snackbar('Pesan', '${response.statusCode} Terlalu banyak aksi, server sedang sibuk');
           print('Failed to edit cart: ${jsonDecode(response.statusCode.toString())}');
-          print(responseData);
+
         }
       }
 
@@ -369,7 +360,6 @@ class CartController extends GetxController {
   Future<void> removeCart({required int idCart,}) async {
     isLoading.value = true;
     print(idCart);
-    print('hapus keranjgn');
     final url = Uri.parse('${GlobalVariables.apiCartDelete}$idCart');
 
     final client = http.Client();
@@ -384,10 +374,9 @@ class CartController extends GetxController {
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        print(responseData);
         fetchCart();
         cartItems2.refresh();
-        print(response.statusCode);
+
       }else{
         print(response);
       }
@@ -437,7 +426,7 @@ class CartController extends GetxController {
     final item = cartItems2.firstWhereOrNull((item) => item.cartId?.value == cartId);
     cartItems2.remove(item);
       await removeCart(idCart: cartId);
-      print('cart id yang dihapus $cartId');
+
     cartItems2.refresh();
 
   }

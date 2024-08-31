@@ -8,7 +8,7 @@ class AppbarCustom extends StatelessWidget implements PreferredSizeWidget {
   const AppbarCustom({required this.title, required this.style});
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class AppbarCustom extends StatelessWidget implements PreferredSizeWidget {
       leading:
       InkWell(
           child: Ink(
-            child: Icon(Icons.arrow_back_ios_new)),
+            child: const Icon(Icons.arrow_back_ios_new)),
           onTap: (){
             Get.back();
     },

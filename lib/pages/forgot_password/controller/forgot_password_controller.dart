@@ -49,8 +49,7 @@ class ForgotPasswordController extends GetxController {
     } else {
       isFilled.value = false;
     }
-    codeOtp.value = ('${code13Controller.text}${code14Controller.text}${code15Controller.text}${code16Controller.text}${code17Controller.text}${code18Controller.text}');
-    print('OTP Updated: ${codeOtp.value}'); // Debugging line
+    codeOtp.value = ('${code13Controller.text}${code14Controller.text}${code15Controller.text}${code16Controller.text}${code17Controller.text}${code18Controller.text}');// Debugging line
   }
 
 
@@ -80,8 +79,6 @@ class ForgotPasswordController extends GetxController {
 
       if (response.statusCode == 200) {
         if(responseData['status'] == 'failed'){
-          print('OTP verification failed');
-          print('Response: ${response.body}');
           Get.snackbar(
             'Error',
             'Kode OTP salah',
@@ -91,7 +88,6 @@ class ForgotPasswordController extends GetxController {
           );
         }
         else if (responseData['status'] == 'success'){
-          print('OTP verification succeeded');
           Get.snackbar(
             'Success',
             'Verifikasi Berhasil',
@@ -99,15 +95,11 @@ class ForgotPasswordController extends GetxController {
             backgroundColor: Colors.green,
             colorText: Colors.white,
           );
-          print('Response: ${response.body}');
           prefs.remove('token');
           Get.to(ForgotPasswordLastPage());
         }
       } else {
         // Error occurred
-        print('token: $token');
-        print('Failed to send OTP: ${response.statusCode}');
-        print('Response: ${response.body}');
         // Show error snackbar
         Get.snackbar(
           'Error',
@@ -154,9 +146,6 @@ class ForgotPasswordController extends GetxController {
       );
 
       final responseData = jsonDecode(response.body);
-      print(response.statusCode);
-      print(responseData);
-      print(responseData['token']);
       if (response.statusCode == 200) {
         if(responseData['status'] == 'failed'){
           Get.snackbar(
@@ -170,8 +159,6 @@ class ForgotPasswordController extends GetxController {
           prefs.setString('token3', '${responseData['token']}');
           Get.to(ForgotPasswordSecondPage());
           isLoading.value = false;
-          print(responseData);
-          print(response.statusCode);
           Get.snackbar(
             'Success',
             'Otp berhasil dikirim',
@@ -191,7 +178,6 @@ class ForgotPasswordController extends GetxController {
       }
     } catch (e) {
       isLoading.value = false;
-      print('error $e di forgot password 1');
       Get.snackbar(
         'Error',
         'Nomor Hp tidak ditemukan',
@@ -207,7 +193,6 @@ class ForgotPasswordController extends GetxController {
     final url = Uri.parse(GlobalVariables.apiSendOtp);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token3');
-    print(token);
     isLoading.value = true;
     final client = http.Client();
     try {
@@ -223,8 +208,6 @@ class ForgotPasswordController extends GetxController {
       );
 
       final responseData = jsonDecode(response.body);
-      print(response.statusCode);
-      print(responseData);
       if (response.statusCode == 200) {
         prefs.setString('token2','${responseData['token']}');
         isLoading.value = false;
@@ -246,7 +229,6 @@ class ForgotPasswordController extends GetxController {
       }
     } catch (e) {
       isLoading.value = false;
-      print('error $e di forgot password 1');
       Get.snackbar(
         'Error',
         'Tunggu 5 Menit',
@@ -288,15 +270,11 @@ class ForgotPasswordController extends GetxController {
       );
 
       final responseData = jsonDecode(response.body);
-      print(response.statusCode);
       if (response.statusCode == 500) {
-        print(response.body);
         isLoading.value = false;
       }
       if (response.statusCode == 200) {
         isLoading.value = false;
-        print(responseData);
-        print(response.statusCode);
         if(token2 == null){
         Get.offNamed(Routes.LOGIN_PAGE);
         Get.snackbar(

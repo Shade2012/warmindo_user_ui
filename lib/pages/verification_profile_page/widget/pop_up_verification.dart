@@ -53,7 +53,6 @@ class PopUpVerification extends StatelessWidget {
                   child: ElevatedButton(onPressed: (){
                     if(controller.isFilled.value == true){
                       controller.confirmEditPhone();
-                      print('Verification code: ${controller.codeOtp.value}');
                     }else{
                       return;
                     }
@@ -64,7 +63,6 @@ class PopUpVerification extends StatelessWidget {
               child: InkWell(onTap: (){
                 if(controller.isFilled.value == true){
                   controller.sendOtp();
-                  print('Verification code: ${controller.codeOtp.value}');
                 }else{
                   return;
                 }

@@ -68,7 +68,6 @@ class GuestHomeController extends GetxController {
       if (response.statusCode == 200) {
         menuElement.value = menuListFromJson(response.body);
         isLoading.value = false;
-        print("Fetched menu list: ${menuElement.length} items");
         // You can call the button function here if you want to print the menuList
         // button();
       } else {

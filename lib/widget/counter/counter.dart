@@ -170,7 +170,6 @@ class CounterWidget extends StatelessWidget {
                           menuID: menu.menuId,
                           variantId: selectedVarianId,
                           toppings: selectedToppingIds);
-                      print(cartItem?.quantity.value);
                       popupController.isLoading.value = true;
                       menuController.checkConnectivity();
                       popupController.isLoading.value = true;
@@ -194,8 +193,6 @@ class CounterWidget extends StatelessWidget {
                     }
                   } else {
                     if (isCartItem) {
-                      print(cartId);
-                      print('ngedit cart');
                       cartController.isLoading.value = true;
                       List<int> selectedToppingIds = popupController.selectedToppings[cartId]?.map((topping) => topping.toppingID).toList() ?? [];
                       final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.cartId == cartId);

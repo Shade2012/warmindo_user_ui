@@ -51,7 +51,6 @@ class ProfileController extends GetxController {
             txtUsername.value = data['user']['username'];
             image.value = data['user']['profile_picture'] ?? '';
             user_verified.value = data['user']['user_verified'];
-            print("Fetched username: ${txtUsername.value}");
           } else {
             print('Error: ${data['message']}');
           }
@@ -63,7 +62,6 @@ class ProfileController extends GetxController {
       } finally {
         isLoading.value = false; // Set loading to false after data is fetched
       }
-      print('object2');
     }
   }
 

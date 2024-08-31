@@ -45,13 +45,11 @@ class PembatalanController extends GetxController {
   }
   Future<void> postCancelOrder({required String orderid, required int noRek, required String cancelMethod, required String alasanBatal}) async {
     token = prefs.getString('token') ?? '';
-    print('history');
     final body = {
       "no_rekening": noRek,
       "cancel_method": cancelMethod,
       "reason_cancel": alasanBatal,
     };
-    print(orderid);
     final id = int.tryParse(orderid);
     try {
       isLoadingButton.value = true; // Set loading state to true
@@ -68,13 +66,10 @@ class PembatalanController extends GetxController {
 
       if (response.statusCode == 200) {
         final updatedOrder = historyController.orders2.firstWhere((element) => element.id == id);
-        print(updatedOrder.id);
-
         updatedOrder.status.value = 'menunggu batal'; // Set the new status value
         updatedOrder.alasan_batal?.value = alasanBatal; // Set the new cancel reason
         updatedOrder.noRekening?.value = noRek.toString();
         updatedOrder.cancelMethod?.value = cancelMethod;
-        print('ini cancel method di pembatalan controller $cancelMethod');
         await historyController.fetchHistory();
 
         historyController.orders2.refresh(); // Refresh the order list to reflect the changes
@@ -82,7 +77,6 @@ class PembatalanController extends GetxController {
         Get.back(); // Go back to the previous screen
       } else {
         // Handle other status codes if needed
-        print(response.body);
         print('Failed to fetch history: ${response.statusCode}');
       }
     } catch (e) {

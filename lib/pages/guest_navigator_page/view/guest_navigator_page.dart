@@ -27,9 +27,9 @@ class GuestNavigatorPage extends StatelessWidget {
         onPressed: () {
           controller.changeIndex(1);
         },
-        child: Obx(() => SvgPicture.asset(controller.currentIndex.value == 1 ? IconThemes.guest_iconmenuSelected : IconThemes.guest_iconmenu, color: Colors.white)),
         backgroundColor: ColorResources.bgfloatingActionButtonColor,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
+        child: Obx(() => SvgPicture.asset(controller.currentIndex.value == 1 ? IconThemes.guest_iconmenuSelected : IconThemes.guest_iconmenu, color: Colors.white)),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Obx(() => BottomNavigationBar(
@@ -45,11 +45,11 @@ class GuestNavigatorPage extends StatelessWidget {
             icon: Obx(() => SvgPicture.asset(controller.currentIndex.value == 0 ? IconThemes.iconhomeSelected : IconThemes.iconhome)),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: SizedBox.shrink(),
             label: '',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),

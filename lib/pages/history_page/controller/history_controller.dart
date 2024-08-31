@@ -8,21 +8,15 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:warmindo_user_ui/common/model/cart_model2.dart';
-import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
-import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
 import 'package:warmindo_user_ui/pages/navigator_page/controller/navigator_controller.dart';
 import 'package:warmindo_user_ui/pages/pembatalan_page/view/pembatalan_page_view.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
-
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
-import 'package:warmindo_user_ui/widget/batal_popup.dart';
 import '../../../common/global_variables.dart';
 import '../../../common/model/history2_model.dart';
-import '../../../common/model/toppings.dart';
 import '../../../widget/myRatingPopUp/rating_popup.dart';
 import '../../../widget/reusable_dialog.dart';
 import '../../cart_page/controller/cart_controller.dart';
-import '../../pembayaran-page/view/pembayaran_complete_view.dart';
 import '../widget/popup_choose_payment.dart';
 
 class HistoryController extends GetxController {
@@ -108,7 +102,6 @@ class HistoryController extends GetxController {
   // }
   Future<void> fetchHistory() async {
     token.value = prefs.getString('token') ?? '';
-    print('history');
     try {
       isLoading.value = true; // Set loading state to true
       final response = await http.get(
@@ -130,7 +123,6 @@ class HistoryController extends GetxController {
         // Handle other status codes if needed
         print('Failed to fetch history: ${response.statusCode}');
       }
-      print(orders2);
     } catch (e) {
       print('Error: $e');
     } finally {
@@ -140,7 +132,6 @@ class HistoryController extends GetxController {
 
   Future<void> fetchHistorywithoutLoading() async {
     token.value = prefs.getString('token') ?? '';
-    print('history');
     try {
       final response = await http.get(
         Uri.parse(GlobalVariables.apiHistory),
@@ -161,7 +152,6 @@ class HistoryController extends GetxController {
         // Handle other status codes if needed
         print('Failed to fetch history: ${response.statusCode}');
       }
-      print(orders2);
     } catch (e) {
       print('berhasil fetch history tanpa loading');
       print('Error: $e');
@@ -336,7 +326,6 @@ class HistoryController extends GetxController {
     }else{
       Get.snackbar('Pesan', 'Pesanan anda tidak bisa di prosest');
     }
-    print(itemsToAdd);
   }
 
 
@@ -367,7 +356,6 @@ class HistoryController extends GetxController {
     );
   }
   void showCustomModalForPayment(int order, BuildContext context) {
-    print('ini order id: $order');
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -399,12 +387,11 @@ class HistoryController extends GetxController {
       if(isTunai == true){
         final response = await http.post(Uri.parse(urlTunai),headers: headersTunai, body:bodyTunai);
         fetchHistory();
-          print(response);
+
       }else{
         final response = await http.post(Uri.parse(url),headers: headers, body:body);
         final responseBody = jsonDecode(response.body);
         if(response.statusCode == 201){
-          print(responseBody);
           if(responseBody['status'] == 'success'){
             final uriString = Uri.parse(responseBody['checkout_link']);
             launchUrl(uriString,mode: LaunchMode.inAppWebView);
@@ -421,7 +408,6 @@ class HistoryController extends GetxController {
             fetchHistory();
           }else{
             print('ada error ');
-            print(responseBody);
           }
         }else if(response.statusCode == 400){
           Get.snackbar('Pesan', 'Pesanan sudah di bayar');

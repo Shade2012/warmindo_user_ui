@@ -41,14 +41,12 @@ void startPolling()async{
     isLoading.value = true;
 
     if (asiaJakarta == null) {
-      print('asiaJakarta is not initialized.');
       isLoading.value = false;
       return; // Stop execution if asiaJakarta is not initialized
     }
 
     final now = tz.TZDateTime.now(asiaJakarta!); // Use the non-null value
     hariIni = DateFormat('EEEE', 'id_ID').format(now);
-    print('hariIni updated to: $hariIni');
 
     try {
       final response = await http.get(

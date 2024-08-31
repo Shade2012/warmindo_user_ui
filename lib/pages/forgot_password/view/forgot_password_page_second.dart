@@ -53,7 +53,6 @@ class ForgotPasswordSecondPage extends StatelessWidget {
                 width: double.infinity,
                 child: Obx(()=> ElevatedButton(onPressed: (){
                     if(controller.isFilled.value == true){
-                    print('code : ${controller.codeOtp}');
                     controller.verifyOtp();
                     }else{
                       return;

@@ -40,7 +40,7 @@ class ToppingDetail extends StatelessWidget {
                           onChanged: (bool? value) {
                             toppingItem.isSelected.value = value!;
                             int quantity = toppingItem.isSelected.value ? 1 : 0;
-                            print('Topping name: ${toppingItem.nameTopping}\nTopping is selected value: ${toppingItem.isSelected.value}\n Topping quantity : $quantity');
+
                           },
                         ),
                         ),

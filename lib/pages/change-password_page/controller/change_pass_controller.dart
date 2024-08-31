@@ -41,8 +41,6 @@ class ChangePasswordController extends GetxController {
 
       final responseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        print(responseData);
-        print(response.statusCode);
         Get.back();
         Get.snackbar(
           'Success',
@@ -54,8 +52,7 @@ class ChangePasswordController extends GetxController {
 
       }
       else if(response.statusCode == 400) {
-        print(responseData);
-        print(response.statusCode);
+
         Get.snackbar(
           'Error',
           'Password Saat ini tidak sesuai',
@@ -66,8 +63,6 @@ class ChangePasswordController extends GetxController {
 
       }
       else if(response.statusCode == 422) {
-        print(responseData);
-        print(response.statusCode);
         Get.snackbar(
           'Error',
           'Password Tidak Sama',

@@ -37,7 +37,7 @@ class SplashPage extends GetView<SplashController> {
                     ),
                     child: animationValue == 0.7 // Tampilkan logo ketika mencapai 0.7
                         ? ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                      borderRadius: const BorderRadius.all(Radius.circular(100)),
                           child: Image.asset(
                               Images.warmindoIcon,
                               height: MediaQuery.of(context).size.height * circleSize,

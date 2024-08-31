@@ -266,7 +266,6 @@ class CartData extends GetView<CartController> {
                 RxBool hasLowStock = controller.cartItems2.any((cartItem) {
                   final menu = controller.menuController.menuElement
                       .firstWhere((menuItem) => menuItem.menuId == cartItem.productId, orElse: () => MenuList(menuId: 0, statusMenu: '0', image: '', nameMenu: '', price: 0, category: '', stock: 0,description: ''));
-                  print(menu);
                   return menu.stock! > 1;
                 }).obs;
                  return InkWell(
@@ -275,19 +274,15 @@ class CartData extends GetView<CartController> {
                      await controller.menuController.fetchProduct();
                       await popUpController.fetchTopping();
                       await popUpController.fetchVarian();
-                      print('ini topping list di cart${popUpController.toppingList}');
-                      print(controller.cartItems2[0]);
                      bool isScheduleFetched = await controller.fetchSchedule();
                      if (isScheduleFetched) {
                        if (scheduleController.jadwalElement[0].is_open == false) {
                          Get.snackbar('Pesan', 'Maaf, Toko saat ini sedang tutup. Silahkan coba lagi nanti.', colorText: Colors.black);
                        } else {
                          if (hasDisableMenu.value) {
-                           print(hasDisableMenu.value);
                            Get.snackbar('Pesan', 'Keranjangmu memiliki menu yang sedang dinonaktifkan.');
                          } else {
                            if(hasDisableVarian.value){
-                             print(controller.cartItems2);
                              Get.snackbar('Pesan', 'Keranjangmu memiliki varian yang sedang dinonaktifkan.');
                            }else if(hasDisableTopping.value){
                              Get.snackbar('Pesan', 'Keranjangmu memiliki topping yang sedang dinonaktifkan.');

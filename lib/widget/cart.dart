@@ -92,7 +92,6 @@ class Cart extends StatelessWidget {
             }
           }
         } catch (e) {
-          print('Error: $e');
           Get.snackbar('Error', 'An error occurred', colorText: Colors.white, backgroundColor: Colors.red);
         }
       },

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:warmindo_user_ui/pages/login_page/controller/login_controller.dart';
-import 'package:warmindo_user_ui/pages/register_page/controller/register_controller.dart';
 import '../pages/veritification_page/controller/veritification_controller.dart';
 import '../utils/themes/buttonstyle_themes.dart';
 import '../utils/themes/image_themes.dart';
@@ -22,7 +20,7 @@ class EditPopup extends StatelessWidget {
 
     return AlertDialog(
       elevation: 0,
-      contentPadding: EdgeInsets.all(20),
+      contentPadding: const EdgeInsets.all(20),
       content: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +28,7 @@ class EditPopup extends StatelessWidget {
             Center(
               child: Image.asset(Images.batalask),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: ctrPhoneNumber,
               keyboardType: TextInputType.phone,
@@ -38,18 +36,18 @@ class EditPopup extends StatelessWidget {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                focusedBorder: OutlineInputBorder(
+                focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black),
                 ),
                 labelText: 'Nomor Telepon',
                 labelStyle: boldTextStyle,
                 hintStyle: GoogleFonts.oxygen(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 12),
+                  textStyle: const TextStyle(color: Colors.black, fontSize: 12),
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Container(
+            const SizedBox(height: 20),
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
@@ -66,11 +64,9 @@ class EditPopup extends StatelessWidget {
                   }
                 },
                 style: editPhoneNumber(),
-                child: Container(
-                  child: Text(
-                    "Edit",
-                    style: whiteboldTextStyle15,
-                  ),
+                child: Text(
+                  "Edit",
+                  style: whiteboldTextStyle15,
                 ),
               ),
             ),

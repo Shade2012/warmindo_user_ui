@@ -166,8 +166,6 @@ class VerificationPage extends GetView<VeritificationController> {
                                     Get.offNamed(Routes.BOTTOM_NAVBAR);
                                   }
                                 }
-
-                                print('Verification code: ${controller.codeOtp.value}');
                               }else{
                                 return;
                               }
@@ -178,7 +176,6 @@ class VerificationPage extends GetView<VeritificationController> {
                         TextButton(
                           onPressed: () {
                             controller.sendOtp();
-                            print('Resend code');
                           },
                           child: Text('Kirim Ulang', style: bluelinkTextStyle,),
                         ),

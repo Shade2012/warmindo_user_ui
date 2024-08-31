@@ -80,9 +80,6 @@ class RatingCard extends StatelessWidget {
                       // Extract menuId and orderDetailID from the orderDetails
                       int menuId = order.orderDetails[i].menuId;
                       int orderDetailID = order.orderDetails[i].orderDetailId;
-                      print(menuId);
-                      print(rating);
-                      print(orderDetailID);
                       // Call the addRating method with the appropriate parameters
                       await ratingController.addRating(menuId, rating, orderDetailID,order);
                       controller.orders2.refresh();

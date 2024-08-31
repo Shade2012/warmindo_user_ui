@@ -11,7 +11,7 @@ Widget myText(
     String? Function(String)? validator, // Validation function for email
     ) {
   return Container(
-    margin: EdgeInsets.only(top: 20, bottom: 20),
+    margin: const EdgeInsets.only(top: 20, bottom: 20),
     child: TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
@@ -20,7 +20,7 @@ Widget myText(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black),
         ),
         hintText: hint,

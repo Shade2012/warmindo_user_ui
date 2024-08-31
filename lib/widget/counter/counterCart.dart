@@ -16,7 +16,6 @@ class CounterWidget2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartItem = cartController.cartItems2.firstWhere((element) => element.cartId == index);
-    print(cartItem.productName);
     return Row(
       children: [
         Container(

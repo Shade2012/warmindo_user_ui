@@ -14,7 +14,7 @@ class VerificationCodeInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    return Container(
+    return SizedBox(
       width: screenWidth * 0.11,
       height: screenWidth * 0.11,
       child: Center(

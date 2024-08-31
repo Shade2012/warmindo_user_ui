@@ -37,9 +37,7 @@ class MyCustomPopUp extends StatelessWidget {
         final cartItem = controller.cartController.cartItems2.firstWhere((element) => element.productId == product.menuId);
         if (cartItem.cartId?.value != null) {
           cartid.value = cartItem.cartId!.value;
-          print('cartid updated: ${cartid.value}');
         } else {
-          print('cartid is still null, retrying...');
           checkAndUpdateCartId();
         }
       });

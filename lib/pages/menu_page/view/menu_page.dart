@@ -80,7 +80,7 @@ class MenuPage extends StatelessWidget {
             if(controller.searchObx.value != ''){
               if (controller.searchResults.isEmpty) {
                 return
-                    Center(child: Text('Produk tidak ditemukan'),);
+                    const Center(child: Text('Produk tidak ditemukan'),);
               }else  {
                 return Search(
                   categoryName: 'Search Results',

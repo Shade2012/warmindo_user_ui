@@ -1,7 +1,5 @@
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:warmindo_user_ui/pages/history_page/widget/order_box.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/appBar.dart';
@@ -27,7 +25,7 @@ class HistoryDetailFilterPage extends StatelessWidget {
           await controller.fetchHistory();
         },
         child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
             padding: const EdgeInsets.all(10),
             child: Column(
@@ -49,7 +47,7 @@ class HistoryDetailFilterPage extends StatelessWidget {
                   } else {
                     return ListView.builder(
                       shrinkWrap: true, // Add this line to ensure the ListView takes the minimum size it needs
-                      physics: NeverScrollableScrollPhysics(), // Prevents the ListView from scrolling separately
+                      physics: const NeverScrollableScrollPhysics(), // Prevents the ListView from scrolling separately
                       itemCount: filteredOrders.length,
                       itemBuilder: (context, index) {
                         return OrderBox(order: filteredOrders[index], isBatal: false);
