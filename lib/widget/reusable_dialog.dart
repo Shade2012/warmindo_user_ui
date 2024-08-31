@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
@@ -57,10 +56,10 @@ class ReusableDialog extends StatelessWidget {
               child: TextButton(
                 onPressed: onCancelPressed as void Function()?,
                 style: TextButton.styleFrom(
-                  minimumSize: Size(120, 48),
+                  minimumSize: const Size(120, 48),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(7.0),
-                    side: BorderSide(color: Colors.white),
+                    side: const BorderSide(color: Colors.white),
                   ),
                   backgroundColor: cancelButtonColor,
                   foregroundColor: cancelButtonTextColor,
@@ -71,15 +70,15 @@ class ReusableDialog extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 8), // Add some spacing between the buttons
+            const SizedBox(width: 8), // Add some spacing between the buttons
             Expanded(
               child: TextButton(
                 onPressed: onConfirmPressed as void Function()?,
                 style: TextButton.styleFrom(
-                  minimumSize: Size(120, 48),
+                  minimumSize: const Size(120, 48),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(7.0),
-                    side: BorderSide(color: Colors.white),
+                    side: const BorderSide(color: Colors.white),
                   ),
                   backgroundColor: confirmButtonColor,
                   foregroundColor: confirmButtonTextColor,

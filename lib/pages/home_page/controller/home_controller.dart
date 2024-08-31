@@ -44,13 +44,10 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
           // Extract the name from the response
           txtUsername.value = data['user']['name'];
           profileController.user_verified.value = data['user']['user_verified'];
-          print("Fetched username: ${txtUsername.value}");
         } else {
           print('Error: ${data['message']}');
         }
       } else {
-        print(response.body);
-        print(token);
         print('Error: ${response.statusCode}');
       }
     } catch (e) {
@@ -100,7 +97,6 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
       }
     } catch (e) {
       print('Exception: $e');
-      print(menuElement.value);
     } finally {
       isLoading.value = false;
     }
@@ -135,8 +131,6 @@ MenuList getHighestRatingMenu(List<MenuList> menuElements, int categoryId) {
     );
   }
   filteredItems.sort((a, b) => b.rating?.compareTo(a.rating ?? 0) ?? 0);
-  print('ini menu element $menuElement');
-  print('yang di filter ${filteredItems.first}');
   return filteredItems.first;
 }
 

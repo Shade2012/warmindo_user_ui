@@ -60,13 +60,12 @@ int generateOrderId() {
           }
         } else {
           // Handle other status codes if needed
-          print('Failed to fetch history: ${response.statusCode}');
         }
         historyController.orders2.refresh();
-        await Future.delayed(Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 3));
       } catch (e) {
         print('Error occurred: $e');
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 5));
       }
     }
   }
@@ -89,18 +88,15 @@ Future<void> postOrder({required String catatan}) async{
   final responseBody = jsonDecode(response.body);
     if (responseBody['success'] == true) {
       orderID.value = responseBody['data']['id'].toString();
-      print('Order ID saat post order: $orderID');
     } else {
       print('Error: ${responseBody['message']}');
     }
   }catch(e){
     print(e);
-    print('ada error disini post order');
   }
 }
 
 Future<void> postOrderDetail({required String catatan}) async{
-  print('Order ID di post order detail atas:${orderID.value}');
   const url = GlobalVariables.postOrderDetail;
     final headers = {
       'Content-Type': 'application/json',
@@ -125,11 +121,8 @@ Future<void> postOrderDetail({required String catatan}) async{
     try{
       final response = await http.post(Uri.parse(url),headers: headers, body: jsonEncode(toRequestBody()),);
       final responseBody = jsonDecode(response.body);
-      print('Order ID di post order detail bawah:${orderID.value}');
-      print(responseBody);
 
     }catch(e){
-      print(toRequestBody());
       print('ada error disini $e');
     }
   }
@@ -152,7 +145,6 @@ Future<void> postOrderDetail({required String catatan}) async{
       'order_id': orderID.value,
     };
     try{
-      print(cartController.token.value);
       if(isTunai == true){
         await historyController.fetchHistory();
           Get.off(PembayaranComplate());
@@ -160,7 +152,6 @@ Future<void> postOrderDetail({required String catatan}) async{
         final response = await http.post(Uri.parse(url),headers: headers, body:body);
         final responseBody = jsonDecode(response.body);
         if(response.statusCode == 201){
-          print(responseBody);
           if(responseBody['status'] == 'success'){
             final uriString = Uri.parse(responseBody['checkout_link']);
             launchUrl(uriString,mode: LaunchMode.inAppWebView);
@@ -172,12 +163,9 @@ Future<void> postOrderDetail({required String catatan}) async{
             });
           }else{
             print('ada error ');
-            print(responseBody);
           }
         }else{
-          print(orderID.value);
           print(responseBody);
-          print(response.statusCode);
         }
       }
     }catch(e){

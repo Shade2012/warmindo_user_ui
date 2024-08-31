@@ -41,7 +41,6 @@ class GuestHomeDetailController extends GetxController {
 
       if (response.statusCode == 200) {
         menuElement.value = menuListFromJson(response.body);
-        print("Fetched menu list: ${menuElement.length} items");
       } else {
         print('Error: ${response.statusCode}');
       }

@@ -15,7 +15,7 @@ class UploadImage extends StatelessWidget {
     return Container(
       height: 150,
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
@@ -24,7 +24,7 @@ class UploadImage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,10 +34,9 @@ class UploadImage extends StatelessWidget {
                   if (onImageCapture != null) {
                     onImageCapture!(ImageSource.camera);
                   } else {
-                    print('onImageCapture callback is null');
                   }
                 },
-                child: Column(
+                child: const Column(
                   children: [
                     Icon(Icons.camera_alt, size: 40),
                     SizedBox(height: 10),
@@ -51,10 +50,9 @@ class UploadImage extends StatelessWidget {
                   if (onImageCapture != null) {
                     onImageCapture!(ImageSource.gallery);
                   } else {
-                    print('onImageCapture callback is null');
                   }
                 },
-                child: Column(
+                child: const Column(
                   children: [
                     Icon(Icons.photo, size: 40),
                     SizedBox(height: 10),
@@ -64,7 +62,7 @@ class UploadImage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
         ],
       ),
     );

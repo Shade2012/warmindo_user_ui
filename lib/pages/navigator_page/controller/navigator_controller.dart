@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
-import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/schedule_controller.dart';
 import 'package:warmindo_user_ui/pages/menu_page/controller/menu_controller.dart';
 

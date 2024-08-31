@@ -13,7 +13,7 @@ import '../pages/profile_page/controller/profile_controller.dart';
 class FirebaseApi {
   final firebaseMessaging = FirebaseMessaging.instance;
 
-  static final channel = AndroidNotificationChannel(
+  static final channel =  AndroidNotificationChannel(
     'high_importance_channel',
     'High Importance Channel',
     importance: Importance.high,
@@ -85,7 +85,6 @@ class FirebaseApi {
         if (notificationBody != null && (notificationBody.contains('diverifikasi')|| notificationBody.contains('terverifikasi'))) {
           final ProfileController profileController = Get.put(ProfileController());
           profileController.checkConnectivity();
-          print('ngejalanan ini');
         }
       }
     }

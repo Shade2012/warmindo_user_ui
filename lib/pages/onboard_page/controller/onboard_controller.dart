@@ -18,7 +18,7 @@ class OnboardController extends GetxController {
     currentPage.value = page;
     pageController.animateToPage(
       currentPage.value,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.ease,
     );
   }

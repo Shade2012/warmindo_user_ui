@@ -230,7 +230,6 @@ class PembayaranPage extends GetView<PembayaranController> {
                           controller.isLoading.value = true;
                           String fullText = controller.ctrCatatan.text;
                           String catatanValue = fullText.replaceFirst('Catatan :', '').trim();
-                          print(catatanValue);
                           controller.makePayment2(catatan: catatanValue, isTunai: true);
                         }else{
                           return;
@@ -241,7 +240,6 @@ class PembayaranPage extends GetView<PembayaranController> {
                         controller.isLoading.value = true;
                         String fullText = controller.ctrCatatan.text;
                         String catatanValue = fullText.replaceFirst('Catatan :', '').trim();
-                        print('ini catatan value $catatanValue');
                         controller.makePayment2(catatan: catatanValue, isTunai: false);
                       }else{
                         return;

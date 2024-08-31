@@ -257,8 +257,6 @@ class MenuCategory extends StatelessWidget {
                                                               popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: -1);
                                                             }
                                                             else {
-                                                              print(cartItem?.cartId);
-                                                              print(cartController.cartItems2);
                                                               popUpcontroller.addToCart2(product: menu, quantity: 1, cartID: cartItem?.cartId?.value ?? 0, context: context,);
                                                               final cartItem2 = cartController.cartItems2.firstWhereOrNull((item) => item.productId == menu.menuId);
                                                               popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: cartItem2?.cartId?.value ?? 0);

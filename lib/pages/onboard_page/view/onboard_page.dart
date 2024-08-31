@@ -119,8 +119,8 @@ class OnboardPage extends StatelessWidget {
                             height: 49,
                             decoration: BoxDecoration(
 
-                              boxShadow: [
-                                const BoxShadow(
+                              boxShadow: const [
+                                 BoxShadow(
                                   color: ColorResources.tomatoRed, // Warna hitam dengan opasitas 50%
                                   spreadRadius: 0, // Persebaran bayangan
                                   blurRadius: 6, // Kekaburan bayangan

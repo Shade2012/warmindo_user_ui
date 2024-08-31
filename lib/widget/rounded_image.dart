@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../utils/themes/image_themes.dart';
-
 class RoundedImage extends StatelessWidget {
   const RoundedImage({
     super.key,

@@ -27,7 +27,6 @@ class CartPage extends StatelessWidget {
           await popUpController.fetchVarian();
           await popUpController.fetchTopping();
           await controller.fetchCart();
-          print('ini token:${controller.token.value}');
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),// Wrap with SingleChildScrollView
@@ -82,7 +81,7 @@ class CartPage extends StatelessWidget {
                 );
               } else {
                 if(controller.isLoading.value == true){
-                  return CartShimmer();
+                  return const CartShimmer();
                 }else{
                   return Column(
                     children: [

@@ -42,11 +42,11 @@ return Colors.blue;
 // Create a function to generate dynamic button style
 ButtonStyle dynamicButtonStyle(String status,String cancelMethod) {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(getLabelColor(status,cancelMethod)),
-    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+    backgroundColor: WidgetStateProperty.all<Color>(getLabelColor(status,cancelMethod)),
+    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
       const EdgeInsets.only(top: 15, bottom: 15),
     ),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -55,11 +55,11 @@ ButtonStyle dynamicButtonStyle(String status,String cancelMethod) {
 }
 ButtonStyle verifyOTPStyle(bool status) {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(getColorVerify(status)),
-    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+    backgroundColor: WidgetStateProperty.all<Color>(getColorVerify(status)),
+    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
       const EdgeInsets.only(top: 15, bottom: 15),
     ),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -68,11 +68,11 @@ ButtonStyle verifyOTPStyle(bool status) {
 }
 ButtonStyle authLoginRegisterButtonStyle() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(ColorResources.btnonboard),
-    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+    backgroundColor: WidgetStateProperty.all<Color>(ColorResources.btnonboard),
+    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
       const EdgeInsets.only(top: 15, bottom: 15),
     ),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -81,11 +81,11 @@ ButtonStyle authLoginRegisterButtonStyle() {
 }
 ButtonStyle redeembutton() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+    backgroundColor: WidgetStateProperty.all<Color>(Colors.black),
+    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
       const EdgeInsets.only(top: 15, bottom: 15),
     ),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
@@ -94,13 +94,13 @@ ButtonStyle redeembutton() {
 }
 ButtonStyle black_secWhite() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-    minimumSize: MaterialStateProperty.all<Size>(const Size(211,46)),
-    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+    backgroundColor: WidgetStateProperty.all<Color>(Colors.black),
+    foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+    minimumSize: WidgetStateProperty.all<Size>(const Size(211,46)),
+    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
       const EdgeInsets.all(10.0),
     ),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
@@ -109,11 +109,11 @@ ButtonStyle black_secWhite() {
 }
 ButtonStyle verificationButton() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+    backgroundColor: WidgetStateProperty.all<Color>(Colors.black),
+    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
       const EdgeInsets.only(top: 15, bottom: 15),
     ),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -122,11 +122,11 @@ ButtonStyle verificationButton() {
 }
 ButtonStyle redeembutton2() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+    backgroundColor: WidgetStateProperty.all<Color>(Colors.black),
+    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
       const EdgeInsets.only(top: 15, bottom: 15),
     ),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -135,11 +135,11 @@ ButtonStyle redeembutton2() {
 }
 ButtonStyle editPhoneNumber() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+    backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
+    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
       const EdgeInsets.only(top: 15, bottom: 15),
     ),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -149,10 +149,10 @@ ButtonStyle editPhoneNumber() {
 
 ButtonStyle button_no() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+    backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
 
 
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         side: BorderSide(color: Colors.black),
         borderRadius: BorderRadius.circular(10.0),
@@ -162,9 +162,9 @@ ButtonStyle button_no() {
 }
 ButtonStyle button_cancel() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+    backgroundColor: WidgetStateProperty.all<Color>(Colors.red),
 
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -173,8 +173,8 @@ ButtonStyle button_cancel() {
 }
 ButtonStyle button_detail_voucher() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(ColorResources.voucherbtnDetail),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    backgroundColor: WidgetStateProperty.all<Color>(ColorResources.voucherbtnDetail),
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(20.0),
@@ -187,9 +187,9 @@ ButtonStyle button_detail_voucher() {
 }
 ButtonStyle button_reedem_voucher() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-    elevation: MaterialStateProperty.all<double>(0),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+    elevation: WidgetStateProperty.all<double>(0),
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
         Radius.circular(10.0),
@@ -205,9 +205,9 @@ ButtonStyle button_reedem_voucher() {
 
 ButtonStyle button_login() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(ColorResources.btnonboard2),
-    elevation: MaterialStateProperty.all<double>(0),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    backgroundColor: WidgetStateProperty.all<Color>(ColorResources.btnonboard2),
+    elevation: WidgetStateProperty.all<double>(0),
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(5.0),
@@ -222,9 +222,9 @@ ButtonStyle button_login() {
 
 ButtonStyle button_register() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-    elevation: MaterialStateProperty.all<double>(0),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+    elevation: WidgetStateProperty.all<double>(0),
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(5.0),

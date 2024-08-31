@@ -66,8 +66,6 @@ class VeritificationController extends GetxController {
   try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-
-      print('token di register shared prefrence prefs : ${prefs.getString('token')}');
       final uri = Uri.parse(GlobalVariables.apiSendOtp);
       var request = http.MultipartRequest('POST', uri)
         ..headers['Authorization'] = 'Bearer $token'
@@ -76,7 +74,6 @@ class VeritificationController extends GetxController {
 
 
       var response = await http.Response.fromStream(await request.send());
-      print('token: $token');
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
         if(responseBody['status'] == 'failed'){
@@ -91,15 +88,7 @@ class VeritificationController extends GetxController {
               backgroundColor: Colors.green,
               colorText: Colors.white,);
         }
-        print('OTP sent successfully');
-        print('Response: ${response.body}');
       } else {
-        // Error occurred
-        print(token);
-        print('Failed to send OTP: ${response.statusCode}');
-        print('Response: ${response.body}');
-
-        // Show error snackbar
         Get.snackbar(
           'Error',
           'Failed to send OTP!',
@@ -148,8 +137,6 @@ class VeritificationController extends GetxController {
       isSuccess.value = responseData['status'];
       if (response.statusCode == 200) {
      if(responseData['status'] == 'failed'){
-       print('OTP verification failed');
-       print('Response: ${response.body}');
        Get.snackbar(
          'Error',
          'Kode OTP salah',
@@ -159,7 +146,6 @@ class VeritificationController extends GetxController {
        );
      }
      else if (responseData['status'] == 'success'){
-       print('OTP verification succeeded');
        Get.snackbar(
          'Success',
          'Verifikasi Berhasil',
@@ -167,18 +153,13 @@ class VeritificationController extends GetxController {
          backgroundColor: Colors.green,
          colorText: Colors.white,
        );
-       print('Response: ${response.body}');
        // Get.offNamed(Routes.LOGIN_PAGE);
        prefs.remove('token4');
        registerController.phone_number.value = '';
        loginController.phone_number.value = '';
      }
       } else {
-        // Error occurred
-        print('token: $token');
-        print('Failed to send OTP: ${response.statusCode}');
-        print('Response: ${response.body}');
-        // Show error snackbar
+
         Get.snackbar(
           'Error',
           'Ada Kesalahan',
@@ -224,16 +205,12 @@ class VeritificationController extends GetxController {
 
       final responseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        print(responseData);
-        print(response.statusCode);
-        print('object');
         if(loginController.phone_number.value == ''){
           registerController.phone_number.value = responseData['user']['phone_number'];
         } else if (registerController.phone_number.value == ''){
           loginController.phone_number.value = responseData['user']['phone_number'];
         }
-        print('login phone number : ${loginController.phone_number.value}');
-        print('register phone number : ${registerController.phone_number.value}');
+
 
         Get.back();
         Get.snackbar(
@@ -245,8 +222,6 @@ class VeritificationController extends GetxController {
         );
 
       } else {
-        print(responseData);
-        print(response.statusCode);
         Get.snackbar(
           'Error',
           'Nomor Hp Sudah ada',

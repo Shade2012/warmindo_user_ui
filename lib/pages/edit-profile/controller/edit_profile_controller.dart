@@ -60,7 +60,6 @@ class EditProfileController extends GetxController {
           fullNameController.text = txtName.value;
           phoneNumberController.text = txtNomorHp.value;
           emailController.text = txtEmail.value;
-          print("Fetched username: ${txtUsername.value}");
         } else {
           print('Error: ${data['message']}');
         }
@@ -161,7 +160,6 @@ class EditProfileController extends GetxController {
         );
       } else {
         isLoading.value = false;
-        print('error biasa : ${response.body}');
         Get.snackbar(
           'Error biasa',
           'Error: ${response.statusCode} ${response.body}',

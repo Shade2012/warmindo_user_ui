@@ -46,7 +46,6 @@ class MyCustomPopUpController extends GetxController {
     final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.cartId == cartid);
     if (cartItem != null) {
       selectedVarian[cartid] = cartItem.selectedVarian;
-      print('Fetched selected varian: ${selectedVarian[cartid]}');
     } else {
       selectedVarian[cartid] = null;
     }
@@ -64,8 +63,6 @@ class MyCustomPopUpController extends GetxController {
       if (response.statusCode == 200) {
         final data = toppingListFromJson(response.body);
         toppingList.value = data;
-        print('ini response : \n $data');
-        print('ini list topping : \n${toppingList.value}');
       } else {
         print('Error: ${response.statusCode}');
       }
@@ -77,7 +74,6 @@ class MyCustomPopUpController extends GetxController {
     }
   }
   Future<void> fetchVarian () async{
-    print('menjalankan fetch varian');
     isLoading.value = true;
     try {
       final response = await http.get(
@@ -91,9 +87,6 @@ class MyCustomPopUpController extends GetxController {
     final data = varianListFromJson(response.body);
     varianList.value = data.where((element) => element.statusVarian == "1",).toList();
         // final data = jsonDecode(response.body);
-
-        print('ini response varian: \n $data');
-        print('ini list varian : \n${varianList.value}');
       } else {
         print('Error: ${response.statusCode}');
       }
@@ -105,7 +98,6 @@ class MyCustomPopUpController extends GetxController {
     }
   }
   void showCustomModalForItem(MenuList product, BuildContext context, int quantity, {required int cartid}) async {
-    print('ini cart id $cartid');
     cartController.fetchCart();
   await fetchSelectedToppings(cartid);
     await fetchSelectedVarian(cartid);

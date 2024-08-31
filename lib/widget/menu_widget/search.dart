@@ -61,9 +61,7 @@ class Search extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-
             Obx((){
-
               return menuController.isLoading.value ?
               GridView.count(
                 crossAxisCount: 2,

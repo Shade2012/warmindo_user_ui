@@ -5,7 +5,6 @@ import 'package:warmindo_user_ui/pages/guest_navigator_page/controller/guest_nav
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 
 import '../pages/navigator_page/controller/navigator_controller.dart';
-import '../routes/AppPages.dart';
 import '../utils/themes/icon_themes.dart';
 import '../utils/themes/textstyle_themes.dart';
 Widget MinumanWidget(bool isGuest){
@@ -19,23 +18,21 @@ Widget MinumanWidget(bool isGuest){
         controller.goToMenuPage(argument: 1);
       }
     } ,
-    child: Container(
-      child: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                color: ColorResources.tomatoRed,
-                borderRadius: BorderRadius.circular(50.0)
-            ),
-            padding: EdgeInsets.only(left: 12,right: 8,top: 10,bottom: 10),
-            margin: EdgeInsets.only(bottom: 5),
-            width: 60,
-            height: 60,
-            child: Center(child: SvgPicture.asset(IconThemes.iconcoffe,color: Colors.white,)),
+    child: Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              color: ColorResources.tomatoRed,
+              borderRadius: BorderRadius.circular(50.0)
           ),
-          Text("Minuman",style: boldTextStyle,)
-        ],
-      ),
+          padding: const EdgeInsets.only(left: 12,right: 8,top: 10,bottom: 10),
+          margin: const EdgeInsets.only(bottom: 5),
+          width: 60,
+          height: 60,
+          child: Center(child: SvgPicture.asset(IconThemes.iconcoffe,color: Colors.white,)),
+        ),
+        Text("Minuman",style: boldTextStyle,)
+      ],
     ),
   );
 }

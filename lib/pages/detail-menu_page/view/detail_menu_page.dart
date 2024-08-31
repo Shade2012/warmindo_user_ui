@@ -189,7 +189,7 @@ class DetailMenuPage extends StatelessWidget {
           );
         }
         if (controller.isLoading.value) {
-          return BottomMenuDetailSkeleton();
+          return const BottomMenuDetailSkeleton();
         }
         final cartItem = cartController.cartItems2
             .firstWhereOrNull((item) => item.productId == menu.menuId);

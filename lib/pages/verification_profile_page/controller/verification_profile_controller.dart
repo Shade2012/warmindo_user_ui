@@ -80,13 +80,8 @@ class VerificationProfileController extends GetxController{
             backgroundColor: Colors.green,
             colorText: Colors.white,);
         }
-        print('OTP sent successfully');
         print('Response: ${response.body}');
       } else {
-        // Error occurred
-        print('Failed to send OTP: ${response.statusCode}');
-        print('Response: ${response.body}');
-
         // Show error snackbar
         Get.snackbar(
           'Error',
@@ -132,8 +127,6 @@ class VerificationProfileController extends GetxController{
       final responseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         if(responseData['status'] == 'failed'){
-          print('OTP verification failed');
-          print('Response: ${response.body}');
           Get.snackbar(
             'Error',
             'Kode OTP salah',
@@ -143,7 +136,7 @@ class VerificationProfileController extends GetxController{
           );
         }
         else if (responseData['status'] == 'success'){
-          print('OTP verification succeeded');
+
           Get.snackbar(
             'Success',
             'Verifikasi Berhasil',
@@ -151,12 +144,9 @@ class VerificationProfileController extends GetxController{
             backgroundColor: Colors.green,
             colorText: Colors.white,
           );
-          print('Response: ${response.body}');
         }
       } else {
         // Error occurred
-        print('Failed to send OTP: ${response.statusCode}');
-        print('Response: ${response.body}');
         // Show error snackbar
         Get.snackbar(
           'Error',
@@ -199,7 +189,6 @@ class VerificationProfileController extends GetxController{
           if (data['success']) {
             txtPhoneNumber.value = data['user']['phone_number'];
             phoneNumberController.text = txtPhoneNumber.value;
-            print("Fetched username: ${txtPhoneNumber.value}");
           } else {
             print('Error: ${data['message']}');
           }
@@ -233,7 +222,6 @@ class VerificationProfileController extends GetxController{
     }
   }
   Future<void> confirmEditPhone() async {
-    print('lagi di confirmasi phone');
     final url = Uri.parse(GlobalVariables.apiVerifyOtp);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
@@ -266,7 +254,6 @@ class VerificationProfileController extends GetxController{
           );
         } else {
           await cartController.fetchUser();
-          print(response.body);
           Get.back();
           Get.offNamed(Routes.BOTTOM_NAVBAR);
         }
@@ -279,7 +266,6 @@ class VerificationProfileController extends GetxController{
           colorText: Colors.white,
         );
       }
-      print(response.body);
     } catch (e) {
       Get.snackbar(
         'Error',

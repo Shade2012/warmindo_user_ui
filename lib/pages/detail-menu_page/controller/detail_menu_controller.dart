@@ -33,7 +33,6 @@ class DetailMenuController extends GetxController {
         var fetchedMenu = menuListFromJson(response.body);
         // Filter the menu based on the provided menuId
         menu.value = fetchedMenu.where((item) => item.menuId == menuId).toList();
-        print("Fetched and filtered menu list: ${menu.length} items");
       } else {
         print('Error: ${response.statusCode}');
       }
@@ -56,8 +55,7 @@ class DetailMenuController extends GetxController {
       if (response.statusCode == 200) {
         toppingList.value = toppingListFromJson(response.body);
         final data = jsonDecode(response.body);
-        print('ini response topping: \n $data');
-        print('ini list topping : \n$toppingList');
+
       } else {
         print('Error: ${response.statusCode}');
       }
@@ -81,9 +79,6 @@ class DetailMenuController extends GetxController {
       if (response.statusCode == 200) {
         varianList.value = varianListFromJson(response.body);
         final data = jsonDecode(response.body);
-
-        print('ini response varian: \n $data');
-        print('ini list varian : \n$varianList');
       } else {
         print('Error: ${response.statusCode}');
       }

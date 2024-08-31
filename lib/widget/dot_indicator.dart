@@ -13,7 +13,7 @@ class DotIndicator extends StatelessWidget {
       children: [
         for (int i = 0; i <= 2; i++)
           Container(
-            margin: EdgeInsets.all(5),
+            margin: const EdgeInsets.all(5),
             width: 10,
             height: 10,
             decoration: BoxDecoration(

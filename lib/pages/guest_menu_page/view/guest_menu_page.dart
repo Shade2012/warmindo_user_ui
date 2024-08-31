@@ -85,10 +85,10 @@ class GuestMenuPage extends StatelessWidget {
               ),
             );
           }
-         else if(controller.searchObx.value != ''){
-            if (controller.searchResults.length == 0) {
+         else  if(controller.searchObx.value != ''){
+            if (controller.searchResults.isEmpty) {
               return
-                const Center(child: Text('Produk tidak ditemukan'),);
+                Center(child: Text('Produk tidak ditemukan'),);
             }else  {
               return Search(
                 categoryName: 'Search Results',

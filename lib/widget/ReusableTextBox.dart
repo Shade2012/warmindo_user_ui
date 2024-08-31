@@ -7,13 +7,13 @@ class ReusableTextBox extends StatelessWidget {
 
   ReusableTextBox({required this.title, required this.controller}) {
     controller.addListener(() {
-      if (controller.text.length < '$title'.length) {
-        controller.text = '$title';
+      if (controller.text.length < title.length) {
+        controller.text = title;
         controller.selection = TextSelection.fromPosition(
           TextPosition(offset: controller.text.length),
         );
-      } else if (!controller.text.startsWith('$title')) {
-        String newText = '$title' + controller.text.replaceFirst('$title', '');
+      } else if (!controller.text.startsWith(title)) {
+        String newText = title + controller.text.replaceFirst(title, '');
         controller.text = newText;
         controller.selection = TextSelection.fromPosition(
           TextPosition(offset: newText.length),
@@ -33,9 +33,9 @@ class ReusableTextBox extends StatelessWidget {
             controller: controller,
             maxLines: 5,
             style: regulargreyText,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.black, width: 2.0),
+                borderSide: BorderSide(color: Colors.black, width: 2.0),
                 borderRadius: BorderRadius.all(Radius.circular(8.0)),
               ),
               border: OutlineInputBorder(

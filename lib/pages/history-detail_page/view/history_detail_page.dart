@@ -66,13 +66,10 @@ class HistoryDetailPage extends StatelessWidget {
                 final index = controller.orders2.firstWhere((element) =>
                 element.id == order.value.id);
                 // order.value = index;
-                print(index.status);
-                print(order.value.status);
-                print(order.value.status.value);
                 // print('selesai fetch');
               },
               child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -310,7 +307,7 @@ class HistoryDetailPage extends StatelessWidget {
                                                             crossAxisAlignment: WrapCrossAlignment
                                                                 .center,
                                                             children: [
-                                                              Icon(Icons
+                                                              const Icon(Icons
                                                                   .star_rounded,
                                                                   color: Colors
                                                                       .orange,
@@ -482,11 +479,8 @@ class HistoryDetailPage extends StatelessWidget {
             ),
             Obx(() {
               if (controller.isLoading.value) {
-                return Container(
-
-                  child: const Center(
-                    child: CircularProgressIndicator(color: Colors.black,),
-                  ),
+                return const Center(
+                  child: CircularProgressIndicator(color: Colors.black,),
                 );
               } else {
                 return const SizedBox.shrink();
