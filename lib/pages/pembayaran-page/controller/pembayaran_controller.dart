@@ -72,7 +72,7 @@ int generateOrderId() {
   }
 Future<void> postOrder({required String catatan}) async{
     String payment_method =  selectedButton3.value == true ? 'tunai' : '';
-    String takeaway =  selected.value == true ? 'take-away' : '';
+    // String takeaway =  selected.value == true ? 'take-away' : '';
     const url = GlobalVariables.postOrder;
   final headers = {
     'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ Future<void> postOrder({required String catatan}) async{
   final body = jsonEncode({
     'status': selectedButton3.value ? 'sedang diproses' : 'menunggu pembayaran',
     'payment_method': payment_method,
-    'order_method': takeaway,
+    'order_method': 'take-away',
     'note': catatan,
   });
   try{
@@ -183,11 +183,12 @@ Future<void> postOrderDetail({required String catatan}) async{
     }catch(e){
       print('ada error di catch2 $e');
     }
+    cartController.fetchCart();
     //
-    for (int i = 0; i < cartController.cartItems2.length; i++) {
-      CartItem2 item = cartController.cartItems2[i];
-      await cartController.removeCart(idCart: item.cartId!.value);
-    }
+    // for (int i = 0; i < cartController.cartItems2.length; i++) {
+    //   CartItem2 item = cartController.cartItems2[i];
+    //   await cartController.removeCart(idCart: item.cartId!.value);
+    // }
 
     // //
     // cartController.cartItems2.clear();

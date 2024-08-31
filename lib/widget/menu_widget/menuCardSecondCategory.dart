@@ -39,14 +39,14 @@ class MenuSecondCategory extends StatelessWidget {
           await cartController.fetchCart();
           await guestMenuController.fetchProduct();
           await popUpController.fetchVarian();
-          await popUpController.fetchVarian();
+          await popUpController.fetchTopping();
         }else{
           await scheduleController.fetchSchedule(true);
           await cartController.fetchUser();
           await cartController.fetchCart();
           await menuController.fetchProduct();
           await popUpController.fetchVarian();
-          await popUpController.fetchVarian();
+          await popUpController.fetchTopping();
         }
 
 

@@ -7,11 +7,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/common/global_variables.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/schedule_controller.dart';
+import 'package:warmindo_user_ui/pages/profile_page/controller/profile_controller.dart';
 import '../view/home_detaile_page.dart';
 
 class HomeController extends GetxController {
   late final SharedPreferences prefs;
 final ScheduleController scheduleController = Get.put(ScheduleController());
+  final ProfileController profileController = Get.put(ProfileController());
 
   RxString txtUsername = "".obs;
   RxString token = "".obs;
@@ -41,6 +43,7 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
         if (data['success']) {
           // Extract the name from the response
           txtUsername.value = data['user']['name'];
+          profileController.user_verified.value = data['user']['user_verified'];
           print("Fetched username: ${txtUsername.value}");
         } else {
           print('Error: ${data['message']}');
@@ -60,7 +63,6 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
   Future<void>  checkConnectivity() async {
     prefs = await SharedPreferences.getInstance();
     if (prefs != null) {
-
       token.value = prefs.getString('token') ?? '';
       prefs.setString('token2',token.value = prefs.getString('token')?? '') ?? '';
       id.value = prefs.getString('user_id') ?? '';

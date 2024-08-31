@@ -66,12 +66,12 @@ class MyCustomPopUp extends StatelessWidget {
         ),
       ),
       child: Obx(() {
-        if (controller.isLoading.value || cartid.value == 0) {
+        if (controller.isLoading.value && cartid.value == 0) {
           return SingleChildScrollView(
             controller: scrollController,
             child: const Column(
               children: [
-                MyPopupShimmer(),
+                 MyPopupShimmer(),
               ],
             ),
           );
@@ -177,23 +177,35 @@ class MyCustomPopUp extends StatelessWidget {
                         Text('Topping', style: boldTextStyle),
                         const SizedBox(height: 10),
                         Obx(() {
+                          final toppings = controller.toppingList
+                              .where((topping) =>
+                          topping.menus.any((menu2) => menu2.menuID == product.menuId) &&
+                              (topping.statusTopping != "0" ||
+                                  (controller.selectedToppings[cartid.value]?.any((selectedTopping) => selectedTopping.toppingID == topping.toppingID) ?? false)))
+                              .toList();
+
                           final isSelectedToppings = controller.selectedToppings[cartid.value] ?? [];
+
                           return ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.toppingList.length,
+                            itemCount: toppings.length,
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
-                              final toppingItem = controller.toppingList[index];
+                              final toppingItem = toppings[index];
                               final isSelected = isSelectedToppings.any((topping) => topping.toppingID == toppingItem.toppingID);
+
                               return Column(
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(toppingItem.nameTopping, style: boldphoneNumberTextStyle),
+                                      Text(
+                                        toppingItem.nameTopping == '' ? 'halo' : toppingItem.nameTopping,
+                                        style: boldphoneNumberTextStyle,
+                                      ),
                                       Row(
                                         children: [
-                                          Text('+${ toppingItem.priceTopping}', style: boldTextStyle),
+                                          Text('+${toppingItem.priceTopping}', style: boldTextStyle),
                                           Checkbox(
                                             activeColor: Colors.black,
                                             value: isSelected,
@@ -210,7 +222,8 @@ class MyCustomPopUp extends StatelessWidget {
                               );
                             },
                           );
-                        }),
+                        })
+
                       ],
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 
 import '../../../utils/themes/textstyle_themes.dart';
@@ -10,6 +11,7 @@ class HomeStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final jamFormat = DateFormat('yyyy-MM-dd – kk:mm');
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Container(
@@ -55,7 +57,7 @@ class HomeStatus extends StatelessWidget {
                       style: boldphoneNumberRegularTextStyle,
                     ),
                     TextSpan(
-                      text: controller.scheduleController.jadwalElement[0].start_time,
+                      text:  controller.scheduleController.jadwalElement[0].start_time?.substring(0, 5),
                       style: boldphoneNumberTextStyle
                     ),
                   ],
@@ -70,7 +72,7 @@ class HomeStatus extends StatelessWidget {
                       style: boldphoneNumberRegularTextStyle,
                     ),
                     TextSpan(
-                        text: controller.scheduleController.jadwalElement[0].end_time,
+                        text: controller.scheduleController.jadwalElement[0].end_time?.substring(0, 5),
                         style: boldphoneNumberTextStyle
                     ),
                   ],

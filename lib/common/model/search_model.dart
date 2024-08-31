@@ -27,7 +27,7 @@ class SearchList {
   final double price;
   final String category;
   final int stock;
-  final double ratings;
+  final double? ratings;
   final String description;
   final String? statusMenu;
   final DateTime createdAt;
@@ -55,7 +55,7 @@ class SearchList {
       price: double.parse(json["price"]),
       category: json["category"],
       stock: int.parse(json["stock"]),
-      ratings: double.parse(json["rating"]),
+      ratings: double.tryParse(json["rating"] ?? '0') ?? 0.0,
       description: json["description"],
       statusMenu: json['status_menu'],
       createdAt: DateTime.parse(json["created_at"]),

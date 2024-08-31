@@ -113,7 +113,7 @@ class MenuPageController extends GetxController {
           print('Error: ${response.statusCode}');
         }
       } catch (e) {
-        print(e);
+        print('test error $e');
       }
     });
     }

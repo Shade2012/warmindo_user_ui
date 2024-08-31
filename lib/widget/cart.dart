@@ -66,7 +66,7 @@ class Cart extends StatelessWidget {
                   }else{
                     bool variantRequired = popUpcontroller.varianList.any((varian) => varian.category == product.nameMenu);
                     if(variantRequired){
-                      popUpcontroller.showCustomModalForItem(product, context, 1, cartid: 1);
+                      popUpcontroller.showCustomModalForItem(product, context, 1, cartid: -1);
                     }
                     else {
                        popUpcontroller.addToCart2(product: product, quantity: 1, cartID: cartItem?.cartId?.value ?? 0, context: context,);

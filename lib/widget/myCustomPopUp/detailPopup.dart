@@ -222,7 +222,7 @@ class PopupDetail extends StatelessWidget {
                         onPressed: () {
                           popUpController.selectedVarian[cartList[0].cartId?.value ?? 0] = null;
                           popUpController.selectedToppings[cartList[0].cartId?.value ?? 0] = [];
-                          popUpController.showCustomModalForItem(menuList, context, 1, cartid: 1);
+                          popUpController.showCustomModalForItem(menuList, context, 1, cartid: -1);
                         },
                         style: redeembutton(),
                         child: Text('Tambah custom-an lain', style: whiteboldTextStyle15),

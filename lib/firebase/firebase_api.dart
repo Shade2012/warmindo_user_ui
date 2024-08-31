@@ -8,6 +8,7 @@ import 'package:warmindo_user_ui/main.dart';
 import 'package:warmindo_user_ui/pages/home_page/controller/schedule_controller.dart';
 import 'package:warmindo_user_ui/routes/AppPages.dart';
 import '../pages/history_page/controller/history_controller.dart';
+import '../pages/profile_page/controller/profile_controller.dart';
 
 class FirebaseApi {
   final firebaseMessaging = FirebaseMessaging.instance;
@@ -81,6 +82,11 @@ class FirebaseApi {
           ScheduleController scheduleController = Get.put(ScheduleController());
           await scheduleController.fetchSchedule(false);
         }
+        if (notificationBody != null && (notificationBody.contains('diverifikasi')|| notificationBody.contains('terverifikasi'))) {
+          final ProfileController profileController = Get.put(ProfileController());
+          profileController.checkConnectivity();
+          print('ngejalanan ini');
+        }
       }
     }
   }
@@ -114,6 +120,10 @@ class FirebaseApi {
         if (notificationBody != null && (notificationBody.contains('status') || notificationBody.contains('toko'))) {
           ScheduleController scheduleController = Get.put(ScheduleController());
           await scheduleController.fetchSchedule(false);
+        }
+        if (notificationBody != null && (notificationBody.contains('diverifikasi')|| notificationBody.contains('terverifikasi'))) {
+          final ProfileController profileController = Get.put(ProfileController());
+          profileController.checkConnectivity();
         }
       }
 
