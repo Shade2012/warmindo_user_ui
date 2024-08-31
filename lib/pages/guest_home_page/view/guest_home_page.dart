@@ -112,12 +112,12 @@ class GuestHomePage extends StatelessWidget {
 
                       ],
                     ),
-                    const SizedBox(height: 20,),
-                    Text("Favorite Snack", style: LoginboldTextStyle),
-                    const SizedBox(height: 20,),
-                    Visibility(
-                        visible: controller.menuElement.where((element) => element.category == 'Snack').length > 0,
-                        child: GuestSnack(menuItem: controller.getHighestRatingMenu(controller.menuElement,3))),
+                    // const SizedBox(height: 20,),
+                    // Text("Favorite Snack", style: LoginboldTextStyle),
+                    // const SizedBox(height: 20,),
+                    // Visibility(
+                    //     visible: controller.menuElement.where((element) => element.category == 'Snack').length > 0,
+                    //     child: GuestSnack(menuItem: controller.getHighestRatingMenu(controller.menuElement,3))),
                     const SizedBox(height: 20,)
                   ],
                 );

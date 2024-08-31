@@ -13,7 +13,7 @@ import '../reusable_dialog.dart';
 
 class CounterWidget extends StatelessWidget {
   final currencyFormat =
-      NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+  NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
   final MenuList menu;
   final RxInt quantity;
   final int cartId;
@@ -75,7 +75,7 @@ class CounterWidget extends StatelessWidget {
                               return ReusableDialog(
                                 title: 'Pesan',
                                 content:
-                                    'Apakah anda yakin untuk menghapus item ini dari keranjang?',
+                                'Apakah anda yakin untuk menghapus item ini dari keranjang?',
                                 cancelText: "Tidak",
                                 confirmText: "Iya",
                                 onCancelPressed: () {
@@ -85,7 +85,7 @@ class CounterWidget extends StatelessWidget {
                                   cartController.removeItemFromCartWithID(
                                       currentCartId);
                                   quantity.value =
-                                      0; // Directly update the value
+                                  0; // Directly update the value
                                   menuController.checkConnectivity();
                                   Get.back();
                                   Get.back();
@@ -180,7 +180,7 @@ class CounterWidget extends StatelessWidget {
                       Future.delayed(const Duration(seconds: 2), () {
                         controller.isLoading.value = false;
                       });
-                      Get.back();
+                      Get.back(closeOverlays: true);
                     }
                     else {
                       cartController.addToCart2(productId: menu.menuId, productName: menu.nameMenu, productImage: menu.image, price: menu.price, quantity: quantity.value, selectedVarian: popupController.selectedVarian[cartId], selectedToppings: popupController.selectedToppings[cartId], cartID: cartId);
@@ -201,7 +201,7 @@ class CounterWidget extends StatelessWidget {
                       final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.cartId == cartId);
                       cartItem?.quantity.value = quantity.value;
                       Get.back(closeOverlays: true);
-                     await cartController.editCart(idCart: cartId, quantity: quantity.value, menuID: menu.menuId, toppings: selectedToppingIds);
+                      await cartController.editCart(idCart: cartId, quantity: quantity.value, menuID: menu.menuId, toppings: selectedToppingIds);
 
 
                       cartController.fetchCart();

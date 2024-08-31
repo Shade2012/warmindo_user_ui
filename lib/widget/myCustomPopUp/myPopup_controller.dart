@@ -63,7 +63,7 @@ class MyCustomPopUpController extends GetxController {
 
       if (response.statusCode == 200) {
         final data = toppingListFromJson(response.body);
-        toppingList.value = data.where((element) => element.statusTopping == '1',).toList();
+        toppingList.value = data;
         print('ini response : \n $data');
         print('ini list topping : \n${toppingList.value}');
       } else {
@@ -106,6 +106,7 @@ class MyCustomPopUpController extends GetxController {
   }
   void showCustomModalForItem(MenuList product, BuildContext context, int quantity, {required int cartid}) async {
     print('ini cart id $cartid');
+    cartController.fetchCart();
   await fetchSelectedToppings(cartid);
     await fetchSelectedVarian(cartid);
       showModalBottomSheet(
@@ -195,13 +196,25 @@ class MyCustomPopUpController extends GetxController {
     if (selectedToppings[cartId] == null) {
       selectedToppings[cartId] = [];
     }
-    if (selectedToppings[cartId]!.contains(toppingItem)) {
-      selectedToppings[cartId]!.remove(toppingItem);
+
+    // Check the status of the topping
+    if (toppingItem.statusTopping == "0") {
+        selectedToppings[cartId]!.remove(toppingItem);
+        toppingItem.isSelected.value = false; // Unselect the topping
     } else {
-      selectedToppings[cartId]!.add(toppingItem);
+      // Normal toggle logic for available toppings
+      if (selectedToppings[cartId]!.contains(toppingItem)) {
+        selectedToppings[cartId]!.remove(toppingItem);
+        toppingItem.isSelected.value = false;
+      } else {
+        selectedToppings[cartId]!.add(toppingItem);
+        toppingItem.isSelected.value = true;
+      }
     }
+
     selectedToppings.refresh();
   }
+
 
 }
 

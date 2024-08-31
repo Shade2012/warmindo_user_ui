@@ -146,23 +146,27 @@ class DetailMenuPage extends StatelessWidget {
                               const Divider(),
                               Text('Topping', style: boldTextStyle),
                               const SizedBox(height: 10,),
-                              Obx(()=>
-                                  Wrap(
-                                    spacing: 10.0,
-                                    runSpacing: 10.0,
-                                    children: List.generate(controller.toppingList.length, (index) {
-                                      final topping = controller.toppingList[index];
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[300],
-                                          borderRadius: BorderRadius.circular(5),
-                                        ),
-                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                        child: Text(topping.nameTopping, style: const TextStyle(color: Colors.black)),
-                                      );
-                                    })
-                                  ),
-                              ),
+                              Obx((){
+                                final toppings = controller.toppingList.where((topping) => topping.menus.any((menu2) => menu2.menuID == menu.menuId)).toList();
+                                return Wrap(
+                                  spacing: 10.0,
+                                  runSpacing: 10.0,
+                                  children: List.generate(toppings.length, (index) {
+                                    final topping = toppings[index];
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                      child: Text(
+                                        topping.nameTopping,
+                                        style: const TextStyle(color: Colors.black),
+                                      ),
+                                    );
+                                  }),
+                                );
+                              }),
                             ],
                           )),
 
@@ -307,7 +311,7 @@ class DetailMenuPage extends StatelessWidget {
                                   Future.delayed(const Duration(seconds: 2), () {
                                     popUpController.isLoading.value = false;
                                   });
-                                  popUpController.showCustomModalForItem(menu, context, 1, cartid: 1);
+                                  popUpController.showCustomModalForItem(menu, context, 1, cartid: -1);
                                 }else {
                                   popUpController.addToCart2(product: menu, quantity: 1, cartID: cartItem?.cartId?.value ?? 0, context: context,);
                                   final cartItem2 = cartController.cartItems2.firstWhereOrNull((item) => item.productId == menu.menuId);

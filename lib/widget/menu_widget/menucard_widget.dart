@@ -254,7 +254,7 @@ class MenuCategory extends StatelessWidget {
                                                               Future.delayed(const Duration(seconds: 2), () {
                                                                 popUpcontroller.isLoading.value = false;
                                                               });
-                                                              popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: 1);
+                                                              popUpcontroller.showCustomModalForItem(menu, context, 1, cartid: -1);
                                                             }
                                                             else {
                                                               print(cartItem?.cartId);

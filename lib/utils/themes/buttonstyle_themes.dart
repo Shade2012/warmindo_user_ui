@@ -31,7 +31,7 @@ Color getLabelColor(String status, String cancelMethod) {
     return Colors.red; // Default to red for other statuses
   }
 }
-Color getColorVerify(bool status) {
+Color getColorVerify(bool status){
 if(status == true){
 return Colors.blue;
 }else{

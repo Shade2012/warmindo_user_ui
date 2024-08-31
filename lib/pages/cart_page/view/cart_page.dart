@@ -24,6 +24,8 @@ class CartPage extends StatelessWidget {
         onRefresh: () async {
           controller.isLoading.value = true;
           await controller.menuController.fetchProduct();
+          await popUpController.fetchVarian();
+          await popUpController.fetchTopping();
           await controller.fetchCart();
           print('ini token:${controller.token.value}');
         },

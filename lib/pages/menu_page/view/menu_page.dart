@@ -33,7 +33,7 @@ class MenuPage extends StatelessWidget {
       },
       child: DefaultTabController(
         initialIndex: navigatorController.menuPageArgument.value,
-        length: 4,
+        length: 3,
         child: Scaffold(
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(110),
@@ -70,12 +70,6 @@ class MenuPage extends StatelessWidget {
                       'Makanan',
                       style: categoryMenuTextStyle,
                       overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'Snack',
-                      style: categoryMenuTextStyle,
                     ),
                   ),
                 ],
@@ -121,11 +115,6 @@ class MenuPage extends StatelessWidget {
                   MenuSecondCategory(
                     categoryName: 'Makanan',
                     menuList: controller.menuElement.where((menu) => menu.category.toLowerCase() == 'makanan').toList(),
-                    isGuest: false,
-                  ),
-                  MenuSecondCategory(
-                    categoryName: 'Snack',
-                    menuList: controller.menuElement.where((menu) => menu.category.toLowerCase() == 'snack').toList(),
                     isGuest: false,
                   ),
                 ],

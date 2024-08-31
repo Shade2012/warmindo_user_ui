@@ -35,10 +35,13 @@ class CartItem2 {
       quantity: _parseQuantity(json['quantity']).obs,
       selectedVarian: json['variant'] != null ? VarianList.fromJson(json['variant']) : null,
       selectedToppings: json['toppings'] != null
-          ? (json['toppings'] as List).map((item) => ToppingList.fromJson(item)).toList()
-          : [],
+          ? (json['toppings'] as List<dynamic>)
+          .map((item) => ToppingList.fromJson(item))
+          .toList()
+          : [], // Handle null case by assigning an empty list
     );
   }
+
 
   Map<String, dynamic> toJson() {
     return {

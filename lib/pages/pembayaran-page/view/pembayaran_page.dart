@@ -34,38 +34,38 @@ class PembayaranPage extends GetView<PembayaranController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Metode Pemesanan",style: boldTextStyle,),
-              const SizedBox(height: 20,),
-               SizedBox(
-                 width: double.infinity,
-                 child: Obx(() => InkWell(
-                   onTap: (){
-                     controller.selected.value = true;
-                   },
-                   child: Ink(
-                     decoration: BoxDecoration(
-                       color: Colors.white,
-                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                       border: controller.selected.value ? Border.all(
-                         color: Colors.black,
-                         width: 2
-                       ) : null,
-
-                       boxShadow: [
-                         BoxShadow(
-                           color: Colors.grey.withOpacity(0.4),
-                           spreadRadius: 0,
-                           blurRadius: 2,
-                           offset: const Offset(0, 1), // changes position of shadow
-                         ),
-                       ],
-                     ),
-                     padding: const EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
-                     child: Text("Takeaway",style: boldTextStyle,textAlign: TextAlign.center,),
-                   ),
-                 )),
-               ),
-              const SizedBox( height: 20,),
+              // Text("Metode Pemesanan",style: boldTextStyle,),
+              // const SizedBox(height: 20,),
+              //  SizedBox(
+              //    width: double.infinity,
+              //    child: Obx(() => InkWell(
+              //      onTap: (){
+              //        controller.selected.value = true;
+              //      },
+              //      child: Ink(
+              //        decoration: BoxDecoration(
+              //          color: Colors.white,
+              //          borderRadius: const BorderRadius.all(Radius.circular(10)),
+              //          border: controller.selected.value ? Border.all(
+              //            color: Colors.black,
+              //            width: 2
+              //          ) : null,
+              //
+              //          boxShadow: [
+              //            BoxShadow(
+              //              color: Colors.grey.withOpacity(0.4),
+              //              spreadRadius: 0,
+              //              blurRadius: 2,
+              //              offset: const Offset(0, 1), // changes position of shadow
+              //            ),
+              //          ],
+              //        ),
+              //        padding: const EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
+              //        child: Text("Takeaway",style: boldTextStyle,textAlign: TextAlign.center,),
+              //      ),
+              //    )),
+              //  ),
+              // const SizedBox( height: 20,),
               Row(
                 children: [
                   MapScreen(),
@@ -215,15 +215,6 @@ class PembayaranPage extends GetView<PembayaranController> {
               const SizedBox(height: 20),
                InkWell(
                   onTap: () {
-                    if (!controller.selected.value) {
-                      Get.snackbar(
-                        'Pesan',
-                        'Silakan pilih metode pemesananya terlebih dahulu',
-                        backgroundColor: Colors.orange,
-                        colorText: Colors.white,
-                      );
-                      return;
-                    }
                     if (!controller.selectedButton2.value && !controller.selectedButton3.value) {
                       Get.snackbar(
                         'Pesan',

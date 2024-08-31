@@ -27,7 +27,6 @@ class ProfileController extends GetxController {
   Future<void> initializePrefs() async {
     prefs ??= await SharedPreferences.getInstance();
   }
-
   void checkSharedPreference() async {
     await initializePrefs();
     if (prefs != null) {

@@ -46,6 +46,7 @@ class CartController extends GetxController {
 
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(response.body)['data'];
+        print(data);
         responseData.value = data.toString();
         cartItems2.clear();
 
@@ -57,7 +58,7 @@ class CartController extends GetxController {
         cartItems2.clear();
       }
     } catch (e) {
-      print(e);
+      print('ada erro $e');
     } finally {
       isLoading.value = false;
     }
