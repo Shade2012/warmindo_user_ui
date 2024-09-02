@@ -53,11 +53,11 @@ class VarianList {
   int get hashCode => varianID.hashCode;
 
   factory VarianList.fromJson(Map<String, dynamic> json) => VarianList(
-    varianID: json["id"], // Changed to match API field
-    nameVarian: json["name_varian"],
-    category: json["category"],
-    stockVarian: json["stock_varian"], // Convert string to int
-    statusVarian: json["status_variant"],
+    varianID: json["id"] ?? 0, // Changed to match API field
+    nameVarian: json["name_varian"] ?? '',
+    category: json["category"] ?? '',
+    stockVarian: json["stock_varian"] ?? '', // Convert string to int
+    statusVarian: json["status_variant"]?? '0',
     createdAt: json["created_at"] != null ? DateTime.parse(json["created_at"]) : null,
     updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : null,
   );

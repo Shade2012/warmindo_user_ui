@@ -141,13 +141,14 @@ class HistoryController extends GetxController {
           'Authorization': 'Bearer ${token.value}',
         },
       ).timeout(const Duration(seconds: 10));
-
+      print('mulai fetch');
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(response.body)['orders'];
         orders2.clear();
         orders2.assignAll(data.map((item) => Order2.fromJson(item)).toList());
         orders2.refresh();
         isLoading.value = false;
+        print('selesai fetch');
       } else {
         // Handle other status codes if needed
         print('Failed to fetch history: ${response.statusCode}');
@@ -217,6 +218,7 @@ class HistoryController extends GetxController {
 
 
   Future<void> goToCart(Order2 order,BuildContext context) async {
+
     List<CartItem2> itemsToAdd = order.orderDetails
         .where((element) => element.statusMenu != '0').where((element) => element.stock != '0')
         .map((menu) {
@@ -241,10 +243,10 @@ class HistoryController extends GetxController {
                   cancelText: 'Tidak',
                   confirmText: 'Iya',
                   onCancelPressed: () {
-                    Get.back();
+                    Get.back(closeOverlays: true);
                   },
                   onConfirmPressed: () async {
-                    Get.back();
+                    Get.back(closeOverlays: true);
                     isLoadingButton.value = true;
                     if (itemsToAdd.isNotEmpty) {
                       for (CartItem2 item2 in itemsToAdd) {
@@ -285,6 +287,7 @@ class HistoryController extends GetxController {
                   });
             });
       }else{
+        isLoadingButton.value = true;
         if (itemsToAdd.isNotEmpty) {
           for (CartItem2 item2 in itemsToAdd) {
             final existingItem = cartController.cartItems2.firstWhereOrNull((item) {
@@ -320,9 +323,11 @@ class HistoryController extends GetxController {
               cartController.cartItems2.refresh();
             }
           }
+          navigatorController.currentIndex.value = 2;
           Get.toNamed(Routes.BOTTOM_NAVBAR);
         }
       }
+      isLoadingButton.value = false;
     }else{
       Get.snackbar('Pesan', 'Pesanan anda tidak bisa di prosest');
     }

@@ -35,19 +35,18 @@ class Order2 {
   factory Order2.fromJson(Map<String, dynamic> json) {
     return Order2(
       id: json['id'],
-      totalprice: json['price_order'],
-      cancelMethod: RxString(json['cancel_method']?? ''),
-      alasan_batal: RxString(json['reason_cancel']?? '') ,
-      noRekening: RxString(json['no_rekening']?? '') ,
-      paymentMethod: json['payment_method'] ?? '-',
-      orderMethod: json['order_method'] ?? '-',
-      orderDetails: (json['orderDetails'] as List)
-          .map((item) => MenuList.fromOrderDetailJson(item))
-          .toList() ?? [],
-      status: RxString(json['status']),
-      catatan: json['note'] ?? '',
+      totalprice: json['price_order'] ?? '0',  // Default to '0' if null
+      cancelMethod: RxString(json['cancel_method'] ?? ''), // Handle null
+      alasan_batal: RxString(json['reason_cancel'] ?? ''), // Handle null
+      noRekening: RxString(json['no_rekening'] ?? ''), // Handle null
+      paymentMethod: json['payment_method'] ?? '-',  // Default to '-'
+      orderMethod: json['order_method'] ?? '-',  // Default to '-'
+      orderDetails: (json['orderDetails'] as List?)?.map((item) => MenuList.fromOrderDetailJson(item)).toList() ?? [],
+      status: RxString(json['status'] ?? ''), // Handle null
+      catatan: json['note'] ?? '',  // Default to empty string
     );
   }
+
 
   Map<String, dynamic> toJson() {
     return {

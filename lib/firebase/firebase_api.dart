@@ -77,6 +77,8 @@ class FirebaseApi {
         if (notificationBody != null && (notificationBody.contains('pembayaran') || notificationBody.contains('order')|| notificationBody.contains('pesanan'))) {
           HistoryController historyController = Get.put(HistoryController());
           await historyController.fetchHistorywithoutLoading();
+          print('print notif on app');
+          print('notif body : $notificationBody');
         }
         if (notificationBody != null && (notificationBody.contains('status') || notificationBody.contains('toko'))) {
           ScheduleController scheduleController = Get.put(ScheduleController());
@@ -115,6 +117,8 @@ class FirebaseApi {
         if (notificationBody != null && (notificationBody.contains('pembayaran') || notificationBody.contains('order')|| notificationBody.contains('pesanan'))) {
           HistoryController historyController = Get.put(HistoryController());
           await historyController.fetchHistorywithoutLoading();
+          print('print notif backdounrd');
+          print('notif body background : $notificationBody');
         }
         if (notificationBody != null && (notificationBody.contains('status') || notificationBody.contains('toko'))) {
           ScheduleController scheduleController = Get.put(ScheduleController());
