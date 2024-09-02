@@ -11,7 +11,10 @@ List<MenuList> menuListFromJson(String str) {
   final jsonData = json.decode(str);
   return List<MenuList>.from(jsonData.map((item) => MenuList.fromJson(item)));
 }
-
+List<MenuList> foodMenuListFromJson(String str) {
+  final jsonData = json.decode(str);
+  return List<MenuList>.from(jsonData.map((item) => MenuList.fromJson(item)));
+}
 class Data {
   final bool success;
   final String message;

@@ -118,11 +118,16 @@ class MenuCategory extends StatelessWidget {
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
                               ),
-                              child: FadeInImage(
-                                image: NetworkImage(menu.image),
-                                fit: BoxFit.cover,
-                                placeholder: const AssetImage(Images.placeholder),
-                              ),
+                              // child: FadeInImage(
+                              //   image: NetworkImage(menu.image,),
+                              //   fit: BoxFit.cover,
+                              //   placeholder: const AssetImage(Images.placeholder),
+                              // ),
+                              child: Image.network(menu.image,errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  Images.placeholder
+                                );
+                              },),
                             ),
                           ),
                         ],

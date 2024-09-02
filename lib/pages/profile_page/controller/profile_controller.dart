@@ -64,7 +64,24 @@ class ProfileController extends GetxController {
       }
     }
   }
-
+Future<void> logoutFetch() async{
+    final url = Uri.parse(GlobalVariables.apiLogout);
+    final headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    try{
+      final response = await http.post(url,headers: headers,);
+      if(response.statusCode == 200){
+        Get.snackbar('Pesan', 'Berhasil Log out');
+      }
+    }
+    catch(e){
+    Get.snackbar('Error', e.toString());
+    }
+  // apiLogout
+}
   void checkConnectivity() async {
     await initializePrefs();
     if (prefs != null) {
@@ -89,6 +106,7 @@ class ProfileController extends GetxController {
   void logOut() async {
     await initializePrefs();
     if (prefs != null) {
+      logoutFetch();
       await GoogleSignIn().signOut();
       prefs!.remove('username');
       prefs!.remove('token3');
