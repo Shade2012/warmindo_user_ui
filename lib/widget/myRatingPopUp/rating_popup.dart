@@ -52,7 +52,7 @@ class RatingCard extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    Get.back();
+                    Get.back(closeOverlays: true);
                   },
                   icon: const Icon(Icons.arrow_back_ios, size: 20),
                 ),
@@ -68,30 +68,49 @@ class RatingCard extends StatelessWidget {
             ),
 
             const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () async {
-                  bool isRatingGreaterThanZero = checkIfRatingIsGreaterThanZero(ratingsList);
-                  if (isRatingGreaterThanZero) {
-                    for (int i = 0; i < ratingsList.length; i++) {
-                      double rating = ratingsList[i];
+            InkWell(
+              onTap: () async {
+    bool isRatingGreaterThanZero = checkIfRatingIsGreaterThanZero(ratingsList);
+    if (isRatingGreaterThanZero) {
+    for (int i = 0; i < ratingsList.length; i++) {
+    double rating = ratingsList[i];
 
-                      // Extract menuId and orderDetailID from the orderDetails
-                      int menuId = order.orderDetails[i].menuId;
-                      int orderDetailID = order.orderDetails[i].orderDetailId;
-                      // Call the addRating method with the appropriate parameters
-                      await ratingController.addRating(menuId, rating, orderDetailID,order);
-                      controller.orders2.refresh();
-                    }
-                    Get.back();
-                    order.isRatingDone.value = true;
-                  } else {
-                    Get.snackbar("Pesan", "Anda Harus Mengisi Nilai Semua Menu Terlebih Dahulu", backgroundColor: Colors.white);
-                  }
-                },
-                style: redeembutton(),
-                child: Text("Selesai", style: whiteboldTextStyle15),
+    // Extract menuId and orderDetailID from the orderDetails
+    int menuId = order.orderDetails[i].menuId;
+    int orderDetailID = order.orderDetails[i].orderDetailId;
+    // Call the addRating method with the appropriate parameters
+    await ratingController.addRating(menuId, rating, orderDetailID,order);
+    controller.orders2.refresh();
+    }
+    Get.back(closeOverlays: true);
+    order.isRatingDone.value = true;
+    } else {
+    Get.snackbar("Pesan", "Anda Harus Mengisi Nilai Semua Menu Terlebih Dahulu", backgroundColor: Colors.white);
+    }
+    },
+              child: Obx(()=>
+                  Container(
+                    height: 40,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    child: ratingController.isLoadingButton.value
+                        ? const Center(
+                      child: SizedBox(
+                        width: 20, // Adjust the width to your preference
+                        height: 20, // Adjust the height to your preference
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 3, // Adjust the stroke width if needed
+                        ),
+                      ),
+                    ):Center(
+                      child: Text("Selesai", style: categoryMenuTextStyle, textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
               ),
             ),
           ],
@@ -138,6 +157,7 @@ class RatingCard extends StatelessWidget {
                         color: Colors.white,
                       ),
                       child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
                         child: Text.rich(
                           TextSpan(
                             children: List.generate( menu.toppings!.length, (index) {

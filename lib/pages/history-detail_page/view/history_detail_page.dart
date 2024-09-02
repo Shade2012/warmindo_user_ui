@@ -63,8 +63,6 @@ class HistoryDetailPage extends StatelessWidget {
             RefreshIndicator(
               onRefresh: () async {
                 await controller.fetchHistory();
-                final index = controller.orders2.firstWhere((element) =>
-                element.id == order.value.id);
                 // order.value = index;
                 // print('selesai fetch');
               },
@@ -238,16 +236,10 @@ class HistoryDetailPage extends StatelessWidget {
                                                     ],
                                                   ),
                                                   Visibility(
-                                                    visible: order.value
-                                                        .orderDetails[index]
-                                                        .variantId != null,
+                                                    visible: order.value.orderDetails[index].variantId != null,
                                                     child: Builder(
                                                       builder: (context) {
-                                                        final varian = popUpController
-                                                            .varianList
-                                                            .firstWhereOrNull((
-                                                            element) =>
-                                                        element.varianID ==
+                                                        final varian = popUpController.varianList.firstWhereOrNull((element) => element.varianID ==
                                                             order.value
                                                                 .orderDetails[index]
                                                                 .variantId);

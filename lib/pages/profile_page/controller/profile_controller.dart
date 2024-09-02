@@ -70,6 +70,7 @@ class ProfileController extends GetxController {
     if (prefs != null) {
       txtUsername.value = prefs!.getString('username') ?? '';
       token.value = prefs!.getString('token') ?? '';
+      print(token.value);
     }
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       isConnected.value = result != ConnectivityResult.none;

@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 class RatingController extends GetxController{
   late final SharedPreferences prefs;
   RxString token = ''.obs;
+  RxBool isLoadingButton = false.obs;
    MenuPageController menuPageController = Get.put(MenuPageController());
   HistoryController historyController = Get.put(HistoryController());
 @override
@@ -32,6 +33,7 @@ class RatingController extends GetxController{
       'order_detail_id': orderDetailId,
     };
     try{
+      isLoadingButton.value = true;
       final response = await http.post(Uri.parse(url), headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -47,6 +49,7 @@ class RatingController extends GetxController{
       } else {
         print('Failed to submit rating. Status code: ${response.statusCode}');
       }
+      isLoadingButton.value = false;
     } catch (e) {
       // Handle client-side error
       print('Error occurred while submitting rating: $e');

@@ -37,6 +37,7 @@ class MyCustomPopUp extends StatelessWidget {
         final cartItem = controller.cartController.cartItems2.firstWhere((element) => element.productId == product.menuId);
         if (cartItem.cartId?.value != null) {
           cartid.value = cartItem.cartId!.value;
+          controller.isLoading.value = false;
         } else {
           checkAndUpdateCartId();
         }
@@ -44,7 +45,7 @@ class MyCustomPopUp extends StatelessWidget {
     }
 
     // Start the loop if the cartid is not set
-    if (controller.isLoading.value || cartid.value == 0) {
+    if (cartid.value == 0) {
       checkAndUpdateCartId();
     }
 
@@ -64,7 +65,7 @@ class MyCustomPopUp extends StatelessWidget {
         ),
       ),
       child: Obx(() {
-        if (controller.isLoading.value && cartid.value == 0) {
+        if (controller.isLoading.value || cartid.value == 0) {
           return SingleChildScrollView(
             controller: scrollController,
             child: const Column(
