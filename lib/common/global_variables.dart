@@ -32,7 +32,7 @@ class GlobalVariables {
 
   static const apiCancelOrder = 'https://warmindo.pradiptaahmad.tech/api/orders/cancel/';
   static const apiHistory = 'https://warmindo.pradiptaahmad.tech/api/users/get-history';
-  static const editPaymentOrder = 'https://warmindo.pradiptaahmad.tech/api/orders/create/updatepayment/';
+  static const editPaymentOrder = 'https://warmindo.pradiptaahmad.tech/api/orders/updatepayment/';
 
   static const apiRating = 'https://warmindo.pradiptaahmad.tech/api/ratings/rate';
   static const apiLogout = 'https://warmindo.pradiptaahmad.tech/api/users/logout';

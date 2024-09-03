@@ -386,12 +386,13 @@ class HistoryController extends GetxController {
     };
     final bodyTunai = {
       '_method': 'put',
-      'payment_method':'Tunai'
+      'payment_method':'tunai'
     };
     try{
       if(isTunai == true){
         final response = await http.post(Uri.parse(urlTunai),headers: headersTunai, body:bodyTunai);
         fetchHistory();
+        Get.back(closeOverlays: true);
 
       }else{
         final response = await http.post(Uri.parse(url),headers: headers, body:body);
