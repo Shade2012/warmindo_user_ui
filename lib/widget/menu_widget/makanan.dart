@@ -44,6 +44,14 @@ class MakananMenu extends StatelessWidget {
                 isGuest: isGuest,
                 secondCategory: 'Nasi Goreng',
               ),
+              //Ricebowl
+              Text('Ricebowl',style: onboardingHeaderTextStyle),
+              MenuCategory(
+                menuList: menuList,
+                context: context,
+                isGuest: isGuest,
+                secondCategory: 'Ricebowl',
+              ),
               //Lain-lain
               Text('Lain-lain',style: onboardingHeaderTextStyle),
               MenuCategory(

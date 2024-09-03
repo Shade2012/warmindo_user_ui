@@ -8,7 +8,6 @@ import 'package:warmindo_user_ui/pages/menu_page/shimmer/menushimmer.dart';
 import 'package:warmindo_user_ui/widget/menu_widget/all.dart';
 import 'package:warmindo_user_ui/widget/menu_widget/makanan.dart';
 import 'package:warmindo_user_ui/widget/menu_widget/minuman.dart';
-import 'package:warmindo_user_ui/widget/menu_widget/snack.dart';
 import '../../pages/menu_page/controller/menu_controller.dart';
 import '../myCustomPopUp/myPopup_controller.dart';
 
@@ -61,13 +60,14 @@ class MenuSecondCategory extends StatelessWidget {
               if(menuController.isLoading.value || guestMenuController.isLoading.value){
                 return const MenuShimmer();
               }else{
-                if(categoryName == "Snack"){
-                  return SnackMenu(menuList: menuList, isGuest: isGuest,);
-                } else if (categoryName == "Minuman"){
+                if (categoryName == "Minuman"){
+                  // return Center(child: Text('Minuman'),);
                   return  MinumanMenu(menuList: menuList, isGuest: isGuest,);
                 }else if (categoryName == "Makanan"){
+                  // return Center(child: Text('Makanan'),);
                   return  MakananMenu(menuList: menuList, isGuest: isGuest,);
                 }else {
+                  // return Center(child: Text('All'),);
                   return AllMenu(menuList: menuList, isGuest: isGuest,);
                 }
               }

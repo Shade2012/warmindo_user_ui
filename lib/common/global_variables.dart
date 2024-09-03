@@ -1,5 +1,7 @@
 class GlobalVariables {
   static const apiMenuUrl = 'https://warmindo.pradiptaahmad.tech/api/menus/';
+  static const apiCategoryUrl = 'https://warmindo.pradiptaahmad.tech/api/menus/filter/';
+  static const apiSecondCategoryUrl = 'https://warmindo.pradiptaahmad.tech/api/menus/Sfilter/';
   static const apiRegisterUrl = 'https://warmindo.pradiptaahmad.tech/api/users/register';
   static const apiSendOtp = 'https://warmindo.pradiptaahmad.tech/api/users/send-otp';
   static const apiVerifyOtp = 'https://warmindo.pradiptaahmad.tech/api/users/verify-otp';
@@ -30,9 +32,10 @@ class GlobalVariables {
 
   static const apiCancelOrder = 'https://warmindo.pradiptaahmad.tech/api/orders/cancel/';
   static const apiHistory = 'https://warmindo.pradiptaahmad.tech/api/users/get-history';
-  static const editPaymentOrder = 'https://warmindo.pradiptaahmad.tech/api/orders/create/updatepayment/';
+  static const editPaymentOrder = 'https://warmindo.pradiptaahmad.tech/api/orders/updatepayment/';
 
   static const apiRating = 'https://warmindo.pradiptaahmad.tech/api/ratings/rate';
+  static const apiLogout = 'https://warmindo.pradiptaahmad.tech/api/users/logout';
 }
 
 

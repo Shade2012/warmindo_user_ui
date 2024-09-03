@@ -51,14 +51,6 @@ class AllMenu extends StatelessWidget {
                   isGuest: isGuest,
                   secondCategory: 'Susu',
                 ),
-                //Gorengan
-                Text('Gorengan',style: onboardingHeaderTextStyle),
-                MenuCategory(
-                  menuList: menuList,
-                  context: context,
-                  isGuest: isGuest,
-                  secondCategory: 'Gorengan',
-                ),
                 //Mie
                 Text('Mie',style: onboardingHeaderTextStyle),
                 MenuCategory(
@@ -82,6 +74,14 @@ class AllMenu extends StatelessWidget {
                   context: context,
                   isGuest: isGuest,
                   secondCategory: 'Nasi Goreng',
+                ),
+                //Ricebowl
+                Text('Ricebowl',style: onboardingHeaderTextStyle),
+                MenuCategory(
+                  menuList: menuList,
+                  context: context,
+                  isGuest: isGuest,
+                  secondCategory: 'Ricebowl',
                 ),
                 //Lain-lain
                 Text('Lain-lain',style: onboardingHeaderTextStyle),
