@@ -45,7 +45,18 @@ class HomeStatus extends StatelessWidget {
           ),
           Visibility(
               visible: controller.scheduleController.jadwalElement[0].temporary_closure_duration != 0,
-              child: Text('Toko Tutup Sementara',style: boldphoneNumberTextStyle,)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Toko Tutup Sementara',style: boldphoneNumberTextStyle,),
+                  Row(
+                    children: [
+                      Text('Perkiraan Buka ',style: boldphoneNumberRegularTextStyle,),
+                      Text('${controller.scheduleController.getAdjustedTime(controller.scheduleController.jadwalElement[0])}',style: boldphoneNumberTextStyle,),
+                    ],
+                  ),
+                ],
+              )),
           const SizedBox(height: 15,),
           Row(
             children: [
@@ -86,3 +97,4 @@ class HomeStatus extends StatelessWidget {
     );
   }
 }
+

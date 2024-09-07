@@ -30,10 +30,10 @@ class MyCustomPopUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: '', decimalDigits: 0);
 
     void checkAndUpdateCartId() {
-      Future.delayed(const Duration(seconds: 4), () {
+      Future.delayed(const Duration(seconds: 2), () {
         final cartItem = controller.cartController.cartItems2.firstWhere((element) => element.productId == product.menuId);
         if (cartItem.cartId?.value != null) {
           cartid.value = cartItem.cartId!.value;
@@ -204,7 +204,7 @@ class MyCustomPopUp extends StatelessWidget {
                                       ),
                                       Row(
                                         children: [
-                                          Text('+${toppingItem.priceTopping}', style: boldTextStyle),
+                                          Text('+${currencyFormat.format(toppingItem.priceTopping)}', style: boldTextStyle),
                                           Checkbox(
                                             activeColor: Colors.black,
                                             value: isSelected,

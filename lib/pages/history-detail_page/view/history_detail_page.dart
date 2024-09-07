@@ -23,6 +23,7 @@ class HistoryDetailPage extends StatelessWidget {
       case 'selesai':
         return ColorResources.labelcomplete;
       case 'sedang diproses':
+      case 'konfirmasi pesanan':
         return ColorResources.labelinprogg;
       case 'menunggu pembayaran':
       case 'menunggu pengembalian dana':

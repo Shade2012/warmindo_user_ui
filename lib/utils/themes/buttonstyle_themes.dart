@@ -19,7 +19,7 @@ import 'package:warmindo_user_ui/utils/themes/color_themes.dart';
 Color getLabelColor(String status, String cancelMethod) {
   if (status.toLowerCase() == 'selesai' || status.toLowerCase() == 'batal') {
     return Colors.green;
-  }else if (status.toLowerCase() == 'menunggu batal' || status.toLowerCase() == 'pesanan siap') {
+  }else if (status.toLowerCase() == 'menunggu batal' || status.toLowerCase() == 'pesanan siap' || status.toLowerCase() == 'sedang diproses') {
     return Colors.white60;
   } else if (status.toLowerCase() == 'menunggu batal' && cancelMethod == '') {
     return Colors.red;
