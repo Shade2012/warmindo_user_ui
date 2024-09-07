@@ -61,6 +61,10 @@ class HistoryPage extends StatelessWidget {
                           orders: controller.filteredHistory(),
                         ),
                         HistoryCategory(
+                          status: 'Konfirmasi Pesanan',
+                          orders: controller.filteredHistory(),
+                        ),
+                        HistoryCategory(
                           status: 'Sedang Diproses',
                           orders: controller.filteredHistory(),
                         ),
@@ -70,10 +74,6 @@ class HistoryPage extends StatelessWidget {
                         ),
                         HistoryCategory(
                           status: 'Menunggu Pengembalian Dana',
-                          orders: controller.filteredHistory(),
-                        ),
-                        HistoryCategory(
-                          status: 'Menunggu Batal',
                           orders: controller.filteredHistory(),
                         ),
                         HistoryCategory(

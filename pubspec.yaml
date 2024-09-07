@@ -48,6 +48,8 @@ dependencies:
   firebase_messaging: ^14.7.10
   flutter_local_notifications:
   url_launcher:
+  geolocator:
+  permission_handler: ^11.1.0
   animated_custom_dropdown:
   shimmer:
   flutter_rating_bar: ^4.0.1

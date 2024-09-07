@@ -179,6 +179,24 @@ class OrderPembatalan extends StatelessWidget {
               ),
               const SizedBox(height: 10,),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Metode Pembayaran",style: boldTextStyle,),
+                  Text(order.paymentMethod == 'tunai'
+                      ? order.paymentMethod!
+                      .toLowerCase()
+                      .substring(0, 1)
+                      .toUpperCase() +
+                      order.paymentMethod!
+                          .toLowerCase()
+                          .substring(1) ?? '-'
+                      : order.paymentMethod
+                      ?.toUpperCase() ?? '-',
+                    style: boldTextStyle,),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

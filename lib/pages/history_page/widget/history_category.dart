@@ -24,6 +24,8 @@ class HistoryCategory extends StatelessWidget {
     switch (status.toLowerCase()) {
       case 'selesai':
         return ColorResources.labelcomplete;
+      case 'konfirmasi pesanan':
+        return ColorResources.labelinprogg;
       case 'sedang diproses':
         return ColorResources.labelinprogg;
       case 'menunggu pembayaran':

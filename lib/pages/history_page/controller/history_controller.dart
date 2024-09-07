@@ -63,43 +63,6 @@ class HistoryController extends GetxController {
       }
     });
   }
-
-  // void initializeOrders() async{
-  //   orders.assignAll(orderList);
-  // }
-  // Future<void> longPollingFetchHistory() async {
-  //   while (keepPolling) {
-  //     try {
-  //           final response = await http.get(
-  //             Uri.parse(GlobalVariables.apiHistory),
-  //             headers: {
-  //               'Content-Type': 'application/json',
-  //               'Accept': 'application/json',
-  //               'Authorization': 'Bearer ${cartController.token.value}',
-  //             },
-  //           ).timeout(const Duration(seconds: 10));
-  //
-  //           if (response.statusCode == 200) {
-  //             List<dynamic> data = jsonDecode(response.body)['orders'];
-  //             orders2.clear();
-  //             for (var item in data) {
-  //               orders2.add(Order2.fromJson(item));
-  //             }
-  //           } else {
-  //             // Handle other status codes if needed
-  //             print('Failed to fetch history: ${response.statusCode}');
-  //           }
-  //       orders2.refresh();
-  //       await Future.delayed(Duration(seconds: 5));
-  //     } catch (e) {
-  //       print('Error occurred: $e');
-  //       await Future.delayed(Duration(seconds: 5));
-  //     }
-  //   }
-  // }
-  // void stopPolling() {
-  //   keepPolling = false;
-  // }
   Future<void> fetchHistory() async {
     token.value = prefs.getString('token') ?? '';
     try {
@@ -185,11 +148,9 @@ class HistoryController extends GetxController {
     if (order.status.value.toLowerCase() == 'selesai' ||
         order.status.value.toLowerCase() == "batal") {
       return "Pesan Lagi";
-    } else if (order.status.value.toLowerCase() == 'sedang diproses') {
-      return 'Batalkan';
     } else if (order.status.value.toLowerCase() == 'menunggu pembayaran') {
       return 'Bayar';
-    } else if(order.status.value.toLowerCase() == 'menunggu batal' && order.cancelMethod?.value == ''){
+    } else if(order.status.value.toLowerCase() == 'menunggu batal' && order.cancelMethod?.value == '' || order.status.value.toLowerCase() == 'konfirmasi pesanan'){
       return 'Konfirmasi Batal';
     }else{
       return 'Menunggu';
@@ -200,6 +161,8 @@ class HistoryController extends GetxController {
     if (status == 'Selesai') //1
         {
       return Images.pesanan_selesai;
+    }else if(status == 'Konfirmasi Pesanan'){
+      return Images.konfirmasi_pesanan;
     } else if (status == 'Sedang Diproses') {
       return Images.pesanan_sedang_diproses;
     } else if (status == 'Batal') {
@@ -338,20 +301,15 @@ class HistoryController extends GetxController {
     if (order.status.value.toLowerCase() == 'selesai' ||
         order.status.value.toLowerCase() == "batal") {
       goToCart(order,context);
-    } else if (order.status.value.toLowerCase() == 'sedang diproses') {
-      Get.to(() => PembatalanPage(order: order,));
-      // showDialog(context: context, builder: (BuildContext context) {
-      //   return BatalPopup(order: order,);
-      // },);
     } else if (order.status.value.toLowerCase() == 'menunggu pembayaran') {
       showCustomModalForPayment(order.id, context);
-    } else if(order.status.value.toLowerCase() == 'menunggu batal' && order.cancelMethod?.value == ''){
+    } else if(order.status.value.toLowerCase() == 'menunggu batal' && order.cancelMethod?.value == '' || order.status.value == 'konfirmasi pesanan'){
       Get.to(() => PembatalanPage(order: order,));
     }else {
       return;
     }
   }
-
+  // Get.to(() => PembatalanPage(order: order,));
   void showCustomModalForRating(Order2 product, BuildContext context) {
     showModalBottomSheet(
       context: context,

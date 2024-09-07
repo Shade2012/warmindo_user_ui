@@ -48,6 +48,7 @@ class Data {
 class ScheduleList {
   final int id;
   final bool is_open;
+  final String? force_close;
   final String? days;
   final String? start_time;
   final String? end_time;
@@ -58,6 +59,7 @@ class ScheduleList {
   ScheduleList({
     required this.id,
     required this.is_open,
+    this.force_close,
     this.days,
     this.start_time,
     this.end_time,
@@ -69,6 +71,7 @@ class ScheduleList {
   factory ScheduleList.fromJson(Map<String, dynamic> json) => ScheduleList(
     id: json["id"],
     is_open: json["is_open"],
+    force_close: json["force_close"],
     days: json["days"],
     start_time: json["start_time"],
     end_time: json["end_time"],
@@ -80,6 +83,7 @@ class ScheduleList {
   Map<String, dynamic> toJson() => {
     "id": id,
     "is_open": is_open,
+    "force_close": force_close,
     "days": days,
     "start_time": start_time,
     "end_time": end_time,
@@ -90,7 +94,7 @@ class ScheduleList {
 
   @override
   String toString() {
-    return 'ScheduleList(id: $id, is_open: $is_open, days: $days, start_time: $start_time, end_time: $end_time, temporary_closure_duration: $temporary_closure_duration)';
+    return 'ScheduleList(id: $id, is_open: $is_open, force_close: $force_close, days: $days, start_time: $start_time, end_time: $end_time, temporary_closure_duration: $temporary_closure_duration)';
   }
 }
 

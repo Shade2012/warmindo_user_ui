@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
+import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_view.dart';
 import '../../../common/global_variables.dart';
@@ -19,7 +20,8 @@ class PembayaranController extends GetxController{
   final CartController cartController = Get.put(CartController());
   bool keepPolling = true;
 RxBool isLoading = false.obs;
-RxBool selected = false.obs;
+RxBool selectedOrderMethodTakeaway = false.obs;
+RxBool selectedOrderMethodDelivery = false.obs;
 RxString orderID = ''.obs;
 
 RxBool selectedButton2 = false.obs;
@@ -78,7 +80,7 @@ Future<void> postOrder({required String catatan}) async{
     'Accept': 'application/json',
     'Authorization': 'Bearer ${cartController.token.value}',};
   final body = jsonEncode({
-    'status': selectedButton3.value ? 'sedang diproses' : 'menunggu pembayaran',
+    'status': selectedButton3.value ? 'konfirmasi pesanan' : 'menunggu pembayaran',
     'payment_method': payment_method,
     'order_method': 'take-away',
     'note': catatan,
@@ -147,7 +149,8 @@ Future<void> postOrderDetail({required String catatan}) async{
     try{
       if(isTunai == true){
         await historyController.fetchHistory();
-          Get.off(PembayaranComplate());
+        final order = historyController.orders2.firstWhere((order) => order.id.toString() == orderID.value,);
+        Get.off(HistoryDetailPage(initialOrder: order));
       }else{
         final response = await http.post(Uri.parse(url),headers: headers, body:body);
         final responseBody = jsonDecode(response.body);
@@ -159,7 +162,8 @@ Future<void> postOrderDetail({required String catatan}) async{
             // longPollingFetchHistory();
             // Future.delayed(const Duration(seconds: 30), () => stopPolling());
             Future.delayed(const Duration(seconds:1 ),(){
-              Get.off(PembayaranComplate());
+              final order = historyController.orders2.firstWhere((order) => order.id.toString() == orderID.value,);
+              Get.off(HistoryDetailPage(initialOrder: order));
             });
           }else{
             print('ada error ');
@@ -172,16 +176,9 @@ Future<void> postOrderDetail({required String catatan}) async{
       print('ada error di catch2 $e');
     }
     cartController.fetchCart();
-    //
-    // for (int i = 0; i < cartController.cartItems2.length; i++) {
-    //   CartItem2 item = cartController.cartItems2[i];
-    //   await cartController.removeCart(idCart: item.cartId!.value);
-    // }
-
-    // //
-    // cartController.cartItems2.clear();
     isLoading.value = false;
   }
+
 }
 
 

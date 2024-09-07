@@ -66,14 +66,12 @@ class PembatalanController extends GetxController {
 
       if (response.statusCode == 200) {
         final updatedOrder = historyController.orders2.firstWhere((element) => element.id == id);
-        updatedOrder.status.value = 'menunggu batal'; // Set the new status value
+        updatedOrder.status.value = updatedOrder.paymentMethod!.toLowerCase() == 'tunai' ? 'batal' :'menunggu pengembalian dana'; // Set the new status value
         updatedOrder.alasan_batal?.value = alasanBatal; // Set the new cancel reason
         updatedOrder.noRekening?.value = noRek.toString();
         updatedOrder.cancelMethod?.value = cancelMethod;
         await historyController.fetchHistory();
-
         historyController.orders2.refresh(); // Refresh the order list to reflect the changes
-
         Get.back(); // Go back to the previous screen
       } else {
         // Handle other status codes if needed
@@ -86,5 +84,40 @@ class PembatalanController extends GetxController {
     }
   }
 
+  int calculatePriceCancel(String paymentMethod, int totalPrice) {
+    double percentage = 0.0;
+
+    // Determine the percentage reduction based on the payment method
+    switch (paymentMethod.toLowerCase()) {
+      case 'ovo':
+        percentage = 1.5;
+        break;
+      case 'dana':
+        percentage = 1.5;
+        break;
+      case 'jeniuspay':
+        percentage = 2.0;
+        break;
+      case 'shopeepay':
+        percentage = 1.8;
+        break;
+      case 'linkaja':
+        percentage = 1.5;
+        break;
+      case 'qris':
+        percentage = 0.63;
+        break;
+      default:
+      // If payment method is not found, no discount is applied
+        percentage = 0.0;
+        break;
+    }
+
+    // Calculate the reduced price
+    double reductionAmount = totalPrice * (percentage / 100);
+    int finalPrice = (totalPrice - reductionAmount).round();
+
+    return finalPrice;
+  }
 
 }

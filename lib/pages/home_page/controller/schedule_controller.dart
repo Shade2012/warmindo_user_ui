@@ -69,6 +69,20 @@ void startPolling()async{
       isLoading.value = false;
     }
   }
+  String getAdjustedTime(ScheduleList schedule) {
+    if (schedule.start_time != null && schedule.temporary_closure_duration != null) {
+      DateTime currentTime = DateTime.now();
+
+
+      // Add the duration in minutes
+      DateTime adjustedTime = currentTime.add(Duration(minutes: schedule.temporary_closure_duration!));
+
+      // Return the adjusted time formatted back to "HH:mm"
+      return DateFormat("HH:mm").format(adjustedTime);
+    }
+    // If start_time or duration is null, return an empty string or the original time
+    return DateFormat("HH:mm").format(DateTime.now());
+  }
 }
 
 

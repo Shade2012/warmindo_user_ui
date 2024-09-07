@@ -21,8 +21,7 @@ class PembayaranPage extends GetView<PembayaranController> {
 
   @override
   Widget build(BuildContext context) {
-    final currencyFormat =
-    NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     final CartController cartController = Get.put(CartController());
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
@@ -34,38 +33,72 @@ class PembayaranPage extends GetView<PembayaranController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Text("Metode Pemesanan",style: boldTextStyle,),
-              // const SizedBox(height: 20,),
-              //  SizedBox(
-              //    width: double.infinity,
-              //    child: Obx(() => InkWell(
-              //      onTap: (){
-              //        controller.selected.value = true;
-              //      },
-              //      child: Ink(
-              //        decoration: BoxDecoration(
-              //          color: Colors.white,
-              //          borderRadius: const BorderRadius.all(Radius.circular(10)),
-              //          border: controller.selected.value ? Border.all(
-              //            color: Colors.black,
-              //            width: 2
-              //          ) : null,
-              //
-              //          boxShadow: [
-              //            BoxShadow(
-              //              color: Colors.grey.withOpacity(0.4),
-              //              spreadRadius: 0,
-              //              blurRadius: 2,
-              //              offset: const Offset(0, 1), // changes position of shadow
-              //            ),
-              //          ],
-              //        ),
-              //        padding: const EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
-              //        child: Text("Takeaway",style: boldTextStyle,textAlign: TextAlign.center,),
-              //      ),
-              //    )),
-              //  ),
-              // const SizedBox( height: 20,),
+              Text("Metode Pemesanan",style: boldTextStyle,),
+              const SizedBox(height: 20,),
+               Row(
+                 children: [
+                   Expanded(
+                     child: Obx(() => InkWell(
+                       onTap: (){
+                         controller.selectedOrderMethodTakeaway.value = true;
+                         controller.selectedOrderMethodDelivery.value = false;
+                       },
+                       child: Ink(
+                         decoration: BoxDecoration(
+                           color: Colors.white,
+                           borderRadius: const BorderRadius.all(Radius.circular(10)),
+                           border: controller.selectedOrderMethodTakeaway.value ? Border.all(
+                             color: Colors.black,
+                             width: 2
+                           ) : null,
+
+                           boxShadow: [
+                             BoxShadow(
+                               color: Colors.grey.withOpacity(0.4),
+                               spreadRadius: 0,
+                               blurRadius: 2,
+                               offset: const Offset(0, 1), // changes position of shadow
+                             ),
+                           ],
+                         ),
+                         padding: const EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
+                         child: Text("Takeaway",style: boldTextStyle,textAlign: TextAlign.center,),
+                       ),
+                     )),
+                   ),
+                   const SizedBox(width: 10,),
+                   Expanded(
+                     child: Obx(() => InkWell(
+                       onTap: (){
+                         controller.selectedOrderMethodDelivery.value = true;
+                         controller.selectedOrderMethodTakeaway.value = false;
+                       },
+                       child: Ink(
+                         decoration: BoxDecoration(
+                           color: Colors.white,
+                           borderRadius: const BorderRadius.all(Radius.circular(10)),
+                           border: controller.selectedOrderMethodDelivery.value ? Border.all(
+                               color: Colors.black,
+                               width: 2
+                           ) : null,
+
+                           boxShadow: [
+                             BoxShadow(
+                               color: Colors.grey.withOpacity(0.4),
+                               spreadRadius: 0,
+                               blurRadius: 2,
+                               offset: const Offset(0, 1), // changes position of shadow
+                             ),
+                           ],
+                         ),
+                         padding: const EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
+                         child: Text("Delivery",style: boldTextStyle,textAlign: TextAlign.center,),
+                       ),
+                     )),
+                   ),
+                 ],
+               ),
+              const SizedBox( height: 20,),
               Row(
                 children: [
                   MapScreen(),
@@ -177,6 +210,24 @@ class PembayaranPage extends GetView<PembayaranController> {
               const SizedBox( height: 20,),
               ReusableTextBox(title: 'Catatan : ', controller: controller.ctrCatatan),
               const SizedBox( height: 20,),
+              Obx(()=>Visibility(
+                visible: controller.selectedOrderMethodDelivery.value == true,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                child:  Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Biaya Delivery", style: boldTextStyle),
+                    Row(
+                      children: [
+                        const Text('Biaya Delivery'),
+                        const SizedBox(width: 5,),
+                        Text(currencyFormat.format(3000),style: boldTextStyle,),
+                      ],
+                    )
+                  ],
+                ),
+              ))),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -203,14 +254,14 @@ class PembayaranPage extends GetView<PembayaranController> {
                           }
 
                           return Text(
-                            currencyFormat.format(totalPrice),
+                            currencyFormat.format(controller.selectedOrderMethodDelivery.value ? totalPrice + 3000 : totalPrice),
                             style: boldTextStyle,
                           );
                         }),
                       ]),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               const Divider(),
               const SizedBox(height: 20),
                InkWell(

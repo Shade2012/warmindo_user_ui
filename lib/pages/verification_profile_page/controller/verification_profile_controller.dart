@@ -85,7 +85,7 @@ class VerificationProfileController extends GetxController{
         // Show error snackbar
         Get.snackbar(
           'Error',
-          'Failed to send OTP!',
+          'Failed to send OTP! ${response.body}',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,

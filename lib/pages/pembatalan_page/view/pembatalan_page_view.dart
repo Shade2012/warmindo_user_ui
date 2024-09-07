@@ -95,7 +95,7 @@ class PembatalanPage extends StatelessWidget {
                             style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           Text(
-                            '*Uang pengembalian ${currencyFormat.format(totalprice)}',
+                            '*Uang pengembalian ${currencyFormat.format(controller.calculatePriceCancel(order.paymentMethod ?? 'tunai', totalprice))}',
                               style: boldTextStyle
                           ),
                           const  SizedBox(height: 10,),
