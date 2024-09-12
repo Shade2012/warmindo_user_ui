@@ -11,6 +11,7 @@ abstract class _Paths {
   static const HISTORY_PAGE = '/history-page';
   static const HOME_PAGE = '/home-page';
   static const LOGIN_PAGE = '/login-page';
+  static const ADDRESS_PAGE = '/address-page';
   static const MENU_PAGE = '/menu-page';
   static const ONBOARD_PAGE = '/onboard-page';
   static const POLICY_PAGE = '/policy-page';
@@ -31,6 +32,7 @@ abstract class _Paths {
 
 abstract class Routes {
   Routes._();
+  static const ADDRESS_PAGE = _Paths.ADDRESS_PAGE;
   static const CART_PAGE = _Paths.CART_PAGE;
   static const PEMBAYARAN_PAGE = _Paths.PEMBAYARAN_PAGE;
   static const CHANGEPASS_PAGE = _Paths.CHANGEPASS_PAGE;

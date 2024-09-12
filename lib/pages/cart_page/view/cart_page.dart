@@ -74,7 +74,7 @@ class CartPage extends StatelessWidget {
                         Text(
                           "Keranjang mu kosong,yuk beli",
                           style: onboardingskip,
-                        )
+                        ),
                       ],
                     ),
                   ),

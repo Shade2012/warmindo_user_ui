@@ -91,7 +91,7 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
 
       if (response.statusCode == 200) {
         final menu = menuListFromJson(response.body);
-        menuElement.value = menu.where((element) => element.statusMenu == '1').toList();
+        menuElement.value = menu.where((element) => element.statusMenu == '1' && element.stock! > 1 ).toList();
       } else {
         print('Error: ${response.statusCode}');
       }

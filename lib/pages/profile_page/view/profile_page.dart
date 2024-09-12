@@ -165,8 +165,15 @@ class ProfilePage extends StatelessWidget {
                                  ),
                                ),
                              ),
-
-
+                             const SizedBox(height: 30),
+                             ListTile(
+                               leading: const Icon(Icons.location_on,size: 25,),
+                               title: const Text('Daftar Alamat'),
+                               trailing: const Icon(Icons.chevron_right),
+                               onTap: () {
+                                 Get.toNamed(Routes.ADDRESS_PAGE);
+                               },
+                             ),
                              Visibility(
                                visible:profileController.isLoginGoogle.value != 'true',
                                child: Column(

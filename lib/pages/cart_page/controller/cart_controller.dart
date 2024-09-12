@@ -43,7 +43,6 @@ class CartController extends GetxController {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
       }).timeout(const Duration(seconds: 10));
-
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(response.body)['data'];
         responseData.value = data.toString();
@@ -133,17 +132,20 @@ class CartController extends GetxController {
     });
 
     try {
+      print('menjalankan post item cart dengan api');
       final response = await http.post(Uri.parse(url), headers: headers, body: body);
         if (response.statusCode == 201) {
           final responseData = jsonDecode(response.body);
           final newCartId = responseData['data']['id'];
           final cartItem = cartItems2.firstWhereOrNull((item) => item.cartId?.value  == 0);
-
+          print('menjalankan post item cart dengan api berhasil');
           if (cartItem != null) {
             cartItem.cartId?.value = newCartId;
             cartid.value = newCartId;
             cartItems2.refresh();
+            print('menjalankan post item cart dengan api berhasil cartIetm != null');
           }
+          print('menjalankan post item cart dengan api berhasil cartIetm == null');
           fetchCart();
           cartItems2.refresh();
         } else {
@@ -167,6 +169,7 @@ class CartController extends GetxController {
     List<ToppingList>? selectedToppings,
     required int quantity,
   }) async {
+    print('addToCart2 di cartcontroller');
     final existingItem = cartItems2.firstWhereOrNull((item) {
       bool sameMenuId = item.productId == productId;
       bool sameVarian = (item.selectedVarian?.varianID == selectedVarian?.varianID);
@@ -179,7 +182,7 @@ class CartController extends GetxController {
     CartItem2 newItem;
 
     if (existingItem == null) {
-
+      print('existim Item = null');
       newItem = CartItem2(
         productId: productId,
         productName: productName,
@@ -205,6 +208,7 @@ class CartController extends GetxController {
     }
 
     else {
+      print('existim Item != null');
       existingItem.quantity.value += quantity;
       newItem = existingItem;
       await editCart(

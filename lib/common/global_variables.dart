@@ -1,41 +1,48 @@
 class GlobalVariables {
-  static const apiMenuUrl = 'https://warmindo.pradiptaahmad.tech/api/menus/';
-  static const apiCategoryUrl = 'https://warmindo.pradiptaahmad.tech/api/menus/filter/';
-  static const apiSecondCategoryUrl = 'https://warmindo.pradiptaahmad.tech/api/menus/Sfilter/';
-  static const apiRegisterUrl = 'https://warmindo.pradiptaahmad.tech/api/users/register';
-  static const apiSendOtp = 'https://warmindo.pradiptaahmad.tech/api/users/send-otp';
-  static const apiVerifyOtp = 'https://warmindo.pradiptaahmad.tech/api/users/verify-otp';
-  static const apiLogin = 'https://warmindo.pradiptaahmad.tech/api/users/login';
-  static const apiUpdatePhoneNumber = 'http://warmindo.pradiptaahmad.tech/api/users/update';
-  static const apiDetailUser = 'http://warmindo.pradiptaahmad.tech/api/users/details';
+  static const api = 'https://warmindoanggrekmuria.my.id/api';
+  static const apiMenuUrl = '$api/menus/';
+  static const apiCategoryUrl = '$api/menus/filter/';
+  static const apiSecondCategoryUrl = '$api/menus/Sfilter/';
+  static const apiRegisterUrl = '$api/users/register';
+  static const apiSendOtp = '$api/users/send-otp';
+  static const apiVerifyOtp = '$api/users/verify-otp';
+  static const apiLogin = '$api/users/login';
+  static const apiUpdatePhoneNumber = '$api/users/update';
+  static const apiDetailUser = '$api/users/details';
   //cart
-  static const apiCartStore = 'https://warmindo.pradiptaahmad.tech/api/carts/store';
-  static const apiCartDetail = 'https://warmindo.pradiptaahmad.tech/api/carts/showcarts';
-  static const apiCartDelete = 'https://warmindo.pradiptaahmad.tech/api/carts/';
-  static const apiCartEdit = 'https://warmindo.pradiptaahmad.tech/api/carts/update/';
+  static const apiCartStore = '$api/carts/store';
+  static const apiCartDetail = '$api/carts/showcarts';
+  static const apiCartDelete = '$api/carts/';
+  static const apiCartEdit = '$api/carts/update/';
 
   static const userQuery = '?user_id=';
   static const quantityQuery = '&quantity=';
 
-  static const apiUpdatePhoneNumber2 ='http://warmindo.pradiptaahmad.tech/api/users/updatePhone';
-  static const googleSignin = 'https://warmindo.pradiptaahmad.tech/api/users/google-login';
-  static const apiSchedule = 'http://warmindo.pradiptaahmad.tech/api/store-statuses/';
+  static const apiUpdatePhoneNumber2 ='$api/users/updatePhone';
+  static const googleSignin = '$api/users/google-login';
+  static const apiSchedule = '$api/store-statuses/';
 
-  static const apiTopping = 'http://warmindo.pradiptaahmad.tech/api/toppings/';
-  static const apiSendPhoneNumber = 'http://warmindo.pradiptaahmad.tech/api/users/send-otp-phonenumber';
-  static const apiForgotPassword = 'http://warmindo.pradiptaahmad.tech/api/users/forgot-password';
-  static const apiVarian = 'http://warmindo.pradiptaahmad.tech/api/variants/';
+  static const apiTopping = '$api/toppings/';
+  static const apiSendPhoneNumber = '$api/users/send-otp-phonenumber';
+  static const apiForgotPassword = '$api/users/forgot-password';
+  static const apiVarian = '$api/variants/';
 
-  static const postOrder = 'https://warmindo.pradiptaahmad.tech/api/orders/store';
-  static const postOrderDetail = 'https://warmindo.pradiptaahmad.tech/api/order-details/create';
-  static const postPayment = 'https://warmindo.pradiptaahmad.tech/api/payments/create';
+  static const postOrder = '$api/orders/store';
+  static const postOrderDetail = '$api/order-details/create';
+  static const postPayment = 'https://warmindoanggrekmuria.my.id/api/payments/create';
 
-  static const apiCancelOrder = 'https://warmindo.pradiptaahmad.tech/api/orders/cancel/';
-  static const apiHistory = 'https://warmindo.pradiptaahmad.tech/api/users/get-history';
-  static const editPaymentOrder = 'https://warmindo.pradiptaahmad.tech/api/orders/updatepayment/';
+  static const apiCancelOrder = '$api/orders/cancel/';
+  static const apiHistory = '$api/users/get-history';
+  static const editPaymentOrder = '$api/orders/updatepayment/';
 
-  static const apiRating = 'https://warmindo.pradiptaahmad.tech/api/ratings/rate';
-  static const apiLogout = 'https://warmindo.pradiptaahmad.tech/api/users/logout';
+  static const apiAddressAll = '$api/alamat-user/';
+  static const apiAddressUpdate = '$api/alamat-user/';
+  static const apiAddressStore = '$api/alamat-user/store';
+  static const apiAddressSelected = '$api/alamat-user/enable/';
+  static const apiAddressDeleted = '$api/alamat-user/disable-status/';
+
+  static const apiRating = '$api/ratings/rate';
+  static const apiLogout = '$api/users/logout';
 }
 
 

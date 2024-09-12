@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,7 @@ import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart
 import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_view.dart';
+import 'package:warmindo_user_ui/service/locationService.dart';
 import '../../../common/global_variables.dart';
 import '../../../common/model/cart_model2.dart';
 import '../../../common/model/history2_model.dart';
@@ -15,14 +18,21 @@ import '../../../common/model/history2_model.dart';
 
 
 class PembayaranController extends GetxController{
+  LocationService locationService = LocationService();
   late final TextEditingController ctrCatatan = TextEditingController(text: 'Catatan :');
   final HistoryController historyController = Get.put(HistoryController());
   final CartController cartController = Get.put(CartController());
   bool keepPolling = true;
-RxBool isLoading = false.obs;
-RxBool selectedOrderMethodTakeaway = false.obs;
-RxBool selectedOrderMethodDelivery = false.obs;
-RxString orderID = ''.obs;
+  RxBool isLoading = false.obs;
+  RxBool selectedOrderMethodTakeaway = false.obs;
+  RxBool selectedOrderMethodDelivery = false.obs;
+  RxDouble distanceBetween = 0.0.obs;
+  RxInt deliveryFee = 0.obs;
+  RxString orderID = ''.obs;
+  final double radarLatitude = -6.7524781;
+  final double radarLongitude = 110.8427672;
+
+  RxBool isWithinRadar = false.obs;
 
 RxBool selectedButton2 = false.obs;
 RxBool selectedButton3 = false.obs;
@@ -31,49 +41,92 @@ void button2 (){
   selectedButton2.value = true;
   selectedButton3.value = false;
 }
+Future<void> calculateDeliveryFee () async {
+  print('dipnaggil');
+  double distanceInMeters = distanceBetween.value;
+  int fee = 3000;
+  deliveryFee.value = fee;
+  if(distanceInMeters > 1500){
+    double additionalDistance = distanceInMeters - 1500;
+    int increments = (additionalDistance / 5).ceil();
+
+    // Add 1000 for each 5-meter increment
+    fee += increments * 1000;
+    deliveryFee.value = fee;
+    print('ini delivery fee di calculate ${deliveryFee.value}');
+    print('ini distance in meter $distanceInMeters');
+  }
+}
+  void delivery(BuildContext context) async {
+
+  await checkUserWithinRadar(context);
+    print("After location check, isWithinRadar: ${isWithinRadar.value}");
+
+    if (isWithinRadar.value) {
+       await calculateDeliveryFee();
+       print(deliveryFee.value);
+      print('User is within the radar: ${isWithinRadar.value}');
+      selectedOrderMethodDelivery.value = true;
+      selectedOrderMethodTakeaway.value = false;
+    } else {
+      print('User is outside the radar: ${isWithinRadar.value}');
+      Get.snackbar('Pesan', 'Maaf Anda diluar jangkauan radar');
+    }
+
+  }
+
+  Future<void> checkUserWithinRadar (BuildContext context) async{
+  try{
+    Position position = await locationService.getCurrentPosition();
+    double distance = locationService.calculateDistance(
+        radarLatitude,
+        radarLongitude,
+        position.latitude,
+        position.longitude,
+    );
+    print("Calculated Distance: $distance meters");
+    distanceBetween.value = distance;
+    isWithinRadar.value = distance <= 12000;
+    print(radarLongitude);
+    print(radarLatitude);
+    print(position.longitude);
+    print(position.latitude);
+    print("Is Within Radar: ${isWithinRadar.value}");
+  }catch(e){
+    if (e.toString().contains('permanently denied')) {
+      // Show an alert dialog to guide the user to app settings
+      showSettingsDialog(context);
+    }
+    Get.snackbar('Pesan', '$e');
+  }
+  }
+  void showSettingsDialog(BuildContext context){
+  showDialog(context: context, builder: (context) {
+    return AlertDialog(
+      title: Text('Permission Required'),
+      content: Text('Izin lokasi dilarang, silahkan pergi ke setting dan pilih enable '),
+      actions: [
+        TextButton(onPressed: () {
+          locationService.openAppSettings();
+          Get.back(closeOverlays: true);
+        }, child: Text('Buka Settings')),
+        TextButton(onPressed: () {
+          Get.back(closeOverlays: true);
+        }, child: Text('Nanti')),
+      ],
+    );
+  },);
+  }
   void button3 (){
     selectedButton2.value = false;
     selectedButton3.value = true;
   }
-  void stopPolling() {
-    keepPolling = false;
-  }
 int generateOrderId() {
   return DateTime.now().millisecondsSinceEpoch; // Example: Using timestamp as order ID
 }
-
-  Future<void> longPollingFetchHistory() async {
-    while (keepPolling) {
-      try {
-        final response = await http.get(
-          Uri.parse(GlobalVariables.apiHistory),
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ${cartController.token.value}',
-          },
-        ).timeout(const Duration(seconds: 10));
-
-        if (response.statusCode == 200) {
-          List<dynamic> data = jsonDecode(response.body)['orders'];
-          historyController.orders2.clear();
-          for (var item in data) {
-            historyController.orders2.add(Order2.fromJson(item));
-          }
-        } else {
-          // Handle other status codes if needed
-        }
-        historyController.orders2.refresh();
-        await Future.delayed(const Duration(seconds: 3));
-      } catch (e) {
-        print('Error occurred: $e');
-        await Future.delayed(const Duration(seconds: 5));
-      }
-    }
-  }
-Future<void> postOrder({required String catatan}) async{
+Future<void> postOrder({required String catatan,required int alamatID}) async{
     String payment_method =  selectedButton3.value == true ? 'tunai' : '';
-    // String takeaway =  selected.value == true ? 'take-away' : '';
+    String order_method = selectedOrderMethodDelivery.value == true ? 'delivery' : 'take-away';
     const url = GlobalVariables.postOrder;
   final headers = {
     'Content-Type': 'application/json',
@@ -82,7 +135,8 @@ Future<void> postOrder({required String catatan}) async{
   final body = jsonEncode({
     'status': selectedButton3.value ? 'konfirmasi pesanan' : 'menunggu pembayaran',
     'payment_method': payment_method,
-    'order_method': 'take-away',
+    'order_method': order_method,
+    'alamat_users_id': alamatID,
     'note': catatan,
   });
   try{
@@ -123,7 +177,7 @@ Future<void> postOrderDetail({required String catatan}) async{
     try{
       final response = await http.post(Uri.parse(url),headers: headers, body: jsonEncode(toRequestBody()),);
       final responseBody = jsonDecode(response.body);
-
+      print('bikin order detail');
     }catch(e){
       print('ada error disini $e');
     }
@@ -134,14 +188,15 @@ Future<void> postOrderDetail({required String catatan}) async{
     prefs.remove('orderID');
   }
   void makePayment2({
-    required String catatan,required bool isTunai}) async {
+    required String catatan,required bool isTunai, required int alamatID}) async {
     isLoading.value = true;
+
     const url = GlobalVariables.postPayment;
     final headers = {
       'Accept': 'application/json',
       'Authorization': 'Bearer ${cartController.token.value}'
     };
-    await postOrder(catatan: catatan);
+    await postOrder(catatan: catatan, alamatID: alamatID);
     await postOrderDetail(catatan: catatan);
     final body = {
       'order_id': orderID.value,
@@ -155,16 +210,16 @@ Future<void> postOrderDetail({required String catatan}) async{
         final response = await http.post(Uri.parse(url),headers: headers, body:body);
         final responseBody = jsonDecode(response.body);
         if(response.statusCode == 201){
+          print(responseBody['status']);
           if(responseBody['status'] == 'success'){
             final uriString = Uri.parse(responseBody['checkout_link']);
             launchUrl(uriString,mode: LaunchMode.inAppWebView);
-            // keepPolling = true;
-            // longPollingFetchHistory();
-            // Future.delayed(const Duration(seconds: 30), () => stopPolling());
-            Future.delayed(const Duration(seconds:1 ),(){
+            await historyController.fetchHistory();
               final order = historyController.orders2.firstWhere((order) => order.id.toString() == orderID.value,);
+            Future.delayed(const Duration(seconds: 2), () {
               Get.off(HistoryDetailPage(initialOrder: order));
             });
+
           }else{
             print('ada error ');
           }
@@ -180,6 +235,7 @@ Future<void> postOrderDetail({required String catatan}) async{
   }
 
 }
+
 
 
 

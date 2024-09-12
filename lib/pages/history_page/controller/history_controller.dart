@@ -173,6 +173,8 @@ class HistoryController extends GetxController {
       return Images.menunggu_pembayaran;
     } else if (status == 'Menunggu Pengembalian Dana'){
       return Images.refund;
+    } else if (status == 'Sedang Diantar'){
+      return Images.sedang_diantar;
     } else {
       return Images.pesanan_siap_diambil;
     }

@@ -53,6 +53,8 @@ dependencies:
   animated_custom_dropdown:
   shimmer:
   flutter_rating_bar: ^4.0.1
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
   http:
   win32: ^5.5.3
   google_sign_in: ^5.0.6
@@ -60,6 +62,7 @@ dependencies:
   shared_preferences: ^2.2.3
   connectivity_plus: ^3.0.3
   mime: ^1.0.5
+  geocoding: ^3.0.0
 
 dev_dependencies:
   flutter_test:

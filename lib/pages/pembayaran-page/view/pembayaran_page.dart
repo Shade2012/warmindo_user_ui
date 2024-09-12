@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:warmindo_user_ui/pages/address_page/controller/address_page_controller.dart';
 import 'package:warmindo_user_ui/pages/pembayaran-page/controller/pembayaran_controller.dart';
 import 'package:warmindo_user_ui/pages/profile_page/controller/profile_controller.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/ReusableTextBox.dart';
 import 'package:warmindo_user_ui/widget/map/view/map_view.dart';
+import '../../../common/model/address_model.dart';
 import '../../../common/model/cart_model2.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../widget/appBar.dart';
 import '../../cart_page/controller/cart_controller.dart';
+import '../widget/address_widget.dart';
 
 class PembayaranPage extends GetView<PembayaranController> {
 
-  final CartController cartController = Get.put(CartController());
+
   final ProfileController profileController = Get.put(ProfileController());
+  final AddressPageController addressPageController = Get.put(AddressPageController());
 
   PembayaranPage({super.key});
 
@@ -26,6 +30,7 @@ class PembayaranPage extends GetView<PembayaranController> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppbarCustom(title: 'Pembayaran',style: headerRegularStyle,),
       body: SingleChildScrollView(
         child: Container(
@@ -51,7 +56,6 @@ class PembayaranPage extends GetView<PembayaranController> {
                              color: Colors.black,
                              width: 2
                            ) : null,
-
                            boxShadow: [
                              BoxShadow(
                                color: Colors.grey.withOpacity(0.4),
@@ -70,8 +74,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                    Expanded(
                      child: Obx(() => InkWell(
                        onTap: (){
-                         controller.selectedOrderMethodDelivery.value = true;
-                         controller.selectedOrderMethodTakeaway.value = false;
+                         controller.delivery(context);
                        },
                        child: Ink(
                          decoration: BoxDecoration(
@@ -81,7 +84,6 @@ class PembayaranPage extends GetView<PembayaranController> {
                                color: Colors.black,
                                width: 2
                            ) : null,
-
                            boxShadow: [
                              BoxShadow(
                                color: Colors.grey.withOpacity(0.4),
@@ -208,6 +210,24 @@ class PembayaranPage extends GetView<PembayaranController> {
                 );
               }),
               const SizedBox( height: 20,),
+              Obx(()=> Visibility(
+                  visible: controller.selectedOrderMethodDelivery.value,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Alamat Pengantaran',style: boldTextStyle,),
+                      const SizedBox(height: 20,),
+                      AddressWidget(
+                          addressModel: addressPageController.address.firstWhere(
+                                (element) => element.selected?.value == '1',
+                            orElse: () => AddressModel(),
+                          ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox( height: 20,),
               ReusableTextBox(title: 'Catatan : ', controller: controller.ctrCatatan),
               const SizedBox( height: 20,),
               Obx(()=>Visibility(
@@ -222,7 +242,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                       children: [
                         const Text('Biaya Delivery'),
                         const SizedBox(width: 5,),
-                        Text(currencyFormat.format(3000),style: boldTextStyle,),
+                        Obx(()=> Text(currencyFormat.format(controller.deliveryFee.value),style: boldTextStyle,)),
                       ],
                     )
                   ],
@@ -242,7 +262,6 @@ class PembayaranPage extends GetView<PembayaranController> {
                         ),
                         Obx(() {
                           double totalPrice = 0;
-
                           for (CartItem2 cartItem in cartController.cartItems2) {
                             int toppingTotalPrice = 0;
                             if (cartItem.selectedToppings != null) {
@@ -254,7 +273,7 @@ class PembayaranPage extends GetView<PembayaranController> {
                           }
 
                           return Text(
-                            currencyFormat.format(controller.selectedOrderMethodDelivery.value ? totalPrice + 3000 : totalPrice),
+                            currencyFormat.format(controller.selectedOrderMethodDelivery.value ? totalPrice + controller.deliveryFee.value : totalPrice),
                             style: boldTextStyle,
                           );
                         }),
@@ -266,22 +285,39 @@ class PembayaranPage extends GetView<PembayaranController> {
               const SizedBox(height: 20),
                InkWell(
                   onTap: () {
-                    if (!controller.selectedButton2.value && !controller.selectedButton3.value) {
+                    if(controller.selectedButton3.value == false && controller.selectedButton2.value == false){
+                      Get.snackbar('Pesan', 'Silahkan pilih metode pembayaran terlebih dahulu');
+                      return;
+                    }
+                    if (!controller.selectedOrderMethodDelivery.value && !controller.selectedOrderMethodTakeaway.value) {
                       Get.snackbar(
                         'Pesan',
-                        'Silakan pilih metode pembayaranya terlebih dahulu',
+                        'Silakan pilih metode pemesanan terlebih dahulu',
                         backgroundColor: Colors.orange,
                         colorText: Colors.white,
                       );
-                    }else if(controller.selectedButton3.value){
+                      return;
+                    }else if(controller.selectedOrderMethodDelivery.value == true){
+                      if(controller.isWithinRadar.value != true){
+                        Get.snackbar('Pesan', 'anda diluar jangkauan');
+                        return;
+                      }
+                      if(addressPageController.address.isEmpty){
+                        Get.snackbar('Pesan', 'Silahkan pilih alamat atau buat alamat terlebih dahulu');
+                        return;
+                      }
+                    }
+                      if(controller.selectedButton3.value){
                       if(profileController.user_verified.value == '0'){
                         Get.snackbar('Pesan', 'User belum terverifikasi, anda bisa mendapatnya setelah memesan selama 15 kali atau meminta ke Warmindo');
+                        return;
                       }else{
                         if(controller.isLoading.value == false){
                           controller.isLoading.value = true;
                           String fullText = controller.ctrCatatan.text;
                           String catatanValue = fullText.replaceFirst('Catatan :', '').trim();
-                          controller.makePayment2(catatan: catatanValue, isTunai: true);
+                          final address = addressPageController.address.firstWhere((element) => element.selected?.value == '1');
+                          controller.makePayment2(catatan: catatanValue, isTunai: true, alamatID: address.id ?? 0);
                         }else{
                           return;
                         }
@@ -291,7 +327,8 @@ class PembayaranPage extends GetView<PembayaranController> {
                         controller.isLoading.value = true;
                         String fullText = controller.ctrCatatan.text;
                         String catatanValue = fullText.replaceFirst('Catatan :', '').trim();
-                        controller.makePayment2(catatan: catatanValue, isTunai: false);
+                        final address = addressPageController.address.firstWhere((element) => element.selected?.value == '1');
+                        controller.makePayment2(catatan: catatanValue, isTunai: false,alamatID: address.id ?? 0);
                       }else{
                         return;
                       }

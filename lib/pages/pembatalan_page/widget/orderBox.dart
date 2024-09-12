@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../../../common/model/address_model.dart';
 import '../../../common/model/history2_model.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../../widget/myCustomPopUp/myPopup_controller.dart';
+import '../../history-detail_page/widget/history_widget_address.dart';
 class OrderPembatalan extends StatelessWidget {
   final MyCustomPopUpController popUpController = Get.put(MyCustomPopUpController());
   final Order2 order;
@@ -16,6 +18,7 @@ class OrderPembatalan extends StatelessWidget {
       case 'selesai':
         return ColorResources.labelcomplete;
       case 'sedang diproses':
+      case 'konfirmasi pesanan':
         return ColorResources.labelinprogg;
       case 'menunggu batal':
         return ColorResources.labelcancel;
@@ -31,6 +34,9 @@ class OrderPembatalan extends StatelessWidget {
   Widget build(BuildContext context) {
     final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     int totalPrice = int.parse(order.totalprice);
+    if(order.orderMethod == 'delivery'){
+      totalPrice += order.deliveryfee!.toInt();
+    }
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     int totalQuantity = 0;
@@ -161,6 +167,24 @@ class OrderPembatalan extends StatelessWidget {
                   );
                 },
               ),
+              const SizedBox(height: 20,),
+              Visibility(
+                  visible: order.orderMethod == 'delivery',
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child:  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Biaya Delivery", style: boldTextStyle),
+                        Row(
+                          children: [
+                            const SizedBox(width: 5,),
+                            Text(currencyFormat.format(order.deliveryfee?.toInt()),style: boldTextStyle,)
+                          ],
+                        )
+                      ],
+                    ),
+                  )),
               const SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -194,6 +218,12 @@ class OrderPembatalan extends StatelessWidget {
                       ?.toUpperCase() ?? '-',
                     style: boldTextStyle,),
                 ],
+              ),
+              const SizedBox(height: 10,),
+              Visibility(
+                visible: order.addressModel != null,
+                child:
+                HistoryWidgetAddress(addressModel: order.addressModel ?? AddressModel(),),
               ),
               const SizedBox(height: 10,),
               Row(

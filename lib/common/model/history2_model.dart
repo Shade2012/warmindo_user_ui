@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:warmindo_user_ui/common/model/address_model.dart';
 import 'package:warmindo_user_ui/common/model/toppings.dart';
 import 'package:warmindo_user_ui/common/model/varians.dart';
 
@@ -7,9 +8,11 @@ import 'menu_list_API_model.dart';
 
 class Order2 {
   final int id;
-  final String totalprice;
+  String totalprice;
   final List<MenuList> orderDetails;
   String catatan;
+  double? adminfee;
+  double? deliveryfee;
   RxString? alasan_batal = ''.obs;
   RxString? cancelMethod = ''.obs;
   RxString? noRekening = ''.obs;
@@ -17,6 +20,7 @@ class Order2 {
   final String? paymentMethod;
   final String? orderMethod;
   RxBool isRatingDone;
+  final AddressModel? addressModel;
 
   Order2({
     required this.id,
@@ -25,6 +29,9 @@ class Order2 {
     required this.status,
     required this.orderMethod,
     required this.catatan,
+    this.deliveryfee,
+    this.addressModel,
+    this.adminfee,
     this.alasan_batal,
     this.paymentMethod,
     this.cancelMethod,
@@ -37,12 +44,15 @@ class Order2 {
       id: json['id'],
       totalprice: json['price_order'] ?? '0',  // Default to '0' if null
       cancelMethod: RxString(json['cancel_method'] ?? ''), // Handle null
-      alasan_batal: RxString(json['reason_cancel'] ?? ''), // Handle null
+        adminfee: double.tryParse(json['admin_fee'] ?? '0.0'),
+      deliveryfee: double.tryParse(json['driver_fee'] ?? '0.0'),
+    alasan_batal: RxString(json['reason_cancel'] ?? ''), // Handle null
       noRekening: RxString(json['no_rekening'] ?? ''), // Handle null
       paymentMethod: json['payment_method'] ?? '-',  // Default to '-'
       orderMethod: json['order_method'] ?? '-',  // Default to '-'
       orderDetails: (json['orderDetails'] as List?)?.map((item) => MenuList.fromOrderDetailJson(item)).toList() ?? [],
       status: RxString(json['status'] ?? ''), // Handle null
+      addressModel: json['alamat'] != null ? AddressModel.fromJson(json['alamat']) : null,
       catatan: json['note'] ?? '',  // Default to empty string
     );
   }
@@ -75,7 +85,12 @@ class Order2 {
       }).toList(),
     };
   }
+  @override
+  String toString() {
+    return 'Order2{id: $id, totalprice: $totalprice, status: ${status.value}, catatan: $catatan, adminfee: $adminfee, orderDetails: $orderDetails}';
+  }
 }
+
 class MenuList {
   final int menuId;
   final int orderDetailId;
