@@ -1,3 +1,5 @@
+import 'package:warmindo_user_ui/pages/address_page/controller/address_page_controller.dart';
+import 'package:warmindo_user_ui/pages/address_page/view/address_page_view.dart';
 import 'package:warmindo_user_ui/pages/cart_page/binding/cart_binding.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
 import 'package:warmindo_user_ui/pages/change-password_page/binding/change_pass_binding.dart';
@@ -47,6 +49,7 @@ import 'package:warmindo_user_ui/pages/veritification_page/binding/veritificatio
 import 'package:warmindo_user_ui/pages/veritification_page/view/veritification_page.dart';
 
 import '../common/model/history2_model.dart';
+import '../pages/address_page/binding/address_page_binding.dart';
 
 
 
@@ -213,6 +216,11 @@ class AppPages {
         binding: PembayaranBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),
-
+    GetPage(
+        name: _Paths.ADDRESS_PAGE,
+        page: () => AddressPageView(),
+        binding: AddressPageBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
   ];
 }

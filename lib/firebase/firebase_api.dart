@@ -131,15 +131,30 @@ class FirebaseApi {
 
   Future<void> initNotifications() async {
     try {
-      await firebaseMessaging.requestPermission(
+      // Request permission for notifications
+      NotificationSettings settings = await firebaseMessaging.requestPermission(
         alert: true,
         sound: true,
         badge: true,
-        provisional: true,
+        provisional: false,
       );
 
+      if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+        print('User granted permission');
+      } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+        print('User granted provisional permission');
+      } else {
+        print('User declined or has not accepted permission');
+        return; // Exit if permission not granted
+      }
+
+      // Listen for foreground messages
       FirebaseMessaging.onMessage.listen(FirebaseApi.handleMessage);
+
+      // Handle background messages
       FirebaseMessaging.onBackgroundMessage(FirebaseApi.handleBackgroundMessaging);
+
+      // Initialize local notifications
       await FirebaseApi.initLocalNotifications();
     } catch (e) {
       print('Error initializing notifications: $e');

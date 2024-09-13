@@ -32,7 +32,8 @@ class MyCustomPopUp extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: '', decimalDigits: 0);
 
-    void checkAndUpdateCartId() {
+    void checkAndUpdateCartId() async {
+      await controller.cartController.fetchCart();
       Future.delayed(const Duration(seconds: 2), () {
         final cartItem = controller.cartController.cartItems2.firstWhere((element) => element.productId == product.menuId);
         if (cartItem.cartId?.value != null) {
@@ -97,7 +98,7 @@ class MyCustomPopUp extends StatelessWidget {
                     child: FadeInImage(
                       width: double.infinity,
                       height: 250,
-                      placeholder: const AssetImage('assets/images/logo.png'),
+                      placeholder: const AssetImage('assets/images/placeholder.png'),
                       image: NetworkImage(product.image),
                       fit: BoxFit.cover,
                     ),

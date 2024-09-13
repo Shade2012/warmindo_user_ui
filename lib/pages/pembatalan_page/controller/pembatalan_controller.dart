@@ -69,8 +69,11 @@ class PembatalanController extends GetxController {
         updatedOrder.status.value = updatedOrder.paymentMethod!.toLowerCase() == 'tunai' ? 'batal' :'menunggu pengembalian dana'; // Set the new status value
         updatedOrder.alasan_batal?.value = alasanBatal; // Set the new cancel reason
         updatedOrder.noRekening?.value = noRek.toString();
+        int totalprice =  int.parse(updatedOrder.totalprice);
+        updatedOrder.totalprice = calculatePriceCancel(updatedOrder.paymentMethod ?? '', totalprice).toString();
+        print(updatedOrder.totalprice);
         updatedOrder.cancelMethod?.value = cancelMethod;
-        await historyController.fetchHistory();
+        // await historyController.fetchHistory();
         historyController.orders2.refresh(); // Refresh the order list to reflect the changes
         Get.back(); // Go back to the previous screen
       } else {

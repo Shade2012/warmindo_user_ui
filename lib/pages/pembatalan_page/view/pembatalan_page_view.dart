@@ -95,7 +95,7 @@ class PembatalanPage extends StatelessWidget {
                             style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           Text(
-                            '*Uang pengembalian ${currencyFormat.format(controller.calculatePriceCancel(order.paymentMethod ?? 'tunai', totalprice))}',
+                            '*Uang pengembalian ${currencyFormat.format(controller.calculatePriceCancel(order.paymentMethod ?? 'tunai', (order.orderMethod == 'delivery' ? totalprice += order.deliveryfee!.toInt() : totalprice) ))}',
                               style: boldTextStyle
                           ),
                           const  SizedBox(height: 10,),
@@ -118,7 +118,6 @@ class PembatalanPage extends StatelessWidget {
                     Future.delayed(const Duration(seconds: 3),(){
                       controller.isLoadingButton.value = false;
                       if(controller.isLoadingButton.value == false){
-                        print('ini alasan batal value $alasanValue');
                         if(alasanValue == ''){
                           Get.snackbar('Pesan', 'Berikan alasan pembatalan terlebih dahulu');
                           return;

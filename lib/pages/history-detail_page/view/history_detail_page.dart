@@ -6,11 +6,13 @@ import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/utils/themes/image_themes.dart';
 import 'package:warmindo_user_ui/utils/themes/textstyle_themes.dart';
 import 'package:warmindo_user_ui/widget/myCustomPopUp/myPopup_controller.dart';
+import '../../../common/model/address_model.dart';
 import '../../../common/model/history2_model.dart';
 import '../../../utils/themes/buttonstyle_themes.dart';
 import '../../../utils/themes/color_themes.dart';
 import '../../../widget/appBar.dart';
 import '../../history_page/controller/history_controller.dart';
+import '../widget/history_widget_address.dart';
 
 
 class HistoryDetailPage extends StatelessWidget {
@@ -24,6 +26,7 @@ class HistoryDetailPage extends StatelessWidget {
         return ColorResources.labelcomplete;
       case 'sedang diproses':
       case 'konfirmasi pesanan':
+      case 'sedang diantar':
         return ColorResources.labelinprogg;
       case 'menunggu pembayaran':
       case 'menunggu pengembalian dana':
@@ -46,7 +49,7 @@ class HistoryDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
-    int totalPrice = int.parse(order.value.totalprice);
+
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -55,6 +58,11 @@ class HistoryDetailPage extends StatelessWidget {
       totalQuantity += menu.quantity;
     }
     return Obx(() {
+      int totalPrice = int.parse(order.value.totalprice);
+      if (order.value.orderMethod == 'delivery') {
+        totalPrice += 3000;
+      }
+
       order.value = controller.orders2.firstWhere((element) => element.id == order.value.id,);
       return Scaffold(
         appBar: AppbarCustom(
@@ -64,8 +72,7 @@ class HistoryDetailPage extends StatelessWidget {
             RefreshIndicator(
               onRefresh: () async {
                 await controller.fetchHistory();
-                // order.value = index;
-                // print('selesai fetch');
+                print(order.value.totalprice);
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -312,20 +319,8 @@ class HistoryDetailPage extends StatelessWidget {
                                                                   style: descriptionratingTextStyle),
                                                             ],
                                                           )),),
-                                                  //   Visibility(
-                                                  //     visible: order.orderDetails[index].ratings != null ,
-                                                  //     child: Wrap(
-                                                  //       crossAxisAlignment: WrapCrossAlignment.center,
-                                                  //       children: [
-                                                  //         Icon(Icons.star_rounded,
-                                                  //             color: Colors.orange, size: 23),
-                                                  //         Text(order.orderDetails[index].ratings.toString(),
-                                                  //             style: descriptionratingTextStyle),
-                                                  //       ],
-                                                  //     ),),
                                                 ],
                                               ),
-                                              // Text(currencyFormat.format(totalPrice),style: boldTextStyle,)
                                             ],
                                           ),
                                         ),
@@ -337,28 +332,50 @@ class HistoryDetailPage extends StatelessWidget {
                                 Text(
                                   "Detail Pembayaran", style: boldTextStyle,),
                                 const SizedBox(height: 10,),
+                                Visibility(
+                                  visible: order.value.status.toLowerCase() == 'menunggu pengembalian dana' || order.value.status.toLowerCase() == 'batal',
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text("Potongan Biaya Admin", style: boldTextStyle,),
+                                            Text(
+                                              currencyFormat.format(double.tryParse(order.value.adminfee.toString()) ?? 0.0), // Parse as double
+                                              style: boldTextStyle,
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 10,),
+                                      ],
+                                    )),
+                                Visibility(
+                                  visible: order.value.orderMethod == 'delivery',
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Biaya Delivery",
+                                        style: boldTextStyle,),
+                                      Text(currencyFormat.format(3000),
+                                        style: boldTextStyle,),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 10,),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("Total", style: boldTextStyle,),
-                                    Text(currencyFormat.format(totalPrice),
-                                      style: boldTextStyle,),
+                                    Text(order.value.status.toLowerCase() == 'menunggu pengembalian dana' || order.value.status.toLowerCase() == 'batal' ? 'Total Pengembalian Dana'  :"Total", style: boldTextStyle,),
+                                    Text(currencyFormat.format(totalPrice -= order.value.adminfee!.toInt()), style: boldTextStyle,),
                                   ],
                                 ),
                                 const SizedBox(height: 10,),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text("Metode Pemesanan",
                                       style: boldTextStyle,),
-                                    Text(order.value.orderMethod!.toLowerCase()
-                                        .substring(0, 1)
-                                        .toUpperCase() +
-                                        order.value.orderMethod!
-                                            .toLowerCase()
-                                            .substring(1) ?? '-',
+                                    Text(order.value.orderMethod!.toLowerCase().substring(0, 1).toUpperCase() + order.value.orderMethod!.toLowerCase().substring(1) ?? '-',
                                       style: boldTextStyle,),
                                   ],
                                 ),
@@ -382,6 +399,12 @@ class HistoryDetailPage extends StatelessWidget {
                                       style: boldTextStyle,),
                                   ],
                                 ),
+                                const SizedBox(height: 10,),
+                                Visibility(
+                                    visible: order.value.addressModel != null,
+                                    child:
+                                    HistoryWidgetAddress(addressModel: order.value.addressModel ?? AddressModel(),),
+                                  ),
                                 const SizedBox(height: 10,),
                                 Obx(() =>
                                     Visibility(

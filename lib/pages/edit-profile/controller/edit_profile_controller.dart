@@ -160,6 +160,7 @@ class EditProfileController extends GetxController {
         );
       } else {
         isLoading.value = false;
+        print(response.body);
         Get.snackbar(
           'Error biasa',
           'Error: ${response.statusCode} ${response.body}',

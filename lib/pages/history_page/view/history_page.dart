@@ -13,14 +13,6 @@ class HistoryPage extends StatelessWidget {
   final HistoryController controller = Get.put(HistoryController());
   Color selectedTextColor = Colors.white;
   Color dropdownTextColor = Colors.black;
-  List<String> titles = <String>[
-    'Semua',
-    'Selesai',
-    'Pesanan Siap',
-    'Sedang Diproses',
-    'Menunggu Batal',
-    'Batal',
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,6 +58,10 @@ class HistoryPage extends StatelessWidget {
                         ),
                         HistoryCategory(
                           status: 'Sedang Diproses',
+                          orders: controller.filteredHistory(),
+                        ),
+                        HistoryCategory(
+                          status: 'Sedang Diantar',
                           orders: controller.filteredHistory(),
                         ),
                         HistoryCategory(

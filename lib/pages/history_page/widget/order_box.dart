@@ -27,6 +27,8 @@ class OrderBox extends StatelessWidget {
       case 'selesai':
         return ColorResources.labelcomplete;
       case 'sedang diproses':
+      case 'konfirmasi pesanan':
+      case 'sedang diantar':
         return ColorResources.labelinprogg;
       case 'menunggu pembayaran':
       case 'menunggu pengembalian dana':
@@ -143,6 +145,5 @@ class OrderBox extends StatelessWidget {
       }
     }
     );
-
   }
 }

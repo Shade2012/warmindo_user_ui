@@ -171,6 +171,7 @@ class MyCustomPopUpController extends GetxController {
     required int quantity,
     required int cartID,
   }) async {
+    print('add to cart di pop up');
     cartController.isLoading.value = true;
     await cartController.addToCart2(
       context: context,
