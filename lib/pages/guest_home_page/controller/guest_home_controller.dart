@@ -2,6 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:warmindo_user_ui/common/global_variables.dart';
 import 'package:warmindo_user_ui/pages/guest_home_page/view/guest_home_detail_page.dart';
 import '../../../common/model/menu_list_API_model.dart';
 import '../../home_page/controller/schedule_controller.dart';
@@ -62,7 +63,7 @@ class GuestHomeController extends GetxController {
   Future<void> fetchProduct() async {
     try {
       final response = await http.get(
-        Uri.parse('https://warmindo.pradiptaahmad.tech/api/menus'),
+        Uri.parse(GlobalVariables.apiMenuUrl),
       ).timeout(const Duration(seconds: 5));
 
       if (response.statusCode == 200) {
@@ -70,11 +71,9 @@ class GuestHomeController extends GetxController {
         isLoading.value = false;
         // You can call the button function here if you want to print the menuList
         // button();
-      } else {
-        print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print(e);
+      Get.snackbar('Error', '$e');
     }
   }
   void navigateToFilteredMenu(BuildContext context, int priceThreshold) {

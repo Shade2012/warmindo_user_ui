@@ -2,6 +2,7 @@
 //
 //     final menu = menuFromJson(jsonString);
 
+import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
@@ -45,7 +46,7 @@ class MenuList {
   final String nameMenu;
   final int price;
   final String category;
-  final int? stock;
+  final RxInt? stock;
   late double? rating;
   final String description;
   final String? second_category;
@@ -81,8 +82,8 @@ class MenuList {
     nameMenu: json["name_menu"],
     price: int.tryParse(json["price"] ?? '0') ?? 0, // Safer parsing
     category: json["category"],
-    stock: int.tryParse(json["stock"] ?? '0') ?? 0, // Safer parsing
-    rating: double.tryParse(json["rating"] ?? '0') ?? 0.0, // Safer parsing
+    stock: (int.tryParse(json["stock"] ?? '0') ?? 0).obs, // Safer parsing
+      rating: double.tryParse(json["rating"] ?? '0') ?? 0.0, // Safer parsing
     description: json["description"],
     second_category: json["second_category"],
     statusMenu: json['status_menu'],

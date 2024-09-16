@@ -51,14 +51,10 @@ class ProfileController extends GetxController {
             txtUsername.value = data['user']['username'];
             image.value = data['user']['profile_picture'] ?? '';
             user_verified.value = data['user']['user_verified'];
-          } else {
-            print('Error: ${data['message']}');
           }
-        } else {
-          print('Error: ${response.statusCode}');
         }
       } catch (e) {
-        print('Exception: $e');
+        Get.snackbar('Error', '$e');
       } finally {
         isLoading.value = false; // Set loading to false after data is fetched
       }
@@ -87,7 +83,6 @@ Future<void> logoutFetch() async{
     if (prefs != null) {
       txtUsername.value = prefs!.getString('username') ?? '';
       token.value = prefs!.getString('token') ?? '';
-      print(token.value);
     }
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       isConnected.value = result != ConnectivityResult.none;

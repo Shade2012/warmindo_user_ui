@@ -98,10 +98,7 @@ class VeritificationController extends GetxController {
         );
       }
     } catch (e) {
-      // Handle error
-      print('Error occurred while sending OTP: $e');
 
-      // Show error snackbar
       Get.snackbar(
         'Error',
         '$e',
@@ -169,10 +166,6 @@ class VeritificationController extends GetxController {
         );
       }
     } catch (e) {
-      // Handle error
-      print('Error occurred while sending OTP: $e');
-
-      // Show error snackbar
       Get.snackbar(
         'Error',
         '$e',

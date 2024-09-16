@@ -51,7 +51,7 @@ class MyCustomPopUp extends StatelessWidget {
     }
 
     return Container(
-      foregroundDecoration: (product.stock! > 1 && scheduleController.jadwalElement[0].is_open && product.statusMenu != '0')
+      foregroundDecoration: (product.stock!.value > 1 && scheduleController.jadwalElement[0].is_open && product.statusMenu != '0')
           ? null
           : const BoxDecoration(
         color: Colors.grey,

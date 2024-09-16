@@ -123,7 +123,7 @@ class CounterWidget extends StatelessWidget {
                       if(menu?.statusMenu == '0'){
                         Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan');
                       }else{
-                        if(quantity.value >= menu!.stock!){
+                        if(quantity.value >= menu.stock!.value){
                           Get.snackbar('Pesan', 'Maks ${menu.stock}');
                         }else{
                           quantity.value++;

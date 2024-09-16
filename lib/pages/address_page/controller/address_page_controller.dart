@@ -34,19 +34,18 @@ class AddressPageController extends GetxController {
   RxBool changed = false.obs;
 
   void confirm(){
-    selectedLocation.value = LatLng(0.0, 0.0);
+    selectedLocation.value = const LatLng(0.0, 0.0);
     Get.back();
-    print(selectedLocation.value);
   }
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       isLoading.value = false;
     });
     checkConnectivity();
-    print(selectedLocation.value);
+
   }
   void checkConnectivity() async {
     prefs = await SharedPreferences.getInstance();
@@ -81,7 +80,7 @@ class AddressPageController extends GetxController {
 
       }
     } catch (e) {
-      print(e);
+      Get.snackbar('Error', '$e');
     } finally {
       isLoading.value = false;
     }
@@ -99,10 +98,9 @@ class AddressPageController extends GetxController {
         await fetchAddress();
         await pembayaranController.calculateDeliveryFee();
       }else{
-        print(response.body);
+        Get.snackbar('Pesan', response.body);
       }
     } catch (e) {
-      print(e);
       Get.snackbar('Error', '$e');
     } finally {
       isLoading.value = false;
@@ -141,10 +139,9 @@ class AddressPageController extends GetxController {
       if (response.statusCode == 200) {
         await fetchAddress();
       }else{
-        print(response.body);
+        Get.snackbar('Pesan', response.body);
       }
     } catch (e) {
-      print(e);
       Get.snackbar('Error', '$e');
     } finally {
       isLoading.value = false;
@@ -161,31 +158,29 @@ class AddressPageController extends GetxController {
         position.latitude,
         position.longitude,
       );
-      print("Calculated Distance: $distance meters");
       isWithinRadar.value = distance <= 12000;
       Get.to(()=>FlutterMapWidget(lagtitude: position.latitude,longtitude: position.longitude, isAdd: true, addressModel: addressModel,));
     }catch(e){
       if (e.toString().contains('permanently denied')) {
-        // Show an alert dialog to guide the user to app settings
         showSettingsDialog(context);
       }
-      print("Error: $e");
+      Get.snackbar('Error', '$e');
     }
     addLoading.value = false;
   }
   void showSettingsDialog(BuildContext context){
     showDialog(context: context, builder: (context) {
       return AlertDialog(
-        title: Text('Permission Required'),
-        content: Text('Izin lokasi dilarang, silahkan pergi ke setting dan pilih enable '),
+        title: const Text('Permission Required'),
+        content: const Text('Izin lokasi dilarang, silahkan pergi ke setting dan pilih enable '),
         actions: [
           TextButton(onPressed: () {
             locationService.openAppSettings();
             Get.back(closeOverlays: true);
-          }, child: Text('Buka Settings')),
+          }, child: const Text('Buka Settings')),
           TextButton(onPressed: () {
             Get.back(closeOverlays: true);
-          }, child: Text('Nanti')),
+          }, child: const Text('Nanti')),
         ],
       );
     },);

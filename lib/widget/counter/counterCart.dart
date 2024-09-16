@@ -78,7 +78,7 @@ class CounterWidget2 extends StatelessWidget {
                   menuId: 0,
                   nameMenu: '',
                   image: '',
-                  stock: 0,
+                  stock: 0.obs,
                   price: 0,
                   category: '',
                   statusMenu: '0',

@@ -28,6 +28,7 @@ class HomePage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -85,7 +86,6 @@ class HomePage extends StatelessWidget {
                     children: [
                       MakananWidget(false),
                       MinumanWidget(false),
-                      SnackWidget(false),
                     ],
                   ),
                     const SizedBox(height: 20,),

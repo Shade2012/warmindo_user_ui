@@ -12,7 +12,7 @@ class UnorderedList extends StatelessWidget {
       // Add list item
       widgetList.add(UnorderedListItem(text));
       // Add space between items
-      widgetList.add(SizedBox(height: 4.0));
+      widgetList.add(const SizedBox(height: 4.0));
     }
 
     return Column(children: widgetList);

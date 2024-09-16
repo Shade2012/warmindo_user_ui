@@ -34,11 +34,10 @@ class MenuSecondCategory extends StatelessWidget {
       onRefresh: () async {
         if(isGuest == true){
           await scheduleController.fetchSchedule(true);
-          await cartController.fetchUser();
-          await cartController.fetchCart();
           await guestMenuController.fetchProduct();
           await popUpController.fetchVarian();
           await popUpController.fetchTopping();
+          return;
         }else{
           await scheduleController.fetchSchedule(true);
           await cartController.fetchUser();
@@ -46,9 +45,8 @@ class MenuSecondCategory extends StatelessWidget {
           await menuController.fetchProduct();
           await popUpController.fetchVarian();
           await popUpController.fetchTopping();
+          return;
         }
-
-
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),

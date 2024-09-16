@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/pages/address_page/controller/address_page_controller.dart';
 import 'package:warmindo_user_ui/pages/address_page/shimmer/address_page_shimmer.dart';
-import 'package:warmindo_user_ui/pages/pembayaran-page/controller/pembayaran_controller.dart';
-
 import '../../../utils/themes/buttonstyle_themes.dart';
 import '../../../utils/themes/icon_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
@@ -40,7 +37,7 @@ class AddressPageView extends GetView<AddressPageController> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Obx((){
             if(controller.isLoading.value == true){
-              return AddressPageShimmer();
+              return const AddressPageShimmer();
             }
             if(controller.isConnected.value == false){
               return Center(
@@ -59,8 +56,8 @@ class AddressPageView extends GetView<AddressPageController> {
                   margin: EdgeInsets.only(top: screenHeight * 0.37),
                   child: Column(
                     children: [
-                      Icon(Icons.location_pin,size: 50,),
-                      SizedBox(height: 20,),
+                      const Icon(Icons.location_pin,size: 50,),
+                      const SizedBox(height: 20,),
                       Text(
                         'Anda belum menambahkan alamat anda',
                         style: boldTextStyle,textAlign: TextAlign.center,
@@ -70,18 +67,18 @@ class AddressPageView extends GetView<AddressPageController> {
                           await controller.checkUserWithinRadar(context,null);
                         },
                         child: Container(
-                          padding: EdgeInsets.only(top: 10),
-                          decoration: BoxDecoration(
+                          padding: const EdgeInsets.only(top: 10),
+                          decoration: const BoxDecoration(
                               color: Colors.white,
 
                           ),
                           child: Container(
-                            margin: EdgeInsets.all(20),
-                            padding: EdgeInsets.all(15),
+                            margin: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(15),
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 color: Colors.black,
-                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                                borderRadius: const BorderRadius.all(Radius.circular(5)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.4),
@@ -114,7 +111,7 @@ class AddressPageView extends GetView<AddressPageController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
                   child: SizedBox(
                     height: screenHeight * 0.78,
                     child: ListView.builder(
@@ -126,10 +123,10 @@ class AddressPageView extends GetView<AddressPageController> {
                             controller.selectAddress(addressItem.id ?? 0);
                           },
                           child: Container(
-                            margin: EdgeInsets.only(bottom: 20),
+                            margin: const EdgeInsets.only(bottom: 20),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderRadius: const BorderRadius.all(Radius.circular(10)),
                                 border: Border.all(
                                   color: addressItem.selected?.value == '1' ? Colors.black : Colors.white,
                                 ),
@@ -143,7 +140,7 @@ class AddressPageView extends GetView<AddressPageController> {
                               ]
                             ),
 
-                            child: Padding(padding: EdgeInsets.all(10.0),
+                            child: Padding(padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -153,7 +150,7 @@ class AddressPageView extends GetView<AddressPageController> {
                                     Row(
                                       children: [
                                         Visibility(visible: addressItem.selected?.value == '1' ,child: Text('Alamat Utama',style: boldTextStyle,),),
-                                        SizedBox(width: 10,),
+                                        const SizedBox(width: 10,),
                                         InkWell(
                                             onTap: () {
                                               controller.showBottomSheetModal(addressItem.id ?? 0,context);
@@ -167,15 +164,12 @@ class AddressPageView extends GetView<AddressPageController> {
                                     )],
                                   ),
                                   Text(addressItem.detailAddress ?? '',style: regularInputTextStyle,),
-                                  SizedBox(height: 50,),
-                                  Container(
+                                  const SizedBox(height: 50,),
+                                  SizedBox(
                                     width: double.infinity,
                                     height: screenHeight * 0.060,
                                     child: ElevatedButton(onPressed: () {
-                                      print(addressItem.lagtitude);
-                                      print(addressItem.longtitude);
                                       Get.to(()=>FlutterMapWidget( lagtitude: addressItem.lagtitude ?? 0.0,longtitude: addressItem.longtitude ?? 0.0, isAdd: false, addressModel: addressItem,));
-                                      print('Ubah Alamat');
                                     },style: redeembutton(), child: Text('Ubah Alamat',style: whiteboldTextStyle15,)),
                                   )
                                 ],
@@ -192,7 +186,7 @@ class AddressPageView extends GetView<AddressPageController> {
                     await controller.checkUserWithinRadar(context,null);
                   },
                   child: Container(
-                    padding: EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 10),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -205,12 +199,12 @@ class AddressPageView extends GetView<AddressPageController> {
                         ]
                     ),
                     child: Container(
-                      margin: EdgeInsets.all(20),
-                      padding: EdgeInsets.all(15),
+                      margin: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(15),
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.black,
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.4),

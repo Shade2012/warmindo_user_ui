@@ -65,23 +65,20 @@ class PembatalanController extends GetxController {
       ).timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 200) {
-        final updatedOrder = historyController.orders2.firstWhere((element) => element.id == id);
-        updatedOrder.status.value = updatedOrder.paymentMethod!.toLowerCase() == 'tunai' ? 'batal' :'menunggu pengembalian dana'; // Set the new status value
-        updatedOrder.alasan_batal?.value = alasanBatal; // Set the new cancel reason
-        updatedOrder.noRekening?.value = noRek.toString();
-        int totalprice =  int.parse(updatedOrder.totalprice);
-        updatedOrder.totalprice = calculatePriceCancel(updatedOrder.paymentMethod ?? '', totalprice).toString();
-        print(updatedOrder.totalprice);
-        updatedOrder.cancelMethod?.value = cancelMethod;
+        await historyController.fetchHistorywithoutLoading();
+        // final updatedOrder = historyController.orders2.firstWhere((element) => element.id == id);
+        // updatedOrder.status.value = updatedOrder.paymentMethod!.toLowerCase() == 'tunai' ? 'batal' :'menunggu pengembalian dana'; // Set the new status value
+        // updatedOrder.alasan_batal?.value = alasanBatal; // Set the new cancel reason
+        // updatedOrder.noRekening?.value = noRek.toString();
+        // int totalprice =  int.parse(updatedOrder.totalprice);
+        // updatedOrder.totalprice = calculatePriceCancel(updatedOrder.paymentMethod ?? '', totalprice).toString();
+        // updatedOrder.cancelMethod?.value = cancelMethod;
         // await historyController.fetchHistory();
         historyController.orders2.refresh(); // Refresh the order list to reflect the changes
         Get.back(); // Go back to the previous screen
-      } else {
-        // Handle other status codes if needed
-        print('Failed to fetch history: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error: $e');
+      Get.snackbar('Error', '$e');
     } finally {
       isLoadingButton.value = false; // Reset loading state
     }

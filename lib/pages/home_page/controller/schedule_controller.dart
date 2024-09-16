@@ -31,7 +31,7 @@ class ScheduleController extends GetxController {
       asiaJakarta = tz.getLocation('Asia/Jakarta'); // Initialize asiaJakarta
       await fetchSchedule(true); // Call fetchSchedule only after initialization
     } catch (e) {
-      print('Error initializing schedule: $e');
+      Get.snackbar('Error', '$e');
     }
   }
 void startPolling()async{
@@ -58,13 +58,12 @@ void startPolling()async{
         if (jadwalHariIni.isNotEmpty) {
           jadwalElement.value = jadwalHariIni;
         } else {
-          print('Tidak ada jadwal untuk hari ini');
+          Get.snackbar('Error', 'Tidak ada Jadwal untuk hari ini');
         }
-      } else {
-        print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Exception: $e');
+      Get.snackbar('Error', '$e');
+
     } finally {
       isLoading.value = false;
     }

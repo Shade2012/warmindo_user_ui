@@ -3,6 +3,7 @@ class GlobalVariables {
   static const apiMenuUrl = '$api/menus/';
   static const apiCategoryUrl = '$api/menus/filter/';
   static const apiSecondCategoryUrl = '$api/menus/Sfilter/';
+  static const apiSearchUrl = '$api/menus/search?q=';
   static const apiRegisterUrl = '$api/users/register';
   static const apiSendOtp = '$api/users/send-otp';
   static const apiVerifyOtp = '$api/users/verify-otp';

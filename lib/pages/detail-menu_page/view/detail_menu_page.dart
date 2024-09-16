@@ -66,7 +66,7 @@ class DetailMenuPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        foregroundDecoration: (menu.stock! > 1 && scheduleController.jadwalElement[0].is_open && menu.statusMenu != '0')
+                        foregroundDecoration: (menu.stock!.value > 1 && scheduleController.jadwalElement[0].is_open && menu.statusMenu != '0')
                             ? null
                             : const BoxDecoration(
                           color: Colors.grey,
@@ -232,7 +232,7 @@ class DetailMenuPage extends StatelessWidget {
                         popUpController.showCustomModalForGuest(context);
                       } else {
                         if(menu.statusMenu == '1'){
-                          if(menu.stock! < 1){
+                          if(menu.stock!.value < 1){
                             Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
                           }
                           else{
@@ -301,7 +301,7 @@ class DetailMenuPage extends StatelessWidget {
                                 });
                           }else{
                             if(menu.statusMenu == '1'){
-                              if(menu.stock! < 1){
+                              if(menu.stock!.value < 1){
                                 Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
                               }
                               else{

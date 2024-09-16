@@ -61,11 +61,9 @@ class MenuPageController extends GetxController {
         menuWithDisable.value = menu;
         menuElement.value = menu.where((element) => element.statusMenu == '1').toList();
 
-      } else {
-        print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print(e);
+      Get.snackbar('Error', '$e');
     } finally {
       isLoading.value = false;
     }
@@ -77,7 +75,7 @@ class MenuPageController extends GetxController {
       try {
         final response = await http.get(
           Uri.parse(
-              'https://warmindo.pradiptaahmad.tech/api/menus/search?q=$query'),
+              '${GlobalVariables.apiSearchUrl}$query'),
         ).timeout(const Duration(seconds: 5));
 
         if (response.statusCode == 200) {
@@ -86,7 +84,6 @@ class MenuPageController extends GetxController {
             searchResults.clear();
             });
           } else {
-
             SearchResult searchResult = SearchResult.fromJson(
                 json.decode(response.body));
             searchResults.value = searchResult.data.map((searchList) =>
@@ -96,7 +93,7 @@ class MenuPageController extends GetxController {
                   nameMenu: searchList.nameMenu,
                   price: searchList.price.toInt(),
                   category: searchList.category,
-                  stock: searchList.stock,
+                  stock: searchList.stock.obs,
                   rating: searchList.ratings,
                   description: searchList.description,
                   createdAt: searchList.createdAt,
@@ -108,10 +105,9 @@ class MenuPageController extends GetxController {
           if(response.statusCode == 404){
               searchResults.clear();
           }
-          print('Error: ${response.statusCode}');
         }
       } catch (e) {
-        print('test error $e');
+        Get.snackbar('Error', '$e');
       }
     });
     }

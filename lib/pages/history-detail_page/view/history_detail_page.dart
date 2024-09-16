@@ -72,7 +72,6 @@ class HistoryDetailPage extends StatelessWidget {
             RefreshIndicator(
               onRefresh: () async {
                 await controller.fetchHistory();
-                print(order.value.totalprice);
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),

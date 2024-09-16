@@ -86,7 +86,6 @@ void firebaseToken ()async{
         }
       } else if (response.statusCode == 422) {
         final responseData = jsonDecode(response.body);
-        print('Error: ${responseData['message']}');
         Get.snackbar(
           'Error',
           responseData['message'],
@@ -95,7 +94,6 @@ void firebaseToken ()async{
           colorText: Colors.white,
         );
       } else {
-        print('Error: ${response.statusCode}');
         Get.snackbar(
           'Error',
           'Password atau username salah',
@@ -105,10 +103,9 @@ void firebaseToken ()async{
         );
       }
     } catch (e) {
-      print('Error: $e');
       Get.snackbar(
         'Error',
-        'An error occurred while processing your request',
+        '$e',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,

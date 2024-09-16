@@ -41,11 +41,9 @@ class HomeDetailController extends GetxController {
 
       if (response.statusCode == 200) {
         menuElement.value = menuListFromJson(response.body);
-      } else {
-        print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Exception: $e');
+      Get.snackbar('Error', '$e');
     } finally {
       isLoading.value = false; // Set loading to false after data is fetched
     }

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:warmindo_user_ui/common/model/address_model.dart';
 import 'package:warmindo_user_ui/pages/address_page/shimmer/map_flutter_widget_shimmer_.dart';
 import 'package:warmindo_user_ui/pages/address_page/widget/map_flutter_controller.dart';
 import 'package:warmindo_user_ui/utils/themes/buttonstyle_themes.dart';
-
 import '../../../utils/themes/textstyle_themes.dart';
 import '../../edit-profile/widget/textform.dart';
 
@@ -17,7 +15,7 @@ class FlutterMapWidget extends StatelessWidget {
   final double lagtitude;
   final bool isAdd;
   final AddressModel? addressModel;
-  FlutterMapWidget({Key? key, required this.longtitude, required this.lagtitude, required this.isAdd, required this.addressModel}) : super(key: key) {
+  FlutterMapWidget({super.key, required this.longtitude, required this.lagtitude, required this.isAdd, required this.addressModel}) {
     controller.selectedLocation.value = LatLng(lagtitude, longtitude);
     controller.updatePlacemarks(); // Update placemarks when the location is set
     if (addressModel != null) {
@@ -78,7 +76,7 @@ class FlutterMapWidget extends StatelessWidget {
                                         right: 20,
                                         child: Obx(
                                               () => controller.changed.value
-                                              ? SizedBox(
+                                              ? const SizedBox(
                                             width: 20,
                                             height: 20,
                                             child: CircularProgressIndicator(
@@ -86,7 +84,7 @@ class FlutterMapWidget extends StatelessWidget {
                                               strokeWidth: 1.6,
                                             ),
                                           )
-                                              : SizedBox(),
+                                              : const SizedBox(),
                                         ),
                                       ),
                                     ],
@@ -100,17 +98,17 @@ class FlutterMapWidget extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top: screenHeight * 0.7,
+                    top: screenHeight * 0.56,
                     left: 20,
                     child: InkWell(
                       onTap: () {
                         Get.back(closeOverlays: true);
                       },
                       child: Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          borderRadius: const BorderRadius.all(Radius.circular(100)),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.4),
@@ -120,7 +118,7 @@ class FlutterMapWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: Icon(Icons.arrow_back_ios_new),
+                        child: const Icon(Icons.arrow_back_ios_new),
                       ),
                     ),
                   ),
@@ -133,9 +131,9 @@ class FlutterMapWidget extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Container(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           boxShadow: [
@@ -146,7 +144,7 @@ class FlutterMapWidget extends StatelessWidget {
                               offset: const Offset(0, 3),
                             ),
                           ],
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(15),
                             topLeft: Radius.circular(15),
                           ),
@@ -156,10 +154,10 @@ class FlutterMapWidget extends StatelessWidget {
                             Obx(
                                   () => Container(
                                 width: double.infinity,
-                                padding: EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(15),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.grey.withOpacity(0.4),
@@ -172,13 +170,13 @@ class FlutterMapWidget extends StatelessWidget {
                                 child: controller.selectedPlacemarks.isNotEmpty // Check if the list is not empty
                                     ? RichText(
                                   text: TextSpan(
-                                    style: TextStyle(color: Colors.black, fontSize: 14), // Default style
+                                    style: const TextStyle(color: Colors.black, fontSize: 14), // Default style
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: '${controller.selectedPlacemarks[0].subLocality ?? ''}\n',
                                         style: boldTextStyle,
                                       ),
-                                      TextSpan(
+                                      const TextSpan(
                                         text: '\n', // Newline or space for additional spacing
                                       ),
                                       TextSpan(
@@ -210,13 +208,13 @@ class FlutterMapWidget extends StatelessWidget {
                                         style: regulargreyText,
                                       ),
                                       TextSpan(
-                                        text: '${controller.selectedPlacemarks[0].country ?? ''}',
+                                        text: controller.selectedPlacemarks[0].country ?? '',
                                         style: regulargreyText,
                                       ),
                                     ],
                                   ),
                                 )
-                                    : Text('Silahkan Pencet Tombol ini'), // Fallback message if the list is empty
+                                    : const Text('Silahkan Pencet Tombol ini'), // Fallback message if the list is empty
                               ),
                             ),
                             myTextFormField(
@@ -240,7 +238,7 @@ class FlutterMapWidget extends StatelessWidget {
                               regulargreyText,
                               3,
                             ),
-                            SizedBox(height: 10,),
+                            const SizedBox(height: 10,),
                             Obx(()=>
                                 SizedBox(
                                   width: double.infinity,
@@ -250,7 +248,6 @@ class FlutterMapWidget extends StatelessWidget {
                                         Get.snackbar('Pesan', 'Tolong lengkapi data alamat terlebih dahulu');
                                         return;
                                       }
-                                      print('location');
                                       controller.addLocation(latitude: controller.selectedLocation.value.latitude,longtitude: controller.selectedLocation.value.longitude, nameAddress: controller.namaAddressTextController.text, catatanAddress: controller.addressTextController.text, namaKost: controller.kostTextController.text);
                                     }else{
                                       if (controller.namaAddressTextController.text == '' || controller.addressTextController.text == '') {

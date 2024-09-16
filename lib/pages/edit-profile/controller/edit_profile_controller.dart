@@ -61,13 +61,12 @@ class EditProfileController extends GetxController {
           phoneNumberController.text = txtNomorHp.value;
           emailController.text = txtEmail.value;
         } else {
-          print('Error: ${data['message']}');
+          Get.snackbar('Pesan', data['message']);
         }
-      } else {
-        print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Exception: $e');
+      Get.snackbar('Error', '$e');
+
     } finally {
       isLoading.value = false;
     }
@@ -160,9 +159,8 @@ class EditProfileController extends GetxController {
         );
       } else {
         isLoading.value = false;
-        print(response.body);
         Get.snackbar(
-          'Error biasa',
+          'Error',
           'Error: ${response.statusCode} ${response.body}',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
@@ -172,13 +170,12 @@ class EditProfileController extends GetxController {
     } catch (e) {
       isLoading.value = false;
       Get.snackbar(
-        'Error Catch',
+        'Error',
         'Error occurred: $e',
         snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
-      print('$e');
     } finally {
       isLoading.value = false;
     }

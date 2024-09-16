@@ -56,7 +56,7 @@ class CartController extends GetxController {
         cartItems2.clear();
       }
     } catch (e) {
-      print(e);
+      Get.snackbar('Error', '$e');
     } finally {
       isLoading.value = false;
     }
@@ -72,7 +72,7 @@ class CartController extends GetxController {
       isLoadingButton.value = false;
       return true;
     } catch (e) {
-      print("Error fetching schedule: $e");
+      Get.snackbar('Error', '$e');
       return false;
     }
   }
@@ -94,11 +94,11 @@ class CartController extends GetxController {
         userPhoneVerified.value = data['user']['phone_verified_at'] ?? '';
         id = data['user']['id'] ?? '';
       }else {
-        print('Error: ${response.statusCode}');
+        Get.snackbar('Error', response.body);
+
       }
     } catch (e) {
-      print(e);
-
+      Get.snackbar('Error', '$e');
     }
   }
   Future<void> postCartItems2({
@@ -132,27 +132,23 @@ class CartController extends GetxController {
     });
 
     try {
-      print('menjalankan post item cart dengan api');
       final response = await http.post(Uri.parse(url), headers: headers, body: body);
         if (response.statusCode == 201) {
           final responseData = jsonDecode(response.body);
           final newCartId = responseData['data']['id'];
           final cartItem = cartItems2.firstWhereOrNull((item) => item.cartId?.value  == 0);
-          print('menjalankan post item cart dengan api berhasil');
           if (cartItem != null) {
             cartItem.cartId?.value = newCartId;
             cartid.value = newCartId;
             cartItems2.refresh();
-            print('menjalankan post item cart dengan api berhasil cartIetm != null');
           }
-          print('menjalankan post item cart dengan api berhasil cartIetm == null');
           fetchCart();
           cartItems2.refresh();
         } else {
-        print('Failed to post cart items: ${response.statusCode}');
+          Get.snackbar('Pesan',response.body);
       }
     } catch (e) {
-      print('Error posting cart items: $e');
+      Get.snackbar('Error', '$e');
     }
   }
 
@@ -169,7 +165,7 @@ class CartController extends GetxController {
     List<ToppingList>? selectedToppings,
     required int quantity,
   }) async {
-    print('addToCart2 di cartcontroller');
+
     final existingItem = cartItems2.firstWhereOrNull((item) {
       bool sameMenuId = item.productId == productId;
       bool sameVarian = (item.selectedVarian?.varianID == selectedVarian?.varianID);
@@ -182,7 +178,6 @@ class CartController extends GetxController {
     CartItem2 newItem;
 
     if (existingItem == null) {
-      print('existim Item = null');
       newItem = CartItem2(
         productId: productId,
         productName: productName,
@@ -208,7 +203,6 @@ class CartController extends GetxController {
     }
 
     else {
-      print('existim Item != null');
       existingItem.quantity.value += quantity;
       newItem = existingItem;
       await editCart(
@@ -293,13 +287,9 @@ class CartController extends GetxController {
             await fetchCart();
             cartItems2.refresh();
           }
-          final responseData = jsonDecode(response.body);
-
         } else {
           final responseData = jsonDecode(response.body);
           Get.snackbar('Pesan', '${response.statusCode} Terlalu banyak aksi, server sedang sibuk');
-          print('Failed to edit cart: ${jsonDecode(response.statusCode.toString())}');
-          print(responseData);
         }
       }else{
         final data = <String, dynamic>{
@@ -334,22 +324,19 @@ class CartController extends GetxController {
           cartItems2.refresh();
           isLoading.value = true;
           final responseData = jsonDecode(response.body);
-          print(responseData);
+
 
           await fetchCart();
         } else {
-          final responseData = jsonDecode(response.body);
           // Get.snackbar('Pesan', '${response.statusCode} Terlalu banyak aksi, server sedang sibuk');
-          print('Failed to edit cart: ${jsonDecode(response.statusCode.toString())}');
-
+          Get.snackbar('Error', response.body);
         }
       }
 
     } catch (e) {
-      print('Error: $e');
       Get.snackbar(
         'Error',
-        'An error occurred while processing your request',
+        '$e',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -363,7 +350,6 @@ class CartController extends GetxController {
 
   Future<void> removeCart({required int idCart,}) async {
     isLoading.value = true;
-    print(idCart);
     final url = Uri.parse('${GlobalVariables.apiCartDelete}$idCart');
 
     final client = http.Client();
@@ -377,18 +363,17 @@ class CartController extends GetxController {
         },
       );
       if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
         fetchCart();
         cartItems2.refresh();
 
       }else{
-        print(response);
+        Get.snackbar('Pesan', response.body);
+
       }
     } catch (e) {
-      print('Error: $e');
       Get.snackbar(
         'Error',
-        'An error occurred while processing your request',
+        '$e',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,

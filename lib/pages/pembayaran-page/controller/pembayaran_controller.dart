@@ -2,18 +2,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
 import 'package:warmindo_user_ui/pages/history-detail_page/view/history_detail_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/controller/history_controller.dart';
-import 'package:warmindo_user_ui/pages/pembayaran-page/view/pembayaran_complete_view.dart';
 import 'package:warmindo_user_ui/service/locationService.dart';
 import '../../../common/global_variables.dart';
-import '../../../common/model/cart_model2.dart';
-import '../../../common/model/history2_model.dart';
+
 
 
 
@@ -24,6 +21,7 @@ class PembayaranController extends GetxController{
   final CartController cartController = Get.put(CartController());
   bool keepPolling = true;
   RxBool isLoading = false.obs;
+  RxBool isLoadingAddress = false.obs;
   RxBool selectedOrderMethodTakeaway = false.obs;
   RxBool selectedOrderMethodDelivery = false.obs;
   RxDouble distanceBetween = 0.0.obs;
@@ -42,7 +40,6 @@ void button2 (){
   selectedButton3.value = false;
 }
 Future<void> calculateDeliveryFee () async {
-  print('dipnaggil');
   double distanceInMeters = distanceBetween.value;
   int fee = 3000;
   deliveryFee.value = fee;
@@ -53,23 +50,17 @@ Future<void> calculateDeliveryFee () async {
     // Add 1000 for each 5-meter increment
     fee += increments * 1000;
     deliveryFee.value = fee;
-    print('ini delivery fee di calculate ${deliveryFee.value}');
-    print('ini distance in meter $distanceInMeters');
   }
 }
   void delivery(BuildContext context) async {
-
+  isLoadingAddress.value = true;
   await checkUserWithinRadar(context);
-    print("After location check, isWithinRadar: ${isWithinRadar.value}");
-
+  isLoadingAddress.value = false;
     if (isWithinRadar.value) {
        await calculateDeliveryFee();
-       print(deliveryFee.value);
-      print('User is within the radar: ${isWithinRadar.value}');
       selectedOrderMethodDelivery.value = true;
       selectedOrderMethodTakeaway.value = false;
     } else {
-      print('User is outside the radar: ${isWithinRadar.value}');
       Get.snackbar('Pesan', 'Maaf Anda diluar jangkauan radar');
     }
 
@@ -84,14 +75,8 @@ Future<void> calculateDeliveryFee () async {
         position.latitude,
         position.longitude,
     );
-    print("Calculated Distance: $distance meters");
     distanceBetween.value = distance;
     isWithinRadar.value = distance <= 12000;
-    print(radarLongitude);
-    print(radarLatitude);
-    print(position.longitude);
-    print(position.latitude);
-    print("Is Within Radar: ${isWithinRadar.value}");
   }catch(e){
     if (e.toString().contains('permanently denied')) {
       // Show an alert dialog to guide the user to app settings
@@ -103,16 +88,16 @@ Future<void> calculateDeliveryFee () async {
   void showSettingsDialog(BuildContext context){
   showDialog(context: context, builder: (context) {
     return AlertDialog(
-      title: Text('Permission Required'),
-      content: Text('Izin lokasi dilarang, silahkan pergi ke setting dan pilih enable '),
+      title: const Text('Permission Required'),
+      content: const Text('Izin lokasi dilarang, silahkan pergi ke setting dan pilih enable '),
       actions: [
         TextButton(onPressed: () {
           locationService.openAppSettings();
           Get.back(closeOverlays: true);
-        }, child: Text('Buka Settings')),
+        }, child: const Text('Buka Settings')),
         TextButton(onPressed: () {
           Get.back(closeOverlays: true);
-        }, child: Text('Nanti')),
+        }, child: const Text('Nanti')),
       ],
     );
   },);
@@ -144,11 +129,9 @@ Future<void> postOrder({required String catatan,required int alamatID}) async{
   final responseBody = jsonDecode(response.body);
     if (responseBody['success'] == true) {
       orderID.value = responseBody['data']['id'].toString();
-    } else {
-      print('Error: ${responseBody['message']}');
     }
   }catch(e){
-    print(e);
+    Get.snackbar('Error', '$e');
   }
 }
 
@@ -177,9 +160,8 @@ Future<void> postOrderDetail({required String catatan}) async{
     try{
       final response = await http.post(Uri.parse(url),headers: headers, body: jsonEncode(toRequestBody()),);
       final responseBody = jsonDecode(response.body);
-      print('bikin order detail');
     }catch(e){
-      print('ada error disini $e');
+      Get.snackbar('Error', '$e');
     }
   }
   void removeNotiftoken() async{
@@ -210,7 +192,6 @@ Future<void> postOrderDetail({required String catatan}) async{
         final response = await http.post(Uri.parse(url),headers: headers, body:body);
         final responseBody = jsonDecode(response.body);
         if(response.statusCode == 201){
-          print(responseBody['status']);
           if(responseBody['status'] == 'success'){
             final uriString = Uri.parse(responseBody['checkout_link']);
             launchUrl(uriString,mode: LaunchMode.inAppWebView);
@@ -220,15 +201,11 @@ Future<void> postOrderDetail({required String catatan}) async{
               Get.off(HistoryDetailPage(initialOrder: order));
             });
 
-          }else{
-            print('ada error ');
           }
-        }else{
-          print(responseBody);
         }
       }
     }catch(e){
-      print('ada error di catch2 $e');
+      Get.snackbar('Error', '$e');
     }
     cartController.fetchCart();
     isLoading.value = false;

@@ -81,11 +81,9 @@ class GoogleSignInButton extends StatelessWidget {
 
       }
     } on PlatformException catch (e) {
-      print('Error signing in with Google: $e');
-      Get.snackbar('Error', 'Sign In Failed - PlatformException');
+      Get.snackbar('Error', 'Sign In Failed - $e');
     } catch (e) {
-      print('Error signing in with Google: $e');
-      Get.snackbar('Error', 'Sign In Failed - General Exception');
+      Get.snackbar('Error', 'Sign In Failed - $e');
     }finally{
       loginController.isLoading.value = false;
     }
