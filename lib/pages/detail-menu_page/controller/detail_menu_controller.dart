@@ -34,10 +34,10 @@ class DetailMenuController extends GetxController {
         // Filter the menu based on the provided menuId
         menu.value = fetchedMenu.where((item) => item.menuId == menuId).toList();
       } else {
-        print('Error: ${response.statusCode}');
+        Get.snackbar('Pesan',response.body);
       }
     } catch (e) {
-      print('Exception: $e');
+      Get.snackbar('Error', '$e');
     } finally {
       isLoading.value = false;
     }
@@ -57,10 +57,10 @@ class DetailMenuController extends GetxController {
         final data = jsonDecode(response.body);
 
       } else {
-        print('Error: ${response.statusCode}');
+        Get.snackbar('Pesan', response.body);
       }
     } catch (e) {
-      print('Exception: $e');
+      Get.snackbar('Error', '$e');
 
     } finally {
       isLoading.value = false;
@@ -80,11 +80,10 @@ class DetailMenuController extends GetxController {
         varianList.value = varianListFromJson(response.body);
         final data = jsonDecode(response.body);
       } else {
-        print('Error: ${response.statusCode}');
+        Get.snackbar('Pesan', response.body);
       }
     } catch (e) {
-      print('Exception: $e');
-
+      Get.snackbar('Error', '$e');
     } finally {
       isLoading.value = false;
     }

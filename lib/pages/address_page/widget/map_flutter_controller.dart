@@ -24,9 +24,8 @@ class MapFlutterController extends GetxController {
   RxBool confirmLoading = false.obs;
   Timer? _debounceTimer;
   void confirm(){
-    selectedLocation.value = LatLng(0.0, 0.0);
+    selectedLocation.value = const LatLng(0.0, 0.0);
     Get.back();
-    print(selectedLocation.value);
   }
   @override
   void onInit() async {
@@ -44,7 +43,7 @@ class MapFlutterController extends GetxController {
       // Assign the result to the observable list
       selectedPlacemarks.value = placemarks;
     } catch (e) {
-      print("Error fetching placemarks: $e");
+      Get.snackbar('Error', '$e');
     }
   }
   Future<void> confirmLocationUpdate({
@@ -62,7 +61,7 @@ class MapFlutterController extends GetxController {
         'longitude': longtitude,
         'nama_alamat': nameAddress,
         'catatan_alamat': catatanAddress,
-        'detail_alamat': formatPlacemark(selectedPlacemarks.value),
+        'detail_alamat': formatPlacemark(selectedPlacemarks),
         '_method': 'put',
         'nama_kost': namaKost,
       })).timeout(const Duration(seconds: 10));
@@ -101,22 +100,18 @@ class MapFlutterController extends GetxController {
           'nama_alamat': nameAddress,
           'catatan_alamat': catatanAddress,
           'nama_kost': namaKost,
-          'detail_alamat': formatPlacemark(selectedPlacemarks.value)
+          'detail_alamat': formatPlacemark(selectedPlacemarks)
         }),
       ).timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 201) {
-        print('Response: ${response.body}');
         await addressPageController.fetchAddress();
         Get.back();
         Get.snackbar('Pesan', 'Alamat Berhasil ditambah');
       } else {
-        print('Failed with status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
         Get.snackbar('Error', 'Failed to add location: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error: $e'); // Print the exact error message
       Get.snackbar('Error', 'An error occurred: $e');
     } finally {
       confirmLoading.value = false;
@@ -133,7 +128,6 @@ class MapFlutterController extends GetxController {
       selectedPlacemarks.value = placemarks;
       changed.value = false;
       selectedLocation.value = newLocation;
-      print(selectedLocation.value);
     });
   }
   String formatPlacemark(List<Placemark> placemarks) {

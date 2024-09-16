@@ -47,7 +47,7 @@ class CartData extends GetView<CartController> {
                     menuId: 0,
                     nameMenu: '',
                     image: '',
-                    stock: 0,
+                    stock: 0.obs,
                     price: 0,
                     category: '',
                     statusMenu: '0',
@@ -72,7 +72,7 @@ class CartData extends GetView<CartController> {
                       Obx(()=>Container(
                           width: screenWidth / 3.4,
                           height: screenWidth / 3.4,
-                          foregroundDecoration: (menu.stock! > 1 &&
+                          foregroundDecoration: (menu.stock!.value > 1 &&
                               scheduleController.jadwalElement[0].is_open &&
                               menu.statusMenu != '0' &&
                               (cartItem.selectedVarian == null || popUpController.varianList.any((variantItem) => variantItem.varianID == cartItem.selectedVarian?.varianID && variantItem.statusVarian == '1')) &&
@@ -118,7 +118,7 @@ class CartData extends GetView<CartController> {
                                             menuId: 0,
                                             nameMenu: '',
                                             image: '',
-                                            stock: 0,
+                                            stock: 0.obs,
                                             price: 0,
                                             category: '',
                                             statusMenu: '0',
@@ -249,7 +249,6 @@ class CartData extends GetView<CartController> {
                   );
                   return varian.statusVarian != '1' || varian == null; // Return true if variant is disabled
                 }).obs;
-
                 RxBool hasDisableTopping = controller.cartItems2.any((cartItem) {
                   return cartItem.selectedToppings?.any((selectedTopping) {
                     final matchingTopping = popUpController.toppingList.firstWhere(
@@ -265,7 +264,7 @@ class CartData extends GetView<CartController> {
 
                 RxBool hasLowStock = controller.cartItems2.any((cartItem) {
                   final menu = controller.menuController.menuElement
-                      .firstWhere((menuItem) => menuItem.menuId == cartItem.productId, orElse: () => MenuList(menuId: 0, statusMenu: '0', image: '', nameMenu: '', price: 0, category: '', stock: 0,description: ''));
+                      .firstWhere((menuItem) => menuItem.menuId == cartItem.productId, orElse: () => MenuList(menuId: 0, statusMenu: '0', image: '', nameMenu: '', price: 0, category: '', stock: 0.obs,description: ''));
                   return menu.stock! > 1;
                 }).obs;
                  return InkWell(

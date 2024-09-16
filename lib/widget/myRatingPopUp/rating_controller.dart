@@ -46,13 +46,11 @@ class RatingController extends GetxController{
           menu.ratings?.value = rating;
           menuPageController.fetchProduct();
         }
-      } else {
-        print('Failed to submit rating. Status code: ${response.statusCode}');
       }
       isLoadingButton.value = false;
     } catch (e) {
-      // Handle client-side error
-      print('Error occurred while submitting rating: $e');
+
+      Get.snackbar('Error', '$e');
     }
   }
 

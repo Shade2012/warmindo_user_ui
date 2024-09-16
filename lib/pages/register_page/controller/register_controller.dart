@@ -65,7 +65,6 @@ class RegisterController extends GetxController {
         );
       }
     } catch (e) {
-      print('Error: $e');
       Get.snackbar(
         'Error',
         'Akun Sudah ada',

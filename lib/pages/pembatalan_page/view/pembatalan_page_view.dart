@@ -64,7 +64,6 @@ class PembatalanPage extends StatelessWidget {
                         onChanged: (RxInt? value) {
                           controller.selectedBanks.value = 'Belum Dipilih';
                           _value.value = value!.value;  // Update the reactive variable
-                          print('in the payment page $_value');  // This should print the updated value
                         },
                       ),
                     ],

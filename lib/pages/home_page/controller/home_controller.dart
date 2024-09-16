@@ -41,17 +41,12 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
         final data = jsonDecode(response.body);
 
         if (data['success']) {
-          // Extract the name from the response
           txtUsername.value = data['user']['name'];
           profileController.user_verified.value = data['user']['user_verified'];
-        } else {
-          print('Error: ${data['message']}');
         }
-      } else {
-        print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Exception: $e');
+      Get.snackbar('Error', '$e');
     } finally {
       isLoading.value = false; // Set loading to false after data is fetched
     }
@@ -92,11 +87,9 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
       if (response.statusCode == 200) {
         final menu = menuListFromJson(response.body);
         menuElement.value = menu.where((element) => element.statusMenu == '1' && element.stock! > 1 ).toList();
-      } else {
-        print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Exception: $e');
+      Get.snackbar('Error', '$e');
     } finally {
       isLoading.value = false;
     }

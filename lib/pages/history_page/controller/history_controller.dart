@@ -84,10 +84,10 @@ class HistoryController extends GetxController {
         isLoading.value = false;
       } else {
         // Handle other status codes if needed
-        print('Failed to fetch history: ${response.statusCode}');
+        Get.snackbar('Gagal mengambil data riwayat', response.body);
       }
     } catch (e) {
-      print('Error: $e');
+      Get.snackbar('Error', '$e');
     } finally {
       isLoading.value = false; // Reset loading state
     }
@@ -104,21 +104,19 @@ class HistoryController extends GetxController {
           'Authorization': 'Bearer ${token.value}',
         },
       ).timeout(const Duration(seconds: 10));
-      print('mulai fetch');
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(response.body)['orders'];
         orders2.clear();
         orders2.assignAll(data.map((item) => Order2.fromJson(item)).toList());
         orders2.refresh();
         isLoading.value = false;
-        print('selesai fetch');
       } else {
         // Handle other status codes if needed
-        print('Failed to fetch history: ${response.statusCode}');
+        Get.snackbar('Gagal mengambil data riwayat', response.body);
       }
     } catch (e) {
-      print('berhasil fetch history tanpa loading');
-      print('Error: $e');
+      Get.snackbar('Error', '$e');
+
     }
   }
   void changeCategory(String newCategory) {
@@ -372,8 +370,6 @@ class HistoryController extends GetxController {
             Get.snackbar('Pesan', 'Pesanan sudah di bayar');
             isLoading.value = false;
             fetchHistory();
-          }else{
-            print('ada error ');
           }
         }else if(response.statusCode == 400){
           Get.snackbar('Pesan', 'Pesanan sudah di bayar');
@@ -382,7 +378,8 @@ class HistoryController extends GetxController {
         }
       }
     }catch(e){
-      print('ada error di catch $e');
+      Get.snackbar('Error', '$e');
+
     }
 }
 

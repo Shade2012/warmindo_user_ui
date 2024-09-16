@@ -61,7 +61,6 @@ class PopUpVerification extends StatelessWidget {
             const SizedBox(height: 10,),
             Center(
               child: InkWell(onTap: (){
-                print('object');
                   controller.sendOtp();
               }, child: Text('Kirim Ulang',style: blueLinkRegular,)) ,
             )

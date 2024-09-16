@@ -11,11 +11,11 @@ class MapFlutterWidgetShimmer extends StatelessWidget {
     return Container(
       height: screenHeight * 0.73,
       margin: const EdgeInsets.all(20),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+           Column(
             children: [
               Skeleton(
                 width: double.infinity,

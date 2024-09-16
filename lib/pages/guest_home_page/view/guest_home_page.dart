@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:warmindo_user_ui/pages/guest_home_page/controller/guest_home_controller.dart';
-import 'package:warmindo_user_ui/pages/guest_home_page/view/guest_snack.dart';
 import 'package:warmindo_user_ui/widget/makanan_widget.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../utils/themes/textstyle_themes.dart';
@@ -65,7 +64,6 @@ class GuestHomePage extends StatelessWidget {
                       children: [
                     MakananWidget(true),
                     MinumanWidget(true),
-                    SnackWidget(true),
                       ],
                     ),
                     const SizedBox(height: 20,),

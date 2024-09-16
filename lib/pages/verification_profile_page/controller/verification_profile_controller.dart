@@ -80,7 +80,6 @@ class VerificationProfileController extends GetxController{
             backgroundColor: Colors.green,
             colorText: Colors.white,);
         }
-        print('Response: ${response.body}');
       } else {
         // Show error snackbar
         Get.snackbar(
@@ -92,10 +91,6 @@ class VerificationProfileController extends GetxController{
         );
       }
     } catch (e) {
-      // Handle error
-      print('Error occurred while sending OTP: $e');
-
-      // Show error snackbar
       Get.snackbar(
         'Error',
         '$e',
@@ -158,7 +153,6 @@ class VerificationProfileController extends GetxController{
       }
     } catch (e) {
       // Handle error
-      print('Error occurred while sending OTP: $e');
 
       // Show error snackbar
       Get.snackbar(
@@ -189,14 +183,10 @@ class VerificationProfileController extends GetxController{
           if (data['success']) {
             txtPhoneNumber.value = data['user']['phone_number'];
             phoneNumberController.text = txtPhoneNumber.value;
-          } else {
-            print('Error: ${data['message']}');
           }
-        } else {
-          print('Error: ${response.statusCode}');
         }
       } catch (e) {
-        print('Exception: $e');
+      //
       } finally {
         isLoading.value = false; // Set loading to false after data is fetched
       }
@@ -311,8 +301,6 @@ class VerificationProfileController extends GetxController{
             return PopUpVerification();
           },
         );
-        // Handle success response
-        print(response.body);
       } else {
         // Check for specific error message
         if (responseBody['message'] == "The phone number has already been taken.") {

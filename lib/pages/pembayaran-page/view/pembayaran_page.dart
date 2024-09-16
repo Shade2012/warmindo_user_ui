@@ -12,6 +12,7 @@ import '../../../common/model/cart_model2.dart';
 import '../../../utils/themes/image_themes.dart';
 import '../../../widget/appBar.dart';
 import '../../cart_page/controller/cart_controller.dart';
+import '../shimmer/address_shimmer.dart';
 import '../widget/address_widget.dart';
 
 class PembayaranPage extends GetView<PembayaranController> {
@@ -211,18 +212,24 @@ class PembayaranPage extends GetView<PembayaranController> {
               }),
               const SizedBox( height: 20,),
               Obx(()=> Visibility(
-                  visible: controller.selectedOrderMethodDelivery.value,
+                  visible: controller.selectedOrderMethodDelivery.value || controller.isLoadingAddress.value,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Alamat Pengantaran',style: boldTextStyle,),
                       const SizedBox(height: 20,),
-                      AddressWidget(
-                          addressModel: addressPageController.address.firstWhere(
-                                (element) => element.selected?.value == '1',
-                            orElse: () => AddressModel(),
-                          ),
-                      )
+                      Obx((){
+                        if(controller.isLoadingAddress.value){
+                          return AddressShimmer();
+                        }else{
+                          return AddressWidget(
+                              addressModel: addressPageController.address.firstWhere(
+                          (element) => element.selected?.value == '1',
+                        orElse: () => AddressModel(),
+                        ));
+                        }
+                      }
+                        ),
                     ],
                   ),
                 ),
@@ -234,17 +241,23 @@ class PembayaranPage extends GetView<PembayaranController> {
                 visible: controller.selectedOrderMethodDelivery.value == true,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 5),
-                child:  Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child:  Column(
                   children: [
-                    Text("Biaya Delivery", style: boldTextStyle),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Biaya Delivery'),
-                        const SizedBox(width: 5,),
-                        Obx(()=> Text(currencyFormat.format(controller.deliveryFee.value),style: boldTextStyle,)),
+                        Text("Biaya Delivery", style: boldTextStyle),
+                        Row(
+                          children: [
+                            const Text('Biaya Delivery'),
+                            const SizedBox(width: 5,),
+                            Obx(()=> Text(currencyFormat.format(controller.deliveryFee.value),style: boldTextStyle,)),
+                          ],
+                        )
                       ],
-                    )
+                    ),
+                    const SizedBox(height: 10),
+                    const Divider(),
                   ],
                 ),
               ))),

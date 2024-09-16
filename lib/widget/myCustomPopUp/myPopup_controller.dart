@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
@@ -63,11 +61,9 @@ class MyCustomPopUpController extends GetxController {
       if (response.statusCode == 200) {
         final data = toppingListFromJson(response.body);
         toppingList.value = data;
-      } else {
-        print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Exception: $e');
+      Get.snackbar('Error', '$e');
 
     } finally {
       isLoading.value = false;
@@ -87,11 +83,9 @@ class MyCustomPopUpController extends GetxController {
     final data = varianListFromJson(response.body);
     varianList.value = data.where((element) => element.statusVarian == "1",).toList();
         // final data = jsonDecode(response.body);
-      } else {
-        print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Exception: $e');
+      Get.snackbar('Error', '$e');
 
     } finally {
       isLoading.value = false;
@@ -171,7 +165,6 @@ class MyCustomPopUpController extends GetxController {
     required int quantity,
     required int cartID,
   }) async {
-    print('add to cart di pop up');
     cartController.isLoading.value = true;
     await cartController.addToCart2(
       context: context,

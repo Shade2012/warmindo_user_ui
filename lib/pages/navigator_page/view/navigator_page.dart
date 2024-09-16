@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:warmindo_user_ui/pages/cart_page/controller/cart_controller.dart';
 import 'package:warmindo_user_ui/pages/cart_page/view/cart_page.dart';
 import 'package:warmindo_user_ui/pages/history_page/view/history_page.dart';
 import 'package:warmindo_user_ui/pages/home_page/view/home_page.dart';

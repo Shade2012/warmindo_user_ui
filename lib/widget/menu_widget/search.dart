@@ -42,9 +42,14 @@ class Search extends StatelessWidget {
 
     return RefreshIndicator(
       onRefresh: () async {
-        await cartController.fetchUser();
-        await menuController.fetchProduct();
-        await guestMenuController.fetchProduct();
+        if(isGuest == true){
+          await menuController.fetchProduct();
+          await guestMenuController.fetchProduct();
+        }else{
+          await cartController.fetchUser();
+          await menuController.fetchProduct();
+          await guestMenuController.fetchProduct();
+        }
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
@@ -121,7 +126,7 @@ class Search extends StatelessWidget {
                           Stack(
                             children: [
                               Container(
-                                foregroundDecoration: (menu.stock! > 1 && scheduleController.jadwalElement[0].is_open && menu.statusMenu != '0')
+                                foregroundDecoration: (menu.stock!.value > 1 && scheduleController.jadwalElement[0].is_open && menu.statusMenu != '0')
                                     ? null
                                     : const BoxDecoration(
                                   color: Colors.grey,
@@ -178,7 +183,7 @@ class Search extends StatelessWidget {
                                                 popUpcontroller.showCustomModalForGuest(context);
                                               } else {
                                                 if(menu.statusMenu == '1'){
-                                                  if(menu.stock! < 1){
+                                                  if(menu.stock!.value < 1){
                                                     Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
                                                   }
                                                   else{
@@ -255,7 +260,7 @@ class Search extends StatelessWidget {
                                                   }
                                                   else{
                                                     if(menu.statusMenu == '1'){
-                                                      if(menu.stock! < 1){
+                                                      if(menu.stock!.value < 1){
                                                         Get.snackbar('Pesan', 'Stock Habis',colorText: Colors.black);
                                                       }
                                                       else{

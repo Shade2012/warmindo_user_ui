@@ -14,10 +14,10 @@ class AddressWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         color: Colors.white,
           boxShadow: [
             BoxShadow(
@@ -36,9 +36,9 @@ class AddressWidget extends StatelessWidget {
                 await addressPageController.checkUserWithinRadar(context,null);
               },
               child: Container(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
@@ -56,15 +56,15 @@ class AddressWidget extends StatelessWidget {
               ),
             );
           }
-          if(addressPageController.address.any((element) => element.selected != '1',)){
+          if(addressPageController.address.every((element) => element.selected?.value != '1',)){
             return InkWell(
               onTap: () async {
                 addressPageController.showCustomModalForItem(context);
               },
               child: Container(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
@@ -99,7 +99,7 @@ class AddressWidget extends StatelessWidget {
                       addressPageController.showCustomModalForItem(context);
                     },
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Colors.black,
                               borderRadius: BorderRadius.all(Radius.circular(15))
                           ),
@@ -111,8 +111,8 @@ class AddressWidget extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 10,),
-                Container(
-                  width: screenWidth * 0.48,
+                SizedBox(
+                  width: double.infinity,
                     child: Text(
                       style: regularInputTextStyle,
                   addressModel.detailAddress ?? '', maxLines: 5,
@@ -122,7 +122,7 @@ class AddressWidget extends StatelessWidget {
             const SizedBox(height: 10,),
             Container(
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Color.fromARGB(255 ,244, 244, 244),
                   borderRadius: BorderRadius.all(Radius.circular(5))
               ),
@@ -143,13 +143,13 @@ class AddressWidget extends StatelessWidget {
                 Get.to(()=>FlutterMapWidget(longtitude: addressModel.longtitude ?? 0, lagtitude: addressModel.lagtitude ?? 0, isAdd: false, addressModel: addressModel,));
               },
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border:Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.all(Radius.circular(20))
+                  borderRadius: const BorderRadius.all(Radius.circular(20))
                 ),
-                child: Row(
+                child: const Row(
                   children: [
                     Icon(Icons.edit),
                     SizedBox(width: 5,),

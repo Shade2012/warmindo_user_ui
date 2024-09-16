@@ -35,6 +35,7 @@ class MenuPage extends StatelessWidget {
         initialIndex: navigatorController.menuPageArgument.value,
         length: 3,
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(110),
             child: AppBar(

@@ -52,7 +52,7 @@ class HomeStatus extends StatelessWidget {
                   Row(
                     children: [
                       Text('Perkiraan Buka ',style: boldphoneNumberRegularTextStyle,),
-                      Text('${controller.scheduleController.getAdjustedTime(controller.scheduleController.jadwalElement[0])}',style: boldphoneNumberTextStyle,),
+                      Text(controller.scheduleController.getAdjustedTime(controller.scheduleController.jadwalElement[0]),style: boldphoneNumberTextStyle,),
                     ],
                   ),
                 ],

@@ -19,6 +19,7 @@ class CartPage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(title: Text('Keranjang',style: headerRegularStyle,),centerTitle: true,automaticallyImplyLeading: false,),
       body: RefreshIndicator(
         onRefresh: () async {

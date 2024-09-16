@@ -18,6 +18,7 @@ class GuestMenuController extends GetxController {
   String lastQuery = '';  // Store the last query
   RxBool isConnected = true.obs;
   RxString searchObx = ''.obs;
+  RxInt statusCode = 0.obs;
   late Timer _debounce = Timer(Duration.zero, () { });
   @override
   void onInit() async {
@@ -41,10 +42,11 @@ class GuestMenuController extends GetxController {
       if (response.statusCode == 200) {
         menuElement.value = menuListFromJson(response.body);
       } else {
-        print('Error: ${response.statusCode}');
+        Get.snackbar('Error', response.body);
       }
     } catch (e) {
-      print(e);
+      Get.snackbar('Error', '$e');
+
     } finally {
       isLoading.value = false;
     }
@@ -112,15 +114,11 @@ class GuestMenuController extends GetxController {
       try {
         final response = await http.get(
           Uri.parse(
-              'https://warmindo.pradiptaahmad.tech/api/menus/search?q=$query'),
+              '${GlobalVariables.apiSearchUrl}$query'),
         ).timeout(const Duration(seconds: 5));
 
         if (response.statusCode == 200) {
-          if (query == '') {
-            Future.delayed(const Duration(seconds: 3),(){
-              searchResults.clear();
-            });
-          } else {
+        {
             SearchResult searchResult = SearchResult.fromJson(
                 json.decode(response.body));
             searchResults.value = searchResult.data.map((searchList) =>
@@ -130,7 +128,7 @@ class GuestMenuController extends GetxController {
                   nameMenu: searchList.nameMenu,
                   price: searchList.price.toInt(),
                   category: searchList.category,
-                  stock: searchList.stock,
+                  stock: searchList.stock.obs,
                   rating: searchList.ratings,
                   description: searchList.description,
                   createdAt: searchList.createdAt,
@@ -142,10 +140,10 @@ class GuestMenuController extends GetxController {
           if(response.statusCode == 404){
             searchResults.clear();
           }
-          print('Error: ${response.statusCode}');
         }
+        statusCode.value = response.statusCode;
       } catch (e) {
-        print('test error $e');
+        Get.snackbar('Error', '$e');
       }
     });
   }

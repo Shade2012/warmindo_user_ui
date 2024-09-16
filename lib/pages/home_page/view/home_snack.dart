@@ -34,7 +34,7 @@ class HomeSnack extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.only(left: 10),
-        foregroundDecoration: (menuItem.stock! > 1 && scheduleController.jadwalElement[0].is_open && menuItem.statusMenu != '0')
+        foregroundDecoration: (menuItem.stock!.value > 1 && scheduleController.jadwalElement[0].is_open && menuItem.statusMenu != '0')
             ? null
             : const BoxDecoration(
           color: Colors.grey,

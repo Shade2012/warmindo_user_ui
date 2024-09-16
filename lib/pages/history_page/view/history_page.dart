@@ -16,6 +16,7 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Pesanan dan Riwayat', style: headerRegularStyle,),
         centerTitle: true,
