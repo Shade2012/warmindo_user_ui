@@ -78,14 +78,16 @@ class ForgotPasswordController extends GetxController {
       final responseData = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        if(responseData['status'] == 'failed'){
-          Get.snackbar(
-            'Error',
-            'Kode OTP salah',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
+        if(responseData['status'] == 'failed') {
+          if (Get.isSnackbarOpen != true) {
+            Get.snackbar(
+              'Error',
+              'Kode OTP salah',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
+          }
         }
         else if (responseData['status'] == 'success'){
           Get.snackbar(
@@ -101,22 +103,26 @@ class ForgotPasswordController extends GetxController {
       } else {
         // Error occurred
         // Show error snackbar
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Ada Kesalahan',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+      }
+    } catch (e) {
+      if(Get.isSnackbarOpen != true) {
         Get.snackbar(
           'Error',
-          'Ada Kesalahan',
-          snackPosition: SnackPosition.TOP,
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
       }
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        '$e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
     } finally {
       isLoading.value = false;
     }
@@ -144,13 +150,15 @@ class ForgotPasswordController extends GetxController {
       final responseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         if(responseData['status'] == 'failed'){
-          Get.snackbar(
-            'Pesan',
-            'Tolong tunggu 5 menit',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.green,
-            colorText: Colors.white,
-          );
+          if(Get.isSnackbarOpen != true) {
+            Get.snackbar(
+              'Pesan',
+              'Tolong tunggu 5 menit',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.green,
+              colorText: Colors.white,
+            );
+          }
         }else {
           prefs.setString('token3', '${responseData['token']}');
           Get.to(ForgotPasswordSecondPage());
@@ -164,23 +172,18 @@ class ForgotPasswordController extends GetxController {
           );
         }
       }else{
-        Get.snackbar(
-          'Error',
-          'Nomor Hp tidak ditemukan',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Nomor Hp tidak ditemukan',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        'Nomor Hp tidak ditemukan',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
     } finally {
       isLoading.value = false;
     }
@@ -207,31 +210,28 @@ class ForgotPasswordController extends GetxController {
       if (response.statusCode == 200) {
         prefs.setString('token2','${responseData['token']}');
         isLoading.value = false;
-        Get.snackbar(
-          'Success',
-          'Otp Berhasil dikirim',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
-      }else{
-        Get.snackbar(
-          'Error',
-          'Tunggu 5 Menit',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Success',
+            'Otp Berhasil dikirim',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }
+      }else {
+        if (Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Tunggu 5 Menit',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        'Tunggu 5 Menit',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
     } finally {
       isLoading.value = false;
     }
@@ -294,13 +294,15 @@ class ForgotPasswordController extends GetxController {
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        'Error occurred: $e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          'Error occurred: $e',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }

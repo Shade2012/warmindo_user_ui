@@ -80,7 +80,15 @@ class AddressPageController extends GetxController {
 
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }
@@ -97,11 +105,17 @@ class AddressPageController extends GetxController {
       if (response.statusCode == 200) {
         await fetchAddress();
         await pembayaranController.calculateDeliveryFee();
-      }else{
-        Get.snackbar('Pesan', response.body);
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }
@@ -138,11 +152,17 @@ class AddressPageController extends GetxController {
       }).timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         await fetchAddress();
-      }else{
-        Get.snackbar('Pesan', response.body);
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }
@@ -164,7 +184,15 @@ class AddressPageController extends GetxController {
       if (e.toString().contains('permanently denied')) {
         showSettingsDialog(context);
       }
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }
     addLoading.value = false;
   }

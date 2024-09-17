@@ -75,15 +75,29 @@ class GoogleSignInButton extends StatelessWidget {
       Get.offAllNamed(Routes.BOTTOM_NAVBAR);
     }
       if (user == null) {
-        Get.snackbar('Error', 'Sign In Failed');
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar('Error', 'Sign In Failed');
+        }
       } else {
-        Get.snackbar('Pesan', 'Success');
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar('Pesan', 'Success');
+        }
 
       }
     } on PlatformException catch (e) {
-      Get.snackbar('Error', 'Sign In Failed - $e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar('Error', 'Sign In Failed - $e');
+      }
     } catch (e) {
-      Get.snackbar('Error', 'Sign In Failed - $e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }finally{
       loginController.isLoading.value = false;
     }

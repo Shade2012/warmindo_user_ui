@@ -61,7 +61,9 @@ Future<void> calculateDeliveryFee () async {
       selectedOrderMethodDelivery.value = true;
       selectedOrderMethodTakeaway.value = false;
     } else {
-      Get.snackbar('Pesan', 'Maaf Anda diluar jangkauan radar');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar('Pesan', 'Maaf Anda diluar jangkauan radar');
+      }
     }
 
   }
@@ -82,7 +84,15 @@ Future<void> calculateDeliveryFee () async {
       // Show an alert dialog to guide the user to app settings
       showSettingsDialog(context);
     }
-    Get.snackbar('Pesan', '$e');
+    if(Get.isSnackbarOpen != true) {
+      Get.snackbar(
+        'Error',
+        '$e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
   }
   void showSettingsDialog(BuildContext context){
@@ -131,7 +141,15 @@ Future<void> postOrder({required String catatan,required int alamatID}) async{
       orderID.value = responseBody['data']['id'].toString();
     }
   }catch(e){
-    Get.snackbar('Error', '$e');
+    if(Get.isSnackbarOpen != true) {
+      Get.snackbar(
+        'Error',
+        '$e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 }
 
@@ -161,7 +179,15 @@ Future<void> postOrderDetail({required String catatan}) async{
       final response = await http.post(Uri.parse(url),headers: headers, body: jsonEncode(toRequestBody()),);
       final responseBody = jsonDecode(response.body);
     }catch(e){
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }
   }
   void removeNotiftoken() async{
@@ -205,7 +231,15 @@ Future<void> postOrderDetail({required String catatan}) async{
         }
       }
     }catch(e){
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }
     cartController.fetchCart();
     isLoading.value = false;

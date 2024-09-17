@@ -24,7 +24,11 @@ class Cart extends StatelessWidget {
         try {
           final cartItem = cartController.cartItems2.firstWhereOrNull((item) => item.productId == product.menuId);
           if (scheduleController.jadwalElement[0].is_open == false) {
-            Get.snackbar('Pesan', 'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti', colorText: Colors.black);
+            if(Get.isSnackbarOpen != true) {
+              Get.snackbar('Pesan',
+                  'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti',
+                  colorText: Colors.black);
+            }
           } else {
             if (cartItem == null) {
               if (cartController.userPhone.value.isEmpty) {
@@ -62,7 +66,9 @@ class Cart extends StatelessWidget {
                 popUpcontroller.fetchVarian();
                 if(product.statusMenu == '1'){
                   if(product.stock! < 1 ){
-                    Get.snackbar('Pesan', 'Stok Menu Habis ');
+                    if(Get.isSnackbarOpen != true) {
+                      Get.snackbar('Pesan', 'Stok Menu Habis ');
+                    }
                   }else{
                     bool variantRequired = popUpcontroller.varianList.any((varian) => varian.category == product.nameMenu);
                     if(variantRequired){
@@ -75,24 +81,38 @@ class Cart extends StatelessWidget {
                     }
                   }
                 }else{
-                  Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan.');
+                  if(Get.isSnackbarOpen != true) {
+                    Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan.');
+                  }
                 }
               }
             } else {
               if(product.statusMenu == '1'){
                 if(product.stock! < 1 ){
-                  Get.snackbar('Pesan', 'Stok Menu Habis ');
+                  if(Get.isSnackbarOpen != true) {
+                    Get.snackbar('Pesan', 'Stok Menu Habis ');
+                  }
                 }else{
                   popUpcontroller.showDetailPopupModal(context, product);
                 }
               }else{
-                Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan.');
+                if(Get.isSnackbarOpen != true) {
+                  Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan.');
+                }
               }
 
             }
           }
         } catch (e) {
-          Get.snackbar('Error', 'An error occurred', colorText: Colors.white, backgroundColor: Colors.red);
+          if(Get.isSnackbarOpen != true) {
+            Get.snackbar(
+              'Error',
+              '$e',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
+          }
         }
       },
 

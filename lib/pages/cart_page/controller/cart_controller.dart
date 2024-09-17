@@ -56,7 +56,7 @@ class CartController extends GetxController {
         cartItems2.clear();
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      throw Exception(e);
     } finally {
       isLoading.value = false;
     }
@@ -72,7 +72,7 @@ class CartController extends GetxController {
       isLoadingButton.value = false;
       return true;
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      throw Exception(e);
       return false;
     }
   }
@@ -93,12 +93,17 @@ class CartController extends GetxController {
         userPhone.value = data['user']['phone_number'] ?? '';
         userPhoneVerified.value = data['user']['phone_verified_at'] ?? '';
         id = data['user']['id'] ?? '';
-      }else {
-        Get.snackbar('Error', response.body);
-
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }
   }
   Future<void> postCartItems2({
@@ -144,11 +149,17 @@ class CartController extends GetxController {
           }
           fetchCart();
           cartItems2.refresh();
-        } else {
-          Get.snackbar('Pesan',response.body);
-      }
+        }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }
   }
 
@@ -289,7 +300,9 @@ class CartController extends GetxController {
           }
         } else {
           final responseData = jsonDecode(response.body);
-          Get.snackbar('Pesan', '${response.statusCode} Terlalu banyak aksi, server sedang sibuk');
+          if(Get.isSnackbarOpen != true){
+            Get.snackbar('Pesan', '${response.statusCode} Terlalu banyak aksi, server sedang sibuk');
+          }
         }
       }else{
         final data = <String, dynamic>{
@@ -327,20 +340,19 @@ class CartController extends GetxController {
 
 
           await fetchCart();
-        } else {
-          // Get.snackbar('Pesan', '${response.statusCode} Terlalu banyak aksi, server sedang sibuk');
-          Get.snackbar('Error', response.body);
         }
       }
 
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        '$e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       client.close();
     }
@@ -366,18 +378,17 @@ class CartController extends GetxController {
         fetchCart();
         cartItems2.refresh();
 
-      }else{
-        Get.snackbar('Pesan', response.body);
-
       }
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        '$e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       client.close();
 

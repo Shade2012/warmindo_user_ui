@@ -60,13 +60,18 @@ class EditProfileController extends GetxController {
           fullNameController.text = txtName.value;
           phoneNumberController.text = txtNomorHp.value;
           emailController.text = txtEmail.value;
-        } else {
-          Get.snackbar('Pesan', data['message']);
         }
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
-
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }
@@ -141,41 +146,38 @@ class EditProfileController extends GetxController {
         );
       } else if (response.statusCode == 400) {
         isLoading.value = false;
-        Get.snackbar(
-          'Error',
-          'Password Saat ini tidak sesuai',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Password Saat ini tidak sesuai',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
       } else if (response.statusCode == 422) {
         isLoading.value = false;
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Password Tidak Sama',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+      }
+    } catch (e) {
+      isLoading.value = false;
+      if(Get.isSnackbarOpen != true) {
         Get.snackbar(
           'Error',
-          'Password Tidak Sama',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-      } else {
-        isLoading.value = false;
-        Get.snackbar(
-          'Error',
-          'Error: ${response.statusCode} ${response.body}',
-          snackPosition: SnackPosition.TOP,
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
       }
-    } catch (e) {
-      isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        'Error occurred: $e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
     } finally {
       isLoading.value = false;
     }
@@ -189,6 +191,7 @@ class EditProfileController extends GetxController {
       selectedImage.value = File(pickedFile.path); // Store image as File
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        if(Get.isSnackbarOpen != true) {
         Get.snackbar(
           'Error',
           'Tidak ada gambar yang dipilih',
@@ -196,7 +199,7 @@ class EditProfileController extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-      });
+      }});
     }
   }
 

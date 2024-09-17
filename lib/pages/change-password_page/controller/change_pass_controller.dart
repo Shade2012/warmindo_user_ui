@@ -42,45 +42,48 @@ class ChangePasswordController extends GetxController {
       final responseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         Get.back();
-        Get.snackbar(
-          'Success',
-          'Edit Password Berhasil',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
-
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Success',
+            'Edit Password Berhasil',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }
       }
       else if(response.statusCode == 400) {
-
-        Get.snackbar(
-          'Error',
-          'Password Saat ini tidak sesuai',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Password Saat ini tidak sesuai',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
       }
       else if(response.statusCode == 422) {
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Password Tidak Sama',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+      }
+    } catch (e) {
+      if(Get.isSnackbarOpen != true) {
         Get.snackbar(
           'Error',
-          'Password Tidak Sama',
+          'Error occurred: $e',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-
       }
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Error occurred: $e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-
     } finally {
       isLoading.value = false;
     }

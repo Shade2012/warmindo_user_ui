@@ -85,7 +85,11 @@ class RatingCard extends StatelessWidget {
     Get.back(closeOverlays: true);
     order.isRatingDone.value = true;
     } else {
-    Get.snackbar("Pesan", "Anda Harus Mengisi Nilai Semua Menu Terlebih Dahulu", backgroundColor: Colors.white);
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+            "Pesan", "Anda Harus Mengisi Nilai Semua Menu Terlebih Dahulu",
+            backgroundColor: Colors.white);
+      }
     }
     },
               child: Obx(()=>

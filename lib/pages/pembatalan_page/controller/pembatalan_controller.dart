@@ -78,7 +78,15 @@ class PembatalanController extends GetxController {
         Get.back(); // Go back to the previous screen
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoadingButton.value = false; // Reset loading state
     }

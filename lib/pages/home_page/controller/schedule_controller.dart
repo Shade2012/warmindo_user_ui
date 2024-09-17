@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -31,7 +32,15 @@ class ScheduleController extends GetxController {
       asiaJakarta = tz.getLocation('Asia/Jakarta'); // Initialize asiaJakarta
       await fetchSchedule(true); // Call fetchSchedule only after initialization
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }
   }
 void startPolling()async{
@@ -58,11 +67,21 @@ void startPolling()async{
         if (jadwalHariIni.isNotEmpty) {
           jadwalElement.value = jadwalHariIni;
         } else {
-          Get.snackbar('Error', 'Tidak ada Jadwal untuk hari ini');
+          if(Get.isSnackbarOpen != true) {
+            Get.snackbar('Error', 'Tidak ada Jadwal untuk hari ini');
+          }
         }
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
 
     } finally {
       isLoading.value = false;

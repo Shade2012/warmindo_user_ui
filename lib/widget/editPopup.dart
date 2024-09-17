@@ -52,11 +52,13 @@ class EditPopup extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   if (ctrPhoneNumber.text.isEmpty) {
-                    Get.snackbar(
-                      "Pesan",
-                      "Nomor Hp Jangan Kosong",
-                      backgroundColor: Colors.white,
-                    );
+                    if(Get.isSnackbarOpen != true) {
+                      Get.snackbar(
+                        "Pesan",
+                        "Nomor Hp Jangan Kosong",
+                        backgroundColor: Colors.white,
+                      );
+                    }
                   } else {
                     veritificationController.editPhoneNumber(
                       phoneNumber: ctrPhoneNumber.text,

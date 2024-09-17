@@ -46,7 +46,15 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
         }
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false; // Set loading to false after data is fetched
     }
@@ -89,7 +97,15 @@ final ScheduleController scheduleController = Get.put(ScheduleController());
         menuElement.value = menu.where((element) => element.statusMenu == '1' && element.stock! > 1 ).toList();
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }
