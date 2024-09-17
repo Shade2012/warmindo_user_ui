@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
+import 'package:warmindo_user_ui/pages/guest_menu_page/controller/guest_menu_controller.dart';
 
 import '../../home_page/controller/schedule_controller.dart';
+import '../../menu_page/controller/menu_controller.dart';
 
 class GuestNavigatorController extends GetxController {
+  final menuController = Get.put(GuestMenuController());
   final scheduleController = Get.put(ScheduleController());
   var currentIndex = 0.obs;
   var guestMenuPageArgument = 0.obs;

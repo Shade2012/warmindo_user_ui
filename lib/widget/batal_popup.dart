@@ -49,7 +49,11 @@ class BatalPopup extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(onPressed: (){
                     if(ctrAlasan.text.isEmpty){
-                    Get.snackbar("Pesan", "Beri alasan terlebih dahulu kenapa membatalkan pesanan",backgroundColor: Colors.white,);
+                      if(Get.isSnackbarOpen != true) {
+                        Get.snackbar("Pesan",
+                          "Beri alasan terlebih dahulu kenapa membatalkan pesanan",
+                          backgroundColor: Colors.white,);
+                      }
                     } else {
                       order.status.value = "menunggu batal";
                       order.alasan_batal!.value = ctrAlasan.text;

@@ -47,31 +47,37 @@ class RegisterController extends GetxController {
         final List<String> errorMessages = [];
 
         if (responseData['errors']['username'] != null) {
-          errorMessages.add((responseData['errors']['username'] as List).join('\n'));
+          errorMessages.add(
+              (responseData['errors']['username'] as List).join('\n'));
         }
         if (responseData['errors']['email'] != null) {
-          errorMessages.add((responseData['errors']['email'] as List).join('\n'));
+          errorMessages.add(
+              (responseData['errors']['email'] as List).join('\n'));
         }
         if (responseData['errors']['phone_number'] != null) {
-          errorMessages.add((responseData['errors']['phone_number'] as List).join('\n'));
+          errorMessages.add(
+              (responseData['errors']['phone_number'] as List).join('\n'));
         }
-
+        if (Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            errorMessages.join('\n'),
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+      }
+    } catch (e) {
+      if(Get.isSnackbarOpen != true) {
         Get.snackbar(
           'Error',
-          errorMessages.join('\n'),
+          'Akun Sudah ada',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
       }
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Akun Sudah ada',
-        snackPosition: SnackPosition.TOP  ,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
     } finally {
       client.close();
       isLoading.value = false;

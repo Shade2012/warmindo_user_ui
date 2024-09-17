@@ -43,7 +43,15 @@ class MapFlutterController extends GetxController {
       // Assign the result to the observable list
       selectedPlacemarks.value = placemarks;
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }
   }
   Future<void> confirmLocationUpdate({
@@ -69,10 +77,20 @@ class MapFlutterController extends GetxController {
         await addressPageController.fetchAddress();
         await pembayaranController.calculateDeliveryFee();
         Get.back();
-        Get.snackbar('Pesan', 'Alamat Berhasil diganti');
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar('Pesan', 'Alamat Berhasil diganti');
+        }
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       confirmLoading.value = false;
     }
@@ -107,12 +125,25 @@ class MapFlutterController extends GetxController {
       if (response.statusCode == 201) {
         await addressPageController.fetchAddress();
         Get.back();
-        Get.snackbar('Pesan', 'Alamat Berhasil ditambah');
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar('Pesan', 'Alamat Berhasil ditambah');
+        }
       } else {
-        Get.snackbar('Error', 'Failed to add location: ${response.statusCode}');
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+              'Error', 'Failed to add location: ${response.statusCode}');
+        }
       }
     } catch (e) {
-      Get.snackbar('Error', 'An error occurred: $e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       confirmLoading.value = false;
     }

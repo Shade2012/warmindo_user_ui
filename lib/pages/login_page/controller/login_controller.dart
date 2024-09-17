@@ -82,34 +82,42 @@ void firebaseToken ()async{
             Get.offAllNamed(Routes.BOTTOM_NAVBAR);
           }
         } else{
-          Get.snackbar("Error", 'Password atau username salah');
+          if(Get.isSnackbarOpen != true) {
+            Get.snackbar("Error", 'Password atau username salah');
+          }
         }
       } else if (response.statusCode == 422) {
         final responseData = jsonDecode(response.body);
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            responseData['message'],
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+      } else {
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Password atau username salah',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+      }
+    } catch (e) {
+      if(Get.isSnackbarOpen != true) {
         Get.snackbar(
           'Error',
-          responseData['message'],
+          '$e',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-      } else {
-        Get.snackbar(
-          'Error',
-          'Password atau username salah',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
       }
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        '$e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
     } finally {
       client.close();
       isLoading.value = false;

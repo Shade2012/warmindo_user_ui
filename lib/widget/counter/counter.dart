@@ -121,10 +121,15 @@ class CounterWidget extends StatelessWidget {
                   FloatingActionButton(
                     onPressed: () {
                       if(menu?.statusMenu == '0'){
-                        Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan');
+                        if(Get.isSnackbarOpen != true) {
+                          Get.snackbar('Pesan',
+                              'Menu ini sedang dinonaktifkan');
+                        }
                       }else{
                         if(quantity.value >= menu.stock!.value){
-                          Get.snackbar('Pesan', 'Maks ${menu.stock}');
+                          if(Get.isSnackbarOpen != true) {
+                            Get.snackbar('Pesan', 'Maks ${menu.stock}');
+                          }
                         }else{
                           quantity.value++;
                         }
@@ -155,7 +160,9 @@ class CounterWidget extends StatelessWidget {
               if (scheduleController.jadwalElement[0].is_open) {
                 if (variantRequired &&
                     popupController.selectedVarian[cartId] == null) {
-                  Get.snackbar('Pesan', 'Varian Harus dipilih');
+                  if(Get.isSnackbarOpen != true) {
+                    Get.snackbar('Pesan', 'Varian Harus dipilih');
+                  }
                 } else {
                   if (variantRequired) {
                     if (isCartItem) {
@@ -223,9 +230,11 @@ class CounterWidget extends StatelessWidget {
                   }
                 }
               } else {
-                Get.snackbar('Pesan',
-                    'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti',
-                    colorText: Colors.black);
+                if(Get.isSnackbarOpen != true) {
+                  Get.snackbar('Pesan',
+                      'Maaf Toko saat ini sedang tutup silahkan coba lagi nanti',
+                      colorText: Colors.black);
+                }
               }
             },
             child: Container(

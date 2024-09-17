@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:warmindo_user_ui/common/model/menu_list_API_model.dart';
 import 'package:http/http.dart' as http;
@@ -33,11 +34,17 @@ class DetailMenuController extends GetxController {
         var fetchedMenu = menuListFromJson(response.body);
         // Filter the menu based on the provided menuId
         menu.value = fetchedMenu.where((item) => item.menuId == menuId).toList();
-      } else {
-        Get.snackbar('Pesan',response.body);
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }
@@ -54,14 +61,17 @@ class DetailMenuController extends GetxController {
 
       if (response.statusCode == 200) {
         toppingList.value = toppingListFromJson(response.body);
-        final data = jsonDecode(response.body);
-
-      } else {
-        Get.snackbar('Pesan', response.body);
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
-
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }
@@ -79,11 +89,17 @@ class DetailMenuController extends GetxController {
       if (response.statusCode == 200) {
         varianList.value = varianListFromJson(response.body);
         final data = jsonDecode(response.body);
-      } else {
-        Get.snackbar('Pesan', response.body);
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }

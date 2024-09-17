@@ -70,34 +70,42 @@ class VerificationProfileController extends GetxController{
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
         if(responseBody['status'] == 'failed'){
-          Get.snackbar('Pesan', 'Coba lagi setelah 5 menit',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,);
+          if(Get.isSnackbarOpen != true) {
+            Get.snackbar('Pesan', 'Coba lagi setelah 5 menit',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,);
+          }
         } else  if(responseBody['status'] == 'success') {
-          Get.snackbar('Pesan', 'Kode OTP Behasil dikirim',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.green,
-            colorText: Colors.white,);
+          if (Get.isSnackbarOpen != true) {
+            Get.snackbar('Pesan', 'Kode OTP Behasil dikirim',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.green,
+              colorText: Colors.white,);
+          }
         }
       } else {
         // Show error snackbar
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Failed to send OTP! ${response.body}',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+      }
+    } catch (e) {
+      if(Get.isSnackbarOpen != true) {
         Get.snackbar(
           'Error',
-          'Failed to send OTP! ${response.body}',
-          snackPosition: SnackPosition.TOP,
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
       }
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        '$e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
     } finally {
       isLoading.value = false;
     }
@@ -121,47 +129,54 @@ class VerificationProfileController extends GetxController{
       );
       final responseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        if(responseData['status'] == 'failed'){
+        if(responseData['status'] == 'failed') {
+          if (Get.isSnackbarOpen != true) {
+            Get.snackbar(
+              'Error',
+              'Kode OTP salah',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
+          }
+        }
+        else if (responseData['status'] == 'success'){
+          if(Get.isSnackbarOpen != true) {
+            Get.snackbar(
+              'Success',
+              'Verifikasi Berhasil',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.green,
+              colorText: Colors.white,
+            );
+          }
+        }
+      } else {
+        // Error occurred
+        // Show error snackbar
+        if(Get.isSnackbarOpen != true) {
           Get.snackbar(
             'Error',
-            'Kode OTP salah',
+            'Ada Kesalahan',
             snackPosition: SnackPosition.TOP,
             backgroundColor: Colors.red,
             colorText: Colors.white,
           );
         }
-        else if (responseData['status'] == 'success'){
-
-          Get.snackbar(
-            'Success',
-            'Verifikasi Berhasil',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.green,
-            colorText: Colors.white,
-          );
-        }
-      } else {
-        // Error occurred
-        // Show error snackbar
-        Get.snackbar(
-          'Error',
-          'Ada Kesalahan',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
       }
     } catch (e) {
       // Handle error
 
       // Show error snackbar
-      Get.snackbar(
-        'Error',
-        '$e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }
@@ -235,35 +250,41 @@ class VerificationProfileController extends GetxController{
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
         if (responseBody['status'] == 'failed') {
-          Get.snackbar(
-            'Failed',
-            'Otp salah',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
+          if(Get.isSnackbarOpen != true) {
+            Get.snackbar(
+              'Failed',
+              'Otp salah',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
+          }
         } else {
           await cartController.fetchUser();
           Get.back();
           Get.offNamed(Routes.BOTTOM_NAVBAR);
         }
       } else {
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Error occurred: ${response.statusCode}',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+      }
+    } catch (e) {
+      if(Get.isSnackbarOpen != true) {
         Get.snackbar(
           'Error',
-          'Error occurred: ${response.statusCode}',
-          snackPosition: SnackPosition.TOP,
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
       }
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Error occurred: $e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
     } finally {
       isLoading.value = false;
     }
@@ -304,32 +325,38 @@ class VerificationProfileController extends GetxController{
       } else {
         // Check for specific error message
         if (responseBody['message'] == "The phone number has already been taken.") {
-          Get.snackbar(
-            'Error',
-            'The phone number has already been taken.',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
+          if(Get.isSnackbarOpen != true) {
+            Get.snackbar(
+              'Error',
+              'The phone number has already been taken.',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
+          }
         } else {
-          Get.snackbar(
-            'Error',
-            'An unexpected error occurred.',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
+          if (Get.isSnackbarOpen != true) {
+            Get.snackbar(
+              'Error',
+              'An unexpected error occurred.',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
+          }
         }
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        'Error occurred: $e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }

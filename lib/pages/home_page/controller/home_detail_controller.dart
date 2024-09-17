@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -43,7 +44,15 @@ class HomeDetailController extends GetxController {
         menuElement.value = menuListFromJson(response.body);
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false; // Set loading to false after data is fetched
     }

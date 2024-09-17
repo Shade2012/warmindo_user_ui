@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warmindo_user_ui/common/global_variables.dart';
@@ -49,8 +50,15 @@ class RatingController extends GetxController{
       }
       isLoadingButton.value = false;
     } catch (e) {
-
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }
   }
 

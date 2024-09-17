@@ -77,35 +77,42 @@ class VeritificationController extends GetxController {
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
         if(responseBody['status'] == 'failed'){
-          Get.snackbar('Pesan', 'Coba lagi setelah 5 menit',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,);
+          if(Get.isSnackbarOpen != true) {
+            Get.snackbar('Pesan', 'Coba lagi setelah 5 menit',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,);
+          }
         } else
           if(responseBody['status'] == 'success') {
-            Get.snackbar('Pesan', 'Kode OTP Behasil dikirim',
-              snackPosition: SnackPosition.TOP,
-              backgroundColor: Colors.green,
-              colorText: Colors.white,);
+            if(Get.isSnackbarOpen != true) {
+              Get.snackbar('Pesan', 'Kode OTP Behasil dikirim',
+                snackPosition: SnackPosition.TOP,
+                backgroundColor: Colors.green,
+                colorText: Colors.white,);
+            }
         }
       } else {
-        Get.snackbar(
-          'Error',
-          'Failed to send OTP!',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Failed to send OTP!',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
       }
     } catch (e) {
-
+    if(Get.isSnackbarOpen != true) {
       Get.snackbar(
         'Error',
         '$e',
-        snackPosition: SnackPosition.TOP,
+        snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+    }
     } finally {
       isLoading.value = false;
     }
@@ -133,46 +140,53 @@ class VeritificationController extends GetxController {
       final responseData = jsonDecode(response.body);
       isSuccess.value = responseData['status'];
       if (response.statusCode == 200) {
-     if(responseData['status'] == 'failed'){
-       Get.snackbar(
-         'Error',
-         'Kode OTP salah',
-         snackPosition: SnackPosition.TOP,
-         backgroundColor: Colors.red,
-         colorText: Colors.white,
-       );
+     if(responseData['status'] == 'failed') {
+       if (Get.isSnackbarOpen != true) {
+         Get.snackbar(
+           'Error',
+           'Kode OTP salah',
+           snackPosition: SnackPosition.TOP,
+           backgroundColor: Colors.red,
+           colorText: Colors.white,
+         );
+       }
      }
      else if (responseData['status'] == 'success'){
-       Get.snackbar(
-         'Success',
-         'Verifikasi Berhasil',
-         snackPosition: SnackPosition.TOP,
-         backgroundColor: Colors.green,
-         colorText: Colors.white,
-       );
+       if(Get.isSnackbarOpen != true) {
+         Get.snackbar(
+           'Success',
+           'Verifikasi Berhasil',
+           snackPosition: SnackPosition.TOP,
+           backgroundColor: Colors.green,
+           colorText: Colors.white,
+         );
+       }
        // Get.offNamed(Routes.LOGIN_PAGE);
        prefs.remove('token4');
        registerController.phone_number.value = '';
        loginController.phone_number.value = '';
      }
       } else {
-
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Ada Kesalahan',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+      }
+    } catch (e) {
+      if(Get.isSnackbarOpen != true) {
         Get.snackbar(
           'Error',
-          'Ada Kesalahan',
-          snackPosition: SnackPosition.TOP,
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
       }
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        '$e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
     } finally {
       isLoading.value = false;
         }
@@ -206,32 +220,37 @@ class VeritificationController extends GetxController {
 
 
         Get.back();
-        Get.snackbar(
-          'Success',
-          'Edit Nomor HP Berhasil',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Success',
+            'Edit Nomor HP Berhasil',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }
 
       } else {
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            'Nomor Hp Sudah ada',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+      }
+    } catch (e) {
+      if(Get.isSnackbarOpen != true) {
         Get.snackbar(
           'Error',
-          'Nomor Hp Sudah ada',
-          snackPosition: SnackPosition.TOP,
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-
       }
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Error occurred: $e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
 
     } finally {
       isLoading.value = false;

@@ -85,10 +85,14 @@ class CounterWidget2 extends StatelessWidget {
                   description: '',
                 )); // Default object);
                 if(menu?.statusMenu == '0'){
-                  Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan');
+                  if(Get.isSnackbarOpen != true) {
+                    Get.snackbar('Pesan', 'Menu ini sedang dinonaktifkan');
+                  }
                 }else{
                   if(menu!.stock! <= cartItem.quantity.value){
-                    Get.snackbar('Pesan', 'Maks ${menu.stock}');
+                    if(Get.isSnackbarOpen != true) {
+                      Get.snackbar('Pesan', 'Maks ${menu.stock}');
+                    }
                   }else{
                     cartController.isLoading.value = true;
                     cartController.incrementQuantity(cartItem);

@@ -84,10 +84,20 @@ class HistoryController extends GetxController {
         isLoading.value = false;
       } else {
         // Handle other status codes if needed
-        Get.snackbar('Gagal mengambil data riwayat', response.body);
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar('Gagal mengambil data riwayat', response.body);
+        }
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false; // Reset loading state
     }
@@ -112,11 +122,20 @@ class HistoryController extends GetxController {
         isLoading.value = false;
       } else {
         // Handle other status codes if needed
-        Get.snackbar('Gagal mengambil data riwayat', response.body);
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar('Gagal mengambil data riwayat', response.body);
+        }
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
-
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }
   }
   void changeCategory(String newCategory) {
@@ -292,7 +311,9 @@ class HistoryController extends GetxController {
       }
       isLoadingButton.value = false;
     }else{
-      Get.snackbar('Pesan', 'Pesanan anda tidak bisa di prosest');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar('Pesan', 'Pesanan anda tidak bisa di proses');
+      }
     }
   }
 
@@ -367,19 +388,30 @@ class HistoryController extends GetxController {
             // longPollingFetchHistory();
             // Future.delayed(Duration(seconds: 20), () => stopPolling());
           }else if(responseBody['status'] == 'failed'){
-            Get.snackbar('Pesan', 'Pesanan sudah di bayar');
+            if(Get.isSnackbarOpen != true) {
+              Get.snackbar('Pesan', 'Pesanan sudah di bayar');
+            }
             isLoading.value = false;
             fetchHistory();
           }
         }else if(response.statusCode == 400){
-          Get.snackbar('Pesan', 'Pesanan sudah di bayar');
+          if(Get.isSnackbarOpen != true) {
+            Get.snackbar('Pesan', 'Pesanan sudah di bayar');
+          }
           isLoading.value = false;
           fetchHistory();
         }
       }
     }catch(e){
-      Get.snackbar('Error', '$e');
-
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }
 }
 

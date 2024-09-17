@@ -63,7 +63,16 @@ class MyCustomPopUpController extends GetxController {
         toppingList.value = data;
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+
 
     } finally {
       isLoading.value = false;
@@ -85,7 +94,15 @@ class MyCustomPopUpController extends GetxController {
         // final data = jsonDecode(response.body);
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      if(Get.isSnackbarOpen != true) {
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
 
     } finally {
       isLoading.value = false;
