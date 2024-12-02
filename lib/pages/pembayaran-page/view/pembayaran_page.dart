@@ -299,30 +299,40 @@ class PembayaranPage extends GetView<PembayaranController> {
                InkWell(
                   onTap: () {
                     if(controller.selectedButton3.value == false && controller.selectedButton2.value == false){
-                      Get.snackbar('Pesan', 'Silahkan pilih metode pembayaran terlebih dahulu');
+                      if(Get.isSnackbarOpen != true) {
+                        Get.snackbar('Pesan', 'Silahkan pilih metode pembayaran terlebih dahulu');
+                      }
                       return;
                     }
                     if (!controller.selectedOrderMethodDelivery.value && !controller.selectedOrderMethodTakeaway.value) {
-                      Get.snackbar(
-                        'Pesan',
-                        'Silakan pilih metode pemesanan terlebih dahulu',
-                        backgroundColor: Colors.orange,
-                        colorText: Colors.white,
-                      );
+                      if(Get.isSnackbarOpen != true) {
+                        Get.snackbar(
+                          'Pesan',
+                          'Silakan pilih metode pemesanan terlebih dahulu',
+                          backgroundColor: Colors.orange,
+                          colorText: Colors.white,
+                        );
+                      }
                       return;
                     }else if(controller.selectedOrderMethodDelivery.value == true){
                       if(controller.isWithinRadar.value != true){
-                        Get.snackbar('Pesan', 'anda diluar jangkauan');
+                        if(Get.isSnackbarOpen != true) {
+                          Get.snackbar('Pesan', 'anda diluar jangkauan');
+                        }
                         return;
                       }
                       if(addressPageController.address.isEmpty){
-                        Get.snackbar('Pesan', 'Silahkan pilih alamat atau buat alamat terlebih dahulu');
+                        if(Get.isSnackbarOpen != true) {
+                          Get.snackbar('Pesan', 'Silahkan pilih alamat atau buat alamat terlebih dahulu');
+                        }
                         return;
                       }
                     }
                       if(controller.selectedButton3.value){
                       if(profileController.user_verified.value == '0'){
-                        Get.snackbar('Pesan', 'User belum terverifikasi, anda bisa mendapatnya setelah memesan selama 15 kali atau meminta ke Warmindo');
+                        if(Get.isSnackbarOpen != true) {
+                          Get.snackbar('Pesan', 'User belum terverifikasi, anda bisa mendapatnya setelah memesan selama 15 kali atau meminta ke Warmindo');
+                        }
                         return;
                       }else{
                         if(controller.isLoading.value == false){

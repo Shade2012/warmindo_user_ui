@@ -55,7 +55,11 @@ class GoogleSignInButton extends StatelessWidget {
       //sementara ada signout disini dulu
       await GoogleSignIn().signOut();
       final user = await GoogleSignIn().signIn();
-
+      print(user);
+      // String user2 = jsonDecode(user.toString());
+      // String user3 = jsonEncode(user);
+      // print(user2);
+      // print(user3);
     final response = await http.post(
       Uri.parse(GlobalVariables.googleSignin),
       headers: {'Content-Type': 'application/json'},
@@ -82,7 +86,6 @@ class GoogleSignInButton extends StatelessWidget {
         if(Get.isSnackbarOpen != true) {
           Get.snackbar('Pesan', 'Success');
         }
-
       }
     } on PlatformException catch (e) {
       if(Get.isSnackbarOpen != true) {
@@ -90,8 +93,9 @@ class GoogleSignInButton extends StatelessWidget {
       }
     } catch (e) {
       if(Get.isSnackbarOpen != true) {
+        print(e);
         Get.snackbar(
-          'Error',
+          'Error2',
           '$e',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
