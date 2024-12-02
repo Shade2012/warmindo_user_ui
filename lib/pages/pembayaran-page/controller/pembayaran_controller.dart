@@ -27,11 +27,11 @@ class PembayaranController extends GetxController{
   RxDouble distanceBetween = 0.0.obs;
   RxInt deliveryFee = 0.obs;
   RxString orderID = ''.obs;
-  final double radarLatitude = -6.7524781;
-  final double radarLongitude = 110.8427672;
+  final double radarLatitude = -6.7525374;
+    final double radarLongitude = 110.842826;
 
   RxBool isWithinRadar = false.obs;
-
+RxBool isOrderCreated = false.obs;
 RxBool selectedButton2 = false.obs;
 RxBool selectedButton3 = false.obs;
 
@@ -65,7 +65,6 @@ Future<void> calculateDeliveryFee () async {
         Get.snackbar('Pesan', 'Maaf Anda diluar jangkauan radar');
       }
     }
-
   }
 
   Future<void> checkUserWithinRadar (BuildContext context) async{
@@ -138,13 +137,14 @@ Future<void> postOrder({required String catatan,required int alamatID}) async{
     final response = await http.post(Uri.parse(url),headers: headers, body:body);
   final responseBody = jsonDecode(response.body);
     if (responseBody['success'] == true) {
+      isOrderCreated.value = true;
       orderID.value = responseBody['data']['id'].toString();
     }
   }catch(e){
     if(Get.isSnackbarOpen != true) {
       Get.snackbar(
-        'Error',
-        '$e',
+        'Pesan',
+        'Anda diluar jangkauan',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -179,6 +179,7 @@ Future<void> postOrderDetail({required String catatan}) async{
       final response = await http.post(Uri.parse(url),headers: headers, body: jsonEncode(toRequestBody()),);
       final responseBody = jsonDecode(response.body);
     }catch(e){
+      print('post order detail $e');
       if(Get.isSnackbarOpen != true) {
         Get.snackbar(
           'Error',
@@ -205,46 +206,60 @@ Future<void> postOrderDetail({required String catatan}) async{
       'Authorization': 'Bearer ${cartController.token.value}'
     };
     await postOrder(catatan: catatan, alamatID: alamatID);
-    await postOrderDetail(catatan: catatan);
-    final body = {
-      'order_id': orderID.value,
-    };
-    try{
-      if(isTunai == true){
-        await historyController.fetchHistory();
-        final order = historyController.orders2.firstWhere((order) => order.id.toString() == orderID.value,);
-        Get.off(HistoryDetailPage(initialOrder: order));
-      }else{
-        final response = await http.post(Uri.parse(url),headers: headers, body:body);
-        final responseBody = jsonDecode(response.body);
-        if(response.statusCode == 201){
-          if(responseBody['status'] == 'success'){
-            final uriString = Uri.parse(responseBody['checkout_link']);
-            launchUrl(uriString,mode: LaunchMode.inAppWebView);
-            await historyController.fetchHistory();
+    if(isOrderCreated.value){
+      await postOrderDetail(catatan: catatan);
+      print(orderID.value);
+      final body = {
+        'order_id': orderID.value,
+      };
+      try{
+        if(isTunai == true){
+          await historyController.fetchHistory();
+          final order = historyController.orders2.firstWhere((order) => order.id.toString() == orderID.value,);
+          Get.off(HistoryDetailPage(initialOrder: order));
+        }else{
+          print('make payment2');
+          final response = await http.post(Uri.parse(url),headers: headers, body:body);
+          final responseBody = jsonDecode(response.body);
+          print(response.body);
+          if(response.statusCode == 201){
+            print('make payment3');
+            if(responseBody['status'] == 'success'){
+              print('make payment4');
+              final uriString = Uri.parse(responseBody['checkout_link']);
+              launchUrl(uriString,mode: LaunchMode.inAppWebView);
+              await historyController.fetchHistory();
               final order = historyController.orders2.firstWhere((order) => order.id.toString() == orderID.value,);
-            Future.delayed(const Duration(seconds: 2), () {
-              Get.off(HistoryDetailPage(initialOrder: order));
-            });
+              Future.delayed(const Duration(seconds: 2), () {
+                Get.off(HistoryDetailPage(initialOrder: order));
+              });
 
+            }
+            print('make payment gagal di 3');
           }
+          print(response.statusCode);
+          print('gagal di make payment2');
+        }
+      }catch(e){
+        if(Get.isSnackbarOpen != true) {
+          Get.snackbar(
+            'Error',
+            '$e',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
         }
       }
-    }catch(e){
+      cartController.fetchCart();
+      isLoading.value = false;
+    }else{
       if(Get.isSnackbarOpen != true) {
-        Get.snackbar(
-          'Error',
-          '$e',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        Get.snackbar('Pesan', 'Maaf Alamat yang anda pilih berada diluar jangkauan warmindo');
       }
+      isLoading.value = false;
     }
-    cartController.fetchCart();
-    isLoading.value = false;
   }
-
 }
 
 

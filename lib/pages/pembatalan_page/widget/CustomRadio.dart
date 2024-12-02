@@ -6,7 +6,7 @@ class CustomRadio extends StatelessWidget {
   RxInt groupValue;
   Icon? icons;
   Icon? selectIcons;
-  void Function(RxInt?)? onChanged;
+    void Function(RxInt?)? onChanged;
 
   CustomRadio({
     super.key,

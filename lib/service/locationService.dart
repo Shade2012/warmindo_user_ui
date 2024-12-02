@@ -29,7 +29,6 @@ class LocationService {
     return Geolocator.distanceBetween(
         startLatitude, startLongitude, endLatitude, endLongitude);
   }
-
   Future<void> openAppSettings() async {
     await openAppSettings(); // Open app settings using permission_handler package
   }

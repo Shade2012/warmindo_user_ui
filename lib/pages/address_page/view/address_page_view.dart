@@ -113,8 +113,9 @@ class AddressPageView extends GetView<AddressPageController> {
                 Container(
                   margin: const EdgeInsets.all(20),
                   child: SizedBox(
-                    height: screenHeight * 0.78,
+                    height: screenHeight * 0.73,
                     child: ListView.builder(
+                        shrinkWrap: true,
                         itemBuilder: (context, index) {
                       final addressItem = controller.address[index];
                       return Obx(()=>

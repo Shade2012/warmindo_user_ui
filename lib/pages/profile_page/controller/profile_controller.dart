@@ -101,6 +101,7 @@ Future<void> logoutFetch() async{
       txtUsername.value = prefs!.getString('username') ?? '';
       token.value = prefs!.getString('token') ?? '';
     }
+    print(token.value);
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       isConnected.value = result != ConnectivityResult.none;
       if (isConnected.value) {
